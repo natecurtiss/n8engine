@@ -124,15 +124,24 @@ namespace N8Engine
         #endregion
         
         #region Constructors
-        public Vector2(in float x)
+        /// <summary>
+        /// Creates a vector with an equal X and Y
+        /// </summary>
+        /// <param name="both"> The value of both X and Y </param>
+        public Vector2(in float both)
         {
-            X = x;
-            Y = x;
+            X = both;
+            Y = both;
         }
 
-        public Vector2(in float x, in float y)
+        /// <summary>
+        /// Created a Vector with an X and Y
+        /// </summary>
+        /// <param name="both"> The X value </param>
+        /// <param name="y"> The Y value </param>
+        public Vector2(in float both, in float y)
         {
-            X = x;
+            X = both;
             Y = y;
         }
         #endregion
