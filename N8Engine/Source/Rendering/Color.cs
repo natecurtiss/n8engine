@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace N8Engine
+namespace N8Engine.Rendering
 {
     public struct Color
     {

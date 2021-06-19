@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace N8Engine
+namespace N8Engine.Core
 {
-    public static class Program
+    internal static class Program
     {
         private static Game _game;
         

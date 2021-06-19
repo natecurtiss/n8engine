@@ -1,4 +1,4 @@
-﻿namespace N8Engine
+﻿namespace N8Engine.Mathematics
 {
     public static class Math
     {

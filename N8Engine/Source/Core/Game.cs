@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace N8Engine
+namespace N8Engine.Core
 {
-    public sealed class Game
+    internal sealed class Game
     {
-        public Game()
+        internal Game()
         {
             Console.BackgroundColor = ConsoleColor.Magenta;
         }

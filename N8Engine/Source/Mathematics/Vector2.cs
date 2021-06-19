@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using SystemVector2 = System.Numerics.Vector2;
 
-namespace N8Engine
+namespace N8Engine.Mathematics
 {
     [SuppressMessage("ReSharper", "PossiblyImpureMethodCallOnReadonlyVariable")]
     public struct Vector2
@@ -375,7 +375,7 @@ namespace N8Engine
         #endregion
     }
 
-    internal static class Vector2Extensions
+    internal static class InternalVector2Extensions
     {
         internal static SystemVector2 AsSystemVector2(this Vector2 vector2) => new(vector2.X, vector2.Y);
         internal static Vector2 AsVector2(this SystemVector2 vector2) => new(vector2.X, vector2.Y);
