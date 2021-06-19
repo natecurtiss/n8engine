@@ -111,19 +111,25 @@ namespace N8Engine
 
         #region Properties
         
-        /// <summary> The magnitude/length of the Vector2 </summary>
+        /// <summary> The magnitude/length of the vector </summary>
         public float Magnitude => this.AsSystemVector2().Length();
-        /// <summary> The squared magnitude/length of the Vector2 </summary>
+        
+        /// <summary> The squared magnitude/length of the vector </summary>
         public float SquareMagnitude => this.AsSystemVector2().LengthSquared();
-        /// <summary> The normalized Vector2 </summary>
+        
+        /// <summary> The normalized vector </summary>
         public Vector2 Normalized => SystemVector2.Normalize(this.AsSystemVector2()).AsVector2();
-        /// <summary> The absolute value of the Vector2 </summary>
+        
+        /// <summary> The absolute value of the vector </summary>
         public Vector2 AbsoluteValue => new(X.AbsoluteValue(), Y.AbsoluteValue());
+        
+        /// <summary> The opposite of the current vector </summary>
         public Vector2 Negated => this * -1;
         
         #endregion
         
         #region Constructors
+        
         /// <summary>
         /// Creates a vector with an equal X and Y
         /// </summary>
@@ -144,6 +150,7 @@ namespace N8Engine
             X = both;
             Y = y;
         }
+        
         #endregion
 
         #region Instance Methods
