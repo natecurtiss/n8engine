@@ -31,6 +31,7 @@ namespace N8Engine.Core
             {
                 DateTime __currentTime = DateTime.Now;
                 float __timePassed = Convert.ToSingle(__currentTime.Subtract(__previousTime).TotalSeconds);
+                
                 if (__timePassed >= UPDATE_RATE)
                 {
                     __frames++;
@@ -42,7 +43,8 @@ namespace N8Engine.Core
                         __fpsCounterTime = 0f;
                     }
                     __previousTime = __currentTime;
-                    OnUpdate?.Invoke(0f);
+                    
+                    OnUpdate?.Invoke(__timePassed);
                     OnRender?.Invoke();
                 }
             }
