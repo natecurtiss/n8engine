@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace N8Engine.Debug
+namespace N8Engine.Exceptions
 {
     internal static class InternalExceptions
     {
