@@ -1,4 +1,4 @@
-﻿using System;
+﻿using N8Engine.Rendering;
 
 namespace N8Engine.Core
 {
@@ -6,7 +6,7 @@ namespace N8Engine.Core
     {
         internal Game()
         {
-            Console.BackgroundColor = ConsoleColor.Magenta;
+            Window.Initialize();
         }
     }
 }

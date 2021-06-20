@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace N8Engine.Rendering
 {
@@ -18,6 +19,19 @@ namespace N8Engine.Rendering
         {
             get => Console.WindowHeight;
             set => Console.WindowHeight = value;
+        }
+        public static bool IsCursorVisible
+        {
+            get => Console.CursorVisible;
+            set => Console.CursorVisible = value;
+        }
+        public static Color BackgroundColor { get; set; }
+
+        public static void Initialize()
+        {
+            IsCursorVisible = false;
+            Title = "New N8Engine Game";
+            ConsoleWindow.QuickEditMode = false;
         }
     }
 }
