@@ -243,8 +243,8 @@ namespace N8Engine.Mathematics
         /// <summary>
         /// Assigns the current Vector2 to two floats
         /// </summary>
-        /// <param name="x"> The float to assign the current Vector2's X to </param>
-        /// <param name="y"> The float to assign the current Vector2's Y to </param>
+        /// <param name="x"> The float to assign the current vector's X to </param>
+        /// <param name="y"> The float to assign the current vector's Y to </param>
         public void Assign(out float x, out float y)
         {
             x = X;
@@ -377,7 +377,7 @@ namespace N8Engine.Mathematics
 
     internal static class InternalVector2Extensions
     {
-        internal static SystemVector2 AsSystemVector2(this Vector2 vector2) => new(vector2.X, vector2.Y);
-        internal static Vector2 AsVector2(this SystemVector2 vector2) => new(vector2.X, vector2.Y);
+        public static SystemVector2 AsSystemVector2(this Vector2 vector2) => new(vector2.X, vector2.Y);
+        public static Vector2 AsVector2(this SystemVector2 vector2) => new(vector2.X, vector2.Y);
     }
 }
