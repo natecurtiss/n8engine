@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using N8Engine.Core;
+using NUnit.Framework;
 
 namespace N8Engine.Components
 {
@@ -8,8 +9,8 @@ namespace N8Engine.Components
         public void TestAddComponent()
         {
             GameObject __gameObject = new GameObject("Test AddComponent GameObject");
-            __gameObject.AddComponent(out DummyComponent __dummyComponent);
-            Assert.IsNotNull(__dummyComponent);
+            Component __component = __gameObject.AddComponent<DummyComponent>();
+            Assert.IsNotNull(__component);
         }
 
         [Test]
@@ -26,6 +27,24 @@ namespace N8Engine.Components
             GameObject __gameObject = new GameObject("Test GetComponent GameObject");
             __gameObject.AddComponent<DummyComponent>();
             Assert.IsNotNull(__gameObject.GetComponent<DummyComponent>());
+        }
+        
+        [Test]
+        public void TestDestroyComponent()
+        {
+            GameObject __gameObject = new GameObject("GameObject to Destroy");
+            Component __component = __gameObject.AddComponent<DummyComponent>();
+            Object.Destroy(__component);
+            Assert.IsNull(__component);
+        }
+        
+        [Test]
+        public void TestDestroyComponentAndGetComponent()
+        {
+            GameObject __gameObject = new GameObject("GameObject to Destroy");
+            Component __component = __gameObject.AddComponent<DummyComponent>();
+            Object.Destroy(__component);
+            Assert.IsNull(__gameObject.GetComponent<DummyComponent>());
         }
     }
 }
