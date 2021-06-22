@@ -1,5 +1,6 @@
 ﻿using System;
 using N8Engine.Core;
+using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -22,7 +23,8 @@ namespace N8Engine.Objects
         {
             GameLoop.OnUpdate += Update;
             GameLoop.OnRender += OnRender;
-            Console.WriteLine("init");
+            Input.OnKeyPressed += KeyPressed;
+            Input.OnDirectionalInput += DirectionalInput;
             OnStart();
         }
 
@@ -33,6 +35,14 @@ namespace N8Engine.Objects
         protected virtual void OnUpdate(in float deltaTime) { }
 
         private void OnRender() { }
+
+        private void KeyPressed(Key key) => OnKeyPressed(key);
+
+        protected virtual void OnKeyPressed(in Key key) { }
+
+        private void DirectionalInput(Vector2 directionInput) => OnDirectionalInput(directionInput);
+        
+        protected virtual void OnDirectionalInput(in Vector2 directionalInput) { }
 
         protected abstract Sprite RenderSprite();
     }

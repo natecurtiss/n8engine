@@ -5,10 +5,9 @@ namespace N8Engine.Core
     public static class GameLoop
     {
         public static int FramesPerSecond { get; private set; } = TARGET_FRAME_RATE;
-
-        public static event Action OnStart;
-        public static event Action<float> OnUpdate; 
-        public static event Action OnRender;
+        
+        internal static event Action<float> OnUpdate; 
+        internal static event Action OnRender;
 
         private const int TARGET_FRAME_RATE = 60;
         private const float UPDATE_RATE = 1f / TARGET_FRAME_RATE;
@@ -20,7 +19,6 @@ namespace N8Engine.Core
             float __fpsCounterTime = 0f;
             DateTime __previousTime = DateTime.Now;
             
-            OnStart?.Invoke();
             _isRunning = true;
             while (_isRunning)
             {
