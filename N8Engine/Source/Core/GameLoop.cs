@@ -1,16 +1,12 @@
 ﻿using System;
-using N8Engine.Core;
-using N8Engine.Rendering;
-
-Application.Initialize();
-Application.Run();
 
 namespace N8Engine.Core
 {
-    internal static class Application
+    public static class GameLoop
     {
         public static int FramesPerSecond { get; private set; } = TARGET_FRAME_RATE;
-        
+
+        public static event Action OnStart;
         public static event Action<float> OnUpdate; 
         public static event Action OnRender;
 
@@ -18,14 +14,13 @@ namespace N8Engine.Core
         private const float UPDATE_RATE = 1f / TARGET_FRAME_RATE;
         private static bool _isRunning;
 
-        public static void Initialize() => Window.Initialize();
-
-        public static void Run()
+        internal static void Run()
         {
             int __frames = 0;
             float __fpsCounterTime = 0f;
             DateTime __previousTime = DateTime.Now;
             
+            OnStart?.Invoke();
             _isRunning = true;
             while (_isRunning)
             {

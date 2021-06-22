@@ -1,4 +1,6 @@
-﻿using N8Engine.Core;
+﻿using System;
+using N8Engine.Core;
+using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
 namespace N8Engine.Objects
@@ -6,12 +8,21 @@ namespace N8Engine.Objects
     public abstract class GameObject
     {
         public string Name { get; set; }
-        public bool IsDestroyed { get; private set; }
+        public Vector2 Position { get; set; }
+        
+        private bool _isDestroyed;
+
+        public void Destroy()
+        {
+            if (_isDestroyed) return;
+            _isDestroyed = true;
+        }
 
         internal void Initialize()
         {
-            Application.OnUpdate += Update;
-            Application.OnRender += OnRender;
+            GameLoop.OnUpdate += Update;
+            GameLoop.OnRender += OnRender;
+            Console.WriteLine("init");
             OnStart();
         }
 
@@ -21,17 +32,8 @@ namespace N8Engine.Objects
 
         protected virtual void OnUpdate(in float deltaTime) { }
 
-        private void OnRender()
-        {
-            
-        }
+        private void OnRender() { }
 
         protected abstract Sprite RenderSprite();
-        
-        public void Destroy()
-        {
-            if (IsDestroyed) return;
-            IsDestroyed = true;
-        }
     }
 }

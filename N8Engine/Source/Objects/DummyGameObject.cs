@@ -6,7 +6,7 @@ namespace N8Engine.Objects
     {
         protected override Sprite RenderSprite() => null;
 
-        protected override void OnStart() =>
+        protected override void OnStart() => 
             Name = "BenBonk -- https://youtube.com/BenBonk";
     }
 }
