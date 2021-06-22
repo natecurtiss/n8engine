@@ -4,8 +4,14 @@ using NUnit.Framework;
 
 namespace N8Engine.Inputs
 {
+    /// <summary>
+    /// Unit tests for the Input classes.
+    /// </summary>
     public sealed class InputTests
     {
+        /// <summary>
+        /// Tests conversions to and from a ConsoleKeyInfo and a key.
+        /// </summary>
         [Test]
         public void TestConsoleKeyInfoConversionToKey()
         {
@@ -26,6 +32,9 @@ namespace N8Engine.Inputs
             Assert.IsTrue(__keys[0] == Key.RightArrow && __keys[1] == Key.Shift);
         }
 
+        /// <summary>
+        /// Tests conversions from a key to a vector that holds directional input.
+        /// </summary>
         [Test]
         public void TestDirectionalInput()
         {

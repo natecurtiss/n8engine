@@ -13,11 +13,11 @@ namespace N8Engine.Core
         public static int FramesPerSecond { get; private set; } = TARGET_FRAMERATE;
         
         /// <summary>
-        /// An event invoked every frame before rendering.
+        /// Invoked every frame before rendering.
         /// </summary>
         internal static event Action<float> OnUpdate; 
         /// <summary>
-        /// An event invoked every frame when objects should render (after OnUpdate).
+        /// Invoked every frame when objects should render (after OnUpdate).
         /// </summary>
         internal static event Action OnRender;
 

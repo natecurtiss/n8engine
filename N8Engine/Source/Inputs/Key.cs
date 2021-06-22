@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace N8Engine.Inputs
+﻿namespace N8Engine.Inputs
 {
+    /// <summary>
+    /// A representation of a key on a keyboard.
+    /// </summary>
     public enum Key
     {
         None,

@@ -7,7 +7,7 @@ Application.Start();
 namespace N8Engine.Core
 {
     /// <summary>
-    /// The Main class that the application stems from.
+    /// The main entry point for the application.
     /// </summary>
     internal static class Application
     {
