@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using SystemVector2 = System.Numerics.Vector2;
 
 namespace N8Engine.Mathematics
@@ -7,9 +8,46 @@ namespace N8Engine.Mathematics
     /// A struct that contains holds two values (X and Y); useful for representing positions or directions.
     /// </summary>
     [SuppressMessage("ReSharper", "PossiblyImpureMethodCallOnReadonlyVariable")]
+    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
     public struct Vector2
     {
+        #region Equality Overload Methods
+
+        /// <summary>
+        /// Returns true if the vector is equal to the vector passed in.
+        /// </summary>
+        /// <param name="vector"> The vector to compare to. </param>
+        /// <returns> True if the vectors are equal. </returns>
+        public bool Equals(in Vector2 vector) => this == vector;
+
+        /// <summary>
+        /// Returns true if the vector is equal to the object passed in.
+        /// </summary>
+        /// <param name="obj"> The object to compare to. </param>
+        /// <returns> True if the vector is equal to the object. </returns>
+        public override bool Equals(object obj) => obj is Vector2 __other && this == __other;
+
+        public override int GetHashCode() => base.GetHashCode();
+        
+        #endregion
+
         #region Operator Overloads
+
+        /// <summary>
+        /// Returns true if the vectors are equal
+        /// </summary>
+        /// <param name="first"> The first vector. </param>
+        /// <param name="second"> The second vector. </param>
+        /// <returns> True if the vectors' X and Y values are equal. </returns>
+        public static bool operator ==(in Vector2 first, in Vector2 second) => first.X == second.X && first.Y == second.Y;
+
+        /// <summary>
+        /// Returns true if the vectors are not equal.
+        /// </summary>
+        /// <param name="first"> The first vector. </param>
+        /// <param name="second"> The second vector. </param>
+        /// <returns> True if the vectors' X and Y values are not equal. </returns>
+        public static bool operator !=(in Vector2 first, in Vector2 second) => !(first == second);
         
         /// <summary>
         /// Adds two vectors.
@@ -273,17 +311,6 @@ namespace N8Engine.Mathematics
         /// </summary>
         public void Negate() => this *= -1f;
 
-        /// <summary>
-        /// Assigns the current Vector2 to two floats.
-        /// </summary>
-        /// <param name="x"> The float to assign the current vector's X to. </param>
-        /// <param name="y"> The float to assign the current vector's Y to. </param>
-        public void Assign(out float x, out float y)
-        {
-            x = X;
-            y = Y;
-        }
-        
         #endregion
         
         #region Static Methods
