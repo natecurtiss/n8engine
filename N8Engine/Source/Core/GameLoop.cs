@@ -2,17 +2,41 @@
 
 namespace N8Engine.Core
 {
+    /// <summary>
+    /// The class that handles the game loop.
+    /// </summary>
     public static class GameLoop
     {
-        public static int FramesPerSecond { get; private set; } = TARGET_FRAME_RATE;
+        /// <summary>
+        /// The frames per second of the application.
+        /// </summary>
+        public static int FramesPerSecond { get; private set; } = TARGET_FRAMERATE;
         
+        /// <summary>
+        /// An event invoked every frame before rendering.
+        /// </summary>
         internal static event Action<float> OnUpdate; 
+        /// <summary>
+        /// An event invoked every frame when objects should render (after OnUpdate).
+        /// </summary>
         internal static event Action OnRender;
 
-        private const int TARGET_FRAME_RATE = 60;
-        private const float UPDATE_RATE = 1f / TARGET_FRAME_RATE;
+        /// <summary>
+        /// The target framerate of the application.
+        /// </summary>
+        private const int TARGET_FRAMERATE = 60;
+        /// <summary>
+        /// The amount of times per second the loop will update; based off of the target framerate.
+        /// </summary>
+        private const float UPDATE_RATE = 1f / TARGET_FRAMERATE;
+        /// <summary>
+        /// True when the game loop is running.
+        /// </summary>
         private static bool _isRunning;
 
+        /// <summary>
+        /// Starts running the game loop.
+        /// </summary>
         internal static void Run()
         {
             int __frames = 0;
@@ -43,6 +67,9 @@ namespace N8Engine.Core
             }
         }
 
+        /// <summary>
+        /// Stops running the game loop.
+        /// </summary>
         private static void Stop() => _isRunning = false;
     }
 }

@@ -2,12 +2,18 @@
 using N8Engine.Inputs;
 using N8Engine.Rendering;
 
-Game.Start();
+Application.Start();
 
 namespace N8Engine.Core
 {
-    internal static class Game
+    /// <summary>
+    /// The Main class that the application stems from.
+    /// </summary>
+    internal static class Application
     {
+        /// <summary>
+        /// Starts the application.
+        /// </summary>
         public static void Start()
         {
             Window.Initialize();
