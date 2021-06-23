@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
@@ -52,6 +54,11 @@ namespace N8Engine.Rendering
             IsCursorVisible = false;
             Title = "New N8Engine Game";
             ConsoleWindow.QuickEditMode = false;
+        }
+
+        internal static void Render(in Sprite sprite, in Vector2 position)
+        {
+
         }
     }
 }

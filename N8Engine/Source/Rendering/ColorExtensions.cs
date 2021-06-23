@@ -3,7 +3,7 @@
 namespace N8Engine.Rendering
 {
     /// <summary>
-    /// Extension methods used for converting to and from ConsoleColor and Color.
+    /// Extension methods used for converting to and from Color.
     /// </summary>
     internal static class ColorExtensions
     {
@@ -27,6 +27,31 @@ namespace N8Engine.Rendering
         {
             string __consoleColorName = Enum.GetName(typeof(ConsoleColor), color);
             return (Color) Enum.Parse(typeof(Color), __consoleColorName ?? "Magenta");
+        }
+
+        public static Color AsColor(this string letter)
+        {
+            letter = letter.ToLower();
+            return letter switch
+            {
+                "black" => Color.Black,
+                "dblue" => Color.DarkBlue,
+                "dgreen" => Color.DarkGreen,
+                "dcyan" => Color.DarkCyan,
+                "dred" => Color.DarkRed,
+                "dmagenta" => Color.DarkMagenta,
+                "dyellow" => Color.DarkYellow,
+                "gray" => Color.Gray,
+                "dgray" => Color.DarkGray,
+                "blue" => Color.Blue,
+                "green" => Color.Green,
+                "cyan" => Color.Cyan,
+                "red" => Color.Red,
+                "magenta" => Color.Magenta,
+                "yellow" => Color.Yellow,
+                "white" => Color.White,
+                _ => Color.None
+            };
         }
     }
 }

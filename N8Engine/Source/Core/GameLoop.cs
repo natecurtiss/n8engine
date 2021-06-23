@@ -62,7 +62,7 @@ namespace N8Engine.Core
                     __previousTime = __currentTime;
                     
                     OnUpdate?.Invoke(__timePassed);
-                    OnRender?.Invoke();
+                    OnRender?.Invoke(); 
                 }
             }
         }

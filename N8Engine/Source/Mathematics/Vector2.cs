@@ -214,11 +214,11 @@ namespace N8Engine.Mathematics
         /// <summary>
         /// Created a Vector with an X and Y
         /// </summary>
-        /// <param name="both"> The X value </param>
+        /// <param name="x"> The X value </param>
         /// <param name="y"> The Y value </param>
-        public Vector2(in float both, in float y)
+        public Vector2(in float x, in float y)
         {
-            X = both;
+            X = x;
             Y = y;
         }
         

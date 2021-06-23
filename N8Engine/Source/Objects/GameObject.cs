@@ -39,7 +39,7 @@ namespace N8Engine.Objects
         internal void Initialize()
         {
             GameLoop.OnUpdate += Update;
-            GameLoop.OnRender += OnRender;
+            GameLoop.OnRender += Render;
             Input.OnKeyPressed += KeyPressed;
             Input.OnDirectionalInput += DirectionalInput;
             OnStart();
@@ -65,7 +65,12 @@ namespace N8Engine.Objects
         /// <summary>
         /// Called every frame after the OnUpdate method, used for rendering GameObjects to the screen.
         /// </summary>
-        private void OnRender() { }
+        private void Render()
+        {
+            Sprite __sprite = Sprite();
+            if (__sprite is null) return;
+            Window.Render(__sprite, Position);
+        }
         
         /// <summary>
         /// Subscription method to Input.OnKeyPressed that exists to call the OnKeyPressed method that takes in an "in Key key".
@@ -95,6 +100,6 @@ namespace N8Engine.Objects
         /// Returns the sprite to render to the screen.
         /// </summary>
         /// <returns> The sprite to render to the screen. </returns>
-        protected abstract Sprite RenderSprite();
+        protected abstract Sprite Sprite();
     }
 }
