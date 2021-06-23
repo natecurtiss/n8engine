@@ -1,9 +1,11 @@
-﻿using System;
-
-namespace N8Engine.Rendering
+﻿namespace N8Engine.Rendering
 {
+    /// <summary>
+    /// An enum that contains 16 colors (plus Color.None) used for rendering sprites in the console.
+    /// </summary>
     public enum Color
     {
+        None,
         Black,
         DarkBlue,
         DarkGreen,
@@ -20,20 +22,5 @@ namespace N8Engine.Rendering
         Magenta,
         Yellow,
         White
-    }
-
-    public static class ColorExtensions
-    {
-        internal static ConsoleColor AsConsoleColor(this Color color)
-        {
-            string __colorName = Enum.GetName(typeof(Color), color);
-            return (ConsoleColor) Enum.Parse(typeof(ConsoleColor), __colorName ?? "Magenta");
-        }
-        
-        internal static Color AsColor(this ConsoleColor color)
-        {
-            string __consoleColorName = Enum.GetName(typeof(ConsoleColor), color);
-            return (Color) Enum.Parse(typeof(Color), __consoleColorName ?? "Magenta");
-        }
     }
 }

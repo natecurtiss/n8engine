@@ -4,13 +4,22 @@ using System.Runtime.InteropServices;
 
 namespace N8Engine.Rendering
 {
+    /// <summary>
+    /// Methods for customizing the Console window.
+    /// </summary>
     internal static class ConsoleWindow
     {
+        /// <summary>
+        /// Native functions of the console.
+        /// </summary>
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         [SuppressMessage("ReSharper", "UnusedMember.Local")]
         [SuppressMessage("ReSharper", "CA1069")]
         private static class NativeFunctions
         {
+            /// <summary>
+            /// I literally have no clue, I just copied this from stackoverflow.
+            /// </summary>
             public enum StdHandle : int
             {
                 STD_INPUT_HANDLE = -10,
@@ -18,6 +27,9 @@ namespace N8Engine.Rendering
                 STD_ERROR_HANDLE = -12,
             }
 
+            /// <summary>
+            /// I literally have no clue, I just copied this from stackoverflow.
+            /// </summary>
             public enum ConsoleMode : uint
             {
                 ENABLE_ECHO_INPUT = 0x0004,
@@ -37,16 +49,28 @@ namespace N8Engine.Rendering
                 ENABLE_LVB_GRID_WORLDWIDE = 0x0010
             }
             
+            /// <summary>
+            /// I literally have no clue, I just copied this from stackoverflow.
+            /// </summary>
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern IntPtr GetStdHandle(int nStdHandle);
             
+            /// <summary>
+            /// I literally have no clue, I just copied this from stackoverflow.
+            /// </summary>
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
 
+            /// <summary>
+            /// I literally have no clue, I just copied this from stackoverflow.
+            /// </summary>
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
         }
 
+        /// <summary>
+        /// Enables quick-edit mode on the console if true.
+        /// </summary>
         public static bool QuickEditMode
         {
             get => _quickEditMode;
@@ -66,6 +90,9 @@ namespace N8Engine.Rendering
                 _quickEditMode = value;
             }
         }
+        /// <summary>
+        /// Backing field for the QuickEditMode property.
+        /// </summary>
         private static bool _quickEditMode = true;
     }
 }

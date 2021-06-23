@@ -15,7 +15,6 @@ namespace N8Engine.Rendering
             get => Console.Title;
             set => Console.Title = value;
         }
-        
         /// <summary>
         /// The width of the window.
         /// </summary>
@@ -24,7 +23,6 @@ namespace N8Engine.Rendering
             get => Console.WindowWidth;
             set => Console.WindowWidth = value;
         }
-        
         /// <summary>
         /// The height of the window.
         /// </summary>
@@ -33,14 +31,23 @@ namespace N8Engine.Rendering
             get => Console.WindowHeight;
             set => Console.WindowHeight = value;
         }
+        /// <summary>
+        /// Hides the cursor if false.
+        /// </summary>
         public static bool IsCursorVisible
         {
             get => Console.CursorVisible;
             set => Console.CursorVisible = value;
         }
+        /// <summary>
+        /// The color of the Console background.
+        /// </summary>
         public static Color BackgroundColor { get; set; }
 
-        public static void Initialize()
+        /// <summary>
+        /// Initializes the window.
+        /// </summary>
+        internal static void Initialize()
         {
             IsCursorVisible = false;
             Title = "New N8Engine Game";
