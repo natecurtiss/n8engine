@@ -17,20 +17,20 @@ namespace N8Engine.Internal
         /// <summary>
         /// Retrieves the current input or output mode of the <see cref="Console"/>.
         /// </summary>
-        /// <param name="hConsoleHandle"> A handle to the <see cref="Console"/> input buffer (input) or <see cref="Console"/> screen buffer (output). </param>
-        /// <param name="lpMode"> A variable that receives the current mode of the specified buffer. </param>
+        /// <param name="consoleHandle"> A handle to the <see cref="Console"/> input buffer (input) or <see cref="Console"/> screen buffer (output). </param>
+        /// <param name="modeOutput"> A variable that receives the current mode of the specified buffer. </param>
         /// <returns> True if the function succeeds, false if not. </returns>
         [DllImport("kernel32.dll")]
-        private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+        private static extern bool GetConsoleMode(IntPtr consoleHandle, out uint modeOutput);
         
         /// <summary>
         /// Sets the input or output mode of the <see cref="Console"/>.
         /// </summary>
-        /// <param name="hConsoleHandle"> A handle to the <see cref="Console"/> input buffer (input) or <see cref="Console"/> screen buffer (output). </param>
-        /// <param name="dwMode"> The input or output mode to set. </param>
+        /// <param name="consoleHandle"> A handle to the <see cref="Console"/> input buffer (input) or <see cref="Console"/> screen buffer (output). </param>
+        /// <param name="mode"> The input or output mode to set. </param>
         /// <returns> True if the function succeeds, false if not. </returns>
         [DllImport("kernel32.dll")]
-        private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+        private static extern bool SetConsoleMode(IntPtr consoleHandle, uint mode);
 
         /// <summary>
         /// True when quick-edit mode is enabled.

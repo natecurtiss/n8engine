@@ -13,6 +13,7 @@ namespace N8Engine.Internal
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern IntPtr GetStdHandle(int nStdHandle);
 
-        public static IntPtr StandardInputHandle = GetStdHandle(-10);
+        public static readonly IntPtr StandardInputHandle = GetStdHandle(-10);
+        public static readonly IntPtr StandardOutputHandle = GetStdHandle(-11);
     }
 }

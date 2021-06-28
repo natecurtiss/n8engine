@@ -69,7 +69,6 @@ namespace N8Engine.Objects
         {
             Sprite __sprite = Sprite();
             if (__sprite is null) return;
-            Window.AddToRenderQueue(__sprite, Position);
         }
         
         /// <summary>
