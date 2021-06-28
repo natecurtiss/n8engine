@@ -2,15 +2,15 @@
 
 namespace N8Engine.Rendering
 {
-    public readonly struct SpriteCell
+    internal readonly struct SpriteCell
     {
         public readonly string Color;
-        public readonly Vector2 LocalPosition;
+        public readonly Vector2 DistanceFromPivot;
 
-        public SpriteCell(in string color, in Vector2 localPosition)
+        public SpriteCell(in string color, in Vector2 distanceFromPivot)
         {
             Color = color;
-            LocalPosition = localPosition;
+            DistanceFromPivot = distanceFromPivot;
         }
     }
 }

@@ -46,6 +46,8 @@ namespace N8Engine.Rendering
         /// </summary>
         public static Color BackgroundColor { get; set; }
 
+        internal static readonly Dictionary<Vector2, int> Cells = new();
+
         /// <summary>
         /// Initializes the window.
         /// </summary>
@@ -56,9 +58,16 @@ namespace N8Engine.Rendering
             ConsoleWindow.QuickEditMode = false;
         }
 
-        internal static void Render(in Sprite sprite, in Vector2 position)
+        internal static void AddToRenderQueue(in Sprite sprite, Vector2 position)
         {
+            position = position.AsConsolePosition();
 
+        }
+
+        internal static Vector2 AsConsolePosition(this in Vector2 position)
+        {
+            Vector2 __zero = new(Width / 2f, Height / 2f);
+            return __zero + position;
         }
     }
 }

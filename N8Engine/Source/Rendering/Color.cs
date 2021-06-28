@@ -1,7 +1,7 @@
 ﻿namespace N8Engine.Rendering
 {
     /// <summary>
-    /// An enum that contains 16 colors (plus Color.None) used for rendering sprites in the console.
+    /// An enum that contains 16 colors (plus Color.None) used for rendering <see cref="N8Engine.Rendering.Sprite"/>s in the console.
     /// </summary>
     public enum Color
     {
