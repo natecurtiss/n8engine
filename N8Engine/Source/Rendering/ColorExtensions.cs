@@ -12,7 +12,7 @@ namespace N8Engine.Rendering
         /// </summary>
         /// <param name="color"> The <see cref="Color"/> to convert. </param>
         /// <returns> A <see cref="ConsoleColor"/> that is decided by the <see cref="Color"/> passed in. </returns>
-        public static ConsoleColor AsConsoleColor(this in Color color)
+        public static ConsoleColor AsConsoleColor(this Color color)
         {
             string __colorName = Enum.GetName(typeof(Color), color);
             return (ConsoleColor) Enum.Parse(typeof(ConsoleColor), __colorName ?? "Magenta");
@@ -23,7 +23,7 @@ namespace N8Engine.Rendering
         /// </summary>
         /// <param name="color"> The <see cref="Color"/> to convert. </param>
         /// <returns> A <see cref="Color"/> that is decided by the <see cref="ConsoleColor"/> passed in. </returns>
-        public static Color AsColor(this in ConsoleColor color)
+        public static Color AsColor(this ConsoleColor color)
         {
             string __consoleColorName = Enum.GetName(typeof(ConsoleColor), color);
             return (Color) Enum.Parse(typeof(Color), __consoleColorName ?? "Magenta");

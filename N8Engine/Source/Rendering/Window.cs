@@ -55,7 +55,7 @@ namespace N8Engine.Rendering
         {
             IsCursorVisible = false;
             Title = "New N8Engine Game";
-            ConsoleWindow.QuickEditMode = false;
+            Console.WriteLine("eeeeeee");
         }
 
         internal static void AddToRenderQueue(in Sprite sprite, Vector2 position)
