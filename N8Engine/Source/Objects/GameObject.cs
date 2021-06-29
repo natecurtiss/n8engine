@@ -67,8 +67,7 @@ namespace N8Engine.Objects
         /// </summary>
         private void OnRender()
         {
-            Sprite __sprite = Sprite();
-            if (__sprite is null) return;
+    
         }
         
         /// <summary>

@@ -32,11 +32,11 @@ namespace N8Engine.Rendering
         {
             Title = "New N8Engine Game";
             ConsoleQuickEditMode.Enabled = false;
-            ConsoleText.SetCurrentFont("Arial", 25);
+            ConsoleText.SetCurrentFont("Arial", 1);
             ConsoleResizing.Maximize();
-            Console.BackgroundColor = ConsoleColor.White;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("■■■■■■■■■■");
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("▒▒▒▒▒▒▒▒▒");
             Console.CursorVisible = false;
         }
     }
