@@ -17,10 +17,6 @@ namespace N8Engine.Rendering
             get => Console.Title;
             set => Console.Title = value;
         }
-        /// <summary>
-        /// The color of the Console background.
-        /// </summary>
-        public static Color BackgroundColor { get; set; }
 
         public static int PixelSize
         {
@@ -36,10 +32,12 @@ namespace N8Engine.Rendering
         {
             Title = "New N8Engine Game";
             ConsoleQuickEditMode.Enabled = false;
-            ConsoleText.SetCurrentFont("Arial", 6);
+            ConsoleText.SetCurrentFont("Arial", 25);
+            ConsoleResizing.Maximize();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("■■■■■■■■■■");
             Console.CursorVisible = false;
-            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
-            Console.SetWindowPosition(0, 0);
         }
     }
 }
