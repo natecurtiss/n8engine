@@ -5,38 +5,34 @@ using N8Engine.Mathematics;
 namespace N8Engine.Rendering
 {
     /// <summary>
-    /// The Console Window used to display the game.
+    /// The console window used to display the game.
     /// </summary>
-    public static class Window
+    internal static class Window
     {
-        /// <summary>
-        /// The title of the window.
-        /// </summary>
-        public static string Title
-        {
-            get => Console.Title;
-            set => Console.Title = value;
-        }
+        public static Vector2 Center => Vector2.Zero;
+        public static Vector2 CenterLeft => Center + Vector2.Left * Console.WindowWidth;
+        public static Vector2 CenterRight => Center + Vector2.Right * Console.WindowWidth;
+        public static Vector2 CenterTop => Center + Vector2.Up * Console.WindowHeight;
+        public static Vector2 CenterBottom => Center + Vector2.Down * Console.WindowHeight;
+        public static Vector2 BottomLeft => Center - HalfSpan;
+        public static Vector2 TopLeft => Center + new Vector2(-HalfSpan.X, HalfSpan.Y);
+        public static Vector2 BottomRight => Center + new Vector2(HalfSpan.X, -HalfSpan.Y);
+        public static Vector2 TopRight => Center + HalfSpan;
 
-        public static int PixelSize
-        {
-            get => _pixelSize;
-            set => _pixelSize = value.Clamped(1, 32);
-        }
-        private static int _pixelSize;
+        private static Vector2 Span => new(Console.WindowWidth, Console.WindowHeight);
+        private static Vector2 HalfSpan => Span / 2f;
         
         /// <summary>
         /// Initializes the window.
         /// </summary>
         internal static void Initialize()
         {
-            Title = "New N8Engine Game";
             ConsoleQuickEditMode.Enabled = false;
             ConsoleText.SetCurrentFont("Arial", 1);
             ConsoleResizing.Maximize();
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("▒▒▒▒▒▒▒▒▒");
+            Console.Write("▒▒▒▒▒▒▒▒▒\n▒▒▒▒▒▒▒▒▒\n▒▒▒▒▒▒▒▒▒\n▒▒▒▒▒▒▒▒▒\n▒▒▒▒▒▒▒▒▒\n▒▒▒▒▒▒▒▒▒");
             Console.CursorVisible = false;
         }
     }

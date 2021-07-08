@@ -1,5 +1,4 @@
 ﻿using System;
-using N8Engine.Core;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Inputs
@@ -52,15 +51,15 @@ namespace N8Engine.Inputs
             {
                 X = key switch
                 {
-                    Key.LeftArrow or Key.A => -1f,
-                    Key.RightArrow or Key.D => 1f,
-                    _ => 0f
+                    Key.LeftArrow or Key.A => -1,
+                    Key.RightArrow or Key.D => 1,
+                    _ => 0
                 },
                 Y = key switch
                 {
-                    Key.DownArrow or Key.S => -1f,
-                    Key.UpArrow or Key.W => 1f,
-                    _ => 0f
+                    Key.DownArrow or Key.S => -1,
+                    Key.UpArrow or Key.W => 1,
+                    _ => 0
                 }
             };
     }

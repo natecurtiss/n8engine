@@ -16,7 +16,7 @@ namespace N8Engine.Mathematics
         /// <summary>
         /// Returns true if the <see cref="Vector2"/> is equal to the <see cref="Vector2"/> passed in.
         /// </summary>
-        /// <param name="vector"/>"> The <see cref="Vector2"/> to compare to. </param>
+        /// <param name="vector"> The <see cref="Vector2"/> to compare to. </param>
         /// <returns> True if the <see cref="Vector2"/>s are equal. </returns>
         public bool Equals(in Vector2 vector) => this == vector;
 
@@ -68,7 +68,7 @@ namespace N8Engine.Mathematics
         /// <summary>
         /// Multiplies a <see cref="Vector2"/> by a float.
         /// </summary>
-        /// <param name="<see cref="Vector2"/>"> A <see cref="Vector2"/>. </param>
+        /// <param name="vector"> A <see cref="Vector2"/>. </param>
         /// <param name="multiplier"> The value to multiply by. </param>
         /// <returns> The result of the multiplication. </returns>
         public static Vector2 operator *(in Vector2 vector, in float multiplier) => new(vector.X * multiplier, vector.Y * multiplier);
@@ -77,7 +77,7 @@ namespace N8Engine.Mathematics
         /// Multiplies a float by a <see cref="Vector2"/>.
         /// </summary>
         /// <param name="multiplier"> The value to multiply by. </param>
-        /// <param name="<see cref="Vector2"/>"> A <see cref="Vector2"/>. </param>
+        /// <param name="vector"> A <see cref="Vector2"/>. </param>
         /// <returns> The result of the multiplication. </returns>
         public static Vector2 operator *(in float multiplier, in Vector2 vector) => new(vector.X * multiplier, vector.Y * multiplier);
         
@@ -202,9 +202,9 @@ namespace N8Engine.Mathematics
         #region Constructors
         
         /// <summary>
-        /// Creates a <see cref="Vector2"/> with an equal X and Y
+        /// Creates a <see cref="Vector2"/> with an equal X and Y.
         /// </summary>
-        /// <param name="both"> The value of both X and Y </param>
+        /// <param name="both"> The value of both X and Y. </param>
         public Vector2(in float both)
         {
             X = both;
@@ -212,10 +212,10 @@ namespace N8Engine.Mathematics
         }
 
         /// <summary>
-        /// Created a <see cref="Vector2"/> with an X and Y
+        /// Created a <see cref="Vector2"/> with an X and Y.
         /// </summary>
-        /// <param name="x"> The X value </param>
-        /// <param name="y"> The Y value </param>
+        /// <param name="x"> The X value. </param>
+        /// <param name="y"> The Y value. </param>
         public Vector2(in float x, in float y)
         {
             X = x;

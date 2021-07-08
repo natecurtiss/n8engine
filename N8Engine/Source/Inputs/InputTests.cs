@@ -39,7 +39,7 @@ namespace N8Engine.Inputs
         public void TestDirectionalInput()
         {
             Vector2 __directionalInput = Input.DirectionalInputFrom(Key.A);
-            Assert.IsTrue(__directionalInput == Vector2.Left);
+            Assert.IsTrue(__directionalInput == new Vector2(-1, 0));
         }
     }
 }

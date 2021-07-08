@@ -1,15 +1,19 @@
-﻿using N8Engine.Core;
-using N8Engine.Inputs;
+﻿using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
-namespace N8Engine.Objects
+namespace N8Engine
 {
     /// <summary>
     /// An object that exists and is displayed in a scene.
     /// </summary>
     public abstract class GameObject
     {
+        /// <summary>
+        /// True when the <see cref="GameObject"/> is destroyed.
+        /// </summary>
+        private bool _isDestroyed;
+        
         /// <summary>
         /// The name of the <see cref="GameObject"/>; serves no purpose other than debugging.
         /// </summary>
@@ -19,10 +23,7 @@ namespace N8Engine.Objects
         /// </summary>
         public Vector2 Position { get; set; }
         
-        /// <summary>
-        /// True when the <see cref="GameObject"/> is destroyed.
-        /// </summary>
-        private bool _isDestroyed;
+        public Sprite Sprite { get; set; }
 
         /// <summary>
         /// Destroys the <see cref="GameObject"/>.
@@ -93,11 +94,5 @@ namespace N8Engine.Objects
         /// </summary>
         /// <param name="directionalInput"> The <see cref="Vector2"/> direction (WASD or arrow keys) being inputted. </param>
         protected virtual void OnDirectionalInput(in Vector2 directionalInput) { }
-
-        /// <summary>
-        /// Returns the <see cref="N8Engine.Rendering.Sprite"/> to render to the <see cref="Window"/>.
-        /// </summary>
-        /// <returns> The <see cref="N8Engine.Rendering.Sprite"/> to render to the <see cref="Window"/>. </returns>
-        protected abstract Sprite Sprite();
     }
 }

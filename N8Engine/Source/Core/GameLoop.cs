@@ -1,26 +1,21 @@
 ﻿using System;
 
-namespace N8Engine.Core
+namespace N8Engine
 {
     /// <summary>
     /// The class that handles the game loop.
     /// </summary>
-    public static class GameLoop
+    internal static class GameLoop
     {
-        /// <summary>
-        /// The frames per second of the application.
-        /// </summary>
-        public static int FramesPerSecond { get; private set; } = TARGET_FRAMERATE;
-        
         /// <summary>
         /// Invoked every frame before rendering.
         /// </summary>
-        internal static event Action<float> OnUpdate; 
+        public static event Action<float> OnUpdate; 
         /// <summary>
         /// Invoked every frame when objects should render (after OnUpdate).
         /// </summary>
-        internal static event Action OnRender;
-
+        public static event Action OnRender;
+        
         /// <summary>
         /// The target framerate of the application.
         /// </summary>
@@ -29,6 +24,11 @@ namespace N8Engine.Core
         /// The amount of times per second the loop will update; based off of the target framerate.
         /// </summary>
         private const float UPDATE_RATE = 1f / TARGET_FRAMERATE;
+
+        /// <summary>
+        /// The frames per second of the application.
+        /// </summary>
+        private static int _framesPerSecond = TARGET_FRAMERATE;
         /// <summary>
         /// True when the game loop is running.
         /// </summary>
@@ -55,7 +55,7 @@ namespace N8Engine.Core
                     __fpsCounterTime += __timePassed;
                     if (__fpsCounterTime >= 1)
                     {
-                        FramesPerSecond = __frames;
+                        _framesPerSecond = __frames;
                         __frames = 0;
                         __fpsCounterTime = 0f;
                     }

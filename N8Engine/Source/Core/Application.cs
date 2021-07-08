@@ -1,10 +1,10 @@
-﻿using N8Engine.Core;
+﻿using N8Engine;
 using N8Engine.Inputs;
 using N8Engine.Rendering;
 
 Application.Start();
 
-namespace N8Engine.Core
+namespace N8Engine
 {
     /// <summary>
     /// The main entry point for the application.
