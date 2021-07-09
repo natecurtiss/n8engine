@@ -5,12 +5,14 @@ namespace N8Engine.Rendering
 {
     internal readonly struct Pixel
     {
-        public readonly Color Color;
+        public readonly ConsoleColor ForegroundColor;
+        public readonly ConsoleColor BackgroundColor;
         public readonly Vector2 Position;
 
-        public Pixel(in Color color, in Vector2 position)
+        public Pixel(in ConsoleColor foregroundColor, in ConsoleColor backgroundColor, in Vector2 position)
         {
-            Color = color;
+            ForegroundColor = foregroundColor;
+            BackgroundColor = backgroundColor;
             Position = position;
         }
     }
