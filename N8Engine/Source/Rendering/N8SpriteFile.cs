@@ -12,7 +12,21 @@ namespace N8Engine.Rendering
 
         private readonly string _path;
 
-        public List<Pixel> Pixels
+        public List<Pixel> PixelsRelativeToCenterPixel
+        {
+            get
+            {
+                List<Pixel> __pixels = PixelsNotRelativeToCenterPixel;
+                for (int __i = 0; __i < __pixels.Count; __i++)
+                {
+                    Pixel __pixel = __pixels[__i];
+                    __pixel.Position = GetLocalPositionRelativeToCenterPixel(__pixels, __pixel);
+                }
+                return __pixels;
+            }
+        }
+        
+        public List<Pixel> PixelsNotRelativeToCenterPixel
         {
             get
             {
@@ -23,7 +37,7 @@ namespace N8Engine.Rendering
                 {
                     string __currentLine = __fileText[__line];
                     List<string> __pixelSetsInLine = SeparateCurrentLine(__currentLine);
-
+                    
                     for (int __pixel = 0; __pixel < __pixelSetsInLine.Count; __pixel++)
                     {
                         string __currentPixelSet = __pixelSetsInLine[__pixel];
@@ -31,14 +45,13 @@ namespace N8Engine.Rendering
                         __pixels.Add(__currentPixel);
                     }
                 }
+
                 return __pixels;
             }
         }
-
-        public Pixel CenterPixel => Pixels[((float) Pixels.Count / 2).Rounded()];
-
+        
         public N8SpriteFile(in string path) : this() => _path = path;
-
+        
         public List<string> SeparateCurrentLine(in string currentLine)
         {
             List<string> __currentLinePixels = currentLine.Split('{').ToList();
@@ -55,5 +68,18 @@ namespace N8Engine.Rendering
             ConsoleColor __backgroundColor = AsConsoleColor(pixelSet.Split(',')[1]);
             return new Pixel(__foregroundColor, __backgroundColor, position);
         }
+
+        public Vector2 GetCenterPixelPosition(in List<Pixel> pixels)
+        {
+            float __height = pixels.Last().Position.Y;
+            float __width = pixels.Last().Position.X;
+            int __centerY = (__height / 2f).Rounded();
+            int __centerX = (__width / 2f).Rounded();
+            Vector2 __center = new(__centerX, __centerY);
+            return __center;
+        }
+
+        public Vector2 GetLocalPositionRelativeToCenterPixel(in List<Pixel> allPixels, in Pixel thisPixel) => 
+            Vector2.Zero + (thisPixel.Position - GetCenterPixelPosition(allPixels));
     }
 }

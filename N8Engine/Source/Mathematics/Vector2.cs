@@ -33,6 +33,9 @@ namespace N8Engine.Mathematics
 
         #region Operator Overloads
 
+        // TODO give this a summary
+        public static implicit operator string(in Vector2 vector) => $"({vector.X},{vector.Y})";
+        
         /// <summary>
         /// Returns true if the <see cref="Vector2"/>s are equal
         /// </summary>

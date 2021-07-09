@@ -11,7 +11,7 @@ namespace N8Engine.Rendering
         public void TestLoadN8SpriteFile()
         {
             N8SpriteFile __file = new(@"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Rendering\dummy.n8sprite");
-            Assert.AreEqual(ConsoleColor.Black, __file.Pixels[0].ForegroundColor);
+            Assert.AreEqual(ConsoleColor.Black, __file.PixelsNotRelativeToCenterPixel[0].ForegroundColor);
         }
         
         [Test]
@@ -35,7 +35,25 @@ namespace N8Engine.Rendering
         public void TestCenterOfN8SpriteFilePixels()
         {
             N8SpriteFile __file = new(@"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Rendering\dummy.n8sprite");
-            Assert.AreEqual(ConsoleColor.White, __file.CenterPixel.ForegroundColor);
+            Assert.AreEqual
+            (
+                __file.PixelsNotRelativeToCenterPixel[12].Position, 
+                __file.GetCenterPixelPosition(__file.PixelsNotRelativeToCenterPixel)
+            );
+        }
+
+        [Test]
+        public void TestGetLocalPositionRelativeToCenterPixel()
+        {
+            N8SpriteFile __file = new();
+            List<Pixel> __allPixels = new()
+            {
+                new Pixel(ConsoleColor.Black, ConsoleColor.Black, Vector2.Zero),
+                new Pixel(ConsoleColor.Black, ConsoleColor.Black, new Vector2(0, 1)),
+                new Pixel(ConsoleColor.Black, ConsoleColor.Black, new Vector2(0, 2)),
+            };
+            Vector2 __localPosition = __file.GetLocalPositionRelativeToCenterPixel(__allPixels, __allPixels[0]);
+            Assert.AreEqual(Vector2.Down, __localPosition);
         }
     }
 }

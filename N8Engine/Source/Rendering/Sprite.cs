@@ -8,7 +8,6 @@ namespace N8Engine.Rendering
         private readonly N8SpriteFile _file;
         
         public int SortingOrder { get; set; }
-        internal List<Pixel> Pixels;
 
         public Sprite(in string path, in int sortingOrder)
         {
