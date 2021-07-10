@@ -23,7 +23,7 @@ namespace N8Engine.Rendering
             foreach (Pixel __pixel in __sprite.Pixels)
             {
                 Vector2 __pixelPosition = __pixel.Position + __position;
-                __pixelPosition = Window.GetPositionOnWindow(__pixelPosition);
+                __pixelPosition = Window.GetWindowPositionAsWorldPosition(__pixelPosition);
                 if (!_world.ContainsKey(__pixelPosition)) 
                     _world.Add(__pixelPosition, __pixel);
                 else if (!_world[__pixelPosition].HasValue)
@@ -36,24 +36,20 @@ namespace N8Engine.Rendering
         private static void OnPostRender()
         {
             Console.Clear();
-            for (int __y = 0; __y < Window.Height; __y++)
+            foreach (Vector2 __position in _world.Keys)
             {
-                for (int __x = 0; __x < Window.Width; __x++)
-                {
-                    if (_world.Count == 0) return;
-                    Vector2 __position = new(__x, __y);
-                    if (!_world.ContainsKey(__position) || !_world[__position].HasValue)
-                    {
-                        Console.Write(" ");
-                        continue;
-                    }
-                    Pixel __pixelToRender = _world[__position].Value;
-                    Console.ForegroundColor = __pixelToRender.ForegroundColor;
-                    Console.BackgroundColor = __pixelToRender.BackgroundColor;
-                    Console.Write("▒");
-                    _world.Remove(__position);
-                }
+                if (!_world[__position].HasValue) continue;
+                Pixel __pixelToRender = _world[__position].Value;
+                
+                if (__position.X < 0 || __position.Y < 0) continue;
+
+                Console.SetCursorPosition(__position.X.Rounded(), __position.Y.Rounded());
+                Console.ForegroundColor = __pixelToRender.ForegroundColor;
+                Console.BackgroundColor = __pixelToRender.BackgroundColor;
+                Console.Write("▒");
             }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Black;
         }
     }
 }

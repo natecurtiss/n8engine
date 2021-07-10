@@ -36,6 +36,6 @@ namespace N8Engine.Rendering
             Console.CursorVisible = false;
         }
 
-        public static Vector2 GetPositionOnWindow(in Vector2 position) => position + HalfSpan;
+        public static Vector2 GetWindowPositionAsWorldPosition(in Vector2 position) => position + HalfSpan;
     }
 }
