@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using N8Engine;
+﻿using N8Engine;
 using N8Engine.Inputs;
 using N8Engine.Rendering;
 
@@ -21,7 +20,6 @@ namespace N8Engine
             Input.Initialize();
             Renderer.Initialize();
             DummyGame.Start();
-            Task.Run(NonBlockingConsoleWriter.Initialize);
             GameLoop.Run();
         }
     }

@@ -44,13 +44,13 @@ namespace N8Engine.Rendering
                     Vector2 __position = new(__x, __y);
                     if (!_world.ContainsKey(__position) || !_world[__position].HasValue)
                     {
-                        NonBlockingConsoleWriter.Write(" ");
+                        Console.Write(" ");
                         continue;
                     }
                     Pixel __pixelToRender = _world[__position].Value;
                     Console.ForegroundColor = __pixelToRender.ForegroundColor;
                     Console.BackgroundColor = __pixelToRender.BackgroundColor;
-                    NonBlockingConsoleWriter.Write("▒");
+                    Console.Write("▒");
                     _world.Remove(__position);
                 }
             }
