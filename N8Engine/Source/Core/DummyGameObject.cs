@@ -14,6 +14,7 @@ namespace N8Engine
         protected override void OnUpdate(in float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
+            Position += Vector2.Left * deltaTime;
         }
     }
 }
