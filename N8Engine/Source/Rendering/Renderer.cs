@@ -7,6 +7,8 @@ namespace N8Engine.Rendering
 { 
     internal static class Renderer
     {
+        public const int NUMBER_OF_PIXELS = 2;
+        
         private static readonly Dictionary<Vector2, Pixel?> _world = new();
         private static Dictionary<Vector2, Pixel?> _worldLastFrame = new();
 
@@ -24,7 +26,6 @@ namespace N8Engine.Rendering
 
         public static void Render(in GameObject gameObject)
         {
-            ClearWindow();
             Sprite __sprite = gameObject.Sprite;
             Vector2 __position = gameObject.Position;
             foreach (Pixel __pixel in __sprite.Pixels)
@@ -42,7 +43,6 @@ namespace N8Engine.Rendering
         
         private static void OnPostRender()
         {
-            Console.ResetColor();
             foreach (Vector2 __position in _world.Keys)
             {
                 if (!_world[__position].HasValue) continue;
@@ -53,19 +53,10 @@ namespace N8Engine.Rendering
                 Console.SetCursorPosition(__position.X.Rounded(), __position.Y.Rounded());
                 Console.ForegroundColor = __pixelToRender.ForegroundColor;
                 Console.BackgroundColor = __pixelToRender.BackgroundColor;
-                Console.Write('▒');
+                for (int __i = 0; __i < NUMBER_OF_PIXELS; __i++) Console.Write('▒');
             }
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Black;
-        }
-
-        private static void ClearWindow()
-        {
-            foreach (Vector2 __position in _worldLastFrame.Keys.Where(position => _worldLastFrame[position].HasValue).Where(position => !(position.X < 0) && !(position.Y < 0)))
-            {
-                Console.SetCursorPosition(__position.X.Rounded(), __position.Y.Rounded());
-                Console.Write(' ');
-            }
         }
     }
 }
