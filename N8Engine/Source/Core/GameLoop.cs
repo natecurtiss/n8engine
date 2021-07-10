@@ -11,10 +11,14 @@ namespace N8Engine
         /// Invoked every frame before rendering.
         /// </summary>
         public static event Action<float> OnUpdate; 
+        // TODO add a summary to this
+        public static event Action OnPreRender;
         /// <summary>
         /// Invoked every frame when objects should render (after OnUpdate).
         /// </summary>
         public static event Action OnRender;
+        // TODO add a summary to this
+        public static event Action OnPostRender;
         
         /// <summary>
         /// The target framerate of the application.
@@ -28,7 +32,7 @@ namespace N8Engine
         /// <summary>
         /// The frames per second of the application.
         /// </summary>
-        private static int _framesPerSecond = TARGET_FRAMERATE;
+        public static int FramesPerSecond = TARGET_FRAMERATE;
         /// <summary>
         /// True when the game loop is running.
         /// </summary>
@@ -55,14 +59,16 @@ namespace N8Engine
                     __fpsCounterTime += __timePassed;
                     if (__fpsCounterTime >= 1)
                     {
-                        _framesPerSecond = __frames;
+                        FramesPerSecond = __frames;
                         __frames = 0;
                         __fpsCounterTime = 0f;
                     }
                     __previousTime = __currentTime;
-                    
+
                     OnUpdate?.Invoke(__timePassed);
+                    OnPreRender?.Invoke();
                     OnRender?.Invoke(); 
+                    OnPostRender?.Invoke();
                 }
             }
         }

@@ -20,7 +20,10 @@ namespace N8Engine.Inputs
         /// <summary>
         /// Initializes the input system.
         /// </summary>
-        public static void Initialize() => GameLoop.OnUpdate += Update;
+        public static void Initialize()
+        {
+            //GameLoop.OnUpdate += Update;
+        }
 
         /// <summary>
         /// Called every frame.

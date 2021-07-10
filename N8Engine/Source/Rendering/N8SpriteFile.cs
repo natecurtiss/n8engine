@@ -33,7 +33,8 @@ namespace N8Engine.Rendering
                 string[] __fileText = File.ReadAllLines(_path);
 
                 List<Pixel> __pixels = new();
-                for (int __line = 0; __line < __fileText.Length; __line++)
+                int __flippedLine = 0;
+                for (int __line = __fileText.Length - 1; __line >= 0; __line--)
                 {
                     string __currentLine = __fileText[__line];
                     List<string> __pixelSetsInLine = SeparateCurrentLine(__currentLine);
@@ -41,9 +42,11 @@ namespace N8Engine.Rendering
                     for (int __pixel = 0; __pixel < __pixelSetsInLine.Count; __pixel++)
                     {
                         string __currentPixelSet = __pixelSetsInLine[__pixel];
-                        Pixel __currentPixel = GetPixelFromPixelSet(__currentPixelSet, new Vector2(__pixel, __line));
+                        Pixel __currentPixel = GetPixelFromPixelSet(__currentPixelSet, new Vector2(__pixel, __flippedLine));
                         __pixels.Add(__currentPixel);
                     }
+
+                    __flippedLine++;
                 }
 
                 return __pixels;
@@ -64,8 +67,10 @@ namespace N8Engine.Rendering
         public Pixel GetPixelFromPixelSet(in string pixelSet, in Vector2 position)
         {
             ConsoleColor AsConsoleColor(in string color) => (ConsoleColor) Enum.Parse(typeof(ConsoleColor), color);
-            ConsoleColor __foregroundColor = AsConsoleColor(pixelSet.Split(',')[0]);
-            ConsoleColor __backgroundColor = AsConsoleColor(pixelSet.Split(',')[1]);
+            string __foregroundColorName = pixelSet.Split(',')[0];
+            string __backgroundColorName = pixelSet.Split(',')[1];
+            ConsoleColor __foregroundColor = __foregroundColorName == "Clear" ? ConsoleColor.Black : AsConsoleColor(__foregroundColorName);
+            ConsoleColor __backgroundColor = __backgroundColorName == "Clear" ? ConsoleColor.Black : AsConsoleColor(__backgroundColorName);
             return new Pixel(__foregroundColor, __backgroundColor, position);
         }
 

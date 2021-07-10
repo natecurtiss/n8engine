@@ -1,4 +1,5 @@
-﻿using N8Engine.Inputs;
+﻿using System;
+using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -22,9 +23,16 @@ namespace N8Engine
         /// A <see cref="Vector2"/> that holds the position of the <see cref="GameObject"/> in the scene.
         /// </summary>
         public Vector2 Position { get; set; }
-        
+        // TODO add a summary to this
         public Sprite Sprite { get; set; }
 
+        public static T Create<T>() where T : GameObject, new()
+        {
+            T __gameObject = new();
+            __gameObject.Initialize();
+            return __gameObject;
+        }
+        
         /// <summary>
         /// Destroys the <see cref="GameObject"/>.
         /// </summary>
@@ -37,7 +45,7 @@ namespace N8Engine
         /// <summary>
         /// Initializes the <see cref="GameObject"/>; used for subscribing to <see cref="GameLoop"/> and <see cref="Input"/> events.
         /// </summary>
-        internal void Initialize()
+        private void Initialize()
         {
             GameLoop.OnUpdate += Update;
             GameLoop.OnRender += OnRender;
@@ -50,7 +58,7 @@ namespace N8Engine
         /// Event method called on the first frame.
         /// </summary>
         protected virtual void OnStart() { }
-        
+
         /// <summary>
         /// Subscription to <see cref="GameLoop.OnUpdate"/> that exists to call <see cref="OnUpdate"/>.
         /// </summary>
@@ -66,11 +74,8 @@ namespace N8Engine
         /// <summary>
         /// Called every frame after <see cref="OnUpdate"/>, used for rendering <see cref="GameObject"/>s to the <see cref="Window"/>.
         /// </summary>
-        private void OnRender()
-        {
-    
-        }
-        
+        private void OnRender() => Renderer.Render(this);
+
         /// <summary>
         /// Subscription to <see cref="Input.OnKeyPressed"/> that exists to call <see cref="OnKeyPressed"/>.
         /// </summary>

@@ -6,27 +6,55 @@ namespace N8Engine.Rendering
 { 
     internal static class Renderer
     {
-        private static Dictionary<Vector2, Pixel?> _screen = new();
+        private static readonly Dictionary<Vector2, Pixel?> _world = new();
 
         public static void Initialize()
         {
-            
+            GameLoop.OnPreRender += OnPreRender;
+            GameLoop.OnPostRender += OnPostRender;
         }
+
+        private static void OnPreRender() => _world.Clear();
 
         public static void Render(in GameObject gameObject)
         {
             Sprite __sprite = gameObject.Sprite;
             Vector2 __position = gameObject.Position;
+            foreach (Pixel __pixel in __sprite.Pixels)
+            {
+                Vector2 __pixelPosition = __pixel.Position + __position;
+                __pixelPosition = Window.GetPositionOnWindow(__pixelPosition);
+                // Console.WriteLine(__pixelPosition + " " + __pixel.Position);
+                if (!_world.ContainsKey(__pixelPosition)) 
+                    _world.Add(__pixelPosition, __pixel);
+                else if (!_world[__pixelPosition].HasValue)
+                    _world[__pixelPosition] = __pixel;
+                else if (__pixel.SortingOrder > _world[__pixelPosition].Value.SortingOrder)
+                    _world[__pixelPosition] = __pixel;
+            }
         }
-
-        private static void RefreshScreen()
+        
+        private static void OnPostRender()
         {
-            Vector2 __startingPosition = Window.BottomLeft;
-            Vector2 __endingPosition = Window.TopRight;
-
-            for (int __y = __startingPosition.Y.Rounded(); __y < __endingPosition.Y.Rounded(); __y++)
-                for (int __x = __startingPosition.X.Rounded(); __x < __endingPosition.X.Rounded(); __x++)
-                    _screen.Add(new Vector2(__x, __y), null);
+            Console.Clear();
+            for (int __y = 0; __y < Window.Height; __y++)
+            {
+                for (int __x = 0; __x < Window.Width; __x++)
+                {
+                    Vector2 __position = new(__x, __y);
+                    if (!_world.ContainsKey(__position) || !_world[__position].HasValue)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.Black;
+                        Console.Write("▒");
+                        continue;
+                    }
+                    Pixel __pixelToRender = _world[__position].Value;
+                    Console.ForegroundColor = __pixelToRender.ForegroundColor;
+                    Console.BackgroundColor = __pixelToRender.BackgroundColor;
+                    Console.Write("▒");
+                }
+            }
         }
     }
 }

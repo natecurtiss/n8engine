@@ -18,6 +18,8 @@ namespace N8Engine
         {
             Window.Initialize();
             Input.Initialize();
+            Renderer.Initialize();
+            DummyGame.Start();
             GameLoop.Run();
         }
     }
