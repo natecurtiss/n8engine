@@ -24,7 +24,6 @@ namespace N8Engine.Rendering
             {
                 Vector2 __pixelPosition = __pixel.Position + __position;
                 __pixelPosition = Window.GetPositionOnWindow(__pixelPosition);
-                // Console.WriteLine(__pixelPosition + " " + __pixel.Position);
                 if (!_world.ContainsKey(__pixelPosition)) 
                     _world.Add(__pixelPosition, __pixel);
                 else if (!_world[__pixelPosition].HasValue)
@@ -41,18 +40,18 @@ namespace N8Engine.Rendering
             {
                 for (int __x = 0; __x < Window.Width; __x++)
                 {
+                    if (_world.Count == 0) return;
                     Vector2 __position = new(__x, __y);
                     if (!_world.ContainsKey(__position) || !_world[__position].HasValue)
                     {
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.Write("▒");
+                        Console.Write(" ");
                         continue;
                     }
                     Pixel __pixelToRender = _world[__position].Value;
                     Console.ForegroundColor = __pixelToRender.ForegroundColor;
                     Console.BackgroundColor = __pixelToRender.BackgroundColor;
                     Console.Write("▒");
+                    _world.Remove(__position);
                 }
             }
         }

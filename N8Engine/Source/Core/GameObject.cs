@@ -1,5 +1,4 @@
-﻿using System;
-using N8Engine.Inputs;
+﻿using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 

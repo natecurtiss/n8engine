@@ -22,7 +22,7 @@ namespace N8Engine.Inputs
         /// </summary>
         public static void Initialize()
         {
-            //GameLoop.OnUpdate += Update;
+            GameLoop.OnUpdate += Update;
         }
 
         /// <summary>
@@ -36,6 +36,7 @@ namespace N8Engine.Inputs
         /// </summary>
         private static void CheckInput()
         {
+            // TODO replace this with something else because it's blocking everything else :weary:
             foreach (Key __key in Console.ReadKey(true).AsKeys())
             {
                 OnKeyPressed?.Invoke(__key);

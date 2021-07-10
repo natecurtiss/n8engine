@@ -17,12 +17,14 @@ namespace N8Engine.Rendering
             get
             {
                 List<Pixel> __pixels = PixelsNotRelativeToCenterPixel;
+                List<Pixel> __newPixels = new();
                 for (int __i = 0; __i < __pixels.Count; __i++)
                 {
                     Pixel __pixel = __pixels[__i];
                     __pixel.Position = GetLocalPositionRelativeToCenterPixel(__pixels, __pixel);
+                    __newPixels.Add(__pixel);
                 }
-                return __pixels;
+                return __newPixels;
             }
         }
         
@@ -85,6 +87,6 @@ namespace N8Engine.Rendering
         }
 
         public Vector2 GetLocalPositionRelativeToCenterPixel(in List<Pixel> allPixels, in Pixel thisPixel) => 
-            Vector2.Zero + (thisPixel.Position - GetCenterPixelPosition(allPixels));
+            thisPixel.Position - GetCenterPixelPosition(allPixels);
     }
 }
