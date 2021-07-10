@@ -44,8 +44,7 @@ namespace N8Engine.Rendering
                     for (int __pixel = 0; __pixel < __pixelSetsInLine.Count; __pixel++)
                     {
                         string __currentPixelSet = __pixelSetsInLine[__pixel];
-                        Vector2 __position = new(__pixel * Renderer.PIXEL_SIZE, __flippedLine);
-                        Pixel __currentPixel = GetPixelFromPixelSet(__currentPixelSet, __position);
+                        Pixel __currentPixel = GetPixelFromPixelSet(__currentPixelSet, new Vector2(__pixel, __flippedLine));
                         __pixels.Add(__currentPixel);
                     }
 
