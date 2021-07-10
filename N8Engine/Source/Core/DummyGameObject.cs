@@ -15,10 +15,5 @@ namespace N8Engine
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
         }
-
-        protected override void OnDirectionalInput(in Vector2 directionalInput)
-        {
-            Position += directionalInput * 10;
-        }
     }
 }

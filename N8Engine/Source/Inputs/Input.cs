@@ -22,7 +22,7 @@ namespace N8Engine.Inputs
         /// </summary>
         public static void Initialize()
         {
-            GameLoop.OnUpdate += Update;
+            // GameLoop.OnUpdate += Update;
         }
 
         /// <summary>
