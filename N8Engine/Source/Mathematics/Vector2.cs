@@ -111,11 +111,11 @@ namespace N8Engine.Mathematics
         #endregion
         
         #region Base Values
-        
+
         /// <summary> The first value of the <see cref="Vector2"/>. </summary>
-        public float X { get; set; }
+        public float X;
         /// <summary> The second value of the <see cref="Vector2"/>. </summary>
-        public float Y { get; set; }
+        public float Y;
         
         #endregion
         

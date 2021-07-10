@@ -134,5 +134,9 @@ namespace N8Engine.Mathematics
         public static void Round(this ref float value) => value = (float) System.Math.Round(value, 0);
 
         public static int Rounded(this in float value) => (int) System.Math.Round(value, 0);
+
+        public static void Floor(this ref float value) => value = (float) System.Math.Floor(value);
+
+        public static int Floored(this in float value) => (int) System.Math.Floor(value);
     }
 }

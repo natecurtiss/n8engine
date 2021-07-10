@@ -5,6 +5,11 @@ namespace N8Engine.Rendering
 {
     internal struct Pixel
     {
+        public static bool operator ==(in Pixel first, in Pixel second) =>
+            first.ForegroundColor == second.ForegroundColor && first.BackgroundColor == second.BackgroundColor;
+
+        public static bool operator !=(Pixel first, Pixel second) => !(first == second);
+
         public readonly ConsoleColor ForegroundColor;
         public readonly ConsoleColor BackgroundColor;
         
@@ -18,5 +23,9 @@ namespace N8Engine.Rendering
             Position = position;
             SortingOrder = 0;
         }
+        
+        public override bool Equals(object obj) => obj is Pixel __other && this == __other;
+
+        public override int GetHashCode() => base.GetHashCode();
     }
 }
