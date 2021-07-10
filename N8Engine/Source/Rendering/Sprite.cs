@@ -4,12 +4,22 @@
     {
         internal readonly Pixel[] Pixels;
 
-        public Sprite(in string path, in int sortingOrder = 0)
+        internal int SortingOrder
+        {
+            get => _sortingOrder;
+            set
+            {
+                for (int __i = 0; __i < Pixels.Length; __i++)
+                    Pixels[__i].SortingOrder = value;
+                _sortingOrder = value;
+            }
+        }
+        private int _sortingOrder;
+
+        public Sprite(in string path)
         {
             N8SpriteFile __file = path;
             Pixels = __file.PixelsRelativeToCenterPixel.ToArray();
-            for (int __i = 0; __i < Pixels.Length; __i++) 
-                Pixels[__i].SortingOrder = sortingOrder;
         }
     }
 }

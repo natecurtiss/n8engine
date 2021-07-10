@@ -1,4 +1,6 @@
-﻿namespace N8Engine
+﻿using N8Engine.Mathematics;
+
+namespace N8Engine
 {
     internal static class DummyGame
     {

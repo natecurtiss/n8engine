@@ -24,6 +24,11 @@ namespace N8Engine
         public Vector2 Position { get; set; }
         // TODO add a summary to this
         public Sprite Sprite { get; set; }
+        public int SortingOrder
+        {
+            get => Sprite.SortingOrder;
+            set => Sprite.SortingOrder = value;
+        }
 
         public static T Create<T>() where T : GameObject, new()
         {
