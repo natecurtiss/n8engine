@@ -16,6 +16,7 @@ namespace N8Engine
         /// </summary>
         public static void Start()
         {
+            Debug.Initialize();
             Window.Initialize();
             Input.Initialize();
             Renderer.Initialize();

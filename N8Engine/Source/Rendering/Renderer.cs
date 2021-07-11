@@ -22,6 +22,7 @@ namespace N8Engine.Rendering
         {
             _worldLastFrame = new Dictionary<Vector2, Pixel>(_world);
             _world.Clear();
+            Debug.Log(_world.Count);
         }
 
         public static void Render(in GameObject gameObject)
@@ -35,9 +36,9 @@ namespace N8Engine.Rendering
                 __pixelPosition = Window.GetWindowPositionAsWorldPosition(__pixelPosition);
                 __pixelPosition.X.Floor();
                 __pixelPosition.Y.Floor();
+                
                 if (!Window.IsWithinWindow(__pixelPosition)) 
                     continue;
-                
                 if (!_world.ContainsKey(__pixelPosition)) 
                     _world.Add(__pixelPosition, __pixel);
                 else if (__pixel.SortingOrder > _world[__pixelPosition].SortingOrder)

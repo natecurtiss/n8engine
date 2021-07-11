@@ -1,13 +1,14 @@
 ﻿using System;
+using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using NUnit.Framework;
 
-namespace N8Engine.Inputs
+namespace N8Engine.Tests
 {
     /// <summary>
     /// Unit tests for the Input classes.
     /// </summary>
-    public sealed class InputTests
+    internal sealed class InputTests
     {
         /// <summary>
         /// Tests conversions to and from a ConsoleKeyInfo and a key.
