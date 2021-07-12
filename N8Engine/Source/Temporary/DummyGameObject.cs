@@ -18,6 +18,7 @@ namespace N8Engine
         protected override void OnDirectionalInput(in Vector2 directionalInput, in float deltaTime)
         {
             Position += directionalInput * deltaTime * 100;
+            Debug.Log(directionalInput+ " ");
         }
     }
 }

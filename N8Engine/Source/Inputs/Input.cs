@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Inputs
@@ -18,10 +20,12 @@ namespace N8Engine.Inputs
         /// </summary>
         public static event Action<Vector2, float> OnDirectionalInput;
 
+        private static Key _lastKeyPressed;
+        private static Vector2 _lastDirectionInputted;
+
         /// <summary>
         /// Initializes the input system - called internally by <see cref="Application">Application.</see>
         /// </summary>
-        [SuppressMessage("ReSharper", "FunctionNeverReturns")]
         public static void Initialize() => GameLoop.OnUpdate += _ => CheckInput();
 
         /// <summary>
@@ -51,13 +55,25 @@ namespace N8Engine.Inputs
         /// </summary>
         private static void CheckInput()
         {
-            if (!Console.KeyAvailable) return;
+            if (!Console.KeyAvailable)
+            {
+                _lastKeyPressed = Key.None;
+                _lastDirectionInputted = Vector2.Zero;
+                return;
+            }
             
             foreach (Key __key in Console.ReadKey(true).AsKeys())
             {
-                OnKeyPressed?.Invoke(__key, GameLoop.DeltaTime);
+                if (__key != _lastKeyPressed)
+                    OnKeyPressed?.Invoke(__key, GameLoop.DeltaTime);
                 Vector2 __directionalInput = DirectionalInputFrom(__key);
-                OnDirectionalInput?.Invoke(__directionalInput, GameLoop.DeltaTime);
+                if (__directionalInput != _lastDirectionInputted)
+                {
+                    Debug.Log(__directionalInput + " " + _lastDirectionInputted);
+                    OnDirectionalInput?.Invoke(__directionalInput, GameLoop.DeltaTime);
+                }
+                _lastKeyPressed = __key;
+                _lastDirectionInputted = __directionalInput;
             }
         }
     }
