@@ -8,8 +8,8 @@ namespace N8Engine.Rendering
     {
         public const int NUMBER_OF_PIXELS = 2;
         
-        private static readonly Dictionary<Vector2, Pixel> _world = new();
-        private static Dictionary<Vector2, Pixel> _worldLastFrame = new();
+        private static readonly Dictionary<Vector2, Pixel> _pixelsToRender = new();
+        private static readonly Dictionary<Vector2, Pixel> _pixelsToRenderLastFrame = new();
 
         public static void Initialize()
         {
@@ -19,14 +19,14 @@ namespace N8Engine.Rendering
 
         private static void OnPreRender()
         {
-            foreach ((Vector2 __position, Pixel __pixel) in _world)
+            foreach ((Vector2 __position, Pixel __pixel) in _pixelsToRender)
             {
-                if (_worldLastFrame.ContainsKey(__position))
-                    _worldLastFrame[__position] = __pixel;
+                if (_pixelsToRenderLastFrame.ContainsKey(__position))
+                    _pixelsToRenderLastFrame[__position] = __pixel;
                 else
-                    _worldLastFrame.Add(__position, __pixel);
+                    _pixelsToRenderLastFrame.Add(__position, __pixel);
             }
-            _world.Clear();
+            _pixelsToRender.Clear();
         }
 
         public static void Render(in GameObject gameObject)
@@ -38,23 +38,23 @@ namespace N8Engine.Rendering
             {
                 Vector2 __pixelPosition = __pixel.Position + __gameObjectPosition;
                 __pixelPosition = Window.GetWindowPositionAsWorldPosition(__pixelPosition);
-                __pixelPosition = new Vector2(__pixelPosition.X.Floored(), __pixelPosition.Y.Floored());
+                __pixelPosition = new Vector2((int) __pixelPosition.X, (int) __pixelPosition.Y);
                 
                 if (!__pixelPosition.IsWithinWindow()) 
                     continue;
-                if (!_world.ContainsKey(__pixelPosition)) 
-                    _world.Add(__pixelPosition, __pixel);
-                else if (__pixel.SortingOrder > _world[__pixelPosition].SortingOrder)
-                    _world[__pixelPosition] = __pixel;
+                if (!_pixelsToRender.ContainsKey(__pixelPosition)) 
+                    _pixelsToRender.Add(__pixelPosition, __pixel);
+                else if (__pixel.SortingOrder > _pixelsToRender[__pixelPosition].SortingOrder)
+                    _pixelsToRender[__pixelPosition] = __pixel;
             }
         }
         
         private static void OnPostRender()
         {
-            foreach (Vector2 __position in _world.Keys)
+            foreach (Vector2 __position in _pixelsToRender.Keys)
             {
-                Pixel __pixelToRender = _world[__position];
-                if (_worldLastFrame.ContainsKey(__position) && _worldLastFrame[__position] == __pixelToRender) continue;
+                Pixel __pixelToRender = _pixelsToRender[__position];
+                if (_pixelsToRenderLastFrame.ContainsKey(__position) && _pixelsToRenderLastFrame[__position] == __pixelToRender) continue;
 
                 Console.SetCursorPosition((int) __position.X, (int) __position.Y);
                 Console.ForegroundColor = __pixelToRender.ForegroundColor;
@@ -64,10 +64,14 @@ namespace N8Engine.Rendering
             
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Black;
-            foreach (Vector2 __oldPosition in _worldLastFrame.Keys)
+            foreach (Vector2 __oldPosition in _pixelsToRenderLastFrame.Keys)
             {
-                if (_world.ContainsKey(__oldPosition) || _world.ContainsKey(__oldPosition + Vector2.Right * (NUMBER_OF_PIXELS - 1))) continue;
-                _worldLastFrame.Remove(__oldPosition);
+                if 
+                (
+                    _pixelsToRender.ContainsKey(__oldPosition) ||
+                    _pixelsToRender.ContainsKey(__oldPosition + Vector2.Left * (NUMBER_OF_PIXELS - 1))
+                ) continue;
+                _pixelsToRenderLastFrame.Remove(__oldPosition);
                 Console.SetCursorPosition((int) __oldPosition.X, (int) __oldPosition.Y);
                 for (int __i = 0; __i < NUMBER_OF_PIXELS; __i++) Console.Write(' ');
             }

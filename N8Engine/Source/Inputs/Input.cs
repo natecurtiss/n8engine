@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Inputs
@@ -9,48 +10,26 @@ namespace N8Engine.Inputs
     internal static class Input
     {
         /// <summary>
-        /// Invoked when a key is pressed.
+        /// Invoked when a <see cref="Key"/> is pressed.
         /// </summary>
-        public static event Action<Key> OnKeyPressed;
+        public static event Action<Key, float> OnKeyPressed;
         /// <summary>
         /// Invoked when a direction (WASD or arrow keys) is inputted.
         /// </summary>
-        public static event Action<Vector2> OnDirectionalInput;
+        public static event Action<Vector2, float> OnDirectionalInput;
 
         /// <summary>
-        /// Initializes the input system.
+        /// Initializes the input system - called internally by <see cref="Application">Application.</see>
         /// </summary>
-        public static void Initialize()
-        {
-            // GameLoop.OnUpdate += Update;
-        }
-
-        /// <summary>
-        /// Called every frame.
-        /// </summary>
-        /// <param name="f"> A useless parameter that exists for the sake of subscribing the GameLoop.OnUpdate event. </param>
-        private static void Update(float f) => CheckInput();
-
-        /// <summary>
-        /// Checks the input for the current frame.
-        /// </summary>
-        private static void CheckInput()
-        {
-            // TODO replace this with something else because it's blocking everything else :weary:
-            foreach (Key __key in Console.ReadKey(true).AsKeys())
-            {
-                OnKeyPressed?.Invoke(__key);
-                Vector2 __directionalInput = DirectionalInputFrom(__key);
-                OnDirectionalInput?.Invoke(__directionalInput);
-            }
-        }
+        [SuppressMessage("ReSharper", "FunctionNeverReturns")]
+        public static void Initialize() => GameLoop.OnUpdate += _ => CheckInput();
 
         /// <summary>
         /// Returns a vector that holds the directional input (WASD or arrow keys) from the key passed in.
         /// </summary>
         /// <param name="key"> The key passed in. </param>
         /// <returns> A vector that holds directional input (WASD or arrow keys) from the key passed in. </returns>
-        internal static Vector2 DirectionalInputFrom(in Key key)
+        public static Vector2 DirectionalInputFrom(in Key key)
         {
             float __x = key switch
             {
@@ -65,6 +44,21 @@ namespace N8Engine.Inputs
                 _ => 0
             };
             return new Vector2(__x, __y);
+        }
+        
+        /// <summary>
+        /// Checks for <see cref="Key"/> and directional input from the user.
+        /// </summary>
+        private static void CheckInput()
+        {
+            if (!Console.KeyAvailable) return;
+            
+            foreach (Key __key in Console.ReadKey(true).AsKeys())
+            {
+                OnKeyPressed?.Invoke(__key, GameLoop.DeltaTime);
+                Vector2 __directionalInput = DirectionalInputFrom(__key);
+                OnDirectionalInput?.Invoke(__directionalInput, GameLoop.DeltaTime);
+            }
         }
     }
 }

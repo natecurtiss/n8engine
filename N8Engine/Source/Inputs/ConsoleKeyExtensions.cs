@@ -4,15 +4,16 @@ using System.Collections.Generic;
 namespace N8Engine.Inputs
 {
     /// <summary>
-    /// Extension methods for converting to and from ConsoleKeyInfo, ConsoleKey, ConsoleModifier, and Key.
+    /// Extension methods for converting to and from <see cref="ConsoleKeyInfo">ConsoleKeyInfo,</see>
+    /// <see cref="ConsoleKey">ConsoleKey,</see> <see cref="ConsoleModifiers">ConsoleModifiers,</see> and
+    /// <see cref="Key">Key.</see>
     /// </summary>
     internal static class ConsoleKeyExtensions
     {
         /// <summary>
-        /// Returns an array of keys from a ConsoleKeyInfo struct passed in.
+        /// Returns an array of <see cref="Key">Keys</see> from a <see cref="ConsoleKeyInfo"/> passed in.
         /// </summary>
-        /// <param name="consoleKeyInfo"> The ConsoleKeyInfo struct passed in. </param>
-        /// <returns> An array of keys from a ConsoleKeyInfo struct passed in. </returns>
+        /// <param name="consoleKeyInfo"> The <see cref="ConsoleKeyInfo"/> passed in. </param>
         public static Key[] AsKeys(this in ConsoleKeyInfo consoleKeyInfo)
         {
             List<Key> __keys = new();
@@ -24,10 +25,9 @@ namespace N8Engine.Inputs
         }
 
         /// <summary>
-        /// Returns a key from a ConsoleKey enum.
+        /// Returns a <see cref="Key"/> from a <see cref="ConsoleKey">ConsoleKey.</see>
         /// </summary>
-        /// <param name="consoleKey"> The ConsoleKey passed in. </param>
-        /// <returns> A key from a ConsoleKey enum. </returns>
+        /// <param name="consoleKey"> The <see cref="ConsoleKey"/> passed in. </param>
         private static Key AsKey(this ConsoleKey consoleKey)
         {
             string __keyName = Enum.GetName(typeof(ConsoleKey), consoleKey);
@@ -52,18 +52,14 @@ namespace N8Engine.Inputs
                     _ => Key.None
                 };
             }
-            else
-            {
-                if (__keyName == "Escape") __keyName = "Esc";
-                return (Key) Enum.Parse(typeof(Key), __keyName);
-            }
+            if (__keyName == "Escape") __keyName = "Esc";
+            return (Key) Enum.Parse(typeof(Key), __keyName);
         }
 
         /// <summary>
-        /// Returns true if the string ends with a number character.
+        /// Returns true if the <see cref="String"/> ends with a numeric character.
         /// </summary>
-        /// <param name="str"> The string passed in. </param>
-        /// <returns> True if the string ends with a number character. </returns>
+        /// <param name="str"> The <see cref="String"/> passed in. </param>
         private static bool EndsWithNumber(this string str) =>  
             str.EndsWith('0') || 
             str.EndsWith('1') || 
@@ -77,16 +73,17 @@ namespace N8Engine.Inputs
             str.EndsWith('9');
 
         /// <summary>
-        /// Returns a list of keys from a ConsoleModifiers object.
+        /// Returns a <see cref="List{T}"/> of <see cref="Key">Keys</see> from a
+        /// <see cref="ConsoleModifiers">ConsoleModifiers object.</see>
         /// </summary>
-        /// <param name="consoleModifier"> The ConsoleModifier passed in. </param>
-        /// <returns> A list of keys from a ConsoleModifiers object. </returns>
-        private static List<Key> AsKeys(this ConsoleModifiers consoleModifier)
+        /// <param name="consoleModifiers"> The <see cref="ConsoleModifiers">ConsoleModifiers object</see>
+        /// passed in. </param>
+        private static List<Key> AsKeys(this ConsoleModifiers consoleModifiers)
         {
             List<Key> __keys = new();
-            if (consoleModifier.HasFlag(ConsoleModifiers.Alt)) __keys.Add(Key.Alt);
-            if (consoleModifier.HasFlag(ConsoleModifiers.Control)) __keys.Add(Key.Ctrl);
-            if (consoleModifier.HasFlag(ConsoleModifiers.Shift)) __keys.Add(Key.Shift);
+            if (consoleModifiers.HasFlag(ConsoleModifiers.Alt)) __keys.Add(Key.Alt);
+            if (consoleModifiers.HasFlag(ConsoleModifiers.Control)) __keys.Add(Key.Ctrl);
+            if (consoleModifiers.HasFlag(ConsoleModifiers.Shift)) __keys.Add(Key.Shift);
             return __keys;
         }
     }

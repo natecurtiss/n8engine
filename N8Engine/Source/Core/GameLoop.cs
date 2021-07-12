@@ -8,42 +8,52 @@ namespace N8Engine
     internal static class GameLoop
     {
         /// <summary>
-        /// Invoked every frame before rendering.
-        /// </summary>
-        public static event Action<float> OnUpdate; 
-        // TODO add a summary to this
-        public static event Action OnPreRender;
-        /// <summary>
-        /// Invoked every frame when objects should render (after OnUpdate).
-        /// </summary>
-        public static event Action OnRender;
-        // TODO add a summary to this
-        public static event Action OnPostRender;
-        
-        /// <summary>
         /// The target framerate of the application.
         /// </summary>
         private const int TARGET_FRAMERATE = 60;
         /// <summary>
-        /// The amount of times per second the loop will update; based off of the target framerate.
+        /// The amount of times per second the <see cref="GameLoop"/> will update - based off of
+        /// <see cref="TARGET_FRAMERATE">TARGET_FRAMERATE.</see>
         /// </summary>
         private const float UPDATE_RATE = 1f / TARGET_FRAMERATE;
+        
+        /// <summary>
+        /// Invoked every frame before rendering.
+        /// </summary>
+        public static event Action<float> OnUpdate;
+        /// <summary>
+        /// Invoked every frame before <see cref="OnRender"/> and after <see cref="OnUpdate">OnUpdate.</see>
+        /// </summary>
+        public static event Action OnPreRender;
+        /// <summary>
+        /// Invoked every frame after <see cref="OnPreRender"/> and before <see cref="OnPostRender">OnPostRender.</see>
+        /// </summary>
+        public static event Action OnRender;
+        /// <summary>
+        /// Invoked every frame after <see cref="OnRender">OnRender.</see>
+        /// </summary>
+        public static event Action OnPostRender;
 
         /// <summary>
         /// The frames per second of the application.
         /// </summary>
         public static int FramesPerSecond = TARGET_FRAMERATE;
+
         /// <summary>
-        /// True when the game loop is running.
+        /// The time since the last frame.
+        /// </summary>
+        public static float DeltaTime;
+        
+        /// <summary>
+        /// True when the <see cref="GameLoop"/> is running.
         /// </summary>
         private static bool _isRunning;
 
         /// <summary>
-        /// Starts running the game loop.
+        /// Starts running the <see cref="GameLoop">GameLoop.</see>
         /// </summary>
         internal static void Run()
         {
-            Console.ReadKey();
             int __frames = 0;
             float __fpsCounterTime = 0f;
             DateTime __previousTime = DateTime.Now;
@@ -65,6 +75,7 @@ namespace N8Engine
                         __fpsCounterTime = 0f;
                     }
                     __previousTime = __currentTime;
+                    DeltaTime = __timePassed;
 
                     OnUpdate?.Invoke(__timePassed);
                     OnPreRender?.Invoke();
@@ -75,7 +86,7 @@ namespace N8Engine
         }
 
         /// <summary>
-        /// Stops running the game loop.
+        /// Stops running the <see cref="GameLoop">GameLoop.</see>
         /// </summary>
         private static void Stop() => _isRunning = false;
     }

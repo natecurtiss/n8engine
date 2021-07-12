@@ -15,21 +15,35 @@ namespace N8Engine
         private bool _isDestroyed;
         
         /// <summary>
-        /// The name of the <see cref="GameObject"/>; serves no purpose other than debugging.
+        /// The name of the <see cref="GameObject"/> - serves no purpose other than debugging.
         /// </summary>
         public string Name { get; set; }
+        
         /// <summary>
         /// A <see cref="Vector2"/> that holds the position of the <see cref="GameObject"/> in the scene.
         /// </summary>
         public Vector2 Position { get; set; }
-        // TODO add a summary to this
+        
+        /// <summary>
+        /// The current <see cref="Sprite"/> of the <see cref="GameObject"/> to render.
+        /// </summary>
         public Sprite Sprite { get; set; }
+        
+        /// <summary>
+        /// The sorting order to render the <see cref="GameObject.Sprite"/> against overlapping
+        /// <see cref="Sprite">Sprites</see> - a higher value means it will be rendered on top.
+        /// </summary>
         public int SortingOrder
         {
             get => Sprite.SortingOrder;
             set => Sprite.SortingOrder = value;
         }
 
+        /// <summary>
+        /// Creates a new <see cref="GameObject"/> of the specified type.
+        /// </summary>
+        /// <typeparam name="T"> The type of <see cref="GameObject"/> to create. </typeparam>
+        /// <returns> The <see cref="GameObject"/> created. </returns>
         public static T Create<T>() where T : GameObject, new()
         {
             T __gameObject = new();
@@ -47,7 +61,7 @@ namespace N8Engine
         }
 
         /// <summary>
-        /// Initializes the <see cref="GameObject"/>; used for subscribing to <see cref="GameLoop"/> and <see cref="Input"/> events.
+        /// Initializes the <see cref="GameObject"/> - called by <see cref="Create{T}">Create{T}.</see>
         /// </summary>
         private void Initialize()
         {
@@ -76,32 +90,40 @@ namespace N8Engine
         protected virtual void OnUpdate(in float deltaTime) { }
 
         /// <summary>
-        /// Called every frame after <see cref="OnUpdate"/>, used for rendering <see cref="GameObject"/>s to the <see cref="Window"/>.
+        /// Sends the <see cref="Sprite"/> to the <see cref="Renderer"/> to be rendered -
+        /// called every frame after <see cref="OnUpdate">OnUpdate.</see>
         /// </summary>
         private void OnRender() => Renderer.Render(this);
 
         /// <summary>
-        /// Subscription to <see cref="Input.OnKeyPressed"/> that exists to call <see cref="OnKeyPressed"/>.
+        /// Subscription to <see cref="Input.OnKeyPressed"/> that exists to call
+        /// <see cref="OnKeyPressed">OnKeyPressed.</see>
         /// </summary>
         /// <param name="key"> The <see cref="Key"/> being pressed. </param>
-        private void KeyPressed(Key key) => OnKeyPressed(key);
+        /// <param name="deltaTime"> The time since the last frame. </param>
+        private void KeyPressed(Key key, float deltaTime) => OnKeyPressed(key, deltaTime);
 
         /// <summary>
         /// Event method called whenever a <see cref="Key"/> is pressed.
         /// </summary>
         /// <param name="key"> The <see cref="Key"/> being pressed. </param>
-        protected virtual void OnKeyPressed(in Key key) { }
+        /// <param name="deltaTime"> The time since the last frame. </param>
+        protected virtual void OnKeyPressed(in Key key, in float deltaTime) { }
 
         /// <summary>
-        /// Subscription to <see cref="Input.OnDirectionalInput"/> that exists to call <see cref="OnDirectionalInput"/>.
+        /// Subscription to <see cref="Input.OnDirectionalInput"/> that exists to call
+        /// <see cref="OnDirectionalInput">OnDirectionalInput.</see>
         /// </summary>
         /// <param name="directionalInput"> The <see cref="Vector2"/> direction (WASD and arrow keys) of input. </param>
-        private void DirectionalInput(Vector2 directionalInput) => OnDirectionalInput(directionalInput);
+        /// <param name="deltaTime"> The time since the last frame. </param>
+        private void DirectionalInput(Vector2 directionalInput, float deltaTime) => OnDirectionalInput(directionalInput, deltaTime);
         
         /// <summary>
         /// Event method called whenever a direction (WASD or arrow keys) is inputted.
         /// </summary>
-        /// <param name="directionalInput"> The <see cref="Vector2"/> direction (WASD or arrow keys) being inputted. </param>
-        protected virtual void OnDirectionalInput(in Vector2 directionalInput) { }
+        /// <param name="directionalInput"> The <see cref="Vector2"/> direction (WASD or arrow keys)
+        /// being inputted. </param>
+        /// <param name="deltaTime"> The time since the last frame. </param>
+        protected virtual void OnDirectionalInput(in Vector2 directionalInput, in float deltaTime) { }
     }
 }
