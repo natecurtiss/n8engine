@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using SystemVector2 = System.Numerics.Vector2;
 
 namespace N8Engine.Mathematics
@@ -7,28 +6,14 @@ namespace N8Engine.Mathematics
     /// <summary>
     /// A struct that contains holds two values (X and Y); useful for representing positions or directions.
     /// </summary>
-    [SuppressMessage("ReSharper", "PossiblyImpureMethodCallOnReadonlyVariable")]
-    [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
-    public struct Vector2
+    public struct Vector2 : IEquatable<Vector2>
     {
         #region Equality Overload Methods
 
-        /// <summary>
-        /// Returns true if the <see cref="Vector2"/> is equal to the <see cref="Vector2"/> passed in.
-        /// </summary>
-        /// <param name="vector"> The <see cref="Vector2"/> to compare to. </param>
-        /// <returns> True if the <see cref="Vector2"/>s are equal. </returns>
-        public bool Equals(in Vector2 vector) => this == vector;
+        public bool Equals(Vector2 other) => X.Equals(other.X) && Y.Equals(other.Y);
 
-        /// <summary>
-        /// Returns true if the <see cref="Vector2"/> is equal to the object passed in.
-        /// </summary>
-        /// <param name="obj"> The object to compare to. </param>
-        /// <returns> True if the <see cref="Vector2"/> is equal to the object. </returns>
-        public override bool Equals(object obj) => obj is Vector2 __other && this == __other;
+        public override bool Equals(object obj) => obj is Vector2 __other && Equals(__other);
 
-        public override int GetHashCode() => base.GetHashCode();
-        
         #endregion
 
         #region Operator Overloads
@@ -289,7 +274,6 @@ namespace N8Engine.Mathematics
         /// <returns> The squared distance between the current vector and the target vector .</returns>
         public void LerpTo(in Vector2 target, in float amount) =>
             this = Lerp(this, target, amount);
-
         
         /// <summary>
         /// Performs a reflection of the current vector off of a surface's normal vector.

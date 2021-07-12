@@ -27,7 +27,7 @@ namespace N8Engine.Rendering
 
         public static Vector2 GetWindowPositionAsWorldPosition(in Vector2 position) => position + _span / 2;
 
-        public static bool IsWithinWindow(in Vector2 position) =>
+        public static bool IsWithinWindow(this in Vector2 position) =>
             position.X >= 0 &&
             position.Y >= 0 &&
             position.X <= Window.Width - 1 &&

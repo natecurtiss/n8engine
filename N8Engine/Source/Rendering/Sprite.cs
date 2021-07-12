@@ -3,7 +3,8 @@
     public sealed class Sprite
     {
         internal readonly Pixel[] Pixels;
-
+        private int _sortingOrder;
+        
         internal int SortingOrder
         {
             get => _sortingOrder;
@@ -14,7 +15,6 @@
                 _sortingOrder = value;
             }
         }
-        private int _sortingOrder;
 
         public Sprite(in string path)
         {
