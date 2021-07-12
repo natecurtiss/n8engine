@@ -6,8 +6,6 @@ namespace N8Engine.Rendering
 { 
     internal static class Renderer
     {
-        public const int NUMBER_OF_PIXELS = 2;
-        
         private static readonly Dictionary<Vector2, Pixel> _pixelsToRender = new();
         private static readonly Dictionary<Vector2, Pixel> _pixelsToRenderLastFrame = new();
 
@@ -59,21 +57,17 @@ namespace N8Engine.Rendering
                 Console.SetCursorPosition((int) __position.X, (int) __position.Y);
                 Console.ForegroundColor = __pixelToRender.ForegroundColor;
                 Console.BackgroundColor = __pixelToRender.BackgroundColor;
-                for (int __i = 0; __i < NUMBER_OF_PIXELS; __i++) Console.Write('▒');
+                Console.Write('▒');
             }
             
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Black;
             foreach (Vector2 __oldPosition in _pixelsToRenderLastFrame.Keys)
             {
-                if 
-                (
-                    _pixelsToRender.ContainsKey(__oldPosition) ||
-                    _pixelsToRender.ContainsKey(__oldPosition + Vector2.Left * (NUMBER_OF_PIXELS - 1))
-                ) continue;
+                if (_pixelsToRender.ContainsKey(__oldPosition)) continue;
                 _pixelsToRenderLastFrame.Remove(__oldPosition);
                 Console.SetCursorPosition((int) __oldPosition.X, (int) __oldPosition.Y);
-                for (int __i = 0; __i < NUMBER_OF_PIXELS; __i++) Console.Write(' ');
+                 Console.Write(' ');
             }
         }
     }

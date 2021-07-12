@@ -10,6 +10,8 @@ namespace N8Engine.Rendering
     {
         public static implicit operator N8SpriteFile(in string path) => new(path);
 
+        private const int NUMBER_OF_PIXELS = 2;
+        
         private readonly string _path;
 
         public List<Pixel> PixelsRelativeToCenterPixel
@@ -44,12 +46,18 @@ namespace N8Engine.Rendering
                     for (int __pixel = 0; __pixel < __pixelSetsInLine.Count; __pixel++)
                     {
                         string __currentPixelSet = __pixelSetsInLine[__pixel];
-                        Pixel __currentPixel = GetPixelFromPixelSet
+                        Pixel __currentFirstPixel = GetPixelFromPixelSet
                         (
                             __currentPixelSet, 
-                            new Vector2(__pixel * Renderer.NUMBER_OF_PIXELS, __flippedLine)
+                            new Vector2(__pixel * NUMBER_OF_PIXELS, __flippedLine)
                         );
-                        __pixels.Add(__currentPixel);
+                        __pixels.Add(__currentFirstPixel);
+                        Pixel __currentSecondPixel = GetPixelFromPixelSet
+                        (
+                            __currentPixelSet, 
+                            new Vector2(__pixel * NUMBER_OF_PIXELS + 1, __flippedLine)
+                        );
+                        __pixels.Add(__currentSecondPixel);
                     }
 
                     __flippedLine++;
