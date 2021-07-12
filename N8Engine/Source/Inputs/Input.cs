@@ -50,21 +50,21 @@ namespace N8Engine.Inputs
         /// </summary>
         /// <param name="key"> The key passed in. </param>
         /// <returns> A vector that holds directional input (WASD or arrow keys) from the key passed in. </returns>
-        internal static Vector2 DirectionalInputFrom(in Key key) =>
-            new()
+        internal static Vector2 DirectionalInputFrom(in Key key)
+        {
+            float __x = key switch
             {
-                X = key switch
-                {
-                    Key.LeftArrow or Key.A => -1,
-                    Key.RightArrow or Key.D => 1,
-                    _ => 0
-                },
-                Y = key switch
-                {
-                    Key.DownArrow or Key.S => -1,
-                    Key.UpArrow or Key.W => 1,
-                    _ => 0
-                }
+                Key.LeftArrow or Key.A => -1,
+                Key.RightArrow or Key.D => 1,
+                _ => 0
             };
+            float __y = key switch
+            {
+                Key.DownArrow or Key.S => -1,
+                Key.UpArrow or Key.W => 1,
+                _ => 0
+            };
+            return new Vector2(__x, __y);
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
@@ -20,7 +19,13 @@ namespace N8Engine.Rendering
 
         private static void OnPreRender()
         {
-            _worldLastFrame = new Dictionary<Vector2, Pixel>(_world);
+            foreach ((Vector2 __position, Pixel __pixel) in _world)
+            {
+                if (_worldLastFrame.ContainsKey(__position))
+                    _worldLastFrame[__position] = __pixel;
+                else
+                    _worldLastFrame.Add(__position, __pixel);
+            }
             _world.Clear();
         }
 
@@ -33,8 +38,7 @@ namespace N8Engine.Rendering
             {
                 Vector2 __pixelPosition = __pixel.Position + __gameObjectPosition;
                 __pixelPosition = Window.GetWindowPositionAsWorldPosition(__pixelPosition);
-                __pixelPosition.X.Floor();
-                __pixelPosition.Y.Floor();
+                __pixelPosition = new Vector2(__pixelPosition.X.Floored(), __pixelPosition.Y.Floored());
                 
                 if (!__pixelPosition.IsWithinWindow()) 
                     continue;
@@ -57,10 +61,13 @@ namespace N8Engine.Rendering
                 Console.BackgroundColor = __pixelToRender.BackgroundColor;
                 for (int __i = 0; __i < NUMBER_OF_PIXELS; __i++) Console.Write('▒');
             }
-
+            
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Black;
             foreach (Vector2 __oldPosition in _worldLastFrame.Keys)
             {
-                if (_world.ContainsKey(__oldPosition)) continue;
+                if (_world.ContainsKey(__oldPosition) || _world.ContainsKey(__oldPosition + Vector2.Right * (NUMBER_OF_PIXELS - 1))) continue;
+                _worldLastFrame.Remove(__oldPosition);
                 Console.SetCursorPosition((int) __oldPosition.X, (int) __oldPosition.Y);
                 for (int __i = 0; __i < NUMBER_OF_PIXELS; __i++) Console.Write(' ');
             }

@@ -43,6 +43,7 @@ namespace N8Engine
         /// </summary>
         internal static void Run()
         {
+            Console.ReadKey();
             int __frames = 0;
             float __fpsCounterTime = 0f;
             DateTime __previousTime = DateTime.Now;

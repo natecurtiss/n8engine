@@ -13,6 +13,8 @@ namespace N8Engine.Mathematics
         public bool Equals(Vector2 other) => X.Equals(other.X) && Y.Equals(other.Y);
 
         public override bool Equals(object obj) => obj is Vector2 __other && Equals(__other);
+        
+        public override int GetHashCode() => HashCode.Combine(X, Y);
 
         #endregion
 
@@ -98,9 +100,9 @@ namespace N8Engine.Mathematics
         #region Base Values
 
         /// <summary> The first value of the <see cref="Vector2"/>. </summary>
-        public float X;
+        public readonly float X;
         /// <summary> The second value of the <see cref="Vector2"/>. </summary>
-        public float Y;
+        public readonly float Y;
         
         #endregion
         

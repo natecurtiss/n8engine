@@ -1,0 +1,16 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=55c60fa8_002D2a26_002D4d0e_002D9428_002Dca3832b5b8e9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ComponentTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Objects.GameObjectTests.TestGameObjectInitialization&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Inputs.KeyTests.TestConsoleKeyConversionToKey&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Inputs.KeyTests.TestConsoleKeyConversionToKeySimple&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Inputs.KeyTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Inputs.InputTests.TestDirectionalInput&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Inputs.InputTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestReadN8SpriteFile&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestSeparateCurrentLine&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestLoadN8SpriteFile&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestCenterOfN8SpriteFilePixels&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestGetLocalPositionRelativeToCenterPixel&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
