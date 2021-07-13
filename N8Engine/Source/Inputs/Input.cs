@@ -1,5 +1,4 @@
-﻿using System;
-using N8Engine.Mathematics;
+﻿using N8Engine.Mathematics;
 using N8Engine.Native;
 
 namespace N8Engine.Inputs
@@ -9,37 +8,28 @@ namespace N8Engine.Inputs
     /// </summary>
     public static class Input
     {
-        /// <summary>
-        /// Invoked when a <see cref="Key"/> is pressed.
-        /// </summary>
-        internal static event Action<Key, float> OnKeyPressed;
-        /// <summary>
-        /// Invoked when a direction (WASD or arrow keys) is inputted.
-        /// </summary>
-        internal static event Action<Vector2, float> OnDirectionalInput;
+        public static bool IsDown(this Key key) => ConsoleInput.GetKeyDown(key);
 
-        public static bool GetKeyDown(in Key key) => ConsoleInput.GetKeyDown(key);
+        public static bool IsUp(this Key key) => !key.IsDown();
 
-        /// <summary>
-        /// Returns a vector that holds the directional input (WASD or arrow keys) from the key passed in.
-        /// </summary>
-        /// <param name="key"> The key passed in. </param>
-        /// <returns> A vector that holds directional input (WASD or arrow keys) from the key passed in. </returns>
-        internal static Vector2 DirectionalInputFrom(in Key key)
+        public static Vector2 MovementAxis
         {
-            float __x = key switch
+            get
             {
-                Key.LeftArrow or Key.A => -1,
-                Key.RightArrow or Key.D => 1,
-                _ => 0
-            };
-            float __y = key switch
-            {
-                Key.DownArrow or Key.S => -1,
-                Key.UpArrow or Key.W => 1,
-                _ => 0
-            };
-            return new Vector2(__x, __y);
+                float __horizontalInput = 0f;
+                if (Key.D.IsDown() || Key.RightArrow.IsDown())
+                    __horizontalInput = 1f;
+                else if (Key.A.IsDown() || Key.LeftArrow.IsDown())
+                    __horizontalInput = -1f;
+                
+                float __verticalInput = 0f;
+                if (Key.W.IsDown() || Key.UpArrow.IsDown())
+                    __verticalInput  = 1f;
+                else if (Key.S.IsDown() || Key.DownArrow.IsDown())
+                    __verticalInput = -1f;
+
+                return new Vector2(__horizontalInput, __verticalInput);
+            }
         }
     }
 }

@@ -67,8 +67,6 @@ namespace N8Engine
         {
             GameLoop.OnUpdate += Update;
             GameLoop.OnRender += OnRender;
-            Input.OnKeyPressed += KeyPressed;
-            Input.OnDirectionalInput += DirectionalInput;
             OnStart();
         }
 
@@ -94,36 +92,5 @@ namespace N8Engine
         /// called every frame after <see cref="OnUpdate">OnUpdate.</see>
         /// </summary>
         private void OnRender() => Renderer.Render(this);
-
-        /// <summary>
-        /// Subscription to <see cref="Input.OnKeyPressed"/> that exists to call
-        /// <see cref="OnKeyPressed">OnKeyPressed.</see>
-        /// </summary>
-        /// <param name="key"> The <see cref="Key"/> being pressed. </param>
-        /// <param name="deltaTime"> The time since the last frame. </param>
-        private void KeyPressed(Key key, float deltaTime) => OnKeyPressed(key, deltaTime);
-
-        /// <summary>
-        /// Event method called whenever a <see cref="Key"/> is pressed.
-        /// </summary>
-        /// <param name="key"> The <see cref="Key"/> being pressed. </param>
-        /// <param name="deltaTime"> The time since the last frame. </param>
-        protected virtual void OnKeyPressed(in Key key, in float deltaTime) { }
-
-        /// <summary>
-        /// Subscription to <see cref="Input.OnDirectionalInput"/> that exists to call
-        /// <see cref="OnDirectionalInput">OnDirectionalInput.</see>
-        /// </summary>
-        /// <param name="directionalInput"> The <see cref="Vector2"/> direction (WASD and arrow keys) of input. </param>
-        /// <param name="deltaTime"> The time since the last frame. </param>
-        private void DirectionalInput(Vector2 directionalInput, float deltaTime) => OnDirectionalInput(directionalInput, deltaTime);
-        
-        /// <summary>
-        /// Event method called whenever a direction (WASD or arrow keys) is inputted.
-        /// </summary>
-        /// <param name="directionalInput"> The <see cref="Vector2"/> direction (WASD or arrow keys)
-        /// being inputted. </param>
-        /// <param name="deltaTime"> The time since the last frame. </param>
-        protected virtual void OnDirectionalInput(in Vector2 directionalInput, in float deltaTime) { }
     }
 }

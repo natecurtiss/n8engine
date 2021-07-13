@@ -32,15 +32,5 @@ namespace N8Engine.Tests
             __keys = __consoleKeyInfo.AsKeys();
             Assert.IsTrue(__keys[0] == Key.RightArrow && __keys[1] == Key.Shift);
         }
-
-        /// <summary>
-        /// Tests conversions from a key to a vector that holds directional input.
-        /// </summary>
-        [Test]
-        public void TestDirectionalInput()
-        {
-            Vector2 __directionalInput = Input.DirectionalInputFrom(Key.A);
-            Assert.IsTrue(__directionalInput == new Vector2(-1, 0));
-        }
     }
 }

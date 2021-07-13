@@ -13,14 +13,9 @@ namespace N8Engine
         protected override void OnUpdate(in float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
-            if (Input.GetKeyDown(Key.A))
-                Position += Vector2.Left * deltaTime * 30;
-        }
-
-        protected override void OnDirectionalInput(in Vector2 directionalInput, in float deltaTime)
-        {
-            Position += directionalInput * deltaTime * 100;
-            Debug.Log(directionalInput+ " ");
+            Vector2 __input = Input.MovementAxis;
+            __input.Normalize();
+            Position += __input * deltaTime * 30;
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using N8Engine.Native;
 using N8Engine.Mathematics;
+using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
+using Console = System.Console;
 
 namespace N8Engine.Rendering
 {
@@ -19,7 +22,7 @@ namespace N8Engine.Rendering
         /// </summary>
         public static void Initialize()
         {
-            ConsoleText.SetCurrentFont("Arial", 9);
+            ConsoleText.SetCurrentFont("Arial", 7);
             ConsoleQuickEditMode.Enabled = false;
             ConsoleResizing.Maximize();
             Console.CursorVisible = false;
@@ -30,7 +33,7 @@ namespace N8Engine.Rendering
         public static bool IsWithinWindow(this in Vector2 position) =>
             position.X >= 0 &&
             position.Y >= 0 &&
-            position.X <= Window.Width - 1 &&
-            position.Y <= Window.Height - 1;
+            position.X <= Width - 1 &&
+            position.Y <= Height - 1;
     }
 }

@@ -257,7 +257,7 @@ namespace N8Engine.Mathematics
         /// </summary>
         /// <param name="target"> The target vector. </param>
         /// <returns> The distance between the current vector and the target vector. </returns>
-        public float DistanceTo(in Vector2 target) =>
+        public readonly float DistanceTo(in Vector2 target) =>
             SystemVector2.Distance(this.AsSystemVector2(), target.AsSystemVector2());
         
         /// <summary>
@@ -293,7 +293,7 @@ namespace N8Engine.Mathematics
         /// <summary>
         /// Normalizes the current vector.
         /// </summary>
-        public void Normalize() => this = this.Normalized;
+        public void Normalize() => this = Normalized;
 
         /// <summary>
         /// Negates the current vector.
