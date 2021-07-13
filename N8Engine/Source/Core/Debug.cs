@@ -1,4 +1,5 @@
 ﻿using N8Engine.Internal;
+using N8Engine.Native;
 
 namespace N8Engine
 {

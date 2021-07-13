@@ -1,4 +1,5 @@
 ﻿using System;
+using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -12,7 +13,8 @@ namespace N8Engine
         protected override void OnUpdate(in float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
-            // Position += Vector2.Left * deltaTime * 30;
+            if (Input.GetKeyDown(Key.A))
+                Position += Vector2.Left * deltaTime * 30;
         }
 
         protected override void OnDirectionalInput(in Vector2 directionalInput, in float deltaTime)

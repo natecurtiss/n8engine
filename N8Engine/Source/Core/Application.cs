@@ -20,7 +20,6 @@ namespace N8Engine
         {
             Debug.Initialize();
             Window.Initialize();
-            Input.Initialize();
             Renderer.Initialize();
             DummyGame.Start();
             GameLoop.Run();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace N8Engine.Internal
+namespace N8Engine.Native
 {
     internal static class ConsoleWindow
     {

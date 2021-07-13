@@ -1,5 +1,5 @@
 ﻿using System;
-using N8Engine.Internal;
+using N8Engine.Native;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
