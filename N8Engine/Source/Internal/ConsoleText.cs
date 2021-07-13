@@ -133,8 +133,10 @@ namespace N8Engine.Internal
         bufferStart.Y,
         (short)(bufferStart.X + size.X - 1),
         (short)(bufferStart.Y + size.Y - 1));
-
-    WinAPI.WriteConsoleOutput(outHandle, buffer, size, coord, &writeRegion);
+	
+    unsafe {
+        WinAPI.WriteConsoleOutput(outHandle, buffer, size, coord, &writeRegion);
+    }
     
     */
 }
