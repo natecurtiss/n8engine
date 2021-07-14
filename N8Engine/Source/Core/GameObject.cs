@@ -1,5 +1,4 @@
-﻿using N8Engine.Inputs;
-using N8Engine.Mathematics;
+﻿using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
 namespace N8Engine
@@ -20,9 +19,9 @@ namespace N8Engine
         public string Name { get; set; }
         
         /// <summary>
-        /// A <see cref="Vector2"/> that holds the position of the <see cref="GameObject"/> in the scene.
+        /// A <see cref="Vector"/> that holds the position of the <see cref="GameObject"/> in the scene.
         /// </summary>
-        public Vector2 Position { get; set; }
+        public Vector Position { get; set; }
         
         /// <summary>
         /// The current <see cref="Sprite"/> of the <see cref="GameObject"/> to render.

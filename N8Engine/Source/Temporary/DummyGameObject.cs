@@ -1,6 +1,4 @@
 ﻿using System;
-using N8Engine.Inputs;
-using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
 namespace N8Engine
@@ -13,6 +11,7 @@ namespace N8Engine
         protected override void OnUpdate(in float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
+            Position += Input.MovementAxis * 50 * deltaTime;
         }
     }
 }

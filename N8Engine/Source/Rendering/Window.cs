@@ -15,7 +15,7 @@ namespace N8Engine.Rendering
         public static readonly float Width = Console.WindowWidth;
         public static readonly float Height = Console.WindowHeight;
 
-        private static readonly Vector2 _span = new(Console.WindowWidth, Console.WindowHeight);
+        private static readonly Vector _span = new(Console.WindowWidth, Console.WindowHeight);
 
         /// <summary>
         /// Initializes the window.
@@ -28,9 +28,9 @@ namespace N8Engine.Rendering
             Console.CursorVisible = false;
         }
 
-        public static Vector2 GetWindowPositionAsWorldPosition(in Vector2 position) => position + _span / 2;
-
-        public static bool IsWithinWindow(this in Vector2 position) =>
+        public static Vector GetWindowPositionAsWorldPosition(in Vector position) => position + _span / 2;
+        
+        public static bool IsWithinWindow(this in Vector position) =>
             position.X >= 0 &&
             position.Y >= 0 &&
             position.X <= Width - 1 &&

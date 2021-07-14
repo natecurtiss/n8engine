@@ -13,10 +13,10 @@ namespace N8Engine.Rendering
         public readonly ConsoleColor ForegroundColor;
         public readonly ConsoleColor BackgroundColor;
         
-        public Vector2 Position { get; set; }
+        public Vector Position { get; set; }
         public int SortingOrder { get; set; }
 
-        public Pixel(in ConsoleColor foregroundColor, in ConsoleColor backgroundColor, in Vector2 position)
+        public Pixel(in ConsoleColor foregroundColor, in ConsoleColor backgroundColor, in Vector position)
         {
             ForegroundColor = foregroundColor;
             BackgroundColor = backgroundColor;

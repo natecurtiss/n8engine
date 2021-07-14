@@ -49,13 +49,13 @@ namespace N8Engine.Rendering
                         Pixel __currentFirstPixel = GetPixelFromPixelSet
                         (
                             __currentPixelSet, 
-                            new Vector2(__pixel * NUMBER_OF_PIXELS, __flippedLine)
+                            new Vector(__pixel * NUMBER_OF_PIXELS, __flippedLine)
                         );
                         __pixels.Add(__currentFirstPixel);
                         Pixel __currentSecondPixel = GetPixelFromPixelSet
                         (
                             __currentPixelSet, 
-                            new Vector2(__pixel * NUMBER_OF_PIXELS + 1, __flippedLine)
+                            new Vector(__pixel * NUMBER_OF_PIXELS + 1, __flippedLine)
                         );
                         __pixels.Add(__currentSecondPixel);
                     }
@@ -78,7 +78,7 @@ namespace N8Engine.Rendering
             return __currentLinePixels;
         }
 
-        public Pixel GetPixelFromPixelSet(in string pixelSet, in Vector2 position)
+        public Pixel GetPixelFromPixelSet(in string pixelSet, in Vector position)
         {
             ConsoleColor AsConsoleColor(in string color) => (ConsoleColor) Enum.Parse(typeof(ConsoleColor), color);
             string __foregroundColorName = pixelSet.Split(',')[0];
@@ -88,17 +88,17 @@ namespace N8Engine.Rendering
             return new Pixel(__foregroundColor, __backgroundColor, position);
         }
 
-        public Vector2 GetCenterPixelPosition(in List<Pixel> pixels)
+        public Vector GetCenterPixelPosition(in List<Pixel> pixels)
         {
             float __height = pixels.Last().Position.Y;
             float __width = pixels.Last().Position.X;
             int __centerY = (__height / 2f).Rounded();
             int __centerX = (__width / 2f).Rounded();
-            Vector2 __center = new(__centerX, __centerY);
+            Vector __center = new(__centerX, __centerY);
             return __center;
         }
 
-        public Vector2 GetLocalPositionRelativeToCenterPixel(in List<Pixel> allPixels, in Pixel thisPixel) => 
+        public Vector GetLocalPositionRelativeToCenterPixel(in List<Pixel> allPixels, in Pixel thisPixel) => 
             thisPixel.Position - GetCenterPixelPosition(allPixels);
     }
 }

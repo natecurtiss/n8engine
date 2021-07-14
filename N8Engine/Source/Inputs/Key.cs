@@ -1,4 +1,4 @@
-﻿namespace N8Engine.Inputs
+﻿namespace N8Engine
 {
     /// <summary>
     /// A representation of a key on a keyboard.

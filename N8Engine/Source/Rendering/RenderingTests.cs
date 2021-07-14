@@ -26,7 +26,7 @@ namespace N8Engine.Rendering
         public void TestGetPixelFromPixelSet()
         {
             N8SpriteFile __file = new();
-            Pixel __pixel = __file.GetPixelFromPixelSet("Black,White", Vector2.Zero);
+            Pixel __pixel = __file.GetPixelFromPixelSet("Black,White", Vector.Zero);
             Assert.AreEqual(ConsoleColor.Black, __pixel.ForegroundColor);
             Assert.AreEqual(ConsoleColor.White, __pixel.BackgroundColor);
         }
@@ -48,12 +48,12 @@ namespace N8Engine.Rendering
             N8SpriteFile __file = new();
             List<Pixel> __allPixels = new()
             {
-                new Pixel(ConsoleColor.Black, ConsoleColor.Black, Vector2.Zero),
-                new Pixel(ConsoleColor.Black, ConsoleColor.Black, new Vector2(0, 1)),
-                new Pixel(ConsoleColor.Black, ConsoleColor.Black, new Vector2(0, 2)),
+                new Pixel(ConsoleColor.Black, ConsoleColor.Black, Vector.Zero),
+                new Pixel(ConsoleColor.Black, ConsoleColor.Black, new Vector(0, 1)),
+                new Pixel(ConsoleColor.Black, ConsoleColor.Black, new Vector(0, 2)),
             };
-            Vector2 __localPosition = __file.GetLocalPositionRelativeToCenterPixel(__allPixels, __allPixels[0]);
-            Assert.AreEqual(Vector2.Down, __localPosition);
+            Vector __localPosition = __file.GetLocalPositionRelativeToCenterPixel(__allPixels, __allPixels[0]);
+            Assert.AreEqual(Vector.Down, __localPosition);
         }
     }
 }
