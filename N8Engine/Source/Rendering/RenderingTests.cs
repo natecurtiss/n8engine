@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using N8Engine.Mathematics;
-using N8Engine.Rendering;
 using NUnit.Framework;
 
-namespace N8Engine.Tests
+namespace N8Engine.Rendering
 {
     internal sealed class RenderingTests
     {
