@@ -22,11 +22,10 @@ namespace N8Engine.Rendering
         /// </summary>
         public static void Initialize()
         {
-            ConsoleText.SetCurrentFont("Arial", 7);
+            ConsoleText.SetCurrentFont("Arial", 5);
             ConsoleQuickEditMode.Enabled = false;
             ConsoleResizing.Maximize();
             Console.CursorVisible = false;
-            Debug.Log(new Vector(Width, Height));
         }
 
         public static Vector GetWindowPositionAsWorldPosition(in Vector position) => position + _span / 2;
