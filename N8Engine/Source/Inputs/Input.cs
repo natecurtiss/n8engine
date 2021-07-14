@@ -29,7 +29,7 @@ namespace N8Engine
 
                 Vector __axisInput = new(__horizontalInput, __verticalInput);
                 __axisInput = __axisInput.Normalized;
-                return new Vector(__axisInput.X, __axisInput.Y);
+                return new Vector(__axisInput.X, __axisInput.Y * 0.5f);
             }
         }
     }

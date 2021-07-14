@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using SystemVector2 = System.Numerics.Vector2;
 
 namespace N8Engine.Mathematics
@@ -14,9 +15,8 @@ namespace N8Engine.Mathematics
         
         public override int GetHashCode() => HashCode.Combine(X, Y);
 
-        // TODO give this a summary
-        public static implicit operator string(in Vector vector) => $"({vector.X},{vector.Y})";
-        
+        public override string ToString() => $"({X.ToString(CultureInfo.CurrentCulture)},{Y.ToString(CultureInfo.CurrentCulture)})";
+
         /// <summary>
         /// Returns true if the <see cref="Vector"/>s are equal
         /// </summary>

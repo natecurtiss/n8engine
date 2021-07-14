@@ -67,7 +67,7 @@ namespace N8Engine.Rendering
                 if (_pixelsToRender.ContainsKey(__oldPosition)) continue;
                 _pixelsToRenderLastFrame.Remove(__oldPosition);
                 Console.SetCursorPosition((int) __oldPosition.X, (int) __oldPosition.Y);
-                 Console.Write(' ');
+                Console.Write(' ');
             }
         }
     }
