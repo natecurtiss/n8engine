@@ -18,7 +18,7 @@ namespace N8Engine
         protected override void OnUpdate(in float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
-            Position += Input.MovementAxis * 30 * deltaTime;
+            Transform.Position += Input.MovementAxis * 30 * deltaTime;
         }
     }
 }

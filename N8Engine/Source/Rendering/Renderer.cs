@@ -30,7 +30,7 @@ namespace N8Engine.Rendering
         public static void Render(in GameObject gameObject)
         {
             Sprite __sprite = gameObject.SpriteRenderer.Sprite;
-            Vector __gameObjectPosition = gameObject.Position;
+            Vector __gameObjectPosition = gameObject.Transform.Position;
             
             foreach (Pixel __pixel in __sprite.Pixels)
             {

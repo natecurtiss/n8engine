@@ -8,14 +8,10 @@ namespace N8Engine
     /// </summary>
     public abstract class GameObject
     {
+        public Transform Transform { get; } = new();
+        public SpriteRenderer SpriteRenderer { get; } = new();
+
         /// <summary>
-        /// A <see cref="Vector"/> that holds the position of the <see cref="GameObject"/> in the scene.
-        /// </summary>
-        public Vector Position { get; set; }
-
-        public SpriteRenderer SpriteRenderer { get; set; } = new();
-
-            /// <summary>
         /// Creates a new <see cref="GameObject"/> of the specified type.
         /// </summary>
         /// <typeparam name="T"> The type of <see cref="GameObject"/> to create. </typeparam>
