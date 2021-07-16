@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using N8Engine.Inputs;
 
 namespace N8Engine.Native
 {

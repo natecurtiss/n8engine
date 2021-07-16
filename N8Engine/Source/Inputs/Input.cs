@@ -1,8 +1,7 @@
 ﻿using N8Engine.Mathematics;
 using N8Engine.Native;
-using N8Engine.Rendering;
 
-namespace N8Engine
+namespace N8Engine.Inputs
 {
     /// <summary>
     /// The input system for the application.

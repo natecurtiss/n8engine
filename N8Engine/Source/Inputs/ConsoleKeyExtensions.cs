@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace N8Engine
+namespace N8Engine.Inputs
 {
     /// <summary>
     /// Extension methods for converting to and from <see cref="ConsoleKeyInfo">ConsoleKeyInfo,</see>

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 
-namespace N8Engine.Internal
+namespace N8Engine.Debugging
 {
     internal sealed class DebugWriteToFile : IDebugOutput
     {

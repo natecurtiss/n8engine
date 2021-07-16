@@ -1,4 +1,4 @@
-﻿namespace N8Engine.Internal
+﻿namespace N8Engine.Debugging
 {
     internal interface IDebugOutput
     {

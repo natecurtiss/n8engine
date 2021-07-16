@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace N8Engine.Internal
+namespace N8Engine.Debugging
 {
     [Obsolete]
     internal sealed class DebugConsole : IDebugOutput

@@ -134,6 +134,11 @@ namespace N8Engine.Mathematics
         /// A <see cref="Vector"/> of (0, -1).
         /// </summary>
         public static Vector Down => new(0f, -1f);
+
+        /// <summary>
+        /// A <see cref="Vector"/> of (-1, 0).
+        /// </summary>
+        public static Vector Left => new(-1f, 0f);
         
         /// <summary>
         /// A <see cref="Vector"/> of (1, 0).

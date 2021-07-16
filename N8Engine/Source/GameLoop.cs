@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Threading;
+using System.Timers;
+using N8Engine.Debugging;
+using Timer = System.Timers.Timer;
 
 namespace N8Engine
 {
@@ -16,11 +20,16 @@ namespace N8Engine
         /// <see cref="TARGET_FRAMERATE">TARGET_FRAMERATE.</see>
         /// </summary>
         private const float UPDATE_RATE = 1f / TARGET_FRAMERATE;
-        
+
         /// <summary>
         /// Invoked every frame before rendering.
         /// </summary>
         public static event Action<float> OnUpdate;
+        public static event Action<float> OnLateUpdate;
+        /// <summary>
+        /// Invoked every frame after <see cref="OnUpdate"/> and before rendering.
+        /// </summary>
+        public static event Action OnPhysicsUpdate;
         /// <summary>
         /// Invoked every frame before <see cref="OnRender"/> and after <see cref="OnUpdate">OnUpdate.</see>
         /// </summary>
@@ -40,16 +49,6 @@ namespace N8Engine
         public static int FramesPerSecond = TARGET_FRAMERATE;
 
         /// <summary>
-        /// The time since the last frame.
-        /// </summary>
-        public static float DeltaTime;
-        
-        /// <summary>
-        /// True when the <see cref="GameLoop"/> is running.
-        /// </summary>
-        private static bool _isRunning;
-
-        /// <summary>
         /// Starts running the <see cref="GameLoop">GameLoop.</see>
         /// </summary>
         internal static void Run()
@@ -57,13 +56,11 @@ namespace N8Engine
             int __frames = 0;
             float __fpsCounterTime = 0f;
             DateTime __previousTime = DateTime.Now;
-            
-            _isRunning = true;
-            while (_isRunning)
+            while (true)
             {
                 DateTime __currentTime = DateTime.Now;
                 float __timePassed = Convert.ToSingle(__currentTime.Subtract(__previousTime).TotalSeconds);
-                
+
                 if (__timePassed >= UPDATE_RATE)
                 {
                     __frames++;
@@ -74,20 +71,17 @@ namespace N8Engine
                         __frames = 0;
                         __fpsCounterTime = 0f;
                     }
+
                     __previousTime = __currentTime;
-                    DeltaTime = __timePassed;
 
                     OnUpdate?.Invoke(__timePassed);
-                    OnPreRender?.Invoke();
-                    OnRender?.Invoke(); 
-                    OnPostRender?.Invoke();
+                    OnLateUpdate?.Invoke(__timePassed);
+                    OnPhysicsUpdate?.Invoke();
+                    OnPreRender.Invoke();
+                    OnRender.Invoke();
+                    OnPostRender.Invoke();
                 }
             }
         }
-
-        /// <summary>
-        /// Stops running the <see cref="GameLoop">GameLoop.</see>
-        /// </summary>
-        private static void Stop() => _isRunning = false;
     }
 }

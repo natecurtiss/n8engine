@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace N8Engine.Mathematics
+﻿namespace N8Engine.Mathematics
 {
     public static class Math
     {
@@ -110,5 +107,7 @@ namespace N8Engine.Mathematics
         public static int Ceiling(this in float value) => (int)System.Math.Ceiling(value);
         
         public static float SquareRoot(this in float value) => (float) System.Math.Sqrt(value);
+
+        public static bool IsWithinRange(this in float value, in float minimum, in float maximum) => value.Clamped(minimum, maximum) == value;
     }
 }

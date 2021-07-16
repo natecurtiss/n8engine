@@ -1,6 +1,6 @@
-﻿using N8Engine.Internal;
+﻿using N8Engine;
 
-namespace N8Engine
+namespace N8Engine.Debugging
 {
     /// <summary>
     /// Methods that make debugging code easier.

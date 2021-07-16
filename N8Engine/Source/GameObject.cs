@@ -1,4 +1,7 @@
-﻿using N8Engine.Mathematics;
+﻿using System;
+using System.Collections.Generic;
+using N8Engine.Mathematics;
+using N8Engine.Physics;
 using N8Engine.Rendering;
 
 namespace N8Engine
@@ -8,21 +11,19 @@ namespace N8Engine
     /// </summary>
     public abstract class GameObject
     {
-        /// <summary>
-        /// True when the <see cref="GameObject"/> is destroyed.
-        /// </summary>
-        private bool _isDestroyed;
-        
-        /// <summary>
-        /// The name of the <see cref="GameObject"/> - serves no purpose other than debugging.
-        /// </summary>
-        public string Name { get; set; }
-        
+        // TODO move this to each scene.
+        internal static readonly List<Collider> AllCollidersInScene = new();
+
         /// <summary>
         /// A <see cref="Vector"/> that holds the position of the <see cref="GameObject"/> in the scene.
         /// </summary>
         public Vector Position { get; set; }
+        private Vector _lastPosition;
+
+        public Collider Collider { get; internal set; }
         
+        public Vector Velocity { get; private set; }
+
         /// <summary>
         /// The current <see cref="Sprite"/> of the <see cref="GameObject"/> to render.
         /// </summary>
@@ -32,11 +33,7 @@ namespace N8Engine
         /// The sorting order to render the <see cref="GameObject.Sprite"/> against overlapping
         /// <see cref="Sprite">Sprites</see> - a higher value means it will be rendered on top.
         /// </summary>
-        public int SortingOrder
-        {
-            get => Sprite.SortingOrder;
-            set => Sprite.SortingOrder = value;
-        }
+        public int SortingOrder { get; set; }
 
         /// <summary>
         /// Creates a new <see cref="GameObject"/> of the specified type.
@@ -49,22 +46,18 @@ namespace N8Engine
             __gameObject.Initialize();
             return __gameObject;
         }
-        
-        /// <summary>
-        /// Destroys the <see cref="GameObject"/>.
-        /// </summary>
-        public void Destroy()
-        {
-            if (_isDestroyed) return;
-            _isDestroyed = true;
-        }
 
         /// <summary>
         /// Initializes the <see cref="GameObject"/> - called by <see cref="Create{T}">Create{T}.</see>
         /// </summary>
         private void Initialize()
         {
-            GameLoop.OnUpdate += Update;
+            GameLoop.OnUpdate += deltaTime =>
+            {
+                _lastPosition = Position;
+                Update(deltaTime);
+            };
+            GameLoop.OnLateUpdate += deltaTime => Velocity = (Position - _lastPosition) * deltaTime;
             GameLoop.OnRender += OnRender;
             OnStart();
         }
