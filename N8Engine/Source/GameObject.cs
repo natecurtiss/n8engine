@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using N8Engine.Mathematics;
-using N8Engine.Physics;
+﻿using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
 namespace N8Engine
@@ -11,31 +8,14 @@ namespace N8Engine
     /// </summary>
     public abstract class GameObject
     {
-        // TODO move this to each scene.
-        internal static readonly List<Collider> AllCollidersInScene = new();
-
         /// <summary>
         /// A <see cref="Vector"/> that holds the position of the <see cref="GameObject"/> in the scene.
         /// </summary>
         public Vector Position { get; set; }
-        private Vector _lastPosition;
 
-        public Collider Collider { get; internal set; }
-        
-        public Vector Velocity { get; private set; }
+        public SpriteRenderer SpriteRenderer { get; set; } = new();
 
-        /// <summary>
-        /// The current <see cref="Sprite"/> of the <see cref="GameObject"/> to render.
-        /// </summary>
-        public Sprite Sprite { get; set; }
-        
-        /// <summary>
-        /// The sorting order to render the <see cref="GameObject.Sprite"/> against overlapping
-        /// <see cref="Sprite">Sprites</see> - a higher value means it will be rendered on top.
-        /// </summary>
-        public int SortingOrder { get; set; }
-
-        /// <summary>
+            /// <summary>
         /// Creates a new <see cref="GameObject"/> of the specified type.
         /// </summary>
         /// <typeparam name="T"> The type of <see cref="GameObject"/> to create. </typeparam>
@@ -52,12 +32,7 @@ namespace N8Engine
         /// </summary>
         private void Initialize()
         {
-            GameLoop.OnUpdate += deltaTime =>
-            {
-                _lastPosition = Position;
-                Update(deltaTime);
-            };
-            GameLoop.OnLateUpdate += deltaTime => Velocity = (Position - _lastPosition) * deltaTime;
+            GameLoop.OnUpdate += Update;
             GameLoop.OnRender += OnRender;
             OnStart();
         }

@@ -1,6 +1,4 @@
-﻿using N8Engine.Mathematics;
-using N8Engine.Physics;
-using N8Engine.Rendering;
+﻿using N8Engine.Rendering;
 
 namespace N8Engine
 {
@@ -8,9 +6,11 @@ namespace N8Engine
     {
         protected override void OnStart()
         {
-            Sprite = new Sprite(@"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\sus.n8sprite");
-            BoxCollider __boxCollider = Collider.Create<BoxCollider>(this);
-            __boxCollider.Size = new Vector(50, 50);
+            SpriteRenderer.Sprite = new Sprite
+            (
+                @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\sus.n8sprite",
+                SpriteRenderer
+            );
         }
     }
 }

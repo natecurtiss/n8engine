@@ -15,13 +15,15 @@ namespace N8Engine.Rendering
         
         public Vector Position { get; set; }
         public int SortingOrder { get; set; }
+        public bool IsBackground { get; }
 
-        public Pixel(in ConsoleColor foregroundColor, in ConsoleColor backgroundColor, in Vector position)
+        public Pixel(in ConsoleColor foregroundColor, in ConsoleColor backgroundColor, in Vector position, in bool isBackground = false)
         {
             ForegroundColor = foregroundColor;
             BackgroundColor = backgroundColor;
             Position = position;
             SortingOrder = 0;
+            IsBackground = isBackground;
         }
         
         public override bool Equals(object obj) => obj is Pixel __other && this == __other;

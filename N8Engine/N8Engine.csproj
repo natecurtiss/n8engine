@@ -10,4 +10,8 @@
       <PackageReference Include="NUnit" Version="3.13.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Source\Physics" />
+    </ItemGroup>
+
 </Project>

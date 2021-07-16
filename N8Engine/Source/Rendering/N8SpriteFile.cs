@@ -46,18 +46,21 @@ namespace N8Engine.Rendering
                     for (int __pixel = 0; __pixel < __pixelSetsInLine.Count; __pixel++)
                     {
                         string __currentPixelSet = __pixelSetsInLine[__pixel];
-                        Pixel __currentFirstPixel = GetPixelFromPixelSet
+                        Pixel? __currentFirstPixel = GetPixelFromPixelSet
                         (
                             __currentPixelSet, 
                             new Vector(__pixel * NUMBER_OF_PIXELS, __flippedLine)
                         );
-                        __pixels.Add(__currentFirstPixel);
-                        Pixel __currentSecondPixel = GetPixelFromPixelSet
+                        if (__currentFirstPixel.HasValue)
+                            __pixels.Add(__currentFirstPixel.Value);
+                        
+                        Pixel? __currentSecondPixel = GetPixelFromPixelSet
                         (
                             __currentPixelSet, 
                             new Vector(__pixel * NUMBER_OF_PIXELS + 1, __flippedLine)
                         );
-                        __pixels.Add(__currentSecondPixel);
+                        if (__currentSecondPixel.HasValue)
+                            __pixels.Add(__currentSecondPixel.Value);
                     }
 
                     __flippedLine++;
@@ -78,13 +81,15 @@ namespace N8Engine.Rendering
             return __currentLinePixels;
         }
 
-        public Pixel GetPixelFromPixelSet(in string pixelSet, in Vector position)
+        public Pixel? GetPixelFromPixelSet(in string pixelSet, in Vector position)
         {
             ConsoleColor AsConsoleColor(in string color) => (ConsoleColor) Enum.Parse(typeof(ConsoleColor), color);
             string __foregroundColorName = pixelSet.Split(',')[0];
             string __backgroundColorName = pixelSet.Split(',')[1];
-            ConsoleColor __foregroundColor = __foregroundColorName == "Clear" ? ConsoleColor.Black : AsConsoleColor(__foregroundColorName);
-            ConsoleColor __backgroundColor = __backgroundColorName == "Clear" ? ConsoleColor.Black : AsConsoleColor(__backgroundColorName);
+            if (__foregroundColorName == "Clear" && __backgroundColorName == "Clear") return null;
+            
+            ConsoleColor __foregroundColor =  AsConsoleColor(__foregroundColorName);
+            ConsoleColor __backgroundColor =  AsConsoleColor(__backgroundColorName);
             return new Pixel(__foregroundColor, __backgroundColor, position);
         }
 
