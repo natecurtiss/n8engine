@@ -56,8 +56,8 @@ namespace N8Engine.Rendering
                 if (__pixelHasNotMoved) continue;
 
                 Console.SetCursorPosition((int) __position.X, (int) __position.Y);
-                Console.ForegroundColor = __pixelToRender.ForegroundColor;
-                Console.BackgroundColor = __pixelToRender.BackgroundColor;
+                if (Console.ForegroundColor != __pixelToRender.ForegroundColor) Console.ForegroundColor = __pixelToRender.ForegroundColor;
+                if (Console.BackgroundColor != __pixelToRender.BackgroundColor) Console.BackgroundColor = __pixelToRender.BackgroundColor;
                 Console.Write('▒');
             }
             
