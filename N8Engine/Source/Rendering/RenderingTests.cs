@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using N8Engine.Mathematics;
+using N8Engine.Physics;
 using NUnit.Framework;
 
 namespace N8Engine.Rendering
@@ -8,53 +8,51 @@ namespace N8Engine.Rendering
     internal sealed class RenderingTests
     {
         [Test]
-        public void TestLoadN8SpriteFile()
-        {
-            N8SpriteFile __file = new(@"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Rendering\dummy.n8sprite");
-            Assert.AreEqual(ConsoleColor.Black, __file.PixelsNotRelativeToCenterPixel[0].ForegroundColor);
-        }
-        
-        [Test]
-        public void TestSeparateCurrentLine()
+        public void TestGetPixelsFromN8SpriteFile()
         {
             N8SpriteFile __file = new();
-            List<string> __separatedLines = __file.SeparateCurrentLine("{Test,Test}{OtherTest,SomeOtherTest}");
-            Assert.AreEqual("Test,Test", __separatedLines[0]);
+            Pixel[] __pixels = __file.GetPixels(new[]
+            {
+                "{Green,Green}{Clear,Clear}{Green,Green}",
+                "{Black,White},{Black,Black}{Clear,Clear}",
+                "{Black,White},{Black,Black}{Clear,Clear}"
+            }).ToArray();
+            Assert.AreEqual(new Pixel[]
+            {
+                new(ConsoleColor.Black, ConsoleColor.White, new Vector(-2,-1)),
+                new(ConsoleColor.Black, ConsoleColor.White, new Vector(-1,-1)),
+                new(ConsoleColor.Black, ConsoleColor.Black, new Vector(0,-1)),
+                new(ConsoleColor.Black, ConsoleColor.Black, new Vector(1,-1)),
+                new(ConsoleColor.Black, ConsoleColor.White, new Vector(-2,0)),
+                new(ConsoleColor.Black, ConsoleColor.White, new Vector(-1,0)),
+                new(ConsoleColor.Black, ConsoleColor.Black, new Vector(0,0)),
+                new(ConsoleColor.Black, ConsoleColor.Black, new Vector(1,0)),
+                new(ConsoleColor.Green, ConsoleColor.Green, new Vector(-2,1)),
+                new(ConsoleColor.Green, ConsoleColor.Green, new Vector(-1,1)),
+                new(ConsoleColor.Green, ConsoleColor.Green, new Vector(2,1)),
+                new(ConsoleColor.Green, ConsoleColor.Green, new Vector(3,1)),
+            }, __pixels);
         }
 
         [Test]
-        public void TestGetPixelFromPixelSet()
+        public void TestRectangleDebugPixels()
         {
-            N8SpriteFile __file = new();
-            Pixel? __pixel = __file.GetPixelFromPixelSet("Black,White", Vector.Zero);
-            Assert.IsTrue(__pixel.HasValue);
-            Assert.AreEqual(ConsoleColor.Black, __pixel.Value.ForegroundColor);
-            Assert.AreEqual(ConsoleColor.White, __pixel.Value.BackgroundColor);
-        }
-
-        [Test]
-        public void TestCenterOfN8SpriteFilePixels()
-        {
-            N8SpriteFile __file = new(@"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Rendering\dummy.n8sprite");
+            Collider __collider = new()
+            {
+                Size = new Vector(3, 3)
+            };
+            string[] __rectangleDebugPixels = __collider.DebugVisualizationPixelData;
+            foreach (string __pixel in __rectangleDebugPixels) Console.WriteLine(__pixel + '\n');
             Assert.AreEqual
             (
-                __file.PixelsNotRelativeToCenterPixel[12].Position, 
-                __file.GetCenterPixelPosition(__file.PixelsNotRelativeToCenterPixel)
+                new[]
+                {
+                    "{Green,Green}{Green,Green}{Green,Green}",
+                    "{Green,Green}{Clear,Clear}{Green,Green}",
+                    "{Green,Green}{Green,Green}{Green,Green}"
+                },
+                __rectangleDebugPixels
             );
-        }
-
-        [Test]
-        public void TestGetLocalPositionRelativeToCenterPixel()
-        {
-            N8SpriteFile __file = new();
-            List<Pixel> __allPixels = new()
-            {
-                new Pixel(ConsoleColor.Black, ConsoleColor.Black, Vector.Zero),
-                new Pixel(ConsoleColor.Black, ConsoleColor.Black, new Vector(0, 1)),
-                new Pixel(ConsoleColor.Black, ConsoleColor.Black, new Vector(0, 2)),
-            };
-            Vector __localPosition = __file.GetLocalPositionRelativeToCenterPixel(__allPixels, __allPixels[0]);
-            Assert.AreEqual(Vector.Down, __localPosition);
         }
     }
 }

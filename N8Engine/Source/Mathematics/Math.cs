@@ -14,7 +14,7 @@
             float __clampedValue;
             if (value > maximum) 
                 __clampedValue = maximum;
-            else if (value < maximum)
+            else if (value < minimum)
                 __clampedValue = minimum;
             else
                 __clampedValue = value;
@@ -33,7 +33,7 @@
             int __clampedValue;
             if (value > maximum) 
                 __clampedValue = maximum;
-            else if (value < maximum)
+            else if (value < minimum)
                 __clampedValue = minimum;
             else
                 __clampedValue = value;

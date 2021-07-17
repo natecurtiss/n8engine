@@ -27,14 +27,11 @@ namespace N8Engine.Rendering
             _pixelsToRender.Clear();
         }
 
-        public static void Render(in GameObject gameObject)
+        public static void Render(in Sprite sprite, in Vector position)
         {
-            Sprite __sprite = gameObject.SpriteRenderer.Sprite;
-            Vector __gameObjectPosition = gameObject.Transform.Position;
-            
-            foreach (Pixel __pixel in __sprite.Pixels)
+            foreach (Pixel __pixel in sprite.Pixels)
             {
-                Vector __pixelPosition = __pixel.Position + __gameObjectPosition;
+                Vector __pixelPosition = __pixel.Position + position;
                 __pixelPosition = Window.GetWindowPositionAsWorldPosition(__pixelPosition);
                 __pixelPosition = new Vector((int) __pixelPosition.X, (int) __pixelPosition.Y);
 

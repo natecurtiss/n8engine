@@ -1,6 +1,7 @@
 ﻿using System;
 using N8Engine.Rendering;
 using N8Engine.Inputs;
+using N8Engine.Mathematics;
 
 namespace N8Engine
 {
@@ -13,6 +14,9 @@ namespace N8Engine
                 @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\sus.n8sprite",
                 SpriteRenderer
             );
+            Collider.Size = new Vector(17, 18);
+            Collider.Offset = Vector.Right * 2;
+            Collider.DebugModeEnabled = true;
         }
 
         protected override void OnUpdate(in float deltaTime)

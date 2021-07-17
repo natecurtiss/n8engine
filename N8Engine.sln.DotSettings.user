@@ -12,5 +12,10 @@
     &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestLoadN8SpriteFile&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestCenterOfN8SpriteFilePixels&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestGetLocalPositionRelativeToCenterPixel&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestRectangleDebugPixels&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Mathematics.MathematicsTests.TestRectangleIsPositionInside&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Mathematics.MathematicsTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests.TestGetPixelsFromN8SpriteFile&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

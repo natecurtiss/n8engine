@@ -1,4 +1,5 @@
 ﻿using N8Engine.Mathematics;
+using N8Engine.Physics;
 using N8Engine.Rendering;
 
 namespace N8Engine
@@ -10,6 +11,7 @@ namespace N8Engine
     {
         public Transform Transform { get; } = new();
         public SpriteRenderer SpriteRenderer { get; } = new();
+        public Collider Collider { get; } = new();
 
         /// <summary>
         /// Creates a new <see cref="GameObject"/> of the specified type.
@@ -54,6 +56,10 @@ namespace N8Engine
         /// Sends the <see cref="Sprite"/> to the <see cref="Renderer"/> to be rendered -
         /// called every frame after <see cref="OnUpdate">OnUpdate.</see>
         /// </summary>
-        private void OnRender() => Renderer.Render(this);
+        private void OnRender()
+        {
+            Renderer.Render(SpriteRenderer.Sprite, Transform.Position);
+            if (Collider.DebugModeEnabled) Renderer.Render(Collider.DebugVisualization, Transform.Position + Collider.Offset);
+        }
     }
 }
