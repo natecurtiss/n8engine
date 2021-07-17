@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using N8Engine.Rendering;
 
 namespace N8Engine.Native
 {
@@ -14,6 +15,8 @@ namespace N8Engine.Native
 		private const int BACKGROUND_RED = 0x0040;
 		private const int BACKGROUND_INTENSITY = 0x0080;
 		private const int BLACK = 0x0000;
+
+		private static readonly CharInfo[] _buffer = new CharInfo[(int) Window.Width * (int) Window.Height];
 		
 		[DllImport("kernel32.dll")]
 		private static extern unsafe bool WriteConsoleOutput
@@ -25,16 +28,15 @@ namespace N8Engine.Native
 			[In,Out] SmallRectangle* lpWriteRegion
 		);
 		
-	    public static void Write(in int width, in int height, in char[] characters, in ConsoleColor[] foregroundColors, in ConsoleColor[] backgroundColors)
+	    public static void Write(in char[] characters, in ConsoleColor[] foregroundColors, in ConsoleColor[] backgroundColors)
 	    {
-		    CharInfo[] __buffer = new CharInfo[width * height];
-		    for (int __i = 0; __i < width * height; __i++) 
-			    __buffer[__i] = new CharInfo
+		    for (int __i = 0; __i < Window.Width * Window.Height; __i++) 
+			    _buffer[__i] = new CharInfo
 			    (
 				    characters[__i], 
 				    (ushort)(foregroundColors[__i].AsForegroundHexadecimal() + backgroundColors[__i].AsBackgroundHexadecimal())
 			    );
-		    Coordinate __size = new((short) width, (short) height);
+		    Coordinate __size = new((short) Window.Width, (short) Window.Height);
 		    Coordinate __coordinate = new(0, 0);
 		    Coordinate __bufferStart = new(0, 0);
 		    SmallRectangle __writeRegion = new
@@ -47,7 +49,7 @@ namespace N8Engine.Native
 		
 		    unsafe 
 		    {
-			    WriteConsoleOutput(ConsoleWindow.StandardOutputHandle, __buffer, __size, __coordinate, &__writeRegion);
+			    WriteConsoleOutput(ConsoleWindow.StandardOutputHandle, _buffer, __size, __coordinate, &__writeRegion);
 		    }
 	    }
 
