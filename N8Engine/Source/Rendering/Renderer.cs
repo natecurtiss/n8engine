@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using N8Engine.Mathematics;
-using N8Engine.Native;
 
 namespace N8Engine.Rendering
 { 
@@ -9,9 +8,6 @@ namespace N8Engine.Rendering
     {
         private static readonly Dictionary<Vector, Pixel> _pixelsToRender = new();
         private static readonly Dictionary<Vector, Pixel> _pixelsToRenderLastFrame = new();
-        private static readonly char[] _characters = new char[(int) Window.Width * (int) Window.Height];
-        private static readonly ConsoleColor[] _foregroundColors = new ConsoleColor[(int) Window.Width * (int) Window.Height];
-        private static readonly ConsoleColor[] _backgroundColors = new ConsoleColor[(int) Window.Width * (int) Window.Height];
 
         public static void Initialize()
         {
@@ -21,13 +17,13 @@ namespace N8Engine.Rendering
 
         private static void OnPreRender()
         {
-            /*foreach ((Vector __position, Pixel __pixel) in _pixelsToRender)
+            foreach ((Vector __position, Pixel __pixel) in _pixelsToRender)
             {
                 if (_pixelsToRenderLastFrame.ContainsKey(__position))
                     _pixelsToRenderLastFrame[__position] = __pixel;
                 else
                     _pixelsToRenderLastFrame.Add(__position, __pixel);
-            }*/
+            }
             _pixelsToRender.Clear();
         }
 
@@ -53,34 +49,6 @@ namespace N8Engine.Rendering
         
         private static void OnPostRender()
         {
-            int __width = (int)Window.Width;
-            int __height = (int)Window.Height;
-            int __i = 0;
-            for (int __y = 0; __y < __height; __y++)
-            {
-                for (int __x = 0; __x < __width; __x++)
-                {
-                    bool __isPixel = _pixelsToRender.ContainsKey(new Vector(__x, __y));
-                    if (__isPixel)
-                    {
-                        Pixel __pixel = _pixelsToRender[new Vector(__x, __y)];
-                        _characters[__i] = '▒';
-                        _foregroundColors[__i] = __pixel.ForegroundColor;
-                        _backgroundColors[__i] = __pixel.BackgroundColor;
-                    }
-                    else
-                    {
-                        _characters[__i] = ' ';
-                        _foregroundColors[__i] = ConsoleColor.Black;
-                        _backgroundColors[__i] = ConsoleColor.Black;
-                    }
-                    __i++;
-                }
-            }
-            ConsoleWriting.Write(_characters, _foregroundColors, _backgroundColors);
-            
-            return;
-            #region Old Code
             foreach (Vector __position in _pixelsToRender.Keys)
             {
                 Pixel __pixelToRender = _pixelsToRender[__position];
@@ -103,7 +71,6 @@ namespace N8Engine.Rendering
                 Console.SetCursorPosition((int) __oldPosition.X, (int) __oldPosition.Y);
                 Console.Write(' ');
             }
-            #endregion
         }
     }
 }
