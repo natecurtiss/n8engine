@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace N8Engine.Mathematics
 {
@@ -116,9 +115,9 @@ namespace N8Engine.Mathematics
         {
             get
             {
-                float __magnitude = Magnitude;
-                if (__magnitude > 0)
-                    return this / __magnitude;
+                var magnitude = Magnitude;
+                if (magnitude > 0)
+                    return this / magnitude;
                 return Zero;
             }
         }
@@ -146,10 +145,10 @@ namespace N8Engine.Mathematics
         
         public bool Equals(Vector other) => X.Equals(other.X) && Y.Equals(other.Y);
 
-        public override bool Equals(object obj) => obj is Vector __other && Equals(__other);
+        public override bool Equals(object obj) => obj is Vector other && Equals(other);
         
         public override int GetHashCode() => HashCode.Combine(X, Y);
 
-        public override string ToString() => $"({X.ToString(CultureInfo.CurrentCulture)},{Y.ToString(CultureInfo.CurrentCulture)})";
+        public override string ToString() => $"({X.ToString()},{Y.ToString()})";
     }
 }

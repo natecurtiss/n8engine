@@ -12,21 +12,21 @@ namespace N8Engine.Inputs
         {
             get
             {
-                float __horizontalInput = 0f;
+                var horizontalInput = 0f;
                 if (Key.D.IsPressedDown() || Key.RightArrow.IsPressedDown())
-                    __horizontalInput = 1f;
+                    horizontalInput = 1f;
                 else if (Key.A.IsPressedDown() || Key.LeftArrow.IsPressedDown())
-                    __horizontalInput = -1f;
+                    horizontalInput = -1f;
                 
-                float __verticalInput = 0f;
+                var verticalInput = 0f;
                 if (Key.W.IsPressedDown() || Key.UpArrow.IsPressedDown())
-                    __verticalInput  = -1f;
+                    verticalInput  = -1f;
                 else if (Key.S.IsPressedDown() || Key.DownArrow.IsPressedDown())
-                    __verticalInput = 1f;
+                    verticalInput = 1f;
 
-                Vector __axisInput = new(__horizontalInput, __verticalInput);
-                __axisInput = __axisInput.Normalized;
-                return new Vector(__axisInput.X, __axisInput.Y * 0.5f);
+                var axisInput = new Vector(horizontalInput, verticalInput);
+                axisInput = axisInput.Normalized;
+                return new Vector(axisInput.X, axisInput.Y * 0.5f);
             }
         }
         

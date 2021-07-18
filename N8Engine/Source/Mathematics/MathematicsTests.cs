@@ -7,18 +7,18 @@ namespace N8Engine.Mathematics
         [Test]
         public void TestRectangleIsPositionInside()
         {
-            Rectangle __first = new(Vector.One * 3);
-            Assert.IsTrue(__first.IsPositionInside(Vector.Left));
+            var rectangle = new Rectangle(Vector.One * 3);
+            Assert.IsTrue(rectangle.IsPositionInside(Vector.Left));
         }
 
         [Test]
         public void TestRectangleIsOverlapping()
         {
-            Rectangle __first = new(Vector.One * 100);
-            Rectangle __second = new(Vector.One * 3);
-            Assert.IsTrue(__first.IsOverlapping(__second));
-            Rectangle __third = new(Vector.One * 2, Vector.Left * 2);
-            Assert.IsTrue(__second.IsOverlapping(__third));
+            var firstRectangle = new Rectangle(Vector.One * 100);
+            var secondRectangle = new Rectangle(Vector.One * 3);
+            Assert.IsTrue(firstRectangle.IsOverlapping(secondRectangle));
+            var thirdRectangle = new Rectangle(Vector.One * 2, Vector.Left * 2);
+            Assert.IsTrue(secondRectangle.IsOverlapping(thirdRectangle));
         }
     }
 }

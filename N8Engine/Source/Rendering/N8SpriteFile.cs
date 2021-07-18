@@ -19,82 +19,82 @@ namespace N8Engine.Rendering
 
         public List<Pixel> GetPixels(in string[] fileText)
         {
-            List<Pixel> __originalPixels = GetPixelsNotRelativeToCenterPixel(fileText);
-            List<Pixel> __newPixels = new();
-            for (int __i = 0; __i < __originalPixels.Count; __i++)
+            var originalPixels = GetPixelsNotRelativeToCenterPixel(fileText);
+            var newPixels = new List<Pixel>();
+            for (var i = 0; i < originalPixels.Count; i++)
             {
-                Pixel __pixel = __originalPixels[__i];
-                __pixel.Position = GetLocalPositionRelativeToCenterPixel(__originalPixels, __pixel);
-                __newPixels.Add(__pixel);
+                var pixel = originalPixels[i];
+                pixel.Position = GetLocalPositionRelativeToCenterPixel(originalPixels, pixel);
+                newPixels.Add(pixel);
             }
 
-            return __newPixels;
+            return newPixels;
         }
 
         private List<Pixel> GetPixelsNotRelativeToCenterPixel(in string[] fileText)
         {
-            List<Pixel> __pixels = new();
-            int __flippedLine = 0;
-            for (int __line = fileText.Length - 1; __line >= 0; __line--)
+            var pixels = new List<Pixel>();
+            var lineIndexFlippedUpsideDown = 0;
+            for (var lineIndex = fileText.Length - 1; lineIndex >= 0; lineIndex--)
             {
-                string __currentLine = fileText[__line];
-                List<string> __pixelSetsInLine = SeparateCurrentLine(__currentLine);
+                var currentLine = fileText[lineIndex];
+                var pixelSetsInLine = SeparateCurrentLine(currentLine);
 
-                for (int __pixel = 0; __pixel < __pixelSetsInLine.Count; __pixel++)
+                for (var pixel = 0; pixel < pixelSetsInLine.Count; pixel++)
                 {
-                    string __currentPixelSet = __pixelSetsInLine[__pixel];
-                    Pixel? __currentFirstPixel = GetPixelFromPixelSet
+                    var currentPixelSet = pixelSetsInLine[pixel];
+                    var currentFirstPixel = GetPixelFromPixelSet
                     (
-                        __currentPixelSet,
-                        new Vector(__pixel * NUMBER_OF_PIXELS, __flippedLine)
+                        currentPixelSet,
+                        new Vector(pixel * NUMBER_OF_PIXELS, lineIndexFlippedUpsideDown)
                     );
-                    if (__currentFirstPixel.HasValue)
-                        __pixels.Add(__currentFirstPixel.Value);
+                    if (currentFirstPixel.HasValue)
+                        pixels.Add(currentFirstPixel.Value);
 
-                    Pixel? __currentSecondPixel = GetPixelFromPixelSet
+                    var currentSecondPixel = GetPixelFromPixelSet
                     (
-                        __currentPixelSet,
-                        new Vector(__pixel * NUMBER_OF_PIXELS + 1, __flippedLine)
+                        currentPixelSet,
+                        new Vector(pixel * NUMBER_OF_PIXELS + 1, lineIndexFlippedUpsideDown)
                     );
-                    if (__currentSecondPixel.HasValue)
-                        __pixels.Add(__currentSecondPixel.Value);
+                    if (currentSecondPixel.HasValue)
+                        pixels.Add(currentSecondPixel.Value);
                 }
 
-                __flippedLine++;
+                lineIndexFlippedUpsideDown++;
             }
 
-            return __pixels;
+            return pixels;
         }
         
         private List<string> SeparateCurrentLine(in string currentLine)
         {
-            List<string> __currentLinePixels = currentLine.Split('{').ToList();
-            __currentLinePixels.RemoveAll(s => s == string.Empty);
-            for (int __x = 0; __x < __currentLinePixels.Count; __x++)
-                __currentLinePixels[__x] = __currentLinePixels[__x].Replace("}", string.Empty);
-            return __currentLinePixels;
+            var currentLinePixels = currentLine.Split('{').ToList();
+            currentLinePixels.RemoveAll(s => s == string.Empty);
+            for (var x = 0; x < currentLinePixels.Count; x++)
+                currentLinePixels[x] = currentLinePixels[x].Replace("}", string.Empty);
+            return currentLinePixels;
         }
 
         private Pixel? GetPixelFromPixelSet(in string pixelSet, in Vector position)
         {
             ConsoleColor AsConsoleColor(in string color) => (ConsoleColor) Enum.Parse(typeof(ConsoleColor), color);
-            string __foregroundColorName = pixelSet.Split(',')[0];
-            string __backgroundColorName = pixelSet.Split(',')[1];
-            if (__foregroundColorName == "Clear" && __backgroundColorName == "Clear") return null;
+            var foregroundColorName = pixelSet.Split(',')[0];
+            var backgroundColorName = pixelSet.Split(',')[1];
+            if (foregroundColorName == "Clear" && backgroundColorName == "Clear") return null;
             
-            ConsoleColor __foregroundColor =  AsConsoleColor(__foregroundColorName);
-            ConsoleColor __backgroundColor =  AsConsoleColor(__backgroundColorName);
-            return new Pixel(__foregroundColor, __backgroundColor, position);
+            var foregroundColor =  AsConsoleColor(foregroundColorName);
+            var backgroundColor =  AsConsoleColor(backgroundColorName);
+            return new Pixel(foregroundColor, backgroundColor, position);
         }
 
         private Vector GetCenterPixelPosition(in List<Pixel> pixels)
         {
-            float __height = pixels.Last().Position.Y;
-            float __width = pixels.Last().Position.X;
-            int __centerY = (int) (__height / 2f);
-            int __centerX = (int) (__width / 2f);
-            Vector __center = new(__centerX, __centerY);
-            return __center;
+            var height = pixels.Last().Position.Y;
+            var width = pixels.Last().Position.X;
+            var centerY = (int) (height / 2f);
+            var centerX = (int) (width / 2f);
+            var center = new Vector(centerX, centerY);
+            return center;
         }
 
         private Vector GetLocalPositionRelativeToCenterPixel(in List<Pixel> allPixels, in Pixel thisPixel) => 

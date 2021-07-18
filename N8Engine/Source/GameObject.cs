@@ -20,9 +20,9 @@ namespace N8Engine
         /// <returns> The <see cref="GameObject"/> created. </returns>
         public static T Create<T>() where T : GameObject, new()
         {
-            T __gameObject = new();
-            __gameObject.Initialize();
-            return __gameObject;
+            T gameObject = new();
+            gameObject.Initialize();
+            return gameObject;
         }
 
         /// <summary>

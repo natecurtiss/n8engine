@@ -27,7 +27,7 @@ namespace N8Engine.Rendering
             IsBackground = isBackground;
         }
         
-        public override bool Equals(object obj) => obj is Pixel __other && this == __other;
+        public override bool Equals(object obj) => obj is Pixel other && this == other;
 
         public override int GetHashCode() => base.GetHashCode();
     }

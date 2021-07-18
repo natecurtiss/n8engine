@@ -23,22 +23,22 @@ namespace N8Engine.Rendering
         {
             get
             {
-                const string __color = "{Green,Green}";
-                string[] __pixels = new string[(int)Size.Y]; // TODO add thickness
-                for (int __topRowPixel = 0; __topRowPixel < Size.X; __topRowPixel++) 
-                    __pixels[0] += __color;
-                for (int __bottomRowPixel = 0; __bottomRowPixel < Size.X; __bottomRowPixel++) 
-                    __pixels[(int)Size.Y - 1] += __color;
-                for (int __line = 1; __line < Size.Y - 1; __line++)
+                const string color = "{Green,Green}";
+                var pixels = new string[(int) Size.Y]; // TODO add thickness
+                for (var topRowPixelIndex = 0; topRowPixelIndex < Size.X; topRowPixelIndex++) 
+                    pixels[0] += color;
+                for (var bottomRowPixelIndex = 0; bottomRowPixelIndex < Size.X; bottomRowPixelIndex++) 
+                    pixels[(int)Size.Y - 1] += color;
+                for (var lineIndex = 1; lineIndex < Size.Y - 1; lineIndex++)
                 {
-                    for (int __pixel = 0; __pixel < Size.X; __pixel++)
-                        if (__pixel == 0 || __pixel == (int)Size.X - 1)
-                            __pixels[__line] += __color;
+                    for (var pixel = 0; pixel < Size.X; pixel++)
+                        if (pixel == 0 || pixel == (int) Size.X - 1)
+                            pixels[lineIndex] += color;
                         else
-                            __pixels[__line] += "{Clear,Clear}";
+                            pixels[lineIndex] += "{Clear,Clear}";
                 }
 
-                return __pixels;
+                return pixels;
             }
         }
 

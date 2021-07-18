@@ -6,9 +6,9 @@ namespace N8Engine
     {
         public static void Start()
         {
-            GameObject __first = GameObject.Create<DummyGameObject>();
-            __first.Transform.Position += Vector.Right * 100;
-            GameObject __second = GameObject.Create<DummyGameObject2>();
+            var firstGameObject = GameObject.Create<DummyGameObject>();
+            firstGameObject.Transform.Position += Vector.Right * 100;
+            var secondGameObject = GameObject.Create<DummyGameObject2>();
         }
     }
 }

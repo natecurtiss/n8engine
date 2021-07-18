@@ -6,10 +6,10 @@
 
         public Sprite(in string path, in SpriteRenderer spriteRenderer)
         {
-            N8SpriteFile __file = path;
-            Pixels = __file.GetPixels().ToArray();
-            for (int __i = 0; __i < Pixels.Length; __i++) 
-                Pixels[__i].SortingOrder = spriteRenderer.SortingOrder;
+            N8SpriteFile file = path;
+            Pixels = file.GetPixels().ToArray();
+            for (var i = 0; i < Pixels.Length; i++) 
+                Pixels[i].SortingOrder = spriteRenderer.SortingOrder;
         }
 
         internal Sprite(in Pixel[] pixels) => Pixels = pixels;

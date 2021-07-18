@@ -56,29 +56,29 @@ namespace N8Engine
         /// </summary>
         internal static void Run()
         {
-            int __frames = 0;
-            float __fpsCounterTime = 0f;
-            DateTime __previousTime = DateTime.Now;
+            var frames = 0;
+            var fpsCounterTime = 0f;
+            var previousDateTime = DateTime.Now;
             while (true)
             {
-                DateTime __currentTime = DateTime.Now;
-                float __timePassed = Convert.ToSingle(__currentTime.Subtract(__previousTime).TotalSeconds);
+                var currentDateTime = DateTime.Now;
+                var timePassed = Convert.ToSingle(currentDateTime.Subtract(previousDateTime).TotalSeconds);
 
-                if (__timePassed >= UPDATE_RATE)
+                if (timePassed >= UPDATE_RATE)
                 {
-                    __frames++;
-                    __fpsCounterTime += __timePassed;
-                    if (__fpsCounterTime >= 1)
+                    frames++;
+                    fpsCounterTime += timePassed;
+                    if (fpsCounterTime >= 1)
                     {
-                        FramesPerSecond = __frames;
-                        __frames = 0;
-                        __fpsCounterTime = 0f;
+                        FramesPerSecond = frames;
+                        frames = 0;
+                        fpsCounterTime = 0f;
                     }
 
-                    __previousTime = __currentTime;
+                    previousDateTime = currentDateTime;
 
-                    OnUpdate?.Invoke(__timePassed);
-                    OnLateUpdate?.Invoke(__timePassed);
+                    OnUpdate?.Invoke(timePassed);
+                    OnLateUpdate?.Invoke(timePassed);
                     OnPhysicsUpdate?.Invoke();
                     OnPreRender.Invoke();
                     OnRender.Invoke();

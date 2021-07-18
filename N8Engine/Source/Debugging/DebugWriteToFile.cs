@@ -9,10 +9,10 @@ namespace N8Engine.Debugging
 
         public DebugWriteToFile()
         {
-            const string __path = @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\debug.txt";
-            File.WriteAllText(__path, string.Empty);
-            FileStream __traceLog = new(__path, FileMode.OpenOrCreate);
-            _textWriterTraceListener = new TextWriterTraceListener(__traceLog);
+            const string path = @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\debug.txt";
+            File.WriteAllText(path, string.Empty);
+            FileStream traceLog = new(path, FileMode.OpenOrCreate);
+            _textWriterTraceListener = new TextWriterTraceListener(traceLog);
         }
 
         public void Write(in string message)

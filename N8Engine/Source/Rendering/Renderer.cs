@@ -50,32 +50,32 @@ namespace N8Engine.Rendering
         
         private static void OnPostRender()
         {
-            ConsoleColor __lastForegroundColor = ConsoleColor.Black;
-            ConsoleColor __lastBackgroundColor = ConsoleColor.Black;
-            Vector __lastPosition = new();
-            foreach (Vector __position in _pixelsToRender.Keys)
+            var lastForegroundColor = ConsoleColor.Black;
+            var lastBackgroundColor = ConsoleColor.Black;
+            var lastPosition = new Vector();
+            foreach (var position in _pixelsToRender.Keys)
             {
-                Pixel __pixelToRender = _pixelsToRender[__position];
-                bool __pixelHasNotMoved = _pixelsToRenderLastFrame.ContainsKey(__position) && _pixelsToRenderLastFrame[__position] == __pixelToRender;
-                if (__pixelHasNotMoved) continue;
+                var pixelToRender = _pixelsToRender[position];
+                var pixelHasNotMoved = _pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixelToRender;
+                if (pixelHasNotMoved) continue;
 
-                if (new Vector((int) __position.X, (int) __position.Y) - new Vector((int)__lastPosition.X, (int)__lastPosition.Y) != Vector.Right)
-                    Console.SetCursorPosition((int) __position.X, (int) __position.Y);
-                if (__lastForegroundColor != __pixelToRender.ForegroundColor) Console.ForegroundColor = __pixelToRender.ForegroundColor;
-                if (__lastBackgroundColor != __pixelToRender.BackgroundColor) Console.BackgroundColor = __pixelToRender.BackgroundColor;
+                if (new Vector((int) position.X, (int) position.Y) - new Vector((int)lastPosition.X, (int)lastPosition.Y) != Vector.Right)
+                    Console.SetCursorPosition((int) position.X, (int) position.Y);
+                if (lastForegroundColor != pixelToRender.ForegroundColor) Console.ForegroundColor = pixelToRender.ForegroundColor;
+                if (lastBackgroundColor != pixelToRender.BackgroundColor) Console.BackgroundColor = pixelToRender.BackgroundColor;
                 Console.Write('▒');
-                __lastForegroundColor = __pixelToRender.ForegroundColor;
-                __lastBackgroundColor = __pixelToRender.BackgroundColor;
+                lastForegroundColor = pixelToRender.ForegroundColor;
+                lastBackgroundColor = pixelToRender.BackgroundColor;
             }
             
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Black;
-            foreach (Vector __oldPosition in _pixelsToRenderLastFrame.Keys)
+            foreach (var oldPosition in _pixelsToRenderLastFrame.Keys)
             {
-                bool __positionHasPixel = _pixelsToRender.ContainsKey(__oldPosition);
-                if (__positionHasPixel) continue;
-                _pixelsToRenderLastFrame.Remove(__oldPosition);
-                Console.SetCursorPosition((int) __oldPosition.X, (int) __oldPosition.Y);
+                var positionHasPixel = _pixelsToRender.ContainsKey(oldPosition);
+                if (positionHasPixel) continue;
+                _pixelsToRenderLastFrame.Remove(oldPosition);
+                Console.SetCursorPosition((int) oldPosition.X, (int) oldPosition.Y);
                 Console.Write(' ');
             }
         }

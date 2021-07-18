@@ -11,14 +11,12 @@
         /// <returns> The float clamped between the minimum and maximum. </returns>
         public static float Clamped(this in float value, in float minimum, in float maximum)
         {
-            float __clampedValue;
+            var clampedValue = value;
             if (value > maximum) 
-                __clampedValue = maximum;
+                clampedValue = maximum;
             else if (value < minimum)
-                __clampedValue = minimum;
-            else
-                __clampedValue = value;
-            return __clampedValue;
+                clampedValue = minimum;
+            return clampedValue;
         }
         
         /// <summary>
@@ -30,14 +28,12 @@
         /// <returns> The float clamped between the minimum and maximum. </returns>
         public static int Clamped(this in int value, in int minimum, in int maximum)
         {
-            int __clampedValue;
+            var clampedValue = value;
             if (value > maximum) 
-                __clampedValue = maximum;
+                clampedValue = maximum;
             else if (value < minimum)
-                __clampedValue = minimum;
-            else
-                __clampedValue = value;
-            return __clampedValue;
+                clampedValue = minimum;
+            return clampedValue;
         }
 
         /// <summary>

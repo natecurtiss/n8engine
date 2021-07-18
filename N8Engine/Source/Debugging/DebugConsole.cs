@@ -12,16 +12,16 @@ namespace N8Engine.Debugging
         
         public DebugConsole()
         {
-            ProcessStartInfo __processStartInfo = new("cmd.exe")
+            var processStartInfo = new ProcessStartInfo("cmd.exe")
             {
                 RedirectStandardError = true,
                 RedirectStandardInput = true,
                 RedirectStandardOutput = true,
             };
-            Process __process = Process.Start(__processStartInfo);
+            var process = Process.Start(processStartInfo);
                     
-            _standardOutput = __process?.StandardInput;
-            _standardInput = __process?.StandardOutput;
+            _standardOutput = process?.StandardInput;
+            _standardInput = process?.StandardOutput;
         }
 
         public void Write(in string message)

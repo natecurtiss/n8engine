@@ -1,10 +1,12 @@
-﻿using N8Engine.Mathematics;
+﻿using System.Collections.Generic;
+using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
 namespace N8Engine.Physics
 {
     public sealed class Collider
     {
+        private static List<Collider> _allColliders;
         private readonly Transform _transform;
 
         internal DebugRectangle DebugRectangle;
