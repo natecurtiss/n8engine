@@ -5,8 +5,9 @@ namespace N8Engine.Rendering
 {
     internal struct Pixel
     {
-        public static bool operator ==(in Pixel first, in Pixel second) =>
-            first.ForegroundColor == second.ForegroundColor && first.BackgroundColor == second.BackgroundColor;
+        public static bool operator ==(in Pixel first, in Pixel second) => 
+            first.ForegroundColor == second.ForegroundColor && 
+            first.BackgroundColor == second.BackgroundColor;
 
         public static bool operator !=(Pixel first, Pixel second) => !(first == second);
 

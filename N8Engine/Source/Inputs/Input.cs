@@ -8,8 +8,6 @@ namespace N8Engine.Inputs
     /// </summary>
     public static class Input
     {
-        public static bool IsPressedDown(this Key key) => ConsoleInput.GetKeyDown(key);
-
         public static Vector MovementAxis
         {
             get
@@ -31,5 +29,7 @@ namespace N8Engine.Inputs
                 return new Vector(__axisInput.X, __axisInput.Y * 0.5f);
             }
         }
+        
+        public static bool IsPressedDown(this Key key) => ConsoleInput.GetKeyDown(key);
     }
 }

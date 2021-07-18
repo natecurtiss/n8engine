@@ -6,7 +6,6 @@ namespace N8Engine.Mathematics
     {
         public Vector Size { get; set; }
         public Vector Position { get; set; }
-
         public Vector Extents => Size / 2f;
         public Vector Left => Vector.Left * Extents.X + Position;
         public Vector Right => Vector.Right * Extents.X + Position;

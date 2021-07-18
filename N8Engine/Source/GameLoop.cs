@@ -25,6 +25,9 @@ namespace N8Engine
         /// Invoked every frame before rendering.
         /// </summary>
         public static event Action<float> OnUpdate;
+        /// <summary>
+        /// Invoked every frame before rendering and after <see cref="OnUpdate">OnUpdate.</see>
+        /// </summary>
         public static event Action<float> OnLateUpdate;
         /// <summary>
         /// Invoked every frame after <see cref="OnUpdate"/> and before rendering.

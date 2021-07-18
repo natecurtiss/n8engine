@@ -1,6 +1,5 @@
 ﻿using System;
 using N8Engine.Mathematics;
-using N8Engine.Physics;
 using NUnit.Framework;
 
 namespace N8Engine.Rendering
@@ -37,11 +36,11 @@ namespace N8Engine.Rendering
         [Test]
         public void TestRectangleDebugPixels()
         {
-            Collider __collider = new()
+            DebugRectangle __debugRectangle = new()
             {
                 Size = new Vector(3, 3)
             };
-            string[] __rectangleDebugPixels = __collider.DebugVisualizationPixelData;
+            string[] __rectangleDebugPixels = __debugRectangle.Pixels;
             foreach (string __pixel in __rectangleDebugPixels) Console.WriteLine(__pixel + '\n');
             Assert.AreEqual
             (

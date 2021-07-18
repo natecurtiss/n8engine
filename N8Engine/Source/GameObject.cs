@@ -11,7 +11,7 @@ namespace N8Engine
     {
         public Transform Transform { get; } = new();
         public SpriteRenderer SpriteRenderer { get; } = new();
-        public Collider Collider { get; } = new();
+        public Collider Collider { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="GameObject"/> of the specified type.
@@ -30,6 +30,7 @@ namespace N8Engine
         /// </summary>
         private void Initialize()
         {
+            Collider = new Collider(Transform);
             GameLoop.OnUpdate += Update;
             GameLoop.OnRender += OnRender;
             OnStart();
@@ -59,7 +60,8 @@ namespace N8Engine
         private void OnRender()
         {
             Renderer.Render(SpriteRenderer.Sprite, Transform.Position);
-            if (Collider.DebugModeEnabled) Renderer.Render(Collider.DebugVisualization, Transform.Position + Collider.Offset);
+            if (Collider.DebugModeEnabled) 
+                Renderer.Render(Collider.DebugRectangle.Sprite, Collider.DebugRectangle.Position);
         }
     }
 }
