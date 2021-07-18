@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace N8Engine.Debugging
@@ -7,15 +8,26 @@ namespace N8Engine.Debugging
     {
         private readonly TextWriterTraceListener _textWriterTraceListener;
 
+        private String _cachedPath;
+        private String DebugPath
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(_cachedPath)) return _cachedPath;
+                
+                String __basePath = AppDomain.CurrentDomain.BaseDirectory;
+                return _cachedPath = Path.Combine(__basePath, "debug.txt");
+            }
+        }
+
         public DebugWriteToFile()
         {
-            const string __path = @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\debug.txt";
-            File.WriteAllText(__path, string.Empty);
-            FileStream __traceLog = new(__path, FileMode.OpenOrCreate);
+            File.WriteAllText(path: DebugPath, contents: String.Empty);
+            FileStream __traceLog = new(DebugPath, FileMode.OpenOrCreate);
             _textWriterTraceListener = new TextWriterTraceListener(__traceLog);
         }
 
-        public void Write(in string message)
+        public void Write(in String message)
         {
             _textWriterTraceListener.WriteLine(message);
             _textWriterTraceListener.Flush();
