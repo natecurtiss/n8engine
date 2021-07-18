@@ -5,6 +5,9 @@ namespace N8Engine.Utilities
 {
 	public static class PathExtensions
 	{
+		public static Boolean IsEmpty(this String value) => String.IsNullOrEmpty(value);
+		public static Boolean NotEmpty(this String value) => !IsEmpty(value);
+		
 		public static String Combine(this String input, in String single)
 			=> Path.Combine(input, single);
 

@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 
+using N8Engine.Utilities;
+
 namespace N8Engine.Debugging
 {
     internal sealed class DebugWriteToFile : IDebugOutput
@@ -13,10 +15,9 @@ namespace N8Engine.Debugging
         {
             get
             {
-                if (!String.IsNullOrEmpty(_cachedPath)) return _cachedPath;
+                if (_cachedPath.NotEmpty()) return _cachedPath;
                 
-                String __basePath = AppDomain.CurrentDomain.BaseDirectory;
-                return _cachedPath = Path.Combine(__basePath, "debug.txt");
+                return _cachedPath = Dir.Project.Combine(single: "debug.txt");
             }
         }
 
