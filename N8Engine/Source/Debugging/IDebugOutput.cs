@@ -2,6 +2,6 @@
 {
     internal interface IDebugOutput
     {
-        public void Write(in string message);
+        public void Write(string message);
     }
 }

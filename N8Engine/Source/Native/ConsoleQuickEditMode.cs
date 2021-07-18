@@ -35,25 +35,25 @@ namespace N8Engine.Native
         /// <summary>
         /// True when quick-edit mode is enabled.
         /// </summary>
-        public static bool Enabled
+        public static bool IsEnabled
         {
-            get => _enabled;
+            get => _isEnabled;
             set
             {
-                GetConsoleMode(ConsoleWindow.StandardInputHandle, out uint __consoleMode);
+                GetConsoleMode(ConsoleWindow.StandardInputHandle, out var consoleMode);
                 if (value)
-                    __consoleMode |= ENABLE_QUICK_EDIT_MODE;
+                    consoleMode |= ENABLE_QUICK_EDIT_MODE;
                 else
-                    __consoleMode &= ~ENABLE_QUICK_EDIT_MODE;
-                __consoleMode |= ENABLE_EXTENDED_FLAGS;
-                SetConsoleMode(ConsoleWindow.StandardInputHandle, __consoleMode);
-                _enabled = value;
+                    consoleMode &= ~ENABLE_QUICK_EDIT_MODE;
+                consoleMode |= ENABLE_EXTENDED_FLAGS;
+                SetConsoleMode(ConsoleWindow.StandardInputHandle, consoleMode);
+                _isEnabled = value;
             }
         }
 
         /// <summary>
-        /// Backing field for <see cref="Enabled"/>.
+        /// Backing field for <see cref="IsEnabled"/>.
         /// </summary>
-        private static bool _enabled = true;
+        private static bool _isEnabled = true;
     }
 }

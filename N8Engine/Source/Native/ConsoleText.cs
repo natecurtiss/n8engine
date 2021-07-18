@@ -13,23 +13,23 @@ namespace N8Engine.Native
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         private static extern bool SetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool maximumWindow, ref FontInfo currentConsoleFontOutput);
 
-        public static void SetCurrentFont(in string font, in short fontSize = 1, in bool useMaximumWindow = false)
+        public static void SetCurrentFont(string font, short fontSize = 1, bool useMaximumWindow = false)
         {
-            FontInfo __before = new()
+            var before = new FontInfo()
             {
                 SizeInBytes = Marshal.SizeOf<FontInfo>()
             };
-            GetCurrentConsoleFontEx(ConsoleWindow.StandardOutputHandle, useMaximumWindow, ref __before);
-            FontInfo __after = new()
+            GetCurrentConsoleFontEx(ConsoleWindow.StandardOutputHandle, useMaximumWindow, ref before);
+            var after = new FontInfo()
             {
                 SizeInBytes = Marshal.SizeOf<FontInfo>(),
                 FontIndex = 0,
                 FontFamily = 54,
                 FontName = font,
                 FontWeight = 400,
-                FontSize = fontSize > 0 ? fontSize : __before.FontSize
+                FontSize = fontSize > 0 ? fontSize : before.FontSize
             };
-            SetCurrentConsoleFontEx(ConsoleWindow.StandardOutputHandle, useMaximumWindow, ref __after);
+            SetCurrentConsoleFontEx(ConsoleWindow.StandardOutputHandle, useMaximumWindow, ref after);
         }
     }
 

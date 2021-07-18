@@ -22,14 +22,14 @@ namespace N8Engine.Rendering
         public static void Initialize()
         {
             ConsoleText.SetCurrentFont("Arial", 5);
-            ConsoleQuickEditMode.Enabled = false;
+            ConsoleQuickEditMode.IsEnabled = false;
             ConsoleResizing.Maximize();
             Console.CursorVisible = false;
         }
 
-        public static Vector GetWindowPositionAsWorldPosition(in Vector position) => position + _span / 2;
+        public static Vector GetWindowPositionAsWorldPosition(Vector position) => position + _span / 2;
         
-        public static bool IsWithinWindow(this in Vector position) =>
+        public static bool IsWithinWindow(this Vector position) =>
             position.X >= 0 &&
             position.Y >= 0 &&
             position.X <= _width - 1 &&

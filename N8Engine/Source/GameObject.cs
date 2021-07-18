@@ -20,7 +20,7 @@ namespace N8Engine
         /// <returns> The <see cref="GameObject"/> created. </returns>
         public static T Create<T>() where T : GameObject, new()
         {
-            T gameObject = new();
+            var gameObject = new T();
             gameObject.Initialize();
             return gameObject;
         }
@@ -31,7 +31,7 @@ namespace N8Engine
         private void Initialize()
         {
             Collider = new Collider(Transform);
-            GameLoop.OnUpdate += Update;
+            GameLoop.OnUpdate += OnUpdate;
             GameLoop.OnRender += OnRender;
             OnStart();
         }
@@ -42,16 +42,10 @@ namespace N8Engine
         protected virtual void OnStart() { }
 
         /// <summary>
-        /// Subscription to <see cref="GameLoop.OnUpdate"/> that exists to call <see cref="OnUpdate"/>.
-        /// </summary>
-        /// <param name="deltaTime"> The time since the last frame. </param>
-        private void Update(float deltaTime) => OnUpdate(deltaTime);
-
-        /// <summary>
         /// Event method called every frame, before <see cref="OnRender"/>.
         /// </summary>
         /// <param name="deltaTime"> The time since the last frame. </param>
-        protected virtual void OnUpdate(in float deltaTime) { }
+        protected virtual void OnUpdate(float deltaTime) { }
 
         /// <summary>
         /// Sends the <see cref="Sprite"/> to the <see cref="Renderer"/> to be rendered -

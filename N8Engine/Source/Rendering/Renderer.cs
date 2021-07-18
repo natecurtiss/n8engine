@@ -17,34 +17,34 @@ namespace N8Engine.Rendering
 
         private static void OnPreRender()
         {
-            foreach ((Vector __position, Pixel __pixel) in _pixelsToRender)
+            foreach (var (position, pixel) in _pixelsToRender)
             {
-                if (_pixelsToRenderLastFrame.ContainsKey(__position))
-                    _pixelsToRenderLastFrame[__position] = __pixel;
+                if (_pixelsToRenderLastFrame.ContainsKey(position))
+                    _pixelsToRenderLastFrame[position] = pixel;
                 else
-                    _pixelsToRenderLastFrame.Add(__position, __pixel);
+                    _pixelsToRenderLastFrame.Add(position, pixel);
             }
 
             _pixelsToRender.Clear();
         }
 
-        public static void Render(in Sprite sprite, in Vector position)
+        public static void Render(Sprite sprite, Vector position)
         {
-            foreach (Pixel __pixel in sprite.Pixels)
+            foreach (var pixel in sprite.Pixels)
             {
-                Vector __pixelPosition = __pixel.Position + position;
-                __pixelPosition = Window.GetWindowPositionAsWorldPosition(__pixelPosition);
-                __pixelPosition = new Vector((int) __pixelPosition.X, (int) __pixelPosition.Y);
+                var pixelPosition = pixel.Position + position;
+                pixelPosition = Window.GetWindowPositionAsWorldPosition(pixelPosition);
+                pixelPosition = new Vector((int) pixelPosition.X, (int) pixelPosition.Y);
 
-                bool __pixelIsOutsideOfWindow = !__pixelPosition.IsWithinWindow();
-                bool __noPixelInPosition = !_pixelsToRender.ContainsKey(__pixelPosition);
+                var isPixelIsOutsideOfWindow = !pixelPosition.IsWithinWindow();
+                var isNoPixelInPosition = !_pixelsToRender.ContainsKey(pixelPosition);
 
-                if (__pixelIsOutsideOfWindow) 
+                if (isPixelIsOutsideOfWindow) 
                     continue;
-                if (__noPixelInPosition)
-                    _pixelsToRender.Add(__pixelPosition, __pixel);
-                else if (__pixel.SortingOrder > _pixelsToRender[__pixelPosition].SortingOrder || _pixelsToRender[__pixelPosition].IsBackground)
-                        _pixelsToRender[__pixelPosition] = __pixel;
+                if (isNoPixelInPosition)
+                    _pixelsToRender.Add(pixelPosition, pixel);
+                else if (pixel.SortingOrder > _pixelsToRender[pixelPosition].SortingOrder || _pixelsToRender[pixelPosition].IsBackground)
+                        _pixelsToRender[pixelPosition] = pixel;
             }
         }
         

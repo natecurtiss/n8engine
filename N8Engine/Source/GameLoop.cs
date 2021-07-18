@@ -32,7 +32,7 @@ namespace N8Engine
         /// <summary>
         /// Invoked every frame after <see cref="OnUpdate"/> and before rendering.
         /// </summary>
-        public static event Action OnPhysicsUpdate;
+        public static event Action<float> OnPhysicsUpdate;
         /// <summary>
         /// Invoked every frame before <see cref="OnRender"/> and after <see cref="OnUpdate">OnUpdate.</see>
         /// </summary>
@@ -54,7 +54,7 @@ namespace N8Engine
         /// <summary>
         /// Starts running the <see cref="GameLoop">GameLoop.</see>
         /// </summary>
-        internal static void Run()
+        public static void Run()
         {
             var frames = 0;
             var fpsCounterTime = 0f;
@@ -79,7 +79,7 @@ namespace N8Engine
 
                     OnUpdate?.Invoke(timePassed);
                     OnLateUpdate?.Invoke(timePassed);
-                    OnPhysicsUpdate?.Invoke();
+                    OnPhysicsUpdate?.Invoke(timePassed);
                     OnPreRender.Invoke();
                     OnRender.Invoke();
                     OnPostRender.Invoke();

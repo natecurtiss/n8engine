@@ -19,7 +19,7 @@ namespace N8Engine
             Collider.DebugModeEnabled = true;
         }
 
-        protected override void OnUpdate(in float deltaTime)
+        protected override void OnUpdate(float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
             Transform.Position += Input.MovementAxis * 30 * deltaTime;

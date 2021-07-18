@@ -21,6 +21,6 @@ namespace N8Engine.Debugging
         /// Prints a message to a text file.
         /// </summary>
         /// <param name="message"> The message to print. </param>
-        public static void Log(in object message) => _debugOutput.Write(message.ToString());
+        public static void Log(object message) => _debugOutput.Write(message.ToString());
     }
 }

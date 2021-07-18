@@ -42,7 +42,7 @@ namespace N8Engine.Rendering
             }
         }
 
-        public DebugRectangle(in Vector size, in Vector position) : this()
+        public DebugRectangle(Vector size, Vector position) : this()
         {
             Size = size;
             Position = position;

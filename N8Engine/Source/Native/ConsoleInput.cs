@@ -11,7 +11,7 @@ namespace N8Engine.Native
         [DllImport("user32.dll")]
         private static extern short GetKeyState(Key key);
         
-        public static bool GetKeyDown(in Key key) =>
+        public static bool GetKeyDown(Key key) =>
             Convert.ToBoolean(GetKeyState(key) & KEY_PRESSED);
     }
 }

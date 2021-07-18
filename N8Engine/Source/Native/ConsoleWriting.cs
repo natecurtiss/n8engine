@@ -25,29 +25,29 @@ namespace N8Engine.Native
 			[In,Out] SmallRectangle* lpWriteRegion
 		);
 		
-	    public static void Write(in int width, in int height, in char[] characters, in ConsoleColor[] foregroundColors, in ConsoleColor[] backgroundColors)
+	    public static void Write(int width, int height, char[] characters, ConsoleColor[] foregroundColors, ConsoleColor[] backgroundColors)
 	    {
-		    CharInfo[] __buffer = new CharInfo[width * height];
-		    for (int __i = 0; __i < width * height; __i++) 
-			    __buffer[__i] = new CharInfo
+		    var buffer = new CharInfo[width * height];
+		    for (var i = 0; i < width * height; i++) 
+			    buffer[i] = new CharInfo
 			    (
-				    characters[__i], 
-				    (ushort)(foregroundColors[__i].AsForegroundHexadecimal() + backgroundColors[__i].AsBackgroundHexadecimal())
+				    characters[i], 
+				    (ushort)(foregroundColors[i].AsForegroundHexadecimal() + backgroundColors[i].AsBackgroundHexadecimal())
 			    );
-		    Coordinate __size = new((short) width, (short) height);
-		    Coordinate __coordinate = new(0, 0);
-		    Coordinate __bufferStart = new(0, 0);
-		    SmallRectangle __writeRegion = new
+		    var size = new Coordinate((short) width, (short) height);
+		    var coordinate = new Coordinate(0, 0);
+		    var bufferStart = new Coordinate(0, 0);
+		    var writeRegion = new SmallRectangle
 		    (
-			    __bufferStart.X,
-			    __bufferStart.Y,
-			    (short)(__bufferStart.X + __size.X - 1),
-			    (short)(__bufferStart.Y + __size.Y - 1)
+			    bufferStart.X,
+			    bufferStart.Y,
+			    (short)(bufferStart.X + size.X - 1),
+			    (short)(bufferStart.Y + size.Y - 1)
 		    );
 		
 		    unsafe 
 		    {
-			    WriteConsoleOutput(ConsoleWindow.StandardOutputHandle, __buffer, __size, __coordinate, &__writeRegion);
+			    WriteConsoleOutput(ConsoleWindow.StandardOutputHandle, buffer, size, coordinate, &writeRegion);
 		    }
 	    }
 
@@ -104,7 +104,7 @@ namespace N8Engine.Native
 		public readonly short Right;
 		public readonly short Bottom;
 
-		public SmallRectangle(in short left, in short top, in short right, in short bottom) 
+		public SmallRectangle(short left, short top, short right, short bottom) 
 		{
 			Left = left;
 			Top = top;
@@ -119,7 +119,7 @@ namespace N8Engine.Native
 		public readonly short X;
 		public readonly short Y;
 
-		public Coordinate(in short x, in short y) 
+		public Coordinate(short x, short y) 
 		{
 			X = x;
 			Y = y;
@@ -132,7 +132,7 @@ namespace N8Engine.Native
 		public readonly char Character;
 		public ushort Attributes;
 
-		public CharInfo(in char character, in ushort attribute) 
+		public CharInfo(char character, ushort attribute) 
 		{
 			Character = character;
 			Attributes = attribute;

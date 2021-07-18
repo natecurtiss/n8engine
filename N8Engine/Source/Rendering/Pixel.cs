@@ -5,7 +5,7 @@ namespace N8Engine.Rendering
 {
     internal struct Pixel
     {
-        public static bool operator ==(in Pixel first, in Pixel second) => 
+        public static bool operator ==(Pixel first, Pixel second) => 
             first.ForegroundColor == second.ForegroundColor && 
             first.BackgroundColor == second.BackgroundColor;
 
@@ -18,7 +18,7 @@ namespace N8Engine.Rendering
         public int SortingOrder { get; set; }
         public bool IsBackground { get; }
 
-        public Pixel(in ConsoleColor foregroundColor, in ConsoleColor backgroundColor, in Vector position, in bool isBackground = false)
+        public Pixel(ConsoleColor foregroundColor, ConsoleColor backgroundColor, Vector position, bool isBackground = false)
         {
             ForegroundColor = foregroundColor;
             BackgroundColor = backgroundColor;

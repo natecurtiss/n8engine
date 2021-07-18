@@ -8,16 +8,16 @@ namespace N8Engine.Rendering
 {
     internal readonly struct N8SpriteFile
     {
-        public static implicit operator N8SpriteFile(in string path) => new(path);
+        public static implicit operator N8SpriteFile(string path) => new(path);
 
         private const int NUMBER_OF_PIXELS = 2;
         private readonly string _path;
 
-        private N8SpriteFile(in string path) : this() => _path = path;
+        private N8SpriteFile(string path) : this() => _path = path;
         
         public List<Pixel> GetPixels() => GetPixels(File.ReadAllLines(_path));
 
-        public List<Pixel> GetPixels(in string[] fileText)
+        public List<Pixel> GetPixels(string[] fileText)
         {
             var originalPixels = GetPixelsNotRelativeToCenterPixel(fileText);
             var newPixels = new List<Pixel>();
@@ -31,7 +31,7 @@ namespace N8Engine.Rendering
             return newPixels;
         }
 
-        private List<Pixel> GetPixelsNotRelativeToCenterPixel(in string[] fileText)
+        private List<Pixel> GetPixelsNotRelativeToCenterPixel(string[] fileText)
         {
             var pixels = new List<Pixel>();
             var lineIndexFlippedUpsideDown = 0;
@@ -66,7 +66,7 @@ namespace N8Engine.Rendering
             return pixels;
         }
         
-        private List<string> SeparateCurrentLine(in string currentLine)
+        private List<string> SeparateCurrentLine(string currentLine)
         {
             var currentLinePixels = currentLine.Split('{').ToList();
             currentLinePixels.RemoveAll(s => s == string.Empty);
@@ -75,9 +75,9 @@ namespace N8Engine.Rendering
             return currentLinePixels;
         }
 
-        private Pixel? GetPixelFromPixelSet(in string pixelSet, in Vector position)
+        private Pixel? GetPixelFromPixelSet(string pixelSet, Vector position)
         {
-            ConsoleColor AsConsoleColor(in string color) => (ConsoleColor) Enum.Parse(typeof(ConsoleColor), color);
+            ConsoleColor AsConsoleColor(string color) => (ConsoleColor) Enum.Parse(typeof(ConsoleColor), color);
             var foregroundColorName = pixelSet.Split(',')[0];
             var backgroundColorName = pixelSet.Split(',')[1];
             if (foregroundColorName == "Clear" && backgroundColorName == "Clear") return null;
@@ -87,7 +87,7 @@ namespace N8Engine.Rendering
             return new Pixel(foregroundColor, backgroundColor, position);
         }
 
-        private Vector GetCenterPixelPosition(in List<Pixel> pixels)
+        private Vector GetCenterPixelPosition(List<Pixel> pixels)
         {
             var height = pixels.Last().Position.Y;
             var width = pixels.Last().Position.X;
@@ -97,7 +97,7 @@ namespace N8Engine.Rendering
             return center;
         }
 
-        private Vector GetLocalPositionRelativeToCenterPixel(in List<Pixel> allPixels, in Pixel thisPixel) => 
+        private Vector GetLocalPositionRelativeToCenterPixel(List<Pixel> allPixels, Pixel thisPixel) => 
             thisPixel.Position - GetCenterPixelPosition(allPixels);
     }
 }

@@ -15,7 +15,7 @@ namespace N8Engine.Debugging
             _textWriterTraceListener = new TextWriterTraceListener(traceLog);
         }
 
-        public void Write(in string message)
+        public void Write(string message)
         {
             _textWriterTraceListener.WriteLine(message);
             _textWriterTraceListener.Flush();

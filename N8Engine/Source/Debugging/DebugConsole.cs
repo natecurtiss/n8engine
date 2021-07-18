@@ -24,7 +24,7 @@ namespace N8Engine.Debugging
             _standardInput = process?.StandardOutput;
         }
 
-        public void Write(in string message)
+        public void Write(string message)
         {
             _standardOutput.WriteLine("Hello world!");
             _standardInput.Close();

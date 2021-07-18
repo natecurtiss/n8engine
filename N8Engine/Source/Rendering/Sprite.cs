@@ -4,7 +4,7 @@
     {
         internal readonly Pixel[] Pixels;
 
-        public Sprite(in string path, in SpriteRenderer spriteRenderer)
+        public Sprite(string path, SpriteRenderer spriteRenderer)
         {
             N8SpriteFile file = path;
             Pixels = file.GetPixels().ToArray();
@@ -12,6 +12,6 @@
                 Pixels[i].SortingOrder = spriteRenderer.SortingOrder;
         }
 
-        internal Sprite(in Pixel[] pixels) => Pixels = pixels;
+        internal Sprite(Pixel[] pixels) => Pixels = pixels;
     }
 }

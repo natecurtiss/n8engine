@@ -6,13 +6,14 @@ namespace N8Engine.Physics
 {
     public sealed class Collider
     {
-        private static List<Collider> _allColliders;
-        private readonly Transform _transform;
+        // TODO add this to each Scene object later
+        private static readonly List<Collider> _allColliders = new();
 
         internal DebugRectangle DebugRectangle;
 
-        private Rectangle _rectangle;
+        private readonly Transform _transform;
         private Vector _size;
+        private Vector _lastPosition = new();
         
         public bool DebugModeEnabled { get; set; }
         public Vector Offset { get; set; }
@@ -22,21 +23,35 @@ namespace N8Engine.Physics
             set
             {
                 if (_size == value) return;
-                _rectangle = new Rectangle(value, _transform.Position + Offset);
+                Rectangle = new Rectangle(value, _transform.Position + Offset);
                 DebugRectangle = new DebugRectangle(value, _transform.Position + Offset);
                 _size = value;
             }
         }
         
-        internal Collider(in Transform transform)
+        private Rectangle Rectangle { get; set; }
+        private Vector Position => _transform.Position + Offset;
+
+        internal Collider(Transform transform)
         {
             _transform = transform;
+            _allColliders.Add(this);
+            GameLoop.OnUpdate += Update;
             GameLoop.OnPhysicsUpdate += PhysicsUpdate;
         }
 
-        private void PhysicsUpdate()
+        private void Update(float deltaTime)
         {
             
+        }
+
+        private void PhysicsUpdate(float deltaTime)
+        {
+            foreach (var collider in _allColliders)
+            {
+                if (collider == this) continue;
+                if (!collider.Rectangle.IsOverlapping(Rectangle)) continue;
+            }
         }
     }
 }

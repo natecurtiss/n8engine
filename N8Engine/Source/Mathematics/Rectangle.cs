@@ -12,18 +12,18 @@ namespace N8Engine.Mathematics
         public Vector Top => Vector.Up * Extents.Y + Position;
         public Vector Bottom => Vector.Down * Extents.Y + Position;
 
-        public Rectangle(in Vector size, in Vector position = default) : this()
+        public Rectangle(Vector size, Vector position = default) : this()
         {
             Size = size;
             Position = position;
         }
 
         [Pure]
-        public bool IsPositionInside(in Vector otherPosition) => 
+        public bool IsPositionInside(Vector otherPosition) => 
             otherPosition.X.IsWithinRange(Left.X, Right.X) && 
             otherPosition.Y.IsWithinRange(Bottom.Y, Top.Y);
 
-        public bool IsOverlapping(in Rectangle otherRectangle) =>
+        public bool IsOverlapping(Rectangle otherRectangle) =>
             otherRectangle.IsPositionInside(Left) || otherRectangle.IsPositionInside(Right) || 
             otherRectangle.IsPositionInside(Top) || otherRectangle.IsPositionInside(Bottom) ||
             IsPositionInside(otherRectangle.Left) || IsPositionInside(otherRectangle.Right) || 
