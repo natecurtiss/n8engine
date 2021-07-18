@@ -80,30 +80,6 @@ namespace N8Engine.Rendering
             ConsoleWriting.Write(_characters, _foregroundColors, _backgroundColors);
             
             return;
-            #region Old Code
-            foreach (Vector __position in _pixelsToRender.Keys)
-            {
-                Pixel __pixelToRender = _pixelsToRender[__position];
-                bool __pixelHasNotMoved = _pixelsToRenderLastFrame.ContainsKey(__position) && _pixelsToRenderLastFrame[__position] == __pixelToRender;
-                if (__pixelHasNotMoved) continue;
-
-                Console.SetCursorPosition((int) __position.X, (int) __position.Y);
-                Console.ForegroundColor = __pixelToRender.ForegroundColor;
-                Console.BackgroundColor = __pixelToRender.BackgroundColor;
-                Console.Write('▒');
-            }
-            
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.BackgroundColor = ConsoleColor.Black;
-            foreach (Vector __oldPosition in _pixelsToRenderLastFrame.Keys)
-            {
-                bool __positionHasPixel = _pixelsToRender.ContainsKey(__oldPosition);
-                if (__positionHasPixel) continue;
-                _pixelsToRenderLastFrame.Remove(__oldPosition);
-                Console.SetCursorPosition((int) __oldPosition.X, (int) __oldPosition.Y);
-                Console.Write(' ');
-            }
-            #endregion
         }
     }
 }
