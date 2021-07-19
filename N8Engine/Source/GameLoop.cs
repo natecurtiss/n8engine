@@ -14,12 +14,12 @@ namespace N8Engine
         /// <summary>
         /// The target framerate of the application.
         /// </summary>
-        private const int TARGET_FRAMERATE = 60;
+        private const int MAX_FRAMERATE = 120;
         /// <summary>
         /// The amount of times per second the <see cref="GameLoop"/> will update - based off of
-        /// <see cref="TARGET_FRAMERATE">TARGET_FRAMERATE.</see>
+        /// <see cref="MAX_FRAMERATE">TARGET_FRAMERATE.</see>
         /// </summary>
-        private const float UPDATE_RATE = 1f / TARGET_FRAMERATE;
+        private const float UPDATE_RATE = 1f / MAX_FRAMERATE;
 
         /// <summary>
         /// Invoked every frame before rendering.
@@ -46,7 +46,7 @@ namespace N8Engine
         /// <summary>
         /// The frames per second of the application.
         /// </summary>
-        public static int FramesPerSecond = TARGET_FRAMERATE;
+        public static int FramesPerSecond = MAX_FRAMERATE;
 
         /// <summary>
         /// Starts running the <see cref="GameLoop">GameLoop.</see>

@@ -38,7 +38,6 @@ namespace N8Engine.Physics
         internal Collider(Transform transform)
         {
             _transform = transform;
-            return;
             _lastPosition = _transform.Position;
             _allColliders.Add(this);
             Rectangle = new Rectangle(Size, this);
@@ -56,9 +55,9 @@ namespace N8Engine.Physics
 
         private void PrePhysicsUpdate(float deltaTime)
         {
+            _positionAfterCollision = Position;
             if (Velocity == Vector.Zero) return;
             if (Size == Vector.Zero) return;
-            _positionAfterCollision = Position;
             foreach (var otherCollider in _allColliders)
             {
                 if (otherCollider == this) continue;
@@ -72,6 +71,9 @@ namespace N8Engine.Physics
             }
         }
 
-        private void PostPhysicsUpdate(float deltaTime) => _transform.Position = _positionAfterCollision - Offset;
+        private void PostPhysicsUpdate(float deltaTime)
+        {
+            _transform.Position = _positionAfterCollision - Offset;
+        }
     }
 }
