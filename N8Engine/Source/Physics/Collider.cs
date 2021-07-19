@@ -4,16 +4,17 @@ using N8Engine.Rendering;
 
 namespace N8Engine.Physics
 {
-    public sealed class Collider
+    public sealed class Collider : IMoveable
     {
         // TODO add this to each Scene object later
         private static readonly List<Collider> _allColliders = new();
-
-        internal DebugRectangle DebugRectangle;
+        
+        internal readonly DebugRectangle DebugRectangle;
 
         private readonly Transform _transform;
         private Vector _size;
-        private Vector _lastPosition = new();
+        private Vector _lastPosition;
+        private Vector _positionAfterCollision;
         
         public bool DebugModeEnabled { get; set; }
         public Vector Offset { get; set; }
@@ -23,35 +24,54 @@ namespace N8Engine.Physics
             set
             {
                 if (_size == value) return;
-                Rectangle = new Rectangle(value, _transform.Position + Offset);
-                DebugRectangle = new DebugRectangle(value, _transform.Position + Offset);
+                DebugRectangle.Size = value;
+                Rectangle.Size = value;
                 _size = value;
             }
         }
+        public Vector Position => _transform.Position + Offset;
         
-        private Rectangle Rectangle { get; set; }
-        private Vector Position => _transform.Position + Offset;
+
+        private Rectangle Rectangle { get; }
+        private Vector Velocity { get; set; }
 
         internal Collider(Transform transform)
         {
             _transform = transform;
+            return;
+            _lastPosition = _transform.Position;
             _allColliders.Add(this);
+            Rectangle = new Rectangle(Size, this);
+            DebugRectangle = new DebugRectangle(Size, this);
             GameLoop.OnUpdate += Update;
-            GameLoop.OnPhysicsUpdate += PhysicsUpdate;
+            GameLoop.OnPrePhysicsUpdate += PrePhysicsUpdate;
+            GameLoop.OnPostPhysicsUpdate += PostPhysicsUpdate;
         }
 
         private void Update(float deltaTime)
         {
-            
+            Velocity = (_transform.Position - _lastPosition) * deltaTime;
+            _lastPosition = _transform.Position;
         }
 
-        private void PhysicsUpdate(float deltaTime)
+        private void PrePhysicsUpdate(float deltaTime)
         {
-            foreach (var collider in _allColliders)
+            if (Velocity == Vector.Zero) return;
+            if (Size == Vector.Zero) return;
+            _positionAfterCollision = Position;
+            foreach (var otherCollider in _allColliders)
             {
-                if (collider == this) continue;
-                if (!collider.Rectangle.IsOverlapping(Rectangle)) continue;
+                if (otherCollider == this) continue;
+                if (!otherCollider.Rectangle.IsOverlapping(Rectangle)) continue;
+                if (otherCollider.Size == Vector.Zero) continue;
+
+                var x = Velocity.X > 0 ? otherCollider.Rectangle.Left.X - Rectangle.Extents.X : otherCollider.Rectangle.Right.X + Rectangle.Extents.X;
+                var y = Velocity.Y > 0 ? otherCollider.Rectangle.Bottom.Y - Rectangle.Extents.Y : otherCollider.Rectangle.Top.Y + Rectangle.Extents.Y;
+                _positionAfterCollision = new Vector(x, y);
+                break;
             }
         }
+
+        private void PostPhysicsUpdate(float deltaTime) => _transform.Position = _positionAfterCollision - Offset;
     }
 }

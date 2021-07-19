@@ -1,4 +1,5 @@
-﻿using N8Engine.Rendering;
+﻿using N8Engine.Mathematics;
+using N8Engine.Rendering;
 
 namespace N8Engine
 {
@@ -11,6 +12,10 @@ namespace N8Engine
                 @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\sus.n8sprite",
                 SpriteRenderer
             );
+            
+            // Collider.Size = new Vector(17, 18);
+            // Collider.Offset = Vector.Right * 2;
+            // Collider.DebugModeEnabled = true;
         }
     }
 }

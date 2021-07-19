@@ -36,10 +36,7 @@ namespace N8Engine.Rendering
         [Test]
         public void TestRectangleDebugPixels()
         {
-            var debugRectangle = new DebugRectangle()
-            {
-                Size = new Vector(3, 3)
-            };
+            var debugRectangle = new DebugRectangle(new Vector(3, 3), (StaticObject) Vector.Zero);
             var rectangleDebugPixels = debugRectangle.Pixels;
             foreach (var pixel in rectangleDebugPixels) Console.WriteLine(pixel + '\n');
             Assert.AreEqual

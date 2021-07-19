@@ -1,24 +1,23 @@
-﻿using System.Diagnostics.Contracts;
-
-namespace N8Engine.Mathematics
+﻿namespace N8Engine.Mathematics
 {
-    public struct Rectangle
+    internal sealed class Rectangle
     {
+        private readonly IMoveable _moveable;
+
         public Vector Size { get; set; }
-        public Vector Position { get; set; }
+        public Vector Position => _moveable.Position;
         public Vector Extents => Size / 2f;
         public Vector Left => Vector.Left * Extents.X + Position;
         public Vector Right => Vector.Right * Extents.X + Position;
         public Vector Top => Vector.Up * Extents.Y + Position;
         public Vector Bottom => Vector.Down * Extents.Y + Position;
 
-        public Rectangle(Vector size, Vector position = default) : this()
+        public Rectangle(Vector size, IMoveable moveable)
         {
             Size = size;
-            Position = position;
+            _moveable = moveable;
         }
-
-        [Pure]
+        
         public bool IsPositionInside(Vector otherPosition) => 
             otherPosition.X.IsWithinRange(Left.X, Right.X) && 
             otherPosition.Y.IsWithinRange(Bottom.Y, Top.Y);

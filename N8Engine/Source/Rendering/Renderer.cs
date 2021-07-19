@@ -13,6 +13,8 @@ namespace N8Engine.Rendering
         {
             GameLoop.OnPreRender += OnPreRender;
             GameLoop.OnPostRender += OnPostRender;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         private static void OnPreRender()
@@ -36,10 +38,10 @@ namespace N8Engine.Rendering
                 pixelPosition = Window.GetWindowPositionAsWorldPosition(pixelPosition);
                 pixelPosition = new Vector((int) pixelPosition.X, (int) pixelPosition.Y);
 
-                var isPixelIsOutsideOfWindow = !pixelPosition.IsWithinWindow();
+                var isPixelOutsideOfWindow = !pixelPosition.IsWithinWindow();
                 var isNoPixelInPosition = !_pixelsToRender.ContainsKey(pixelPosition);
 
-                if (isPixelIsOutsideOfWindow) 
+                if (isPixelOutsideOfWindow) 
                     continue;
                 if (isNoPixelInPosition)
                     _pixelsToRender.Add(pixelPosition, pixel);

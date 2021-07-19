@@ -25,14 +25,11 @@ namespace N8Engine
         /// Invoked every frame before rendering.
         /// </summary>
         public static event Action<float> OnUpdate;
-        /// <summary>
-        /// Invoked every frame before rendering and after <see cref="OnUpdate">OnUpdate.</see>
-        /// </summary>
-        public static event Action<float> OnLateUpdate;
-        /// <summary>
-        /// Invoked every frame after <see cref="OnUpdate"/> and before rendering.
-        /// </summary>
-        public static event Action<float> OnPhysicsUpdate;
+        
+        public static event Action<float> OnPrePhysicsUpdate;
+        
+        public static event Action<float> OnPostPhysicsUpdate;
+
         /// <summary>
         /// Invoked every frame before <see cref="OnRender"/> and after <see cref="OnUpdate">OnUpdate.</see>
         /// </summary>
@@ -78,11 +75,12 @@ namespace N8Engine
                     previousDateTime = currentDateTime;
 
                     OnUpdate?.Invoke(timePassed);
-                    OnLateUpdate?.Invoke(timePassed);
-                    OnPhysicsUpdate?.Invoke(timePassed);
-                    OnPreRender.Invoke();
-                    OnRender.Invoke();
-                    OnPostRender.Invoke();
+                    OnPrePhysicsUpdate?.Invoke(timePassed);
+                    OnPostPhysicsUpdate?.Invoke(timePassed);
+                    Debug.Log("something");
+                    OnPreRender?.Invoke();
+                    OnRender?.Invoke();
+                    OnPostRender?.Invoke();
                 }
             }
         }

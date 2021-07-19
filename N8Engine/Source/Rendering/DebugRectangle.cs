@@ -2,17 +2,19 @@
 
 namespace N8Engine.Rendering
 {
-    public struct DebugRectangle
+    internal sealed class DebugRectangle
     {
+        private readonly IMoveable _moveable;
         private Vector _size;
         private Sprite _sprite;
 
-        public Vector Position { get; set; }
+        public Vector Position => _moveable.Position;
         public Vector Size
         {
             get => _size;
             set
             {
+                if (_size == value) return;
                 _sprite = new Sprite(new N8SpriteFile().GetPixels(Pixels).ToArray());
                 _size = value;
             }
@@ -42,10 +44,10 @@ namespace N8Engine.Rendering
             }
         }
 
-        public DebugRectangle(Vector size, Vector position) : this()
+        public DebugRectangle(Vector size, IMoveable moveable)
         {
             Size = size;
-            Position = position;
+            _moveable = moveable;
         }
     }
 }
