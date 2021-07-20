@@ -10,7 +10,7 @@ namespace N8Engine.Rendering
     {
         public static implicit operator N8SpriteFile(string path) => new(path);
 
-        private const int NUMBER_OF_PIXELS = 2;
+        public const int NUMBER_OF_PIXELS = 2;
         private readonly string _path;
 
         private N8SpriteFile(string path) : this() => _path = path;

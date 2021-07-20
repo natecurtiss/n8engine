@@ -33,7 +33,7 @@ namespace N8Engine.Rendering
             }, pixels);
         }
 
-        [Test]
+        /*[Test]
         public void TestRectangleDebugPixels()
         {
             var debugRectangle = new DebugRectangle(new Vector(3, 3), (StaticObject) Vector.Zero);
@@ -49,6 +49,6 @@ namespace N8Engine.Rendering
                 },
                 rectangleDebugPixels
             );
-        }
+        }*/
     }
 }

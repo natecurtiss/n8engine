@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using N8Engine.Debugging;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -15,7 +16,8 @@ namespace N8Engine.Physics
         private Vector _size;
         private Vector _lastPosition;
         private Vector _positionAfterCollision;
-        
+        private Vector _velocity;
+
         public bool DebugModeEnabled { get; set; }
         public Vector Offset { get; set; }
         public Vector Size
@@ -31,9 +33,7 @@ namespace N8Engine.Physics
         }
         public Vector Position => _transform.Position + Offset;
         
-
         private Rectangle Rectangle { get; }
-        private Vector Velocity { get; set; }
 
         internal Collider(Transform transform)
         {
@@ -49,31 +49,38 @@ namespace N8Engine.Physics
 
         private void Update(float deltaTime)
         {
-            Velocity = (_transform.Position - _lastPosition) * deltaTime;
-            _lastPosition = _transform.Position;
+
         }
 
         private void PrePhysicsUpdate(float deltaTime)
         {
+            _velocity = (_transform.Position - _lastPosition) * deltaTime;
+            _lastPosition = _transform.Position;
             _positionAfterCollision = Position;
-            if (Velocity == Vector.Zero) return;
+            if (_velocity == Vector.Zero) return;
             if (Size == Vector.Zero) return;
             foreach (var otherCollider in _allColliders)
             {
                 if (otherCollider == this) continue;
                 if (!otherCollider.Rectangle.IsOverlapping(Rectangle)) continue;
                 if (otherCollider.Size == Vector.Zero) continue;
-
-                var x = Velocity.X > 0 ? otherCollider.Rectangle.Left.X - Rectangle.Extents.X : otherCollider.Rectangle.Right.X + Rectangle.Extents.X;
-                var y = Velocity.Y > 0 ? otherCollider.Rectangle.Bottom.Y - Rectangle.Extents.Y : otherCollider.Rectangle.Top.Y + Rectangle.Extents.Y;
+                var x = 
+                    _velocity.X > 0 ? 
+                    otherCollider.Rectangle.Left.X - Rectangle.Extents.X - 2 : 
+                    _velocity.X == 0 ? 
+                        Position.X : 
+                        otherCollider.Rectangle.Right.X + Rectangle.Extents.X + 2;
+                var y = 
+                    _velocity.Y > 0 ? 
+                    otherCollider.Rectangle.Bottom.Y - Rectangle.Extents.Y - 1 : 
+                    _velocity.Y == 0 ? 
+                        Position.Y : 
+                        otherCollider.Rectangle.Top.Y + Rectangle.Extents.Y + 1;
                 _positionAfterCollision = new Vector(x, y);
                 break;
             }
         }
 
-        private void PostPhysicsUpdate(float deltaTime)
-        {
-            _transform.Position = _positionAfterCollision - Offset;
-        }
+        private void PostPhysicsUpdate(float deltaTime) => _transform.Position = _positionAfterCollision - Offset;
     }
 }

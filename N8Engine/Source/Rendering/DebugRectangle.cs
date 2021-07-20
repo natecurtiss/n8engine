@@ -1,4 +1,5 @@
-﻿using N8Engine.Mathematics;
+﻿using N8Engine.Debugging;
+using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
@@ -15,8 +16,8 @@ namespace N8Engine.Rendering
             set
             {
                 if (_size == value) return;
-                _sprite = new Sprite(new N8SpriteFile().GetPixels(Pixels).ToArray());
                 _size = value;
+                _sprite = new Sprite(new N8SpriteFile().GetPixels(Pixels).ToArray());
             }
         }
         public Sprite Sprite => _sprite ??= new Sprite(new N8SpriteFile().GetPixels(Pixels).ToArray());
@@ -25,21 +26,22 @@ namespace N8Engine.Rendering
         {
             get
             {
+                var x = (int) Size.X / N8SpriteFile.NUMBER_OF_PIXELS;
+                var y = (int) Size.Y;
                 const string color = "{Green,Green}";
-                var pixels = new string[(int) Size.Y]; // TODO add thickness
-                for (var topRowPixelIndex = 0; topRowPixelIndex < Size.X; topRowPixelIndex++) 
+                var pixels = new string[y]; // TODO add thickness
+                for (var topRowPixelIndex = 0; topRowPixelIndex < x; topRowPixelIndex++) 
                     pixels[0] += color;
-                for (var bottomRowPixelIndex = 0; bottomRowPixelIndex < Size.X; bottomRowPixelIndex++) 
-                    pixels[(int)Size.Y - 1] += color;
-                for (var lineIndex = 1; lineIndex < Size.Y - 1; lineIndex++)
+                for (var bottomRowPixelIndex = 0; bottomRowPixelIndex < x; bottomRowPixelIndex++) 
+                    pixels[y - 1] += color;
+                for (var lineIndex = 1; lineIndex < y - 1; lineIndex++)
                 {
-                    for (var pixel = 0; pixel < Size.X; pixel++)
-                        if (pixel == 0 || pixel == (int) Size.X - 1)
+                    for (var pixel = 0; pixel < x; pixel++)
+                        if (pixel == 0 || pixel == x - 1)
                             pixels[lineIndex] += color;
                         else
                             pixels[lineIndex] += "{Clear,Clear}";
                 }
-
                 return pixels;
             }
         }

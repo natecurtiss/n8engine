@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Timers;
-using N8Engine.Debugging;
-using Timer = System.Timers.Timer;
 
 namespace N8Engine
 {
@@ -14,7 +10,7 @@ namespace N8Engine
         /// <summary>
         /// The target framerate of the application.
         /// </summary>
-        private const int MAX_FRAMERATE = 120;
+        private const int MAX_FRAMERATE = 60;
         /// <summary>
         /// The amount of times per second the <see cref="GameLoop"/> will update - based off of
         /// <see cref="MAX_FRAMERATE">TARGET_FRAMERATE.</see>
@@ -77,7 +73,6 @@ namespace N8Engine
                     OnUpdate?.Invoke(timePassed);
                     OnPrePhysicsUpdate?.Invoke(timePassed);
                     OnPostPhysicsUpdate?.Invoke(timePassed);
-                    Debug.Log("something");
                     OnPreRender?.Invoke();
                     OnRender?.Invoke();
                     OnPostRender?.Invoke();

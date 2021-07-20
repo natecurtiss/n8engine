@@ -14,9 +14,9 @@ namespace N8Engine
                 @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\sus.n8sprite",
                 SpriteRenderer
             );
-            // Collider.Size = new Vector(17, 18);
-            // Collider.Offset = Vector.Right * 2;
-            // Collider.DebugModeEnabled = true;
+            Collider.Size = new Vector(34, 18);
+            Collider.Offset = Vector.Right * 3;
+            Collider.DebugModeEnabled = true;
         }
 
         protected override void OnUpdate(float deltaTime)

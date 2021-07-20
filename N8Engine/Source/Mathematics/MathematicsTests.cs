@@ -20,5 +20,15 @@ namespace N8Engine.Mathematics
             var thirdRectangle = new Rectangle(Vector.One * 2, (StaticObject) Vector.Left);
             Assert.IsTrue(secondRectangle.IsOverlapping(thirdRectangle));
         }
+
+        [Test]
+        public void TestRectangleSides()
+        {
+            var rectangle = new Rectangle(Vector.One * 2f, (StaticObject) Vector.Zero);
+            Assert.AreEqual(new Vector(-1f ,0f), rectangle.Left);
+            Assert.AreEqual(new Vector(1f ,0f), rectangle.Right);
+            Assert.AreEqual(new Vector(0f ,-1f), rectangle.Bottom);
+            Assert.AreEqual(new Vector(0f ,1f), rectangle.Top);
+        }
     }
 }
