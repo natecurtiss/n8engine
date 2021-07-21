@@ -62,15 +62,24 @@ namespace N8Engine.Rendering
                 var pixelHasNotMoved = _pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixelToRender;
                 if (pixelHasNotMoved) continue;
 
-                if (new Vector((int) position.X, (int) position.Y) - new Vector((int)lastPosition.X, (int)lastPosition.Y) != Vector.Right)
+                var pixelIsToTheRightOfPreviousPixel = new Vector
+                (
+                    (int) position.X, (int) position.Y) - new Vector((int)lastPosition.X, (int)lastPosition.Y
+                ) == Vector.Right;
+                
+                if (!pixelIsToTheRightOfPreviousPixel)
                     Console.SetCursorPosition((int) position.X, (int) position.Y);
+                lastPosition = position;
+                
                 if (lastForegroundColor != pixelToRender.ForegroundColor) Console.ForegroundColor = pixelToRender.ForegroundColor;
                 if (lastBackgroundColor != pixelToRender.BackgroundColor) Console.BackgroundColor = pixelToRender.BackgroundColor;
-                Console.Write('▒');
                 lastForegroundColor = pixelToRender.ForegroundColor;
                 lastBackgroundColor = pixelToRender.BackgroundColor;
+                
+                Console.Write('▒');
             }
-            
+
+            var lastOldPosition = new Vector();
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Black;
             foreach (var oldPosition in _pixelsToRenderLastFrame.Keys)
@@ -78,7 +87,15 @@ namespace N8Engine.Rendering
                 var positionHasPixel = _pixelsToRender.ContainsKey(oldPosition);
                 if (positionHasPixel) continue;
                 _pixelsToRenderLastFrame.Remove(oldPosition);
-                Console.SetCursorPosition((int) oldPosition.X, (int) oldPosition.Y);
+                
+                var pixelIsToTheRightOfPreviousPixel = new Vector
+                (
+                    (int) oldPosition.X, (int) oldPosition.Y) - new Vector((int)lastOldPosition.X, (int)lastOldPosition.Y
+                ) == Vector.Right;
+                
+                if (!pixelIsToTheRightOfPreviousPixel)
+                    Console.SetCursorPosition((int) oldPosition.X, (int) oldPosition.Y);
+                
                 Console.Write(' ');
             }
         }

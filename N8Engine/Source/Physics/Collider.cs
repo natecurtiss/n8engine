@@ -12,7 +12,7 @@ namespace N8Engine.Physics
         private Vector _size;
 
         public Vector Velocity { get; set; }
-        public bool DebugModeEnabled { get; set; }
+        public bool IsDebugModeEnabled { get; set; }
         public Vector Offset { get; set; }
         public Vector Size
         {

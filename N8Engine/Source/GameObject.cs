@@ -54,7 +54,7 @@ namespace N8Engine
         private void OnRender()
         {
             Renderer.Render(SpriteRenderer.Sprite, Transform.Position);
-            if (Collider.DebugModeEnabled) 
+            if (Collider.IsDebugModeEnabled) 
                 Renderer.Render(Collider.DebugRectangle.Sprite, Collider.DebugRectangle.Position);
         }
     }

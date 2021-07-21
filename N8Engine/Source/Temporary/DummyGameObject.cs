@@ -15,15 +15,15 @@ namespace N8Engine
                 @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\Source\Temporary\sus.n8sprite",
                 SpriteRenderer
             );
-            Collider.Size = new Vector(34, 18);
+            Collider.Size = new Vector(25, 14);
             Collider.Offset = Vector.Right * 3;
-            Collider.DebugModeEnabled = true;
+            // Collider.IsDebugModeEnabled = true;
         }
 
         protected override void OnUpdate(float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
-            Collider.Velocity = Input.MovementAxis * 40;
+            Collider.Velocity = Input.MovementAxis * 100;
             Debug.Log(Collider.Velocity);
         }
     }
