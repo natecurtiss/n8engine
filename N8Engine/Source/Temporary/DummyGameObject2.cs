@@ -24,7 +24,7 @@ namespace N8Engine
 
         protected override void OnUpdate(float deltaTime)
         {
-            Collider.Velocity = _direction * SPEED;
+            // Collider.Velocity = _direction * SPEED;
             if
             (
                 _direction == Vector.Up && Transform.Position.Y >= MAXIMUM_Y_POSITION ||

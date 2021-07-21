@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using N8Engine.Debugging;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
@@ -53,6 +52,12 @@ namespace N8Engine.Rendering
         
         private static void OnPostRender()
         {
+            RenderNewPixels();
+            ClearOldPixels();
+        }
+
+        private static void RenderNewPixels()
+        {
             var lastForegroundColor = ConsoleColor.Black;
             var lastBackgroundColor = ConsoleColor.Black;
             var lastPosition = new Vector();
@@ -71,14 +76,19 @@ namespace N8Engine.Rendering
                     Console.SetCursorPosition((int) position.X, (int) position.Y);
                 lastPosition = position;
                 
-                if (lastForegroundColor != pixelToRender.ForegroundColor) Console.ForegroundColor = pixelToRender.ForegroundColor;
-                if (lastBackgroundColor != pixelToRender.BackgroundColor) Console.BackgroundColor = pixelToRender.BackgroundColor;
+                if (lastForegroundColor != pixelToRender.ForegroundColor) 
+                    Console.ForegroundColor = pixelToRender.ForegroundColor;
+                if (lastBackgroundColor != pixelToRender.BackgroundColor) 
+                    Console.BackgroundColor = pixelToRender.BackgroundColor;
                 lastForegroundColor = pixelToRender.ForegroundColor;
                 lastBackgroundColor = pixelToRender.BackgroundColor;
                 
                 Console.Write('▒');
             }
+        }
 
+        private static void ClearOldPixels()
+        {
             var lastOldPosition = new Vector();
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Black;

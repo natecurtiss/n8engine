@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using N8Engine.Debugging;
 
 namespace N8Engine
@@ -51,12 +52,14 @@ namespace N8Engine
         {
             var frames = 0;
             var fpsCounterTime = 0f;
-            var previousDateTime = DateTime.Now;
+            var previousTime = 0f;
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 
             while (true)
             {
-                var currentDateTime = DateTime.Now;
-                var timePassed = Convert.ToSingle(currentDateTime.Subtract(previousDateTime).TotalSeconds);
+                var currentTime = stopwatch.ElapsedMilliseconds / 1000f;
+                var timePassed = currentTime - previousTime;
 
                 if (timePassed >= UPDATE_RATE)
                 {
@@ -69,7 +72,7 @@ namespace N8Engine
                         fpsCounterTime = 0f;
                     }
 
-                    previousDateTime = currentDateTime;
+                    previousTime = currentTime;
 
                     OnUpdate?.Invoke(timePassed);
                     OnLateUpdate?.Invoke(timePassed);
