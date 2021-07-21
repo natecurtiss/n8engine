@@ -1,4 +1,5 @@
 ﻿using System;
+using N8Engine.Debugging;
 using N8Engine.Rendering;
 using N8Engine.Inputs;
 using N8Engine.Mathematics;
@@ -22,7 +23,8 @@ namespace N8Engine
         protected override void OnUpdate(float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
-            Transform.Position += Input.MovementAxis * 40 * deltaTime;
+            Collider.Velocity = Input.MovementAxis * 40;
+            Debug.Log(Collider.Velocity);
         }
     }
 }

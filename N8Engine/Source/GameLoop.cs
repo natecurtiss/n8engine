@@ -1,4 +1,5 @@
 ﻿using System;
+using N8Engine.Debugging;
 
 namespace N8Engine
 {
@@ -10,21 +11,20 @@ namespace N8Engine
         /// <summary>
         /// The target framerate of the application.
         /// </summary>
-        private const int MAX_FRAMERATE = 60;
+        private const int TARGET_FRAMERATE = 60;
         /// <summary>
         /// The amount of times per second the <see cref="GameLoop"/> will update - based off of
-        /// <see cref="MAX_FRAMERATE">TARGET_FRAMERATE.</see>
+        /// <see cref="TARGET_FRAMERATE">TARGET_FRAMERATE.</see>
         /// </summary>
-        private const float UPDATE_RATE = 1f / MAX_FRAMERATE;
+        private const float UPDATE_RATE = 1f / TARGET_FRAMERATE;
 
         /// <summary>
         /// Invoked every frame before rendering.
         /// </summary>
         public static event Action<float> OnUpdate;
-        
-        public static event Action<float> OnPrePhysicsUpdate;
-        
-        public static event Action<float> OnPostPhysicsUpdate;
+        public static event Action<float> OnLateUpdate;
+
+        public static event Action<float> OnPhysicsUpdate;
 
         /// <summary>
         /// Invoked every frame before <see cref="OnRender"/> and after <see cref="OnUpdate">OnUpdate.</see>
@@ -42,7 +42,7 @@ namespace N8Engine
         /// <summary>
         /// The frames per second of the application.
         /// </summary>
-        public static int FramesPerSecond = MAX_FRAMERATE;
+        public static int FramesPerSecond = TARGET_FRAMERATE;
 
         /// <summary>
         /// Starts running the <see cref="GameLoop">GameLoop.</see>
@@ -52,6 +52,7 @@ namespace N8Engine
             var frames = 0;
             var fpsCounterTime = 0f;
             var previousDateTime = DateTime.Now;
+
             while (true)
             {
                 var currentDateTime = DateTime.Now;
@@ -71,8 +72,8 @@ namespace N8Engine
                     previousDateTime = currentDateTime;
 
                     OnUpdate?.Invoke(timePassed);
-                    OnPrePhysicsUpdate?.Invoke(timePassed);
-                    OnPostPhysicsUpdate?.Invoke(timePassed);
+                    OnLateUpdate?.Invoke(timePassed);
+                    OnPhysicsUpdate?.Invoke(timePassed);
                     OnPreRender?.Invoke();
                     OnRender?.Invoke();
                     OnPostRender?.Invoke();

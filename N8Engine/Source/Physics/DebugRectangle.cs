@@ -1,15 +1,14 @@
-﻿using N8Engine.Debugging;
-using N8Engine.Mathematics;
+﻿using N8Engine.Mathematics;
+using N8Engine.Rendering;
 
-namespace N8Engine.Rendering
+namespace N8Engine.Physics
 {
     internal sealed class DebugRectangle
     {
-        private readonly IMoveable _moveable;
         private Vector _size;
         private Sprite _sprite;
 
-        public Vector Position => _moveable.Position;
+        public Vector Position { get; set; }
         public Vector Size
         {
             get => _size;
@@ -22,7 +21,7 @@ namespace N8Engine.Rendering
         }
         public Sprite Sprite => _sprite ??= new Sprite(new N8SpriteFile().GetPixels(Pixels).ToArray());
 
-        internal string[] Pixels
+        private string[] Pixels
         {
             get
             {
@@ -46,10 +45,10 @@ namespace N8Engine.Rendering
             }
         }
 
-        public DebugRectangle(Vector size, IMoveable moveable)
+        public DebugRectangle(Vector size, Vector position = default)
         {
             Size = size;
-            _moveable = moveable;
+            Position = position;
         }
     }
 }
