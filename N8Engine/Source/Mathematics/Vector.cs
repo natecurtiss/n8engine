@@ -100,6 +100,10 @@ namespace N8Engine.Mathematics
         /// A <see cref="Vector"/> of (1, 0).
         /// </summary>
         public static Vector Right => new(1f, 0f);
+
+        // TODO summary
+        public Vector AbsoluteValue => new(X.AbsoluteValue(), Y.AbsoluteValue());
+        
         /// <summary>
         /// The un-square-rooted <see cref="Magnitude"/> of the <see cref="Vector">Vector.</see>
         /// </summary>

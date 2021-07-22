@@ -22,7 +22,7 @@ namespace N8Engine.Rendering
         public static void Initialize()
         {
             ConsoleText.SetCurrentFont("Arial", 5);
-            ConsoleQuickEditMode.IsEnabled = false;
+            ConsoleQuickEditMode.IsEnabled = false; 
             ConsoleResizing.Maximize();
             Console.CursorVisible = false;
         }

@@ -25,7 +25,8 @@ namespace N8Engine.Physics
             }
         }
         public Vector Position => _transform.Position + Offset;
-        private Rectangle BoundingBox { get; set; }
+        private BoundingBox BoundingBoxCurrentFrame { get; set; }
+        private BoundingBox BoundingBoxNextFrame { get; set; }
 
         internal Collider(Transform transform)
         {
@@ -38,8 +39,8 @@ namespace N8Engine.Physics
 
         private void OnLateUpdate(float deltaTime)
         {
-            DebugRectangle.Position = Position;
-            BoundingBox = new Rectangle(Size, Position + Velocity * deltaTime);
+            BoundingBoxCurrentFrame = new BoundingBox(Size, Position);
+            BoundingBoxNextFrame = new BoundingBox(Size, Position + Velocity * deltaTime);
         }
 
         private void OnPhysicsUpdate(float deltaTime)
@@ -47,13 +48,19 @@ namespace N8Engine.Physics
             foreach (var otherCollider in _allColliders)
             {
                 if (otherCollider == this) continue;
-                if (BoundingBox.IsOverlapping(otherCollider.BoundingBox))
+                if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
-                    Velocity = Vector.Zero;
+                    var directionOfCollision = BoundingBoxCurrentFrame.DirectionRelativeTo(otherCollider.BoundingBoxCurrentFrame);
+                    Velocity = new Vector
+                    (
+                        directionOfCollision is Direction.Left or Direction.Right ? 0f : Velocity.X,
+                        directionOfCollision is Direction.Top or Direction.Down ? 0f : Velocity.Y
+                    );
                     break;
                 }
             }
             _transform.Position += Velocity * deltaTime;
+            DebugRectangle.Position = Position;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace N8Engine
                 SpriteRenderer
             );
             
-            Collider.Size = new Vector(25, 14);
+            Collider.Size = new Vector(20, 15);
             Collider.Offset = Vector.Right * 3;
             // Collider.IsDebugModeEnabled = true;
         }
