@@ -22,7 +22,7 @@ namespace N8Engine
         protected override void OnUpdate(float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
-            Collider.Velocity = Input.MovementAxis * 75;
+            Collider.Velocity = Input.MovementAxis * 2000 * deltaTime;
         }
     }
 }

@@ -7,6 +7,7 @@ namespace N8Engine.Physics
     {
         // TODO add this to each Scene object later
         private static readonly List<Collider> _allColliders = new();
+
         internal readonly DebugRectangle DebugRectangle;
         private readonly Transform _transform;
         private Vector _size;
