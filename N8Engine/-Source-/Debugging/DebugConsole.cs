@@ -15,7 +15,6 @@ namespace N8Engine.Debugging
         public DebugConsole()
         {
             ConsoleError.RedirectToFile(_pathToLogsFolder);
-            throw new Exception("wow");
             var processStartInfo = new ProcessStartInfo($"{PathExtensions.PathToRootFolder}\\DebugConsole\\bin\\Release\\net5.0\\DebugConsole.exe")
             {
                 WindowStyle = ProcessWindowStyle.Normal, 

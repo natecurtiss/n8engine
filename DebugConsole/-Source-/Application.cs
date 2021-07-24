@@ -21,15 +21,19 @@ namespace DebugConsole
             {
                 var fileLines = new List<string>();
                 using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                using (var streamReader = new StreamReader(fileStream, Encoding.Default))
-                    while (streamReader.ReadLine() != null)
-                        fileLines.Add(streamReader.ReadLine());
+                using (var streamReader = new StreamReader(fileStream))
+                {
+                    var line = string.Empty;
+                    while ((line = streamReader.ReadLine()) != null)
+                        fileLines.Add(line);
+                }
+                
                 if (fileLines.Count != _numberOfWrittenLinesInConsole)
-                    for (var line = _numberOfWrittenLinesInConsole - 1; line < fileLines.Count; line++)
-                    {
-                        Console.WriteLine(line);
-                        _numberOfWrittenLinesInConsole++;
-                    }
+                {
+                    for (var line = _numberOfWrittenLinesInConsole; line < fileLines.Count; line++)
+                        Console.WriteLine(fileLines[line]);
+                    _numberOfWrittenLinesInConsole += fileLines.Count;
+                }
             }
         }
     }

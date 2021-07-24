@@ -6,9 +6,6 @@ namespace Shared
 {
     internal static class Application
     {
-        public static void Initialize()
-        {
-            
-        }
+        public static void Initialize() { }
     }
 }

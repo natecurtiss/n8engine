@@ -13,8 +13,12 @@ namespace N8Engine.Native
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern IntPtr GetStdHandle(int nStdHandle);
 
-        public static readonly IntPtr StandardInputHandle = GetStdHandle(-10);
-        public static readonly IntPtr StandardOutputHandle = GetStdHandle(-11);
-        public static readonly IntPtr StandardErrorHandle = GetStdHandle(-12);
+        public const int STANDARD_INPUT_HANDLE_NUMBER = -10;
+        public const int STANDARD_OUTPUT_HANDLE_NUMBER = -11;
+        public const int STANDARD_ERROR_HANDLE_NUMBER = -12;
+
+        public static readonly IntPtr StandardInputHandle = GetStdHandle(STANDARD_INPUT_HANDLE_NUMBER);
+        public static readonly IntPtr StandardOutputHandle = GetStdHandle(STANDARD_OUTPUT_HANDLE_NUMBER);
+        public static readonly IntPtr StandardErrorHandle = GetStdHandle(STANDARD_ERROR_HANDLE_NUMBER);
     }
 }

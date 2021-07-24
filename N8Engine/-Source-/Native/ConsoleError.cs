@@ -13,7 +13,7 @@ namespace N8Engine.Native
         {
             var fileStream = new FileStream(path, FileMode.Open);
             var handle = fileStream.Handle;
-            SetStdHandle(-12, handle);
+            SetStdHandle(ConsoleWindow.STANDARD_ERROR_HANDLE_NUMBER, handle);
         }
     }
 }
