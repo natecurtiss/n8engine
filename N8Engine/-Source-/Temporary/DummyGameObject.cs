@@ -25,7 +25,7 @@ namespace N8Engine
         protected override void OnUpdate(float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
-            Collider.Velocity = Input.MovementAxis * 2000 * deltaTime;
+            Collider.Velocity = Input.MovementAxis * 5000 * deltaTime;
             if (Key.Spacebar.WasPressedDownThisFrame())
             {
                 if (SceneManager.CurrentScene.Name == "Sample Scene")

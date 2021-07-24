@@ -12,7 +12,7 @@ namespace N8Engine
         /// <summary>
         /// The target framerate of the application.
         /// </summary>
-        private const int TARGET_FRAMERATE = 60;
+        private const int TARGET_FRAMERATE = 48;
         /// <summary>
         /// The amount of times per second the <see cref="GameLoop"/> will update - based off of
         /// <see cref="TARGET_FRAMERATE">TARGET_FRAMERATE.</see>
