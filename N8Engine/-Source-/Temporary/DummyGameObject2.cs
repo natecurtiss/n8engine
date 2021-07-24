@@ -1,6 +1,7 @@
 ﻿using N8Engine.Mathematics;
 using N8Engine.Native;
 using N8Engine.Rendering;
+using Shared;
 
 namespace N8Engine
 {
@@ -14,7 +15,7 @@ namespace N8Engine
         {
             SpriteRenderer.Sprite = new Sprite
             (
-                PathExtensions.PathToRootFolder + @"\N8Engine\-Source-\Temporary\sus.n8sprite",
+                PathExtensions.PathToRootFolder + "\\N8Engine\\-Source-\\Temporary\\sus.n8sprite",
                 SpriteRenderer
             );
             

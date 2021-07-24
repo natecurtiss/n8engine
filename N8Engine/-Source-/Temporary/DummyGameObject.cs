@@ -3,6 +3,7 @@ using N8Engine.Rendering;
 using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.SceneManagement;
+using Shared;
 
 namespace N8Engine
 {
@@ -14,7 +15,7 @@ namespace N8Engine
         {
             SpriteRenderer.Sprite = new Sprite
             (
-                @"C:\Users\NateDawg\RiderProjects\N8Engine" + @"\N8Engine\-Source-\Temporary\sus.n8sprite",
+                PathExtensions.PathToRootFolder + "\\N8Engine\\-Source-\\Temporary\\sus.n8sprite",
                 SpriteRenderer
             );
             Collider.Size = new Vector(20, 15);

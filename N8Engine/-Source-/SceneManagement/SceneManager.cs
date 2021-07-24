@@ -3,6 +3,7 @@ using System.IO;
 using N8Engine.Debugging;
 using N8Engine.Mathematics;
 using N8Engine.Native;
+using Shared;
 
 namespace N8Engine.SceneManagement
 {

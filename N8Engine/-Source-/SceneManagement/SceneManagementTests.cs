@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using N8Engine.Native;
 using NUnit.Framework;
+using Shared;
 
 namespace N8Engine.SceneManagement
 {
