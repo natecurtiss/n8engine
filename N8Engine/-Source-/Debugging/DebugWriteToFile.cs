@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using Shared;
 
 namespace N8Engine.Debugging
 {
@@ -9,7 +10,7 @@ namespace N8Engine.Debugging
 
         public DebugWriteToFile()
         {
-            const string path = @"C:\Users\NateDawg\RiderProjects\N8Engine\N8Engine\-Source-\Temporary\debug.txt";
+            var path = $"{PathExtensions.PathToLogsFolder}\\N8Engine\\-Source-\\Debugging\\debug.txt";
             File.WriteAllText(path, string.Empty);
             FileStream traceLog = new(path, FileMode.OpenOrCreate);
             _textWriterTraceListener = new TextWriterTraceListener(traceLog);

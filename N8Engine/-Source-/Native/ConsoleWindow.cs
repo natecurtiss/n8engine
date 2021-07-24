@@ -15,5 +15,6 @@ namespace N8Engine.Native
 
         public static readonly IntPtr StandardInputHandle = GetStdHandle(-10);
         public static readonly IntPtr StandardOutputHandle = GetStdHandle(-11);
+        public static readonly IntPtr StandardErrorHandle = GetStdHandle(-12);
     }
 }

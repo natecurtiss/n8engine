@@ -1,33 +1,36 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using N8Engine.Native;
+using Shared;
 
 namespace N8Engine.Debugging
 {
-    [Obsolete]
     internal sealed class DebugConsole : IDebugOutput
     {
-        private readonly StreamWriter _standardOutput;
-        private readonly StreamReader _standardInput;
+        private readonly string _pathToLogsFolder = PathExtensions.PathToLogsFolder;
         
         public DebugConsole()
         {
-            var processStartInfo = new ProcessStartInfo("cmd.exe")
+            ConsoleError.RedirectToFile(_pathToLogsFolder);
+            throw new Exception("wow");
+            var processStartInfo = new ProcessStartInfo($"{PathExtensions.PathToRootFolder}\\DebugConsole\\bin\\Release\\net5.0\\DebugConsole.exe")
             {
-                RedirectStandardError = true,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
+                WindowStyle = ProcessWindowStyle.Normal, 
+                UseShellExecute = true,
+                CreateNoWindow = false
             };
-            var process = Process.Start(processStartInfo);
-                    
-            _standardOutput = process?.StandardInput;
-            _standardInput = process?.StandardOutput;
+            Process.Start(processStartInfo);
         }
 
         public void Write(string message)
         {
-            _standardOutput.WriteLine("Hello world!");
-            _standardInput.Close();
+            return;
+            using var fileStream = new FileStream(_pathToLogsFolder, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
+            using var streamWriter = new StreamWriter(fileStream);
+            streamWriter.WriteLine(message);
         }
     }
 }

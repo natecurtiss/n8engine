@@ -1,6 +1,4 @@
-﻿using N8Engine;
-
-namespace N8Engine.Debugging
+﻿namespace N8Engine.Debugging
 {
     /// <summary>
     /// Methods that make debugging code easier.
@@ -15,7 +13,7 @@ namespace N8Engine.Debugging
         /// <summary>
         /// Initializes the <see cref="Debug"/> class - called internally by <see cref="Application"> Application. </see>
         /// </summary>
-        internal static void Initialize() => _debugOutput = new DebugWriteToFile();
+        internal static void Initialize() => _debugOutput = new DebugConsole();
 
         /// <summary>
         /// Prints a message to a text file.

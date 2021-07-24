@@ -1,4 +1,5 @@
 ﻿using System;
+using N8Engine.Debugging;
 using N8Engine.Rendering;
 using N8Engine.Inputs;
 using N8Engine.Mathematics;
@@ -27,6 +28,7 @@ namespace N8Engine
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
             Collider.Velocity = Input.MovementAxis * 5000 * deltaTime;
+            Debug.Log("update");
             if (Key.Spacebar.WasPressedDownThisFrame())
             {
                 if (SceneManager.CurrentScene.Name == "Sample Scene")
