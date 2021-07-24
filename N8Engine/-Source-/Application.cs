@@ -1,5 +1,6 @@
 ﻿using N8Engine;
 using N8Engine.Debugging;
+using N8Engine.Inputs;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 
@@ -20,6 +21,7 @@ namespace N8Engine
             Debug.Initialize();
             SceneManager.Initialize();
             Renderer.Initialize();
+            Input.Initialize();
             Window.Initialize();
             GameLoop.Run();
         }

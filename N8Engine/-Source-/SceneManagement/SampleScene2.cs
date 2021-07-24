@@ -7,7 +7,6 @@ namespace N8Engine.SceneManagement
     {
         protected override void OnSceneLoaded()
         {
-            Debug.Log("wow");
             var gameObject = GameObject.Create<DummyGameObject>();
         }
     }

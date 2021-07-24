@@ -34,18 +34,18 @@ namespace N8Engine.Physics
             _transform = transform;
             _allColliders.Add(this);
             DebugRectangle = new DebugRectangle(Size, Position);
-            GameLoop.OnLateUpdate += OnLateUpdate;
+            GameLoop.OnPostUpdate += PostUpdate;
             GameLoop.OnPhysicsUpdate += OnPhysicsUpdate;
         }
 
         internal void Destroy()
         {
             _allColliders.Remove(this);
-            GameLoop.OnLateUpdate -= OnLateUpdate;
+            GameLoop.OnPostUpdate -= PostUpdate;
             GameLoop.OnPhysicsUpdate -= OnPhysicsUpdate;
         }
 
-        private void OnLateUpdate(float deltaTime)
+        private void PostUpdate(float deltaTime)
         {
             BoundingBoxCurrentFrame = new BoundingBox(Size, Position);
             BoundingBoxNextFrame = new BoundingBox(Size, Position + Velocity * deltaTime);

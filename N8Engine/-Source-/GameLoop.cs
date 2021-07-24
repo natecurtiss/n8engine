@@ -19,11 +19,12 @@ namespace N8Engine
         /// </summary>
         private const float UPDATE_RATE = 1f / TARGET_FRAMERATE;
 
+        public static event Action<float> OnPreUpdate;
         /// <summary>
         /// Invoked every frame before rendering.
         /// </summary>
         public static event Action<float> OnUpdate;
-        public static event Action<float> OnLateUpdate;
+        public static event Action<float> OnPostUpdate;
 
         public static event Action<float> OnPhysicsUpdate;
 
@@ -52,14 +53,14 @@ namespace N8Engine
         {
             var frames = 0;
             var fpsCounterTime = 0f;
-            var previousTime = 0f;
+            var previousTimeInMilliseconds = 0.0;
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             while (true)
             {
-                var currentTime = stopwatch.ElapsedMilliseconds / 1000f;
-                var timePassed = currentTime - previousTime;
+                var currentTimeInMilliseconds = stopwatch.ElapsedMilliseconds;
+                var timePassed = (float) (currentTimeInMilliseconds - previousTimeInMilliseconds) / 1000f;
 
                 if (timePassed >= UPDATE_RATE)
                 {
@@ -72,10 +73,11 @@ namespace N8Engine
                         fpsCounterTime = 0f;
                     }
 
-                    previousTime = currentTime;
+                    previousTimeInMilliseconds = currentTimeInMilliseconds;
 
+                    OnPreUpdate?.Invoke(timePassed);
                     OnUpdate?.Invoke(timePassed);
-                    OnLateUpdate?.Invoke(timePassed);
+                    OnPostUpdate?.Invoke(timePassed);
                     OnPhysicsUpdate?.Invoke(timePassed);
                     OnPreRender?.Invoke();
                     OnRender?.Invoke();
