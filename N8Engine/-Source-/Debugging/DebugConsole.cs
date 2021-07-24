@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using N8Engine.Native;
 using Shared;
 
@@ -14,6 +12,7 @@ namespace N8Engine.Debugging
         
         public DebugConsole()
         {
+            File.WriteAllText(_pathToLogsFolder, string.Empty);
             ConsoleError.RedirectToFile(_pathToLogsFolder);
             var processStartInfo = new ProcessStartInfo($"{PathExtensions.PathToRootFolder}\\DebugConsole\\bin\\Release\\net5.0\\DebugConsole.exe")
             {
@@ -24,12 +23,6 @@ namespace N8Engine.Debugging
             Process.Start(processStartInfo);
         }
 
-        public void Write(string message)
-        {
-            return;
-            using var fileStream = new FileStream(_pathToLogsFolder, FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
-            using var streamWriter = new StreamWriter(fileStream);
-            streamWriter.WriteLine(message);
-        }
+        public void Write(string message) => Console.Error.WriteLine(message);
     }
 }

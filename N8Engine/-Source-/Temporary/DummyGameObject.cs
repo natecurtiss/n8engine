@@ -22,13 +22,13 @@ namespace N8Engine
             Collider.Size = new Vector(20, 15);
             Collider.Offset = Vector.Right * 3;
             // Collider.IsDebugModeEnabled = true;
+            Debug.Log("sick");
         }
 
         protected override void OnUpdate(float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
             Collider.Velocity = Input.MovementAxis * 5000 * deltaTime;
-            Debug.Log("update");
             if (Key.Spacebar.WasPressedDownThisFrame())
             {
                 if (SceneManager.CurrentScene.Name == "Sample Scene")
