@@ -1,6 +1,7 @@
 ﻿using N8Engine;
 using N8Engine.Debugging;
 using N8Engine.Rendering;
+using N8Engine.SceneManagement;
 
 Application.Start();
 
@@ -17,9 +18,9 @@ namespace N8Engine
         public static void Start()
         {
             Debug.Initialize();
-            Window.Initialize();
+            SceneManager.Initialize();
             Renderer.Initialize();
-            DummyGame.Start();
+            Window.Initialize();
             GameLoop.Run();
         }
     }

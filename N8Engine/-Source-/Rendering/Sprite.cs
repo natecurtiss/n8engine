@@ -6,8 +6,8 @@
 
         public Sprite(string path, SpriteRenderer spriteRenderer)
         {
-            N8SpriteFile file = path;
-            Pixels = file.GetPixels().ToArray();
+            var file = new N8SpriteFile(path);
+            Pixels = file.Pixels.ToArray();
             for (var i = 0; i < Pixels.Length; i++) 
                 Pixels[i].SortingOrder = spriteRenderer.SortingOrder;
         }

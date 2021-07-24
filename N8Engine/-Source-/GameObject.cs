@@ -1,6 +1,9 @@
-﻿using N8Engine.Mathematics;
+﻿using System;
+using N8Engine.Debugging;
+using N8Engine.Mathematics;
 using N8Engine.Physics;
 using N8Engine.Rendering;
+using N8Engine.SceneManagement;
 
 namespace N8Engine
 {
@@ -21,19 +24,16 @@ namespace N8Engine
         public static T Create<T>() where T : GameObject, new()
         {
             var gameObject = new T();
+            SceneManager.CurrentScene.GameObjects.Add(gameObject);
             gameObject.Initialize();
             return gameObject;
         }
 
-        /// <summary>
-        /// Initializes the <see cref="GameObject"/> - called by <see cref="Create{T}">Create{T}.</see>
-        /// </summary>
-        private void Initialize()
+        public void Destroy()
         {
-            Collider = new Collider(Transform);
-            GameLoop.OnUpdate += OnUpdate;
-            GameLoop.OnRender += OnRender;
-            OnStart();
+            Collider.Destroy();
+            GameLoop.OnUpdate -= OnUpdate;
+            GameLoop.OnRender -= OnRender;
         }
 
         /// <summary>
@@ -46,6 +46,17 @@ namespace N8Engine
         /// </summary>
         /// <param name="deltaTime"> The time since the last frame. </param>
         protected virtual void OnUpdate(float deltaTime) { }
+        
+        /// <summary>
+        /// Initializes the <see cref="GameObject"/> - called by <see cref="Create{T}">Create{T}.</see>
+        /// </summary>
+        private void Initialize()
+        {
+            Collider = new Collider(Transform);
+            GameLoop.OnUpdate += OnUpdate;
+            GameLoop.OnRender += OnRender;
+            OnStart();
+        }
 
         /// <summary>
         /// Sends the <see cref="Sprite"/> to the <see cref="Renderer"/> to be rendered -

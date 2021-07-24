@@ -1,12 +1,16 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5cfe2154_002Db6a4_002D47cd_002D9e3d_002Dc3519053e029/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="PhysicsTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5cfe2154_002Db6a4_002D47cd_002D9e3d_002Dc3519053e029/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="PhysicsTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Physics.PhysicsTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Rendering.RenderingTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.SceneManagement.SceneManagementTests.TestLoadScenesFromScenesFile&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.Native.NativeTests.TestPathToRootFolder&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::FEA166FB-16B4-474E-9982-65486655B36D::net5.0::N8Engine.SceneManagement.SceneManagementTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=61b6e457_002D431b_002D41f4_002Db57a_002D81cc17aa6f65/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b7633e2d_002Daceb_002D487f_002D8148_002Dcf4532be70fc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=b7633e2d_002Daceb_002D487f_002D8148_002Dcf4532be70fc/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

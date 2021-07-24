@@ -6,17 +6,15 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    internal readonly struct N8SpriteFile
+    internal struct N8SpriteFile
     {
-        public static implicit operator N8SpriteFile(string path) => new(path);
-
         public const int NUMBER_OF_PIXELS = 2;
         private readonly string _path;
 
-        private N8SpriteFile(string path) : this() => _path = path;
-        
-        public List<Pixel> GetPixels() => GetPixels(File.ReadAllLines(_path));
+        public List<Pixel> Pixels => GetPixels(File.ReadAllLines(_path));
 
+        public N8SpriteFile(string path) => _path = path;
+        
         public List<Pixel> GetPixels(string[] fileText)
         {
             var originalPixels = GetPixelsNotRelativeToCenterPixel(fileText);
@@ -31,11 +29,11 @@ namespace N8Engine.Rendering
             return newPixels;
         }
 
-        private List<Pixel> GetPixelsNotRelativeToCenterPixel(string[] fileText)
+        private List<Pixel> GetPixelsNotRelativeToCenterPixel(IReadOnlyList<string> fileText)
         {
             var pixels = new List<Pixel>();
             var lineIndexFlippedUpsideDown = 0;
-            for (var lineIndex = fileText.Length - 1; lineIndex >= 0; lineIndex--)
+            for (var lineIndex = fileText.Count - 1; lineIndex >= 0; lineIndex--)
             {
                 var currentLine = fileText[lineIndex];
                 var pixelSetsInLine = SeparateCurrentLine(currentLine);
@@ -87,7 +85,7 @@ namespace N8Engine.Rendering
             return new Pixel(foregroundColor, backgroundColor, position);
         }
 
-        private Vector GetCenterPixelPosition(List<Pixel> pixels)
+        private Vector GetCenterPixelPosition(IReadOnlyCollection<Pixel> pixels)
         {
             var height = pixels.Last().Position.Y;
             var width = pixels.Last().Position.X;
@@ -97,7 +95,7 @@ namespace N8Engine.Rendering
             return center;
         }
 
-        private Vector GetLocalPositionRelativeToCenterPixel(List<Pixel> allPixels, Pixel thisPixel) => 
+        private Vector GetLocalPositionRelativeToCenterPixel(IReadOnlyCollection<Pixel> allPixels, Pixel thisPixel) => 
             thisPixel.Position - GetCenterPixelPosition(allPixels);
     }
 }

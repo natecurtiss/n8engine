@@ -6,9 +6,7 @@ namespace N8Engine
     {
         public static void Start()
         {
-            var firstGameObject = GameObject.Create<DummyGameObject>();
-            firstGameObject.Transform.Position += Vector.Right * 100;
-            var secondGameObject = GameObject.Create<DummyGameObject2>();
+
         }
     }
 }

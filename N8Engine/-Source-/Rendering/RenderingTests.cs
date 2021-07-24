@@ -1,5 +1,6 @@
 ﻿using System;
 using N8Engine.Mathematics;
+using N8Engine.Native;
 using NUnit.Framework;
 
 namespace N8Engine.Rendering
@@ -9,13 +10,7 @@ namespace N8Engine.Rendering
         [Test]
         public void TestGetPixelsFromN8SpriteFile()
         {
-            var file = new N8SpriteFile();
-            var pixels = file.GetPixels(new[]
-            {
-                "{Green,Green}{Clear,Clear}{Green,Green}",
-                "{Black,White},{Black,Black}{Clear,Clear}",
-                "{Black,White},{Black,Black}{Clear,Clear}"
-            }).ToArray();
+            var file = new N8SpriteFile(PathExtensions.PathToRootFolder + "/N8Engine/-Source-/Rendering/dummy.n8sprite");
             Assert.AreEqual(new Pixel[]
             {
                 new(ConsoleColor.Black, ConsoleColor.White, new Vector(-2,-1)),
@@ -30,25 +25,7 @@ namespace N8Engine.Rendering
                 new(ConsoleColor.Green, ConsoleColor.Green, new Vector(-1,1)),
                 new(ConsoleColor.Green, ConsoleColor.Green, new Vector(2,1)),
                 new(ConsoleColor.Green, ConsoleColor.Green, new Vector(3,1)),
-            }, pixels);
+            }, file.Pixels);
         }
-
-        /*[Test]
-        public void TestRectangleDebugPixels()
-        {
-            var debugRectangle = new DebugRectangle(new Vector(3, 3), (StaticObject) Vector.Zero);
-            var rectangleDebugPixels = debugRectangle.Pixels;
-            foreach (var pixel in rectangleDebugPixels) Console.WriteLine(pixel + '\n');
-            Assert.AreEqual
-            (
-                new[]
-                {
-                    "{Green,Green}{Green,Green}{Green,Green}",
-                    "{Green,Green}{Clear,Clear}{Green,Green}",
-                    "{Green,Green}{Green,Green}{Green,Green}"
-                },
-                rectangleDebugPixels
-            );
-        }*/
     }
 }

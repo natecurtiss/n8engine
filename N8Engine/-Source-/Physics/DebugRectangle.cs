@@ -28,7 +28,7 @@ namespace N8Engine.Physics
                 var x = (int) Size.X / N8SpriteFile.NUMBER_OF_PIXELS;
                 var y = (int) Size.Y;
                 const string color = "{Green,Green}";
-                var pixels = new string[y]; // TODO add thickness
+                var pixels = new string[y];
                 for (var topRowPixelIndex = 0; topRowPixelIndex < x; topRowPixelIndex++) 
                     pixels[0] += color;
                 for (var bottomRowPixelIndex = 0; bottomRowPixelIndex < x; bottomRowPixelIndex++) 

@@ -38,6 +38,13 @@ namespace N8Engine.Physics
             GameLoop.OnPhysicsUpdate += OnPhysicsUpdate;
         }
 
+        internal void Destroy()
+        {
+            _allColliders.Remove(this);
+            GameLoop.OnLateUpdate -= OnLateUpdate;
+            GameLoop.OnPhysicsUpdate -= OnPhysicsUpdate;
+        }
+
         private void OnLateUpdate(float deltaTime)
         {
             BoundingBoxCurrentFrame = new BoundingBox(Size, Position);
