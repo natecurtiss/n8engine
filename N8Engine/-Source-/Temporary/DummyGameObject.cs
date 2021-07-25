@@ -2,6 +2,7 @@
 using N8Engine.Rendering;
 using N8Engine.Inputs;
 using N8Engine.Mathematics;
+using N8Engine.Physics;
 using N8Engine.SceneManagement;
 using Shared;
 
@@ -26,13 +27,15 @@ namespace N8Engine
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
             Collider.Velocity = Input.MovementAxis * 3000 * deltaTime;
-            if (Key.Spacebar.WasPressedDownThisFrame())
-            {
-                if (SceneManager.CurrentScene.Name == "Sample Scene")
-                    SceneManager.LoadNextScene();
-                else
-                    SceneManager.LoadPreviousScene();
-            }
+        }
+
+        protected override void OnCollision(Collider otherCollider)
+        {
+            if (otherCollider.GameObject.Name != "wow") return;
+            if (SceneManager.CurrentScene.Name == "Sample Scene")
+                SceneManager.LoadNextScene();
+            else
+                SceneManager.LoadPreviousScene();
         }
     }
 }

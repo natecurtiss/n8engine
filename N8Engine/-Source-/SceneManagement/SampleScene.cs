@@ -8,7 +8,8 @@ namespace N8Engine.SceneManagement
         {
             var firstGameObject = GameObject.Create<DummyGameObject>();
             firstGameObject.Transform.Position += Vector.Right * 100;
-            var secondGameObject = GameObject.Create<DummyGameObject2>();      
+            var secondGameObject = GameObject.Create<DummyGameObject2>(); 
+            secondGameObject.Name = "wow";
         }
     }
 }

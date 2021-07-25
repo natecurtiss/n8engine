@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using N8Engine.Mathematics;
+﻿using N8Engine.Mathematics;
+using N8Engine.SceneManagement;
 
 namespace N8Engine.Physics
 {
     public sealed class Collider
     {
-        // TODO add this to each Scene object later
-        private static readonly List<Collider> _allColliders = new();
-
+        public readonly GameObject GameObject;
         internal readonly DebugRectangle DebugRectangle;
         private readonly Transform _transform;
         private Vector _size;
@@ -29,10 +27,10 @@ namespace N8Engine.Physics
         private BoundingBox BoundingBoxCurrentFrame { get; set; }
         private BoundingBox BoundingBoxNextFrame { get; set; }
 
-        internal Collider(Transform transform)
+        internal Collider(GameObject gameObject)
         {
-            _transform = transform;
-            _allColliders.Add(this);
+            GameObject = gameObject;
+            _transform = gameObject.Transform;
             DebugRectangle = new DebugRectangle(Size, Position);
             GameLoop.OnPostUpdate += PostUpdate;
             GameLoop.OnPhysicsUpdate += OnPhysicsUpdate;
@@ -40,7 +38,6 @@ namespace N8Engine.Physics
 
         internal void Destroy()
         {
-            _allColliders.Remove(this);
             GameLoop.OnPostUpdate -= PostUpdate;
             GameLoop.OnPhysicsUpdate -= OnPhysicsUpdate;
         }
@@ -53,8 +50,9 @@ namespace N8Engine.Physics
 
         private void OnPhysicsUpdate(float deltaTime)
         {
-            foreach (var otherCollider in _allColliders)
+            foreach (var otherGameObject in SceneManager.CurrentScene.GameObjects)
             {
+                var otherCollider = otherGameObject.Collider;
                 if (otherCollider == this) continue;
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
@@ -64,6 +62,7 @@ namespace N8Engine.Physics
                         directionOfCollision is Direction.Left or Direction.Right ? 0f : Velocity.X,
                         directionOfCollision is Direction.Top or Direction.Down ? 0f : Velocity.Y
                     );
+                    if (directionOfCollision != Direction.None) GameObject.CollidedWith(otherCollider);
                     break;
                 }
             }

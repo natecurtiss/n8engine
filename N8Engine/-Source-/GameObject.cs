@@ -10,6 +10,7 @@ namespace N8Engine
     /// </summary>
     public abstract class GameObject
     {
+        public string Name { get; set; }
         public Transform Transform { get; } = new();
         public SpriteRenderer SpriteRenderer { get; } = new();
         public Collider Collider { get; private set; }
@@ -19,11 +20,12 @@ namespace N8Engine
         /// </summary>
         /// <typeparam name="T"> The type of <see cref="GameObject"/> to create. </typeparam>
         /// <returns> The <see cref="GameObject"/> created. </returns>
-        public static T Create<T>() where T : GameObject, new()
+        public static T Create<T>(string name = default) where T : GameObject, new()
         {
             var gameObject = new T();
             SceneManager.CurrentScene.GameObjects.Add(gameObject);
             gameObject.Initialize();
+            gameObject.Name = name;
             return gameObject;
         }
 
@@ -33,6 +35,8 @@ namespace N8Engine
             GameLoop.OnUpdate -= OnUpdate;
             GameLoop.OnRender -= OnRender;
         }
+
+        internal void CollidedWith(Collider otherCollider) => OnCollision(otherCollider);
 
         /// <summary>
         /// Event method called on the first frame.
@@ -45,12 +49,14 @@ namespace N8Engine
         /// <param name="deltaTime"> The time since the last frame. </param>
         protected virtual void OnUpdate(float deltaTime) { }
         
+        protected virtual void OnCollision(Collider otherCollider) { }
+        
         /// <summary>
         /// Initializes the <see cref="GameObject"/> - called by <see cref="Create{T}">Create{T}.</see>
         /// </summary>
         private void Initialize()
         {
-            Collider = new Collider(Transform);
+            Collider = new Collider(this);
             GameLoop.OnUpdate += OnUpdate;
             GameLoop.OnRender += OnRender;
             OnStart();
