@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using N8Engine.Native;
 using N8Engine.Mathematics;
-using N8Engine;
-using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
-using Console = System.Console;
 
 namespace N8Engine.Rendering
 {

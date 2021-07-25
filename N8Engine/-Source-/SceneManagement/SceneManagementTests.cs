@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using NUnit.Framework;
-using N8Engine;
 
 namespace N8Engine.SceneManagement
 {
@@ -9,7 +8,7 @@ namespace N8Engine.SceneManagement
         [Test]
         public void TestLoadScenesFromScenesFile()
         {
-            var path = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories)[0];
+            var path = Directory.GetFiles(PathExtensions.PathToRootFolder, "internal.scenes", SearchOption.AllDirectories)[0];
             var expectedScenes = new Scene[]
             {
                 new SampleScene

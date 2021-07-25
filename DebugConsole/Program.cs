@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using N8Engine;
 
-Application.Initialize();
-
 namespace N8Engine
 {
-    internal static class Application
+    internal static class Program
     {
         private static int _numberOfWrittenLinesInConsole;
-        
-        public static void Initialize()
+
+        private static void Main()
         {
             Console.Title = "N8Engine Debug Console";
             var path = PathExtensions.PathToLogsFolder;

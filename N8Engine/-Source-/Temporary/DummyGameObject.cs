@@ -4,7 +4,6 @@ using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
 using N8Engine.SceneManagement;
-using N8Engine;
 
 namespace N8Engine
 {
@@ -26,7 +25,7 @@ namespace N8Engine
         protected override void OnUpdate(float deltaTime)
         {
             Console.Title = GameLoop.FramesPerSecond.ToString();
-            Collider.Velocity = Input.MovementAxis * 3000 * deltaTime;
+            Collider.Velocity = Input.MovementAxis * 2250 * deltaTime;
         }
 
         protected override void OnCollision(Collider otherCollider)
