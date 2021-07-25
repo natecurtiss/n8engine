@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using N8Engine.Native;
 using N8Engine.Mathematics;
+using Shared;
 using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
 using Console = System.Console;
 
@@ -22,9 +25,10 @@ namespace N8Engine.Rendering
         public static void Initialize()
         {
             ConsoleText.SetCurrentFont("Arial", 5);
-            ConsoleQuickEditMode.IsEnabled = false; 
+            ConsoleQuickEditMode.IsEnabled = false;
             ConsoleResizing.Maximize();
             Console.CursorVisible = false;
+            ConsoleError.CreateErrorConsole();
         }
 
         public static Vector GetWindowPositionAsWorldPosition(Vector position) => position + _span / 2;
