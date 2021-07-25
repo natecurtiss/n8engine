@@ -2,7 +2,7 @@
 using N8Engine.Mathematics;
 using N8Engine.Native;
 using NUnit.Framework;
-using Shared;
+using N8Engine;
 
 namespace N8Engine.Rendering
 {

@@ -1,11 +1,10 @@
 ﻿using N8Engine.Mathematics;
-using N8Engine.Native;
 using N8Engine.Rendering;
-using Shared;
+using N8Engine;
 
 namespace N8Engine
 {
-    public sealed class DummyGameObject2 : GameObject
+    internal sealed class DummyGameObject2 : GameObject
     {
         private const float MAXIMUM_Y_POSITION = 50f;
         private const float SPEED = 10f;
@@ -26,7 +25,7 @@ namespace N8Engine
 
         protected override void OnUpdate(float deltaTime)
         {
-            // Collider.Velocity = _direction * SPEED;
+            Collider.Velocity = _direction * SPEED;
             if
             (
                 _direction == Vector.Up && Transform.Position.Y >= MAXIMUM_Y_POSITION ||

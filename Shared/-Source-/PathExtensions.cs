@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Shared
+namespace N8Engine
 {
     public static class PathExtensions
     {

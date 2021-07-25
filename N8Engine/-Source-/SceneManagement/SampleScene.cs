@@ -2,7 +2,7 @@
 
 namespace N8Engine.SceneManagement
 {
-    public sealed class SampleScene : Scene
+    internal sealed class SampleScene : Scene
     {
         protected override void OnSceneLoaded()
         {

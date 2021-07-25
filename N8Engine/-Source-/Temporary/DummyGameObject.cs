@@ -4,7 +4,7 @@ using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
 using N8Engine.SceneManagement;
-using Shared;
+using N8Engine;
 
 namespace N8Engine
 {

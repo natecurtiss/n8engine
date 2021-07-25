@@ -1,8 +1,8 @@
-﻿using Shared;
+﻿using N8Engine;
 
 Application.Initialize();
 
-namespace Shared
+namespace N8Engine
 {
     internal static class Application
     {

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using Shared;
+using N8Engine;
 
 namespace N8Engine.Native
 {

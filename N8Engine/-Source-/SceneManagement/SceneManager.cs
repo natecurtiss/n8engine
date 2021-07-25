@@ -1,6 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using N8Engine.Mathematics;
-using Shared;
+using N8Engine;
 
 namespace N8Engine.SceneManagement
 {
@@ -11,8 +12,23 @@ namespace N8Engine.SceneManagement
 
         internal static void Initialize()
         {
-            var scenesFilePath = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories)[0];
-            _scenes = new ScenesFile(scenesFilePath).Scenes;
+            var allScenesFiles = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories);
+            var userScenesFile = string.Empty;
+            foreach (var scenesFile in allScenesFiles)
+                if (!scenesFile.Contains("ignore.scenes"))
+                {
+                    userScenesFile = scenesFile;
+                    break;
+                }
+            // var userScenesFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "ignore.scenes", SearchOption.AllDirectories)[0];
+            try
+            {
+                _scenes = new ScenesFile(userScenesFile).Scenes;
+            }
+            catch (Exception)
+            {
+                throw new FileNotFoundException("No .scenes file was found, please add one :)");
+            }
             LoadScene(_scenes[0]);
         }
 

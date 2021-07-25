@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using DebugConsole;
-using Shared;
+using N8Engine;
 
 Application.Initialize();
 
-namespace DebugConsole
+namespace N8Engine
 {
     internal static class Application
     {
