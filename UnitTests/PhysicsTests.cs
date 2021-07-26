@@ -1,7 +1,8 @@
 ﻿using N8Engine.Mathematics;
+using N8Engine.Physics;
 using NUnit.Framework;
 
-namespace N8Engine.Physics
+namespace N8Engine.Tests
 {
     internal sealed class PhysicsTests
     {

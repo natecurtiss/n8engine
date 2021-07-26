@@ -9,4 +9,8 @@
       <ProjectReference Include="..\N8Engine\N8Engine.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="NUnit" Version="3.13.2" />
+    </ItemGroup>
+
 </Project>

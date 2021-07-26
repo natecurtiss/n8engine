@@ -1,7 +1,8 @@
 ﻿using System.IO;
+using N8Engine.SceneManagement;
 using NUnit.Framework;
 
-namespace N8Engine.SceneManagement
+namespace N8Engine.Tests
 {
     internal sealed class SceneManagementTests
     {
@@ -13,11 +14,11 @@ namespace N8Engine.SceneManagement
             {
                 new SampleScene
                 {
-                    Index = 0, Name = "Sample Scene"
+                    Index = 1, Name = "Sample Scene"
                 },
                 new SampleScene2
                 {
-                    Index = 1, Name = "Sample Scene 2"
+                    Index = 0, Name = "Sample Scene 2"
                 }
             };
             var actualScenes = new ScenesFile(path).Scenes;

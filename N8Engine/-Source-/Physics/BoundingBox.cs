@@ -2,7 +2,7 @@
 
 namespace N8Engine.Physics
 {
-    internal struct BoundingBox
+    internal readonly struct BoundingBox
     {
         public Vector Left => Vector.Left * Extents.X + Position;
         public Vector Right => Vector.Right * Extents.X + Position;
