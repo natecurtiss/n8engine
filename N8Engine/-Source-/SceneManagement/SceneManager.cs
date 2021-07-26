@@ -6,16 +6,16 @@ namespace N8Engine.SceneManagement
 {
     public static class SceneManager
     {
-        internal static Scene CurrentScene { get; private set; }
+        public static Scene CurrentScene { get; private set; }
         private static Scene[] _scenes;
 
         internal static void Initialize()
         {
             var sceneFile = string.Empty;
-            sceneFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "internal.scenes", SearchOption.AllDirectories)[0];
+            sceneFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories)[0];
             if (sceneFile == string.Empty)
                 throw new FileNotFoundException("No .scenes file was found, please add one :)");
-            
+
             _scenes = new ScenesFile(sceneFile).Scenes;
             Array.Sort(_scenes, (first, second) => first.Index - second.Index);
             LoadScene(_scenes[0]);

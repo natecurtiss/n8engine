@@ -1,6 +1,5 @@
 ﻿using N8Engine.Mathematics;
 using N8Engine.Rendering;
-using N8Engine;
 
 namespace N8Engine
 {
@@ -14,7 +13,7 @@ namespace N8Engine
         {
             SpriteRenderer.Sprite = new Sprite
             (
-                PathExtensions.PathToRootFolder + "\\N8Engine\\-Source-\\Temporary\\sus.n8sprite",
+                PathExtensions.PathToRootFolder + "\\TestGame\\Sprites\\sus.n8sprite",
                 SpriteRenderer
             );
             
@@ -25,6 +24,7 @@ namespace N8Engine
 
         protected override void OnUpdate(float deltaTime)
         {
+            return;
             Collider.Velocity = _direction * SPEED;
             if
             (

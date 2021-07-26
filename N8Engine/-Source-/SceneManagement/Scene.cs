@@ -5,8 +5,9 @@ namespace N8Engine.SceneManagement
     public abstract class Scene
     {
         internal readonly List<GameObject> GameObjects = new();
-        internal string Name { get; set; }
-        internal int Index { get; set; }
+
+        public string Name { get; internal set; }
+        public int Index { get; internal set; }
 
         internal void Load() => OnSceneLoaded();
 
@@ -18,5 +19,7 @@ namespace N8Engine.SceneManagement
         }
 
         protected abstract void OnSceneLoaded();
+        
+        
     }
 }

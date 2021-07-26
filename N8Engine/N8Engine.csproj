@@ -10,6 +10,12 @@
         <Description>An open-source C# terminal game engine.</Description>
         <RepositoryUrl>https://github.com/N-8-D-e-v/n8engine</RepositoryUrl>
         <PackageId>n8engine</PackageId>
+        <PackageLicenseUrl>https://www.mit.edu/~amini/LICENSE.md</PackageLicenseUrl>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
     <ItemGroup>

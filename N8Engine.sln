@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugConsole", "DebugConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A9700642-7370-4333-ABE3-A14CFF14F35F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A9700642-7370-4333-ABE3-A14CFF14F35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9700642-7370-4333-ABE3-A14CFF14F35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9700642-7370-4333-ABE3-A14CFF14F35F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

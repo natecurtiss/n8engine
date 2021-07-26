@@ -1,4 +1,5 @@
-﻿using N8Engine.Inputs;
+﻿using System;
+using N8Engine.Inputs;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 
@@ -9,6 +10,8 @@ namespace N8Engine
     /// </summary>
     public static class Application
     {
+        public static event Action OnLaunch;
+        
         /// <summary>
         /// Starts the application - MUST be called externally in the main method.
         /// </summary>
@@ -19,6 +22,7 @@ namespace N8Engine
             SceneManager.Initialize();
             Renderer.Initialize();
             Input.Initialize();
+            OnLaunch?.Invoke();
             GameLoop.Run();
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace N8Engine.SceneManagement
 {
-    public struct ScenesFile
+    public readonly struct ScenesFile
     {
         private readonly string _path;
 
@@ -23,6 +23,9 @@ namespace N8Engine.SceneManagement
                     eachSceneAsTextWithDataSplitUp[i] = eachSceneAsText[i].Split(',');
                 for (var scene = 0; scene < eachSceneAsTextWithDataSplitUp.Length; scene++)
                     for (var data = 0; data < eachSceneAsTextWithDataSplitUp[scene].Length; data++)
+                        eachSceneAsTextWithDataSplitUp[scene][data] = eachSceneAsTextWithDataSplitUp[scene][data].Replace('|', ',');
+                for (var scene = 0; scene < eachSceneAsTextWithDataSplitUp.Length; scene++)
+                    for (var data = 0; data < eachSceneAsTextWithDataSplitUp[scene].Length; data++)
                     {
                         eachSceneAsTextWithDataSplitUp[scene][data] = eachSceneAsTextWithDataSplitUp[scene][data].Split('"')[1];
                         eachSceneAsTextWithDataSplitUp[scene][data] = eachSceneAsTextWithDataSplitUp[scene][data].Replace(@"""", string.Empty);
@@ -31,14 +34,16 @@ namespace N8Engine.SceneManagement
                 var scenes = new Scene[eachSceneAsTextWithDataSplitUp.Length];
                 for (var i = 0; i < eachSceneAsTextWithDataSplitUp.Length; i++)
                 {
-                    var type = Type.GetType(eachSceneAsTextWithDataSplitUp[i][0]);
-                    var typeException = new InvalidOperationException($"Invalid scene class name in *.scenes file at index {i}!");
+                    var assemblyName = eachSceneAsTextWithDataSplitUp[i][0];
+                    
+                    var type = Type.GetType(eachSceneAsTextWithDataSplitUp[i][1] + $", {assemblyName}");
+                    var typeException = new InvalidOperationException($"Invalid class or assembly name in .scenes file at item {i}!");
                     scenes[i] = Activator.CreateInstance(type ?? throw typeException) as Scene;
 
-                    scenes[i].Name = eachSceneAsTextWithDataSplitUp[i][1];
+                    scenes[i].Name = eachSceneAsTextWithDataSplitUp[i][2];
                     
-                    var indexException = new InvalidOperationException($"Invalid scene index value in *.scenes file at index {i}!");
-                    if (!int.TryParse(eachSceneAsTextWithDataSplitUp[i][2], out var index))
+                    var indexException = new InvalidOperationException($"Invalid scene index value in .scenes file at index {i}!");
+                    if (!int.TryParse(eachSceneAsTextWithDataSplitUp[i][3], out var index))
                         throw indexException;
                     scenes[i].Index = index;
                 }

@@ -10,7 +10,7 @@ namespace N8Engine.Tests
         [Test]
         public void TestGetPixelsFromN8SpriteFile()
         {
-            var file = new N8SpriteFile($"{PathExtensions.PathToRootFolder}\\N8Engine\\-Source-\\Temporary\\dummy.n8sprite");
+            var file = new N8SpriteFile(PathExtensions.PathToRootFolder + "\\UnitTests\\Sprites\\dummy.n8sprite");
             Assert.AreEqual(new Pixel[]
             {
                 new(ConsoleColor.Black, ConsoleColor.White, new Vector(-2,-1)),

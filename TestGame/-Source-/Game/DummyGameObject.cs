@@ -1,5 +1,4 @@
-﻿using System;
-using N8Engine.Rendering;
+﻿using N8Engine.Rendering;
 using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
@@ -13,7 +12,7 @@ namespace N8Engine
         {
             SpriteRenderer.Sprite = new Sprite
             (
-                PathExtensions.PathToRootFolder + "\\N8Engine\\-Source-\\Temporary\\sus.n8sprite",
+                PathExtensions.PathToRootFolder + "\\TestGame\\Sprites\\sus.n8sprite",
                 SpriteRenderer
             );
             Collider.Size = new Vector(20, 15);
@@ -24,7 +23,6 @@ namespace N8Engine
 
         protected override void OnUpdate(float deltaTime)
         {
-            Console.Title = GameLoop.FramesPerSecond.ToString();
             Collider.Velocity = Input.MovementAxis * 2250 * deltaTime;
         }
 

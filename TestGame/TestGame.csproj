@@ -7,11 +7,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\N8Engine\N8Engine.csproj" />
-      <ProjectReference Include="..\TestGame\TestGame.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="NUnit" Version="3.13.2" />
     </ItemGroup>
 
 </Project>
