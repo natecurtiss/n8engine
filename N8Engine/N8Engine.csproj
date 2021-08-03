@@ -12,6 +12,8 @@
         <PackageId>n8engine</PackageId>
         <PackageLicenseUrl>https://www.mit.edu/~amini/LICENSE.md</PackageLicenseUrl>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <PackageVersion>1.0.1</PackageVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -22,9 +24,5 @@
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>UnitTests</_Parameter1>
         </AssemblyAttribute>
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
     </ItemGroup>
 </Project>

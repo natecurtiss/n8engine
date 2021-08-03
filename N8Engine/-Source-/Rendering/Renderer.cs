@@ -114,7 +114,7 @@ namespace N8Engine.Rendering
                 if (!pixelIsToTheRightOfPreviousPixel)
                     Console.SetCursorPosition((int) oldPosition.X, (int) oldPosition.Y);
                 
-                Console.Write(' ');
+                Console.Write(" ");
             }
         }
     }

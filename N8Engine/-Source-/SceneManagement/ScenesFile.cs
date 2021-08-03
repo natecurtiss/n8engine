@@ -23,9 +23,6 @@ namespace N8Engine.SceneManagement
                     eachSceneAsTextWithDataSplitUp[i] = eachSceneAsText[i].Split(',');
                 for (var scene = 0; scene < eachSceneAsTextWithDataSplitUp.Length; scene++)
                     for (var data = 0; data < eachSceneAsTextWithDataSplitUp[scene].Length; data++)
-                        eachSceneAsTextWithDataSplitUp[scene][data] = eachSceneAsTextWithDataSplitUp[scene][data].Replace('|', ',');
-                for (var scene = 0; scene < eachSceneAsTextWithDataSplitUp.Length; scene++)
-                    for (var data = 0; data < eachSceneAsTextWithDataSplitUp[scene].Length; data++)
                     {
                         eachSceneAsTextWithDataSplitUp[scene][data] = eachSceneAsTextWithDataSplitUp[scene][data].Split('"')[1];
                         eachSceneAsTextWithDataSplitUp[scene][data] = eachSceneAsTextWithDataSplitUp[scene][data].Replace(@"""", string.Empty);
@@ -34,10 +31,10 @@ namespace N8Engine.SceneManagement
                 var scenes = new Scene[eachSceneAsTextWithDataSplitUp.Length];
                 for (var i = 0; i < eachSceneAsTextWithDataSplitUp.Length; i++)
                 {
-                    var assemblyName = eachSceneAsTextWithDataSplitUp[i][0];
+                    var projectName = eachSceneAsTextWithDataSplitUp[i][0];
                     
-                    var type = Type.GetType(eachSceneAsTextWithDataSplitUp[i][1] + $", {assemblyName}");
-                    var typeException = new InvalidOperationException($"Invalid class or assembly name in .scenes file at item {i}!");
+                    var type = Type.GetType(eachSceneAsTextWithDataSplitUp[i][1] + $", {projectName}, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+                    var typeException = new InvalidOperationException($"Invalid class or project name in .scenes file at index {i}!");
                     scenes[i] = Activator.CreateInstance(type ?? throw typeException) as Scene;
 
                     scenes[i].Name = eachSceneAsTextWithDataSplitUp[i][2];

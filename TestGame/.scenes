@@ -1,12 +1,12 @@
 ﻿{
-    assembly_name = "TestGame| Version=1.0.0.0| Culture=neutral| PublicKeyToken=null",
+    project_name = "TestGame",
     class_name = "N8Engine.SceneManagement.SampleScene",
     scene_name = "Sample Scene",
     scene_index = "0"
 }
 
 {
-    assembly_name = "TestGame| Version=1.0.0.0| Culture=neutral| PublicKeyToken=null",
+    project_name = "TestGame",
     class_name = "N8Engine.SceneManagement.SampleScene2",
     scene_name = "Sample Scene 2",
     scene_index = "1"
