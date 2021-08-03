@@ -1,4 +1,7 @@
-﻿namespace N8Engine.SceneManagement
+﻿using N8Engine;
+using N8Engine.SceneManagement;
+
+namespace TestGame
 {
     public sealed class SampleScene2 : Scene
     {

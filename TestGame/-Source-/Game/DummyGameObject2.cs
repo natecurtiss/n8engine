@@ -1,7 +1,8 @@
-﻿using N8Engine.Mathematics;
+﻿using N8Engine;
+using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
-namespace N8Engine
+namespace TestGame
 {
     internal sealed class DummyGameObject2 : GameObject
     {

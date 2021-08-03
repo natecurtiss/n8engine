@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using N8Engine.SceneManagement;
 using NUnit.Framework;
+using TestGame;
 
 namespace N8Engine.Tests
 {
