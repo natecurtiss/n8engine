@@ -11,11 +11,9 @@ namespace N8Engine
             _pathToLogsFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.logs", SearchOption.AllDirectories)[0];
             if (_pathToLogsFile == string.Empty)
                 throw new FileNotFoundException("No .logs file was found, please add one :)");
+            File.WriteAllText(_pathToLogsFile, string.Empty);
         }
 
-        public static void Log(object message)
-        {
-            File.AppendAllLinesAsync(_pathToLogsFile, new[] { message.ToString() });
-        }
+        public static void Log(object message) => File.AppendAllLinesAsync(_pathToLogsFile, new[] { message.ToString() });
     }
 }
