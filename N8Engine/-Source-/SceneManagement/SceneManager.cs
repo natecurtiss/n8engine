@@ -12,9 +12,14 @@ namespace N8Engine.SceneManagement
         internal static void Initialize()
         {
             var sceneFile = string.Empty;
-            sceneFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories)[0];
-            if (sceneFile == string.Empty)
+            try
+            {
+                sceneFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories)[0];
+            }
+            catch (IndexOutOfRangeException)
+            {
                 throw new FileNotFoundException("No .scenes file was found, please add one :)");
+            }
 
             _scenes = new ScenesFile(sceneFile).Scenes;
             Array.Sort(_scenes, (first, second) => first.Index - second.Index);

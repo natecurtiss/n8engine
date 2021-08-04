@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace N8Engine
 {
@@ -8,9 +9,15 @@ namespace N8Engine
         
         internal static void Initialize()
         {
-            _pathToLogsFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.logs", SearchOption.AllDirectories)[0];
-            if (_pathToLogsFile == string.Empty)
+            try
+            {
+                _pathToLogsFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.logs", SearchOption.AllDirectories)[0];
+            }
+            catch (IndexOutOfRangeException)
+            {
                 throw new FileNotFoundException("No .logs file was found, please add one :)");
+            }
+
             File.WriteAllText(_pathToLogsFile, string.Empty);
         }
 
