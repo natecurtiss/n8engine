@@ -8,8 +8,10 @@ namespace N8Engine.Physics
         public readonly GameObject GameObject;
         internal readonly DebugRectangle DebugRectangle;
         private readonly Transform _transform;
+        
         private Vector _size;
 
+        public bool IsTrigger { get; set; }
         public Vector Velocity { get; set; }
         public bool IsDebugModeEnabled { get; set; }
         public Vector Offset { get; set; }
@@ -54,6 +56,7 @@ namespace N8Engine.Physics
             {
                 var otherCollider = otherGameObject.Collider;
                 if (otherCollider == this) continue;
+                if (otherCollider.Size == Vector.Zero) continue;
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
                     var directionOfCollision = BoundingBoxCurrentFrame.DirectionRelativeTo(otherCollider.BoundingBoxCurrentFrame);
@@ -62,7 +65,13 @@ namespace N8Engine.Physics
                         directionOfCollision is Direction.Left or Direction.Right ? 0f : Velocity.X,
                         directionOfCollision is Direction.Top or Direction.Down ? 0f : Velocity.Y
                     );
-                    if (directionOfCollision != Direction.None) GameObject.CollidedWith(otherCollider);
+                    if (directionOfCollision != Direction.None)
+                    {
+                        if (otherCollider.IsTrigger || IsTrigger)
+                            GameObject.TriggeredWith(otherCollider);
+                        else
+                            GameObject.CollidedWith(otherCollider);
+                    }
                     break;
                 }
             }

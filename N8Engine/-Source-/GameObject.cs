@@ -43,6 +43,8 @@ namespace N8Engine
         protected virtual void OnUpdate(float deltaTime) { }
         
         protected virtual void OnCollision(Collider otherCollider) { }
+        
+        protected virtual void OnTrigger(Collider otherTrigger) { }
 
         public void Destroy()
         {
@@ -53,6 +55,8 @@ namespace N8Engine
         }
 
         internal void CollidedWith(Collider otherCollider) => OnCollision(otherCollider);
+
+        internal void TriggeredWith(Collider otherTrigger) => OnTrigger(otherTrigger);
 
         /// <summary>
         /// Initializes the <see cref="GameObject"/> - called by <see cref="Create{T}">Create{T}.</see>
