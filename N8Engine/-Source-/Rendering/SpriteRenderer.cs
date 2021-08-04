@@ -4,7 +4,7 @@
     {
         public Sprite Sprite { get; set; }
         public int SortingOrder { get; set; }
-        
+
         internal SpriteRenderer() { }
     }
 }

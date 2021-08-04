@@ -32,17 +32,17 @@ namespace N8Engine.Physics
             GameObject = gameObject;
             _transform = gameObject.Transform;
             DebugRectangle = new DebugRectangle(Size, Position);
-            GameLoop.OnPostUpdate += PostUpdate;
+            GameLoop.OnPostUpdate += OnPostUpdate;
             GameLoop.OnPhysicsUpdate += OnPhysicsUpdate;
         }
 
         internal void Destroy()
         {
-            GameLoop.OnPostUpdate -= PostUpdate;
+            GameLoop.OnPostUpdate -= OnPostUpdate;
             GameLoop.OnPhysicsUpdate -= OnPhysicsUpdate;
         }
 
-        private void PostUpdate(float deltaTime)
+        private void OnPostUpdate(float deltaTime)
         {
             BoundingBoxCurrentFrame = new BoundingBox(Size, Position);
             BoundingBoxNextFrame = new BoundingBox(Size, Position + Velocity * deltaTime);

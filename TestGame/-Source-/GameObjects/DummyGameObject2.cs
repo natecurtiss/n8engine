@@ -15,7 +15,8 @@ namespace TestGame
             SpriteRenderer.Sprite = new Sprite
             (
                 PathExtensions.PathToRootFolder + "\\TestGame\\Sprites\\sus.n8sprite",
-                SpriteRenderer
+                SpriteRenderer,
+                Vector.One / 2f
             );
             
             Collider.Size = new Vector(20, 15);

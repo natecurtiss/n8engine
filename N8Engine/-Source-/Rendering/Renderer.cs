@@ -85,11 +85,6 @@ namespace N8Engine.Rendering
                 lastBackgroundColor = pixelToRender.BackgroundColor;
 
                 Console.Write("▒");
-                continue;
-                var output = string.Empty;
-                for (var i = 0; i < N8SpriteFile.NUMBER_OF_PIXELS; i++)
-                    output += "▒"; 
-                Console.Write(output);
             }
         }
 

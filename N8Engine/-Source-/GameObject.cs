@@ -1,6 +1,7 @@
 ﻿using N8Engine.Mathematics;
 using N8Engine.Physics;
 using N8Engine.Rendering;
+using N8Engine.Rendering.Animation;
 using N8Engine.SceneManagement;
 
 namespace N8Engine
@@ -14,6 +15,7 @@ namespace N8Engine
         public Transform Transform { get; } = new();
         public SpriteRenderer SpriteRenderer { get; } = new();
         public Collider Collider { get; private set; }
+        public AnimationPlayer AnimationPlayer { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="GameObject"/> of the specified type.
@@ -28,16 +30,7 @@ namespace N8Engine
             gameObject.Name = name;
             return gameObject;
         }
-
-        public void Destroy()
-        {
-            Collider.Destroy();
-            GameLoop.OnUpdate -= OnUpdate;
-            GameLoop.OnRender -= OnRender;
-        }
-
-        internal void CollidedWith(Collider otherCollider) => OnCollision(otherCollider);
-
+        
         /// <summary>
         /// Event method called on the first frame.
         /// </summary>
@@ -50,13 +43,24 @@ namespace N8Engine
         protected virtual void OnUpdate(float deltaTime) { }
         
         protected virtual void OnCollision(Collider otherCollider) { }
-        
+
+        public void Destroy()
+        {
+            Collider.Destroy();
+            AnimationPlayer.Destroy();
+            GameLoop.OnUpdate -= OnUpdate;
+            GameLoop.OnRender -= OnRender;
+        }
+
+        internal void CollidedWith(Collider otherCollider) => OnCollision(otherCollider);
+
         /// <summary>
         /// Initializes the <see cref="GameObject"/> - called by <see cref="Create{T}">Create{T}.</see>
         /// </summary>
         private void Initialize()
         {
             Collider = new Collider(this);
+            AnimationPlayer = new AnimationPlayer(this);
             GameLoop.OnUpdate += OnUpdate;
             GameLoop.OnRender += OnRender;
             OnStart();
@@ -68,7 +72,8 @@ namespace N8Engine
         /// </summary>
         private void OnRender()
         {
-            Renderer.Render(SpriteRenderer.Sprite, Transform.Position);
+            if (SpriteRenderer.Sprite != null)
+                Renderer.Render(SpriteRenderer.Sprite, Transform.Position);
             if (Collider.IsDebugModeEnabled) 
                 Renderer.Render(Collider.DebugRectangle.Sprite, Collider.DebugRectangle.Position);
         }

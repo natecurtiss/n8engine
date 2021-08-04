@@ -32,7 +32,6 @@ namespace N8Engine.SceneManagement
                 for (var i = 0; i < eachSceneAsTextWithDataSplitUp.Length; i++)
                 {
                     var projectName = eachSceneAsTextWithDataSplitUp[i][0];
-                    
                     var type = Type.GetType(eachSceneAsTextWithDataSplitUp[i][1] + $", {projectName}, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
                     var typeException = new InvalidOperationException($"Invalid class or project name in .scenes file at index {i}!");
                     scenes[i] = Activator.CreateInstance(type ?? throw typeException) as Scene;
