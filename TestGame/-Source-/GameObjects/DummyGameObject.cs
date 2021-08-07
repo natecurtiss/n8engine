@@ -21,7 +21,17 @@ namespace TestGame
 
         protected override void OnUpdate(float deltaTime)
         {
-            AnimationPlayer.Animation = Input.MovementAxis.X switch
+            var axisInput = new Vector();
+            if (Key.A.IsPressed() || Key.LeftArrow.IsPressed()) 
+                axisInput.X = -1f;
+            else if (Key.D.IsPressed() || Key.RightArrow.IsPressed()) 
+                axisInput.X = 1f;
+            if (Key.W.IsPressed() || Key.UpArrow.IsPressed()) 
+                axisInput.Y = 1f;
+            else if (Key.S.IsPressed() || Key.DownArrow.IsPressed()) 
+                axisInput.Y = -1f;
+            
+            AnimationPlayer.Animation = axisInput.X switch
             {
                 > 0 => _walkAnimation,
                 < 0 => _flippedWalkAnimation,
@@ -29,7 +39,7 @@ namespace TestGame
                 0 when AnimationPlayer.Animation == _flippedWalkAnimation => _flippedIdleAnimation,
                 _ => AnimationPlayer.Animation
             };
-            Collider.Velocity = Vector.Right * Input.MovementAxis * 2250 * deltaTime;
+            Collider.Velocity = Vector.Right * axisInput * 2250 * deltaTime;
         }
 
         protected override void OnCollision(Collider otherCollider)

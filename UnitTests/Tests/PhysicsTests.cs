@@ -22,15 +22,5 @@ namespace N8Engine.Tests
             var thirdRectangle = new BoundingBox(Vector.One * 2, Vector.Left);
             Assert.IsTrue(secondRectangle.IsOverlapping(thirdRectangle));
         }
-
-        [Test]
-        public void TestBoundingBoxSides()
-        {
-            var rectangle = new BoundingBox(Vector.One * 2f, Vector.Zero);
-            Assert.AreEqual(new Vector(-1f ,0f), rectangle.Left);
-            Assert.AreEqual(new Vector(1f ,0f), rectangle.Right);
-            Assert.AreEqual(new Vector(0f ,-1f), rectangle.Bottom);
-            Assert.AreEqual(new Vector(0f ,1f), rectangle.Top);
-        }
     }
 }

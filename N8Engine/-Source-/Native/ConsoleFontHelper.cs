@@ -3,23 +3,25 @@ using System.Runtime.InteropServices;
 
 namespace N8Engine.Native
 {
-    internal static class ConsoleText
+    internal static class ConsoleFontHelper
     {
+        // https://docs.microsoft.com/en-us/windows/console/getcurrentconsolefontex
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         private static extern bool GetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool useMaximumWindow, ref FontInfo currentConsoleFontOutput);
         
+        // https://docs.microsoft.com/en-us/windows/console/setcurrentconsolefontex
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        private static extern bool SetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool maximumWindow, ref FontInfo currentConsoleFontOutput);
-
+        private static extern bool SetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool useMaximumWindow, ref FontInfo currentConsoleFontOutput);
+        
         public static void SetCurrentFont(string font, short fontSize = 1, bool useMaximumWindow = false)
         {
             var before = new FontInfo()
             {
                 SizeInBytes = Marshal.SizeOf<FontInfo>()
             };
-            GetCurrentConsoleFontEx(ConsoleWindow.StandardOutputHandle, useMaximumWindow, ref before);
+            GetCurrentConsoleFontEx(CommonConsoleWindowInfo.StandardOutputHandle, useMaximumWindow, ref before);
             var after = new FontInfo()
             {
                 SizeInBytes = Marshal.SizeOf<FontInfo>(),
@@ -29,10 +31,11 @@ namespace N8Engine.Native
                 FontWeight = 400,
                 FontSize = fontSize > 0 ? fontSize : before.FontSize
             };
-            SetCurrentConsoleFontEx(ConsoleWindow.StandardOutputHandle, useMaximumWindow, ref after);
+            SetCurrentConsoleFontEx(CommonConsoleWindowInfo.StandardOutputHandle, useMaximumWindow, ref after);
         }
     }
 
+    // https://docs.microsoft.com/en-us/windows/console/console-font-infoex
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct FontInfo
     {

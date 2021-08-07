@@ -20,7 +20,6 @@ namespace N8Engine.SceneManagement
             {
                 throw new FileNotFoundException("No .scenes file was found, please add one :)");
             }
-
             _scenes = new ScenesFile(sceneFile).Scenes;
             Array.Sort(_scenes, (first, second) => first.Index - second.Index);
             LoadScene(_scenes[0]);
@@ -49,14 +48,14 @@ namespace N8Engine.SceneManagement
         public static void LoadNextScene()
         {
             var currentSceneIndex = CurrentScene.Index;
-            var nextSceneIndex = (currentSceneIndex + 1).Clamped(0, _scenes.Length - 1);
+            var nextSceneIndex = (currentSceneIndex + 1).ClampedBetween(0, _scenes.Length - 1);
             LoadScene(nextSceneIndex);
         }
         
         public static void LoadPreviousScene()
         {
             var currentSceneIndex = CurrentScene.Index;
-            var previousSceneIndex = (currentSceneIndex - 1).Clamped(0, _scenes.Length - 1);
+            var previousSceneIndex = (currentSceneIndex - 1).ClampedBetween(0, _scenes.Length - 1);
             LoadScene(previousSceneIndex);
         }
 

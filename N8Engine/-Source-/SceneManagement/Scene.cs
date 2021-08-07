@@ -6,8 +6,8 @@ namespace N8Engine.SceneManagement
     {
         internal readonly List<GameObject> GameObjects = new();
 
-        public string Name { get; internal set; }
         public int Index { get; internal set; }
+        public string Name { get; internal set; }
 
         internal void Load() => OnSceneLoaded();
 

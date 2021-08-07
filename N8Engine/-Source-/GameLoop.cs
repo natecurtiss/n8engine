@@ -3,50 +3,27 @@ using System.Diagnostics;
 
 namespace N8Engine
 {
-    /// <summary>
-    /// The class that handles the game loop.
-    /// </summary>
     internal static class GameLoop
     {
-        /// <summary>
-        /// The target framerate of the application.
-        /// </summary>
-        private const int TARGET_FRAMERATE = 48;
-        /// <summary>
-        /// The amount of times per second the <see cref="GameLoop"/> will update - based off of
-        /// <see cref="TARGET_FRAMERATE">TARGET_FRAMERATE.</see>
-        /// </summary>
-        private const float UPDATE_RATE = 1f / TARGET_FRAMERATE;
-
         public static event Action<float> OnPreUpdate;
-        /// <summary>
-        /// Invoked every frame before rendering.
-        /// </summary>
         public static event Action<float> OnUpdate;
         public static event Action<float> OnPostUpdate;
-
         public static event Action<float> OnPhysicsUpdate;
-
-        /// <summary>
-        /// Invoked every frame before <see cref="OnRender"/> and after <see cref="OnUpdate">OnUpdate.</see>
-        /// </summary>
         public static event Action OnPreRender;
-        /// <summary>
-        /// Invoked every frame after <see cref="OnPreRender"/> and before <see cref="OnPostRender">OnPostRender.</see>
-        /// </summary>
         public static event Action OnRender;
-        /// <summary>
-        /// Invoked every frame after <see cref="OnRender">OnRender.</see>
-        /// </summary>
         public static event Action OnPostRender;
         
-        /// <summary>
-        /// Starts running the <see cref="GameLoop">GameLoop.</see>
-        /// </summary>
+        public static int TargetFramerate { get; set; } = 48;
+        public static int FramesPerSecond { get; private set; }
+        private static float UpdateRate => 1f / TargetFramerate;
+
         public static void Run()
         {
+            const float milliseconds_to_seconds = 1000f;
+            const float one_second = 1f;
+            
             var frames = 0;
-            var fpsCounterTime = 0f;
+            var timer = 0f;
             var previousTimeInMilliseconds = 0.0;
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -54,30 +31,33 @@ namespace N8Engine
             while (true)
             {
                 var currentTimeInMilliseconds = stopwatch.ElapsedMilliseconds;
-                var timePassed = (float) (currentTimeInMilliseconds - previousTimeInMilliseconds) / 1000f;
+                var timePassed = (float) (currentTimeInMilliseconds - previousTimeInMilliseconds) / milliseconds_to_seconds;
 
-                if (timePassed >= UPDATE_RATE)
+                if (timePassed >= UpdateRate)
                 {
                     frames++;
-                    fpsCounterTime += timePassed;
-                    if (fpsCounterTime >= 1)
+                    timer += timePassed;
+                    if (timer >= one_second)
                     {
-                        Console.Title = $"{frames}fps";
+                        FramesPerSecond = frames;
                         frames = 0;
-                        fpsCounterTime = 0f;
+                        timer = 0f;
                     }
-
                     previousTimeInMilliseconds = currentTimeInMilliseconds;
-
-                    OnPreUpdate?.Invoke(timePassed);
-                    OnUpdate?.Invoke(timePassed);
-                    OnPostUpdate?.Invoke(timePassed);
-                    OnPhysicsUpdate?.Invoke(timePassed);
-                    OnPreRender?.Invoke();
-                    OnRender?.Invoke();
-                    OnPostRender?.Invoke();
+                    InvokeEventsForCurrentFrame(timePassed);
                 }
             }
+        }
+
+        private static void InvokeEventsForCurrentFrame(float deltaTime)
+        {
+            OnPreUpdate?.Invoke(deltaTime);
+            OnUpdate?.Invoke(deltaTime);
+            OnPostUpdate?.Invoke(deltaTime);
+            OnPhysicsUpdate?.Invoke(deltaTime);
+            OnPreRender?.Invoke();
+            OnRender?.Invoke();
+            OnPostRender?.Invoke();
         }
     }
 }

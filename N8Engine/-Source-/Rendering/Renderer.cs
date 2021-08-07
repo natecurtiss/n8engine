@@ -6,6 +6,7 @@ namespace N8Engine.Rendering
 { 
     internal static class Renderer
     {
+        public const int NUMBER_OF_PIXELS = 2;
         private static readonly Dictionary<Vector, Pixel> _pixelsToRender = new();
         private static readonly Dictionary<Vector, Pixel> _pixelsToRenderLastFrame = new();
 
@@ -35,7 +36,7 @@ namespace N8Engine.Rendering
             foreach (var pixel in sprite.Pixels)
             {
                 var pixelPosition = pixel.Position + position;
-                pixelPosition = Window.GetWindowPositionAsWorldPosition(pixelPosition);
+                pixelPosition = pixelPosition.FromWindowPositionToWorldPosition();
                 pixelPosition = new Vector((int) pixelPosition.X, (int) pixelPosition.Y);
 
                 var isPixelOutsideOfWindow = !pixelPosition.IsWithinWindow();

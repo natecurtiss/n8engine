@@ -4,28 +4,22 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    /// <summary>
-    /// The console window used to display the game.
-    /// </summary>
     internal static class Window
     {
         private static readonly float _width = Console.WindowWidth;
         private static readonly float _height = Console.WindowHeight;
         private static readonly Vector _span = new(_width, _height);
-
-        /// <summary>
-        /// Initializes the window.
-        /// </summary>
+        
         public static void Initialize()
         {
-            ConsoleText.SetCurrentFont("Arial", 5);
-            ConsoleQuickEditMode.IsEnabled = false;
-            ConsoleResizing.Maximize();
+            ConsoleFontHelper.SetCurrentFont("Arial", 5);
+            ConsoleQuickEditModeHelper.IsEnabled = false;
+            ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
-            ConsoleError.CreateErrorConsole();
+            ConsoleErrorHelper.CreateErrorConsole();
         }
 
-        public static Vector GetWindowPositionAsWorldPosition(Vector position) => position + _span / 2;
+        public static Vector FromWindowPositionToWorldPosition(this Vector position) => position + _span / 2;
         
         public static bool IsWithinWindow(this Vector position) =>
             position.X >= 0 &&

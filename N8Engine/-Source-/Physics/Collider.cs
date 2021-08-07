@@ -6,14 +6,13 @@ namespace N8Engine.Physics
     public sealed class Collider
     {
         public readonly GameObject GameObject;
-        internal readonly DebugRectangle DebugRectangle;
+        internal readonly DebugCollider Debug;
         private readonly Transform _transform;
-        
         private Vector _size;
 
         public bool IsTrigger { get; set; }
-        public Vector Velocity { get; set; }
         public bool IsDebugModeEnabled { get; set; }
+        public Vector Velocity { get; set; }
         public Vector Offset { get; set; }
         public Vector Size
         {
@@ -21,11 +20,11 @@ namespace N8Engine.Physics
             set
             {
                 if (_size == value) return;
-                DebugRectangle.Size = value;
+                Debug.Size = value;
                 _size = value;
             }
         }
-        public Vector Position => _transform.Position + Offset;
+        private Vector Position => _transform.Position + Offset;
         private BoundingBox BoundingBoxCurrentFrame { get; set; }
         private BoundingBox BoundingBoxNextFrame { get; set; }
 
@@ -33,7 +32,7 @@ namespace N8Engine.Physics
         {
             GameObject = gameObject;
             _transform = gameObject.Transform;
-            DebugRectangle = new DebugRectangle(Size, Position);
+            Debug = new DebugCollider(Size, Position);
             GameLoop.OnPostUpdate += OnPostUpdate;
             GameLoop.OnPhysicsUpdate += OnPhysicsUpdate;
         }
@@ -76,7 +75,7 @@ namespace N8Engine.Physics
                 }
             }
             _transform.Position += Velocity * deltaTime;
-            DebugRectangle.Position = Position;
+            Debug.Position = Position;
         }
     }
 }

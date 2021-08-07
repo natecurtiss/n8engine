@@ -5,6 +5,7 @@
         private readonly SpriteRenderer _spriteRenderer;
         private Animation _animation;
 
+        public bool IsPlaying { get; private set; }
         public Animation Animation
         {
             get => _animation;
@@ -15,17 +16,16 @@
                 _animation = value;
             }
         }
-        public bool IsPlaying { get; private set; }
-        
-        public void Play() => IsPlaying = true;
-
-        public void Stop() => IsPlaying = false;
 
         internal AnimationPlayer(GameObject gameObject)
         {
             _spriteRenderer = gameObject.SpriteRenderer;
             GameLoop.OnPostUpdate += Tick;
         }
+        
+        public void Play() => IsPlaying = true;
+
+        public void Stop() => IsPlaying = false;
 
         internal void Destroy() => GameLoop.OnPostUpdate -= Tick;
 

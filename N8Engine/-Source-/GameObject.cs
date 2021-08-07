@@ -6,22 +6,14 @@ using N8Engine.SceneManagement;
 
 namespace N8Engine
 {
-    /// <summary>
-    /// An object that exists and is displayed in a scene.
-    /// </summary>
     public abstract class GameObject
     {
         public string Name { get; set; }
-        public Transform Transform { get; } = new();
-        public SpriteRenderer SpriteRenderer { get; } = new();
+        public Transform Transform { get; private set; }
+        public SpriteRenderer SpriteRenderer { get; private set; }
         public Collider Collider { get; private set; }
         public AnimationPlayer AnimationPlayer { get; private set; }
-
-        /// <summary>
-        /// Creates a new <see cref="GameObject"/> of the specified type.
-        /// </summary>
-        /// <typeparam name="T"> The type of <see cref="GameObject"/> to create. </typeparam>
-        /// <returns> The <see cref="GameObject"/> created. </returns>
+        
         public static T Create<T>(string name = default) where T : GameObject, new()
         {
             var gameObject = new T();
@@ -31,15 +23,8 @@ namespace N8Engine
             return gameObject;
         }
         
-        /// <summary>
-        /// Event method called on the first frame.
-        /// </summary>
         protected virtual void OnStart() { }
-
-        /// <summary>
-        /// Event method called every frame, before <see cref="OnRender"/>.
-        /// </summary>
-        /// <param name="deltaTime"> The time since the last frame. </param>
+        
         protected virtual void OnUpdate(float deltaTime) { }
         
         protected virtual void OnCollision(Collider otherCollider) { }
@@ -57,29 +42,24 @@ namespace N8Engine
         internal void CollidedWith(Collider otherCollider) => OnCollision(otherCollider);
 
         internal void TriggeredWith(Collider otherTrigger) => OnTrigger(otherTrigger);
-
-        /// <summary>
-        /// Initializes the <see cref="GameObject"/> - called by <see cref="Create{T}">Create{T}.</see>
-        /// </summary>
+        
         private void Initialize()
         {
+            Transform = new Transform();
+            SpriteRenderer = new SpriteRenderer();
             Collider = new Collider(this);
             AnimationPlayer = new AnimationPlayer(this);
             GameLoop.OnUpdate += OnUpdate;
             GameLoop.OnRender += OnRender;
             OnStart();
         }
-
-        /// <summary>
-        /// Sends the <see cref="Sprite"/> to the <see cref="Renderer"/> to be rendered -
-        /// called every frame after <see cref="OnUpdate">OnUpdate.</see>
-        /// </summary>
+        
         private void OnRender()
         {
             if (SpriteRenderer.Sprite != null)
                 Renderer.Render(SpriteRenderer.Sprite, Transform.Position);
             if (Collider.IsDebugModeEnabled) 
-                Renderer.Render(Collider.DebugRectangle.Sprite, Collider.DebugRectangle.Position);
+                Renderer.Render(Collider.Debug.Sprite, Collider.Debug.Position);
         }
     }
 }
