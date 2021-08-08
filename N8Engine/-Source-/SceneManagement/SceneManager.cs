@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using N8Engine.Mathematics;
 
 namespace N8Engine.SceneManagement
@@ -14,7 +15,8 @@ namespace N8Engine.SceneManagement
             var sceneFile = string.Empty;
             try
             {
-                sceneFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories)[0];
+                sceneFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories)
+                    .Where(fileName => !fileName.Contains("ignore.scenes")).ToArray()[0];
             }
             catch (IndexOutOfRangeException)
             {

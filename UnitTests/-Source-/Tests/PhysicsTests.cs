@@ -2,7 +2,7 @@
 using N8Engine.Physics;
 using NUnit.Framework;
 
-namespace N8Engine.Tests
+namespace UnitTests
 {
     internal sealed class PhysicsTests
     {

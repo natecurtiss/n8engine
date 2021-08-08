@@ -1,16 +1,19 @@
 ﻿using System;
+using System.IO;
+using N8Engine;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 using NUnit.Framework;
 
-namespace N8Engine.Tests
+namespace UnitTests
 {
     internal sealed class RenderingTests
     {
         [Test]
         public void TestGetPixelsFromN8SpriteFile()
         {
-            var file = new N8SpriteData(PathExtensions.PathToRootFolder + "\\UnitTests\\Sprites\\dummy.n8sprite");
+            var file = File.ReadAllLines(PathExtensions.PathToRootFolder + "\\UnitTests\\Sprites\\dummy.n8sprite");
+            var data = new N8SpriteData(file);
             Assert.AreEqual(new Pixel[]
             {
                 new(ConsoleColor.Black, ConsoleColor.White, new Vector(-2,-1)),
@@ -25,7 +28,7 @@ namespace N8Engine.Tests
                 new(ConsoleColor.Green, ConsoleColor.Green, new Vector(-1,1)),
                 new(ConsoleColor.Green, ConsoleColor.Green, new Vector(2,1)),
                 new(ConsoleColor.Green, ConsoleColor.Green, new Vector(3,1)),
-            }, file.Pixels);
+            }, data.Pixels);
         }
     }
 }

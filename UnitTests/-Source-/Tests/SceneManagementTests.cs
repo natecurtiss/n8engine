@@ -1,25 +1,26 @@
 ﻿using System.IO;
+using N8Engine;
 using N8Engine.SceneManagement;
 using NUnit.Framework;
 using TestGame;
 
-namespace N8Engine.Tests
+namespace UnitTests
 {
     internal sealed class SceneManagementTests
     {
         [Test]
         public void TestLoadScenesFromScenesFile()
         {
-            var path = Directory.GetFiles(PathExtensions.PathToRootFolder, "internal.scenes", SearchOption.AllDirectories)[0];
+            var path = Directory.GetFiles(PathExtensions.PathToRootFolder, "ignore.scenes", SearchOption.AllDirectories)[0];
             var expectedScenes = new Scene[]
             {
                 new SampleScene
                 {
-                    Index = 1, Name = "Sample Scene"
+                    Index = 0, Name = "Level 1"
                 },
                 new SampleScene2
                 {
-                    Index = 0, Name = "Sample Scene 2"
+                    Index = 1, Name = "Level 2"
                 }
             };
             var actualScenes = new ScenesFile(path).Scenes;
