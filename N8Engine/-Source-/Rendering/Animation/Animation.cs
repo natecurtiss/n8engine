@@ -9,6 +9,8 @@
         
         protected abstract float TimeBetweenFrames();
 
+        internal void Start(SpriteRenderer spriteRenderer) => spriteRenderer.Sprite = Frames(spriteRenderer)[0];
+
         internal void Tick(SpriteRenderer spriteRenderer, float deltaTime)
         {
             _timer -= deltaTime;

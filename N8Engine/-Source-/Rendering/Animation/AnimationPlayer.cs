@@ -14,6 +14,7 @@
                 if (value == _animation) return;
                 _animation?.Reset();
                 _animation = value;
+                _animation.Start(_spriteRenderer);
             }
         }
 

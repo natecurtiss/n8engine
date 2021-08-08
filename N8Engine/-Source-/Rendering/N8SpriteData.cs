@@ -35,6 +35,11 @@ namespace N8Engine.Rendering
                     }
                     lineFlippedUpsideDown++;
                 }
+                for (var i = 0; i < pixels.Count; i++)
+                {
+                    var pixel = pixels[i];
+                    pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, LocalPositionRelativeToCenterPixel(pixels, pixel), pixel.IsBackground);
+                }
                 return pixels;
             }
         }
@@ -60,6 +65,18 @@ namespace N8Engine.Rendering
             var foregroundColor = AsConsoleColor(foregroundColorName);
             var backgroundColor = AsConsoleColor(backgroundColorName);
             return new Pixel(foregroundColor, backgroundColor, position);
+        }
+        
+        private Vector LocalPositionRelativeToCenterPixel(IReadOnlyCollection<Pixel> allPixels, Pixel pixel) => pixel.Position - CenterPixelPositionOf(allPixels);
+
+        private Vector CenterPixelPositionOf(IReadOnlyCollection<Pixel> pixels)
+        {
+            var height = pixels.Last().Position.Y;
+            var width = pixels.Last().Position.X;
+            var centerY = (int) (height / 2f);
+            var centerX = (int) (width / 2f);
+            var center = new Vector(centerX, centerY);
+            return center;
         }
     }
 }
