@@ -1,0 +1,13 @@
+﻿{
+    project_name = "TestGame",
+    class_name = "TestGame.SampleScene",
+    scene_name = "Sample Scene",
+    scene_index = "0"
+}
+
+{
+    project_name = "TestGame",
+    class_name = "TestGame.SampleScene2",
+    scene_name = "Sample Scene 2",
+    scene_index = "1"
+}
