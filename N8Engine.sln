@@ -2,11 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N8Engine", "N8Engine\N8Engine.csproj", "{FEA166FB-16B4-474E-9982-65486655B36D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebugConsole", "DebugConsole\DebugConsole.csproj", "{FA4489B9-188C-4226-80D9-316D155D0AE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErrorConsole", "ErrorConsole\ErrorConsole.csproj", "{FA4489B9-188C-4226-80D9-316D155D0AE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{A9700642-7370-4333-ABE3-A14CFF14F35F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleProject", "SampleProject\SampleProject.csproj", "{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internal", "Internal", "{4D9CCEBA-ED42-49B5-8851-39332E12C3B7}"
 EndProject

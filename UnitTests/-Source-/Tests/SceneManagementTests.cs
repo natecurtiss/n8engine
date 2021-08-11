@@ -2,7 +2,7 @@
 using N8Engine;
 using N8Engine.SceneManagement;
 using NUnit.Framework;
-using TestGame;
+using SampleProject;
 
 namespace UnitTests
 {
@@ -14,11 +14,11 @@ namespace UnitTests
             var path = Directory.GetFiles(PathExtensions.PathToRootFolder, "ignore.scenes", SearchOption.AllDirectories)[0];
             var expectedScenes = new Scene[]
             {
-                new SampleScene
+                new DummyScene
                 {
                     Index = 0, Name = "Level 1"
                 },
-                new SampleScene2
+                new OtherDummyScene
                 {
                     Index = 1, Name = "Level 2"
                 }

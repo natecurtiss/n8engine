@@ -12,7 +12,7 @@
         <PackageId>n8engine</PackageId>
         <PackageLicenseUrl>https://www.mit.edu/~amini/LICENSE.md</PackageLicenseUrl>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageVersion>1.1.1</PackageVersion>
+        <PackageVersion>1.2.0</PackageVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 

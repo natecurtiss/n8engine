@@ -7,7 +7,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\N8Engine\N8Engine.csproj" />
-      <ProjectReference Include="..\TestGame\TestGame.csproj" />
+      <ProjectReference Include="..\SampleProject\SampleProject.csproj" />
     </ItemGroup>
 
     <ItemGroup>

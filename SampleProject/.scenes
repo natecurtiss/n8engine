@@ -1,0 +1,6 @@
+﻿{
+    project_name = "SampleProject",
+    class_name = "SampleProject.Level1Scene",
+    scene_name = "Level 1",
+    scene_index = "0"
+}
