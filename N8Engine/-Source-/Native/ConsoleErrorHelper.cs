@@ -17,12 +17,12 @@ namespace N8Engine.Native
             File.WriteAllText(pathToLogsFolder, string.Empty);
             
             RedirectToFile(pathToLogsFolder);
-            
-            var processStartInfo = new ProcessStartInfo($"{PathExtensions.PathToRootFolder}\\ErrorConsole\\bin\\Release\\net5.0\\ErrorConsole.exe")
+            var processStartInfo = new ProcessStartInfo($"{PathExtensions.PathToRootFolder}\\ErrorConsole.exe")
             {
                 WindowStyle = ProcessWindowStyle.Normal,
                 UseShellExecute = true,
-                CreateNoWindow = false
+                CreateNoWindow = false,
+                Arguments = pathToLogsFolder
             };
             Process.Start(processStartInfo);
         }

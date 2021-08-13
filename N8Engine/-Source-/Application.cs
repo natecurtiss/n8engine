@@ -21,6 +21,7 @@ namespace N8Engine
         
         public static void Start(Action onLaunchedCallback = default, Action onNextFrameCallback = default)
         {
+            PathExtensions.Initialize();
             Debug.Initialize();
             Window.Initialize();
             SceneManager.Initialize();

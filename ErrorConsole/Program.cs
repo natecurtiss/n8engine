@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using N8Engine;
 
-namespace N8Engine
+namespace ErrorConsole
 {
+    // Publish this as a single self-contained executable and place the .exe file in the root directory.
     internal static class Program
     {
         private static int _numberOfWrittenLinesInConsole;
 
-        private static void Main()
+        private static void Main(string[] arguments)
         {
             Console.Title = "N8Engine Error Console";
-            var path = PathExtensions.PathToLogsFolder;
+            var path = arguments[0];
+            Console.WriteLine(path);
             while (true)
             {
                 var fileLines = new List<string>();

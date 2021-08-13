@@ -2,7 +2,6 @@
 using N8Engine;
 using N8Engine.SceneManagement;
 using NUnit.Framework;
-using SampleProject;
 
 namespace UnitTests
 {

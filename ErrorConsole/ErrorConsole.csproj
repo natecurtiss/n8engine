@@ -2,12 +2,10 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
-        <RootNamespace>DebugConsole</RootNamespace>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>ErrorConsole</RootNamespace>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <PublishSingleFile>true</PublishSingleFile>
     </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\N8Engine\N8Engine.csproj" />
-    </ItemGroup>
 
 </Project>

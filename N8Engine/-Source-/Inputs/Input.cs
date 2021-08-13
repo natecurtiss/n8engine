@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using N8Engine.Mathematics;
 using N8Engine.Native;
 
@@ -26,7 +27,7 @@ namespace N8Engine.Inputs
         
         private static void OnPreUpdate(float deltaTime)
         {
-            foreach (var key in _keys.Keys)
+            foreach (var key in _keys.Keys.ToArray())
             {
                 var previousKeyState = _keys[key];
                 var newKeyState = KeyState.IsReleased;
@@ -37,7 +38,7 @@ namespace N8Engine.Inputs
                     KeyState.IsReleased => isKeyDownNow ? KeyState.WasJustPressed : KeyState.IsReleased,
                     KeyState.WasJustPressed => isKeyDownNow ? KeyState.IsPressed : KeyState.WasJustReleased,
                     KeyState.WasJustReleased => isKeyDownNow ? KeyState.WasJustPressed : KeyState.IsReleased,
-                    _ => newKeyState
+                    var _ => newKeyState
                 };
                 _keys[key] = newKeyState;
             }
