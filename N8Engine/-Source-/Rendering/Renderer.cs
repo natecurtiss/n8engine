@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
@@ -35,7 +36,11 @@ namespace N8Engine.Rendering
         {
             foreach (var pixel in sprite.Pixels)
             {
-                var pixelPosition = pixel.Position + position;
+                var newPixel = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position, pixel.IsBackground)
+                {
+                    SortingOrder = sortingOrder
+                };
+                var pixelPosition = newPixel.Position + position;
                 pixelPosition = pixelPosition.FromWindowPositionToWorldPosition();
                 pixelPosition = new Vector((int) pixelPosition.X, (int) pixelPosition.Y);
 
@@ -45,9 +50,9 @@ namespace N8Engine.Rendering
                 if (isPixelOutsideOfWindow) 
                     continue;
                 if (isNoPixelInPosition)
-                    _pixelsToRender.Add(pixelPosition, pixel);
-                else if (pixel.SortingOrder > _pixelsToRender[pixelPosition].SortingOrder || _pixelsToRender[pixelPosition].IsBackground)
-                        _pixelsToRender[pixelPosition] = pixel;
+                    _pixelsToRender.Add(pixelPosition, newPixel);
+                else if (newPixel.SortingOrder > _pixelsToRender[pixelPosition].SortingOrder || _pixelsToRender[pixelPosition].IsBackground)
+                    _pixelsToRender[pixelPosition] = newPixel;
             }
         }
         

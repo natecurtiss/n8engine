@@ -1,14 +1,15 @@
 ﻿using N8Engine.Mathematics;
 using N8Engine.Rendering;
+using N8Engine.Rendering.Animation;
 
 namespace SampleProject
 {
-    public class PlayerIdleAnimation : AnimationBase
+    public class PlayerIdleAnimation : Animation
     {
         protected override Sprite[] Frames => new Sprite[]
         {
-            new(PathToSpritesFolder + "player_1.n8sprite", Vector.Zero, ShouldFlipHorizontally),
-            new(PathToSpritesFolder + "player_5.n8sprite", new Vector(0f, -2f), ShouldFlipHorizontally)
+            new(SpritesFolder.Path + "player_1.n8sprite", Vector.Zero, ShouldFlipHorizontally),
+            new(SpritesFolder.Path + "player_5.n8sprite", new Vector(0f, -2f), ShouldFlipHorizontally)
         };
 
         protected override float TimeBetweenFrames => 0.35f;

@@ -1,15 +1,15 @@
 ﻿using N8Engine;
-using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
 
 namespace SampleProject
 {
-    internal sealed class Player : GameObject
+    public sealed class Player : GameObject
     {
         private const int SPEED = 2600;
         private const int JUMP_FORCE = -200;
-
+        private const float COYOTE_TIME = 0.3f;
+        
         private readonly WasdAndArrowKeyInputs _inputs = new();
         private readonly PlayerWalkAnimation _walkAnimation = new();
         private readonly FlippedPlayerWalkAnimation _flippedWalkAnimation = new();
@@ -18,8 +18,17 @@ namespace SampleProject
         private readonly PlayerJumpAnimation _jumpAnimation = new();
         private readonly FlippedPlayerJumpAnimation _flippedJumpAnimation = new();
 
-        private bool _isGrounded;
         private Direction _currentDirection = Direction.Right;
+        private float _groundedTimer;
+        private float _inputTimer;
+
+        private Vector Input => _inputs.InputVector;
+        private bool IsGrounded
+        {
+            get => _groundedTimer > 0f;
+            set => _groundedTimer = value ? COYOTE_TIME : 0f;
+        }
+        private bool CanJump => IsGrounded && _inputTimer > 0f;
 
         protected override void OnStart()
         {
@@ -32,19 +41,20 @@ namespace SampleProject
 
         protected override void OnUpdate(float deltaTime)
         {
+            HandleInputs();
             UpdateDirection();
             HandleAnimations();
+            TickTimers(deltaTime);
             Move(deltaTime);
-            if (Key.Spacebar.WasJustPressed() && _isGrounded)
-                Jump();
+            if (CanJump) Jump();
         }
         
         public override void OnCollidedWith(Collider otherCollider)
         {
-            var isAirborne = !_isGrounded;
-            if (isAirborne && otherCollider.GameObject.Is<Floor>())
+            var isAirborne = !IsGrounded;
+            if (isAirborne && otherCollider.GameObject.Is<Walls.Wall>())
             {
-                _isGrounded = true;
+                IsGrounded = true;
                 AnimationPlayer.Animation = _currentDirection switch
                 {
                     Direction.Left => _flippedIdleAnimation,
@@ -54,9 +64,21 @@ namespace SampleProject
             }
         }
 
+        private void HandleInputs()
+        {
+            if (Input.Y > 0f)
+                _inputTimer = COYOTE_TIME;
+        }
+
+        private void TickTimers(float deltaTime)
+        {
+            _inputTimer -= deltaTime;
+            _groundedTimer -= deltaTime;
+        }
+
         private void UpdateDirection()
         {
-            _currentDirection = _inputs.InputVector.X switch
+            _currentDirection = Input.X switch
             {
                 > 0 => Direction.Right,
                 < 0 => Direction.Left,
@@ -67,8 +89,8 @@ namespace SampleProject
         private void HandleAnimations()
         {
             const int is_not_pressing_a_key = 0;
-            if (_isGrounded)
-                AnimationPlayer.Animation = _inputs.InputVector.X switch
+            if (IsGrounded)
+                AnimationPlayer.Animation = Input.X switch
                 {
                     > 0 => _walkAnimation,
                     < 0 => _flippedWalkAnimation,
@@ -77,7 +99,7 @@ namespace SampleProject
                     var _ => AnimationPlayer.Animation
                 };
             else
-                AnimationPlayer.Animation = _inputs.InputVector.X switch
+                AnimationPlayer.Animation = Input.X switch
                 {
                     > 0 => _jumpAnimation,
                     < 0 => _flippedJumpAnimation,
@@ -87,12 +109,12 @@ namespace SampleProject
                 };
         }
         
-        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(_inputs.InputVector.X * SPEED * deltaTime, PhysicsBody.Velocity.Y);
+        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(Input.X * SPEED * deltaTime, PhysicsBody.Velocity.Y);
 
         private void Jump()
         {
             PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
-            _isGrounded = false;
+            IsGrounded = false;
         }
     }
 }

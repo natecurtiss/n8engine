@@ -12,7 +12,7 @@ namespace N8Engine.Physics
         private Sprite _sprite;
 
         public Vector Position => _collider.Position;
-        public Sprite Sprite => _sprite ??= new Sprite(Pixels);
+        public Sprite Sprite => _sprite ??= new Sprite(Pixels, Size);
         public Vector Size
         {
             get => _size;
@@ -20,7 +20,7 @@ namespace N8Engine.Physics
             {
                 if (_size == value) return;
                 _size = value;
-                _sprite = new Sprite(Pixels);
+                _sprite = new Sprite(Pixels, _size);
             }
         }
 
@@ -30,10 +30,12 @@ namespace N8Engine.Physics
             {
                 var width = (int) Size.X / Renderer.NUMBER_OF_PIXELS;
                 var height = (int) Size.Y;
+                
                 const string green_color = "{Green,Green}";
                 const string clear_color = "{Clear,Clear}";
                 const int top_row = 0;
                 const int first_pixel_in_row = 0;
+                
                 var bottomRow = height - 1;
                 var lastPixelInRow = width - 1;
 

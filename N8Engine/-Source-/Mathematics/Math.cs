@@ -4,9 +4,9 @@ namespace N8Engine.Mathematics
 {
     public static class Math
     {
-        public static readonly float Infinity = float.MaxValue;
-        public static readonly float NegativeInfinity = float.MinValue;
-        
+        public const int INFINITY = int.MaxValue;
+        public const int NEGATIVE_INFINITY = int.MinValue;
+
         public static float ClampedBetween(this float value, float minimum, float maximum)
         {
             var clampedValue = value;
@@ -37,7 +37,7 @@ namespace N8Engine.Mathematics
 
         public static float MinimumOf(params float[] values)
         {
-            var minimumValue = Infinity;
+            var minimumValue = (float) INFINITY;
             foreach (var value in values)
                 if (value < minimumValue)
                     minimumValue = value;
@@ -48,7 +48,7 @@ namespace N8Engine.Mathematics
 
         public static float MaximumOf(params float[] values)
         {
-            var maximumValue = NegativeInfinity;
+            var maximumValue = (float) NEGATIVE_INFINITY;
             foreach (var value in values)
                 if (value > maximumValue)
                     maximumValue = value;

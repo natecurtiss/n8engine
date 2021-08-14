@@ -15,7 +15,7 @@ namespace N8Engine
         public PhysicsBody PhysicsBody { get; private set; }
         public AnimationPlayer AnimationPlayer { get; private set; }
         
-        public static T Create<T>(string name = default) where T : GameObject, new()
+        public static T Create<T>(string name = "new gameobject") where T : GameObject, new()
         {
             var gameObject = new T();
             SceneManager.CurrentScene.GameObjects.Add(gameObject);
@@ -77,7 +77,7 @@ namespace N8Engine
             if (SpriteRenderer.Sprite != null)
                 Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder);
             if (Collider.IsDebugModeEnabled)
-                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, (int) Math.Infinity);
+                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, Math.INFINITY);
         }
     }
 }

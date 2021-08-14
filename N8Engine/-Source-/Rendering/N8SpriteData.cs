@@ -8,6 +8,7 @@ namespace N8Engine.Rendering
 {
     internal readonly struct N8SpriteData
     {
+        public readonly Vector Dimensions;
         private readonly string[] _dataText;
 
         public List<Pixel> Pixels
@@ -16,11 +17,11 @@ namespace N8Engine.Rendering
             {
                 var pixels = new List<Pixel>();
                 var lineFlippedUpsideDown = 0;
-                for (var line = _dataText.Length - 1; line >= 0; line--)
+                for (var line = (int) Dimensions.Y; line >= 0; line--)
                 {
                     var currentLine = _dataText[line];
                     var pixelsInCurrentLine = SeparateLine(currentLine);
-                    for (var pixel = 0; pixel < pixelsInCurrentLine.Count; pixel++)
+                    for (var pixel = 0; pixel < (int) Dimensions.X; pixel++)
                     {
                         var currentPixel = pixelsInCurrentLine[pixel];
                         for (var fractionOfAPixel = 0; fractionOfAPixel < Renderer.NUMBER_OF_PIXELS; fractionOfAPixel++)
@@ -44,7 +45,11 @@ namespace N8Engine.Rendering
             }
         }
 
-        public N8SpriteData(string[] dataText) => _dataText = dataText;
+        public N8SpriteData(string[] dataText) : this()
+        {
+            _dataText = dataText;
+            Dimensions = new Vector(SeparateLine(_dataText[0]).Count, _dataText.Length - 1);
+        }
 
         private List<string> SeparateLine(string line)
         {
