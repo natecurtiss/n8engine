@@ -13,14 +13,13 @@ namespace ErrorConsole
         {
             Console.Title = "N8Engine Error Console";
             var path = arguments[0];
-            Console.WriteLine(path);
             while (true)
             {
                 var fileLines = new List<string>();
                 using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 using (var streamReader = new StreamReader(fileStream))
                 {
-                    var line = string.Empty;
+                    var line = "";
                     while ((line = streamReader.ReadLine()) != null)
                         fileLines.Add(line);
                 }

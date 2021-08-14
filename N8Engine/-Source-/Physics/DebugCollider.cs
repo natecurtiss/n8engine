@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -7,10 +6,12 @@ namespace N8Engine.Physics
 {
     internal sealed class DebugCollider
     {
+        private readonly Collider _collider;
+
         private Vector _size;
         private Sprite _sprite;
 
-        public Vector Position { get; set; }
+        public Vector Position => _collider.Position;
         public Sprite Sprite => _sprite ??= new Sprite(Pixels);
         public Vector Size
         {
@@ -65,10 +66,10 @@ namespace N8Engine.Physics
             }
         }
 
-        public DebugCollider(Vector size, Vector position = default)
+        public DebugCollider(Collider collider)
         {
-            Size = size;
-            Position = position;
+            _collider = collider;
+            Size = _collider.Size;
         }
     }
 }

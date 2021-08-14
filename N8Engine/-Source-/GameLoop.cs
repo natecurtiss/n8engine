@@ -9,6 +9,7 @@ namespace N8Engine
         public static event Action<float> OnUpdate;
         public static event Action<float> OnPostUpdate;
         public static event Action<float> OnPhysicsUpdate;
+        public static event Action<float> OnPostPhysicsUpdate;
         public static event Action OnPreRender;
         public static event Action OnRender;
         public static event Action OnPostRender;
@@ -57,6 +58,7 @@ namespace N8Engine
             OnPostUpdate?.Invoke(deltaTime);
             
             OnPhysicsUpdate?.Invoke(deltaTime);
+            OnPostPhysicsUpdate?.Invoke(deltaTime);
             
             OnPreRender?.Invoke();
             OnRender?.Invoke();

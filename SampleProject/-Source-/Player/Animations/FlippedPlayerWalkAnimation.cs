@@ -2,6 +2,6 @@
 {
     public sealed class FlippedPlayerWalkAnimation : PlayerWalkAnimation
     {
-        protected override bool ShouldFlipHorizontally() => true;
+        protected override bool ShouldFlipHorizontally => true;
     }
 }

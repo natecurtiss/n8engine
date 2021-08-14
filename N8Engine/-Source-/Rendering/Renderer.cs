@@ -31,7 +31,7 @@ namespace N8Engine.Rendering
             _pixelsToRender.Clear();
         }
 
-        public static void Render(Sprite sprite, Vector position)
+        public static void Render(Sprite sprite, Vector position, int sortingOrder)
         {
             foreach (var pixel in sprite.Pixels)
             {

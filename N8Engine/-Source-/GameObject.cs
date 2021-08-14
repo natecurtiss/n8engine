@@ -12,6 +12,7 @@ namespace N8Engine
         public Transform Transform { get; private set; }
         public SpriteRenderer SpriteRenderer { get; private set; }
         public Collider Collider { get; private set; }
+        public PhysicsBody PhysicsBody { get; private set; }
         public AnimationPlayer AnimationPlayer { get; private set; }
         
         public static T Create<T>(string name = default) where T : GameObject, new()
@@ -23,43 +24,60 @@ namespace N8Engine
             return gameObject;
         }
         
+        public virtual void OnCollidedWith(Collider otherCollider) { }
+
+        public virtual void OnTriggeredBy(Collider otherTrigger) { }
+        
         protected virtual void OnStart() { }
         
         protected virtual void OnUpdate(float deltaTime) { }
+
+        public bool Is<T>(out T type) where T : GameObject
+        {
+            type = this as T;
+            return type != null;
+        }
         
-        protected virtual void OnCollision(Collider otherCollider) { }
-        
-        protected virtual void OnTrigger(Collider otherTrigger) { }
+        public bool Is<T>() where T : GameObject => this is T type;
 
         public void Destroy()
         {
-            Collider.Destroy();
-            AnimationPlayer.Destroy();
             GameLoop.OnUpdate -= OnUpdate;
+            GameLoop.OnPostUpdate -= OnPostUpdate;
+            GameLoop.OnPhysicsUpdate -= OnPhysicsUpdate;
             GameLoop.OnRender -= OnRender;
         }
 
-        internal void CollidedWith(Collider otherCollider) => OnCollision(otherCollider);
-
-        internal void TriggeredWith(Collider otherTrigger) => OnTrigger(otherTrigger);
-        
         private void Initialize()
         {
-            Transform = new Transform();
-            SpriteRenderer = new SpriteRenderer();
+            Transform = new Transform(this);
+            PhysicsBody = new PhysicsBody(this);
             Collider = new Collider(this);
+            SpriteRenderer = new SpriteRenderer(this);
             AnimationPlayer = new AnimationPlayer(this);
             GameLoop.OnUpdate += OnUpdate;
+            GameLoop.OnPostUpdate += OnPostUpdate;
+            GameLoop.OnPhysicsUpdate += OnPhysicsUpdate;
             GameLoop.OnRender += OnRender;
             OnStart();
+        }
+
+        private void OnPostUpdate(float deltaTime) => AnimationPlayer.Tick(deltaTime);
+
+        private void OnPhysicsUpdate(float deltaTime)
+        {
+            PhysicsBody.ApplyGravity();
+            Collider.UpdateBoundingBoxes(deltaTime);
+            Collider.CheckCollisions();
+            PhysicsBody.ApplyVelocity(deltaTime);
         }
         
         private void OnRender()
         {
             if (SpriteRenderer.Sprite != null)
-                Renderer.Render(SpriteRenderer.Sprite, Transform.Position);
+                Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder);
             if (Collider.IsDebugModeEnabled)
-                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position);
+                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, (int) Math.Infinity);
         }
     }
 }

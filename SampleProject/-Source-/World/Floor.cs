@@ -8,13 +8,8 @@ namespace SampleProject
     {
         protected override void OnStart()
         {
-            SpriteRenderer.Sprite = new Sprite(PathExtensions.PathToRootFolder + "\\SampleProject\\Sprites\\floor.n8sprite", SpriteRenderer);
+            SpriteRenderer.Sprite = new Sprite(PathExtensions.PathToRootFolder + "\\SampleProject\\Sprites\\floor.n8sprite");
             Collider.Size = new Vector(80, 10);
-        }
-
-        protected override void OnUpdate(float deltaTime)
-        {
-            
         }
     }
 }

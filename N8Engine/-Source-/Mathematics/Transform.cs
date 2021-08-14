@@ -1,9 +1,9 @@
 ﻿namespace N8Engine.Mathematics
 {
-    public sealed class Transform
+    public sealed class Transform : Component
     {
         public Vector Position { get; set; }
         
-        internal Transform() { }
+        internal Transform(GameObject gameObject) : base(gameObject) { }
     }
 }

@@ -7,28 +7,25 @@ namespace N8Engine.Rendering
     {
         internal Pixel[] Pixels { get; private set; }
 
-        public Sprite(string path, SpriteRenderer spriteRenderer, Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
+        public Sprite(string path, Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
         {
             var file = File.ReadAllLines(path);
             var data = new N8SpriteData(file);
             Pixels = data.Pixels.ToArray();
-            CreateSprite(spriteRenderer.SortingOrder, offset, shouldFlipHorizontally, shouldFlipVertically);
+            CreateSprite(offset, shouldFlipHorizontally, shouldFlipVertically);
         }
 
         internal Sprite(Pixel[] pixels)
         {
             Pixels = pixels;
-            CreateSprite((int) Math.Infinity);
+            CreateSprite();
         }
 
-        private void CreateSprite(int sortingOrder, Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
+        private void CreateSprite(Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
         {
             OffsetPixels(offset);
             if (shouldFlipHorizontally) FlipPixelsHorizontally();
             if (shouldFlipVertically) FlipPixelsVertically();
-            
-            for (var i = 0; i < Pixels.Length; i++) 
-                Pixels[i].SortingOrder = sortingOrder;
         }
 
         private void OffsetPixels(Vector offset)

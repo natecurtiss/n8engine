@@ -1,8 +1,7 @@
 ﻿namespace N8Engine.Rendering.Animation
 {
-    public sealed class AnimationPlayer
+    public sealed class AnimationPlayer : Component
     {
-        private readonly SpriteRenderer _spriteRenderer;
         private Animation _animation;
 
         public bool IsPlaying { get; private set; }
@@ -12,27 +11,22 @@
             set
             {
                 if (value == _animation) return;
+                // Debug.Log($"{value} {_animation}");
                 _animation?.Reset();
                 _animation = value;
             }
         }
 
-        internal AnimationPlayer(GameObject gameObject)
-        {
-            _spriteRenderer = gameObject.SpriteRenderer;
-            GameLoop.OnPostUpdate += Tick;
-        }
-        
+        internal AnimationPlayer(GameObject gameObject) : base(gameObject) { }
+
         public void Play() => IsPlaying = true;
 
         public void Stop() => IsPlaying = false;
 
-        internal void Destroy() => GameLoop.OnPostUpdate -= Tick;
-
-        private void Tick(float deltaTime)
+        internal void Tick(float deltaTime)
         {
             if (!IsPlaying) return;
-            Animation?.Tick(_spriteRenderer, deltaTime);
+            Animation?.Tick(SpriteRenderer, deltaTime);
         }
     }
 }

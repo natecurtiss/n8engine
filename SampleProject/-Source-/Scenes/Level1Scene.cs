@@ -8,11 +8,11 @@ namespace SampleProject
     {
         protected override void OnSceneLoaded()
         {
-            var player = GameObject.Create<Player>();
-            player.Name = "player";
-            var floor = GameObject.Create<Floor>();
+            var player = GameObject.Create<Player>("player");
+            var floor = GameObject.Create<Floor>("floor");
             floor.Transform.Position += Vector.Up * 30f;
-            floor.Name = "floor";
+            var floor2 = GameObject.Create<Floor>("floor");
+            floor2.Transform.Position += Vector.Right * 100f;
         }
     }
 }
