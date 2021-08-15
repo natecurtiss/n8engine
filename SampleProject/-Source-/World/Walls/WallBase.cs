@@ -13,8 +13,6 @@ namespace SampleProject
         {
             SpriteRenderer.Sprite = new Sprite(SpritesFolder.Path + SpriteName, Offset);
             Collider.Size = new Vector(24f, 14f);
-            Collider.IsTrigger = false;
-            // Collider.IsDebugModeEnabled = true;
         }
     }
 }

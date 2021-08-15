@@ -10,7 +10,6 @@ namespace N8Engine.Rendering
         public const int NUMBER_OF_PIXELS = 2;
         private static readonly Dictionary<Vector, Pixel> _pixelsToRender = new();
         private static readonly Dictionary<Vector, Pixel> _pixelsToRenderLastFrame = new();
-        private static readonly Dictionary<Vector, Pixel> _pixelsThatWillNotMove = new();
 
         public static void Initialize()
         {
@@ -32,8 +31,7 @@ namespace N8Engine.Rendering
             _pixelsToRender.Clear();
         }
 
-        // TODO make static objects not always render in front.
-        public static void Render(Sprite sprite, Vector position, int sortingOrder, bool isStaticAndWillNotBeCovered = false)
+        public static void Render(Sprite sprite, Vector position, int sortingOrder)
         {
             foreach (var pixel in sprite.Pixels)
             {
@@ -47,18 +45,12 @@ namespace N8Engine.Rendering
 
                 var isPixelOutsideOfWindow = !pixelPosition.IsWithinWindow();
                 var isNoPixelInPosition = !_pixelsToRender.ContainsKey(pixelPosition);
-                if (isPixelOutsideOfWindow) continue;
 
-                if (!_pixelsThatWillNotMove.ContainsKey(pixelPosition))
-                {
-                    if (isNoPixelInPosition)
-                        _pixelsToRender.Add(pixelPosition, newPixel);
-                    else if (newPixel.SortingOrder > _pixelsToRender[pixelPosition].SortingOrder)
-                        _pixelsToRender[pixelPosition] = newPixel;
-                }
-                
-                if (isStaticAndWillNotBeCovered)
-                    _pixelsThatWillNotMove.Add(pixelPosition, newPixel);
+                if (isPixelOutsideOfWindow) continue;
+                if (isNoPixelInPosition)
+                    _pixelsToRender.Add(pixelPosition, newPixel);
+                else if (newPixel.SortingOrder > _pixelsToRender[pixelPosition].SortingOrder)
+                    _pixelsToRender[pixelPosition] = newPixel;
             }
         }
         
@@ -111,7 +103,6 @@ namespace N8Engine.Rendering
                 var positionHasPixel = _pixelsToRender.ContainsKey(oldPosition);
                 if (positionHasPixel) continue;
                 
-                if (_pixelsThatWillNotMove.ContainsKey(oldPosition)) continue;
                 _pixelsToRenderLastFrame.Remove(oldPosition);
                 
                 var pixelIsToTheRightOfPreviousPixel = 

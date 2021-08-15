@@ -15,16 +15,12 @@ namespace N8Engine
         public PhysicsBody PhysicsBody { get; private set; }
         public AnimationPlayer AnimationPlayer { get; private set; }
 
-        private bool IsStaticAndWillNotBeCovered { get; set; }
-        private bool _hasRenderedOnce;
-
-        public static T Create<T>(string name = "new gameobject", bool isStaticAndWillNotBeCovered = false) where T : GameObject, new()
+        public static T Create<T>(string name = "new gameobject") where T : GameObject, new()
         {
             var gameObject = new T();
             SceneManager.CurrentScene.GameObjects.Add(gameObject);
             gameObject.Initialize();
             gameObject.Name = name;
-            gameObject.IsStaticAndWillNotBeCovered = isStaticAndWillNotBeCovered;
             return gameObject;
         }
 
@@ -80,12 +76,10 @@ namespace N8Engine
         
         private void OnRender()
         {
-            if (IsStaticAndWillNotBeCovered && _hasRenderedOnce) return;
             if (SpriteRenderer.Sprite != null)
-                Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder, IsStaticAndWillNotBeCovered);
+                Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder);
             if (Collider.IsDebugModeEnabled)
                 Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, Math.INFINITY - 1);
-            if (!_hasRenderedOnce) _hasRenderedOnce = true;
         }
     }
 }
