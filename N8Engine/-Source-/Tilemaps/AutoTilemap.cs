@@ -20,7 +20,7 @@ namespace N8Engine.Tilemaps
             Left, Right, Top, Bottom, TopRight, TopLeft, BottomRight, BottomLeft, Middle
         }
         
-        public static void Place(Vector position, Vector sizeOfChunkInTiles, Vector tileSize, TilePivot pivot)
+        public static void Place(Vector position, Vector sizeOfChunkInTiles, Vector tileSize, TilePivot pivot, string name = "tilemap")
         {
             if (sizeOfChunkInTiles.X <= 0 || sizeOfChunkInTiles.Y <= 0) return;
             
@@ -32,16 +32,16 @@ namespace N8Engine.Tilemaps
                     var tileType = GetTileType(new Vector(x, y), sizeOfChunkInTiles);
                     var gameObject = (GameObject) (tileType switch
                     {
-                        TileType.Left => GameObject.Create<TLeft>(),
-                        TileType.Right => GameObject.Create<TRight>(),
-                        TileType.Top => GameObject.Create<TTop>(),
-                        TileType.Bottom => GameObject.Create<TBottom>(),
-                        TileType.TopRight => GameObject.Create<TTopRight>(),
-                        TileType.TopLeft => GameObject.Create<TTopLeft>(),
-                        TileType.BottomRight => GameObject.Create<TBottomRight>(),
-                        TileType.BottomLeft => GameObject.Create<TBottomLeft>(),
-                        TileType.Middle => GameObject.Create<TMiddle>(),
-                        var _ => GameObject.Create<TMiddle>()
+                        TileType.Left => GameObject.Create<TLeft>($"{name}_left", true),
+                        TileType.Right => GameObject.Create<TRight>($"{name}_right", true),
+                        TileType.Top => GameObject.Create<TTop>($"{name}_top", true),
+                        TileType.Bottom => GameObject.Create<TBottom>($"{name}_bottom", true),
+                        TileType.TopRight => GameObject.Create<TTopRight>($"{name}_top-right", true),
+                        TileType.TopLeft => GameObject.Create<TTopLeft>($"{name}_top-left", true),
+                        TileType.BottomRight => GameObject.Create<TBottomRight>($"{name}_bottom-right", true),
+                        TileType.BottomLeft => GameObject.Create<TBottomLeft>($"{name}_bottom-left", true),
+                        TileType.Middle => GameObject.Create<TMiddle>($"{name}_middle", true),
+                        var _ => GameObject.Create<TMiddle>($"{name}_middle", true)
                     });
                     gameObject.Transform.Position = position + new Vector(x, y) * tileSize;
                     tiles.Add(gameObject);

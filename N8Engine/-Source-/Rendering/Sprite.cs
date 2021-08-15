@@ -37,7 +37,7 @@ namespace N8Engine.Rendering
             for (var i = 0; i < Pixels.Length; i++)
             {
                 var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position + new Vector(offset.X, -offset.Y), pixel.IsBackground);
+                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position + new Vector(offset.X, -offset.Y));
             }
             Pixels = pixels;
         }
@@ -48,7 +48,7 @@ namespace N8Engine.Rendering
             for (var i = 0; i < Pixels.Length; i++)
             {
                 var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new Vector(-1f, 1f), pixel.IsBackground);
+                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new Vector(-1f, 1f));
             }
             Pixels = pixels;
         }
@@ -59,7 +59,7 @@ namespace N8Engine.Rendering
             for (var i = 0; i < Pixels.Length; i++)
             {
                 var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new Vector(1f, -1f), pixel.IsBackground);
+                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new Vector(1f, -1f));
             }
             Pixels = pixels;
         }

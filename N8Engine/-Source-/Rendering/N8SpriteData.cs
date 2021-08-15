@@ -39,7 +39,7 @@ namespace N8Engine.Rendering
                 for (var i = 0; i < pixels.Count; i++)
                 {
                     var pixel = pixels[i];
-                    pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, LocalPositionRelativeToCenterPixel(pixels, pixel), pixel.IsBackground);
+                    pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, LocalPositionRelativeToCenterPixel(pixels, pixel));
                 }
                 return pixels;
             }
