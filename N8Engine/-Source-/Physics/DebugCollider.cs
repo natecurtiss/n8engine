@@ -12,7 +12,7 @@ namespace N8Engine.Physics
         private Sprite _sprite;
 
         public Vector Position => _collider.Position;
-        public Sprite Sprite => _sprite ??= new Sprite(Pixels, Size);
+        public Sprite Sprite => _sprite ??= new Sprite(Pixels);
         public Vector Size
         {
             get => _size;
@@ -20,7 +20,7 @@ namespace N8Engine.Physics
             {
                 if (_size == value) return;
                 _size = value;
-                _sprite = new Sprite(Pixels, _size);
+                _sprite = new Sprite(Pixels);
             }
         }
 
@@ -28,9 +28,9 @@ namespace N8Engine.Physics
         {
             get
             {
-                var width = (int) Size.X / Renderer.NUMBER_OF_PIXELS;
+                var width = (int) Size.X;
                 var height = (int) Size.Y;
-                
+
                 const string green_color = "{Green,Green}";
                 const string clear_color = "{Clear,Clear}";
                 const int top_row = 0;
@@ -53,7 +53,6 @@ namespace N8Engine.Physics
                             pixelData[line] += green_color;
                         else
                             pixelData[line] += clear_color;
-                    pixelData[line] += '\n';
                 }
                 
                 var data = new N8SpriteData(pixelData);

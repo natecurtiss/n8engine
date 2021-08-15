@@ -6,10 +6,11 @@ namespace N8Engine
     internal static class GameLoop
     {
         public static event Action<float> OnPreUpdate;
+        public static event Action<float> OnEarlyUpdate;
         public static event Action<float> OnUpdate;
         public static event Action<float> OnPostUpdate;
         public static event Action<float> OnPhysicsUpdate;
-        public static event Action<float> OnPostPhysicsUpdate;
+        public static event Action<float> OnLateUpdate;
         public static event Action OnPreRender;
         public static event Action OnRender;
         public static event Action OnPostRender;
@@ -54,12 +55,13 @@ namespace N8Engine
         private static void InvokeEventsForCurrentFrame(float deltaTime)
         {
             OnPreUpdate?.Invoke(deltaTime);
+            OnEarlyUpdate?.Invoke(deltaTime);
             OnUpdate?.Invoke(deltaTime);
             OnPostUpdate?.Invoke(deltaTime);
             
             OnPhysicsUpdate?.Invoke(deltaTime);
-            OnPostPhysicsUpdate?.Invoke(deltaTime);
-            
+            OnLateUpdate?.Invoke(deltaTime);
+
             OnPreRender?.Invoke();
             OnRender?.Invoke();
             OnPostRender?.Invoke();

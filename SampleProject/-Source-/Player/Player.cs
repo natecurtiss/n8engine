@@ -1,5 +1,4 @@
 ﻿using N8Engine;
-using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
 
@@ -9,9 +8,7 @@ namespace SampleProject
     {
         private const int SPEED = 2600;
         private const int JUMP_FORCE = -200;
-        private const float COYOTE_TIME = 0.3f;
         
-        private readonly WasdAndArrowKeyInputs _inputs = new();
         private readonly PlayerWalkAnimation _walkAnimation = new();
         private readonly FlippedPlayerWalkAnimation _flippedWalkAnimation = new();
         private readonly PlayerIdleAnimation _idleAnimation = new();
@@ -20,67 +17,44 @@ namespace SampleProject
         private readonly FlippedPlayerJumpAnimation _flippedJumpAnimation = new();
 
         private Direction _currentDirection = Direction.Right;
-        private float _groundedTimer;
-        private float _inputTimer;
-
-        private Vector Input => _inputs.InputVector;
-        private bool IsGrounded
-        {
-            get => _groundedTimer > 0f;
-            set => _groundedTimer = value ? COYOTE_TIME : 0f;
-        }
-        private bool CanJump => Key.W.WasJustPressed();
+        private GroundCheck<Ground> _groundCheck;
+        private PlayerInputs _inputs;
+        
+        private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJump;
 
         protected override void OnStart()
         {
-            Collider.Size = new Vector(10f, 7f);
-            Collider.Offset = Vector.Down;
+            _groundCheck = GameObject.Create<GroundCheck<Ground>>("player ground check");
+            _groundCheck.OnLandedOnTheGround += Land;
+            _groundCheck.Collider.Size = new Vector(10f, 2f);
+            _groundCheck.Collider.Offset = Vector.Up * 4f;
+
+            _inputs = GameObject.Create<PlayerInputs>("player inputs");
+            
+            Collider.Size = new Vector(7f, 7f);
+            Collider.Offset = Vector.Right;
+            Collider.IsDebugModeEnabled = true;
             SpriteRenderer.SortingOrder = 1;
             PhysicsBody.UseGravity = true;
             AnimationPlayer.Animation = _idleAnimation;
             AnimationPlayer.Play();
         }
 
+        protected override void OnDestroy() => _groundCheck.OnLandedOnTheGround -= Land;
+
         protected override void OnUpdate(float deltaTime)
         {
-            HandleInputs();
             UpdateDirection();
             HandleAnimations();
-            TickTimers(deltaTime);
             Move(deltaTime);
             if (CanJump) Jump();
         }
-        
-        public override void OnCollidedWith(Collider otherCollider)
-        {
-            var isAirborne = !IsGrounded;
-            if (isAirborne && otherCollider.GameObject.Is<WallBase>())
-            {
-                IsGrounded = true;
-                AnimationPlayer.Animation = _currentDirection switch
-                {
-                    Direction.Left => _flippedIdleAnimation,
-                    Direction.Right => _idleAnimation,
-                    var _ => _idleAnimation
-                };
-            }
-        }
 
-        private void HandleInputs()
-        {
-            if (Input.Y > 0f)
-                _inputTimer = COYOTE_TIME;
-        }
-
-        private void TickTimers(float deltaTime)
-        {
-            _inputTimer -= deltaTime;
-            _groundedTimer -= deltaTime;
-        }
+        protected override void OnLateUpdate(float deltaTime) => _groundCheck.Transform.Position = Transform.Position;
 
         private void UpdateDirection()
         {
-            _currentDirection = Input.X switch
+            _currentDirection = _inputs.Axis.X switch
             {
                 > 0 => Direction.Right,
                 < 0 => Direction.Left,
@@ -90,33 +64,38 @@ namespace SampleProject
 
         private void HandleAnimations()
         {
-            const int is_not_pressing_a_key = 0;
-            if (IsGrounded)
-                AnimationPlayer.Animation = Input.X switch
+            if (_groundCheck.IsGrounded)
+                AnimationPlayer.Animation = _inputs.Axis.X switch
                 {
                     > 0 => _walkAnimation,
                     < 0 => _flippedWalkAnimation,
-                    is_not_pressing_a_key when _currentDirection == Direction.Right => _idleAnimation,
-                    is_not_pressing_a_key when _currentDirection == Direction.Left => _flippedIdleAnimation,
+                    0 when _currentDirection == Direction.Right => _idleAnimation,
+                    0 when _currentDirection == Direction.Left => _flippedIdleAnimation,
                     var _ => AnimationPlayer.Animation
                 };
             else
-                AnimationPlayer.Animation = Input.X switch
+                AnimationPlayer.Animation = _inputs.Axis.X switch
                 {
                     > 0 => _jumpAnimation,
                     < 0 => _flippedJumpAnimation,
-                    is_not_pressing_a_key when _currentDirection == Direction.Right => _jumpAnimation,
-                    is_not_pressing_a_key when _currentDirection == Direction.Left => _flippedJumpAnimation,
+                    0 when _currentDirection == Direction.Right => _jumpAnimation,
+                    0 when _currentDirection == Direction.Left => _flippedJumpAnimation,
                     var _ => AnimationPlayer.Animation
                 };
         }
         
-        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(Input.X * SPEED * deltaTime, PhysicsBody.Velocity.Y);
+        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED * deltaTime, PhysicsBody.Velocity.Y);
 
-        private void Jump()
+        private void Jump() => PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
+        
+        private void Land()
         {
-            PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
-            IsGrounded = false;
+            AnimationPlayer.Animation = _currentDirection switch
+            {
+                Direction.Left => _flippedIdleAnimation,
+                Direction.Right => _idleAnimation,
+                var _ => _idleAnimation
+            };
         }
     }
 }

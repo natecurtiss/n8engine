@@ -1,11 +1,15 @@
-﻿using N8Engine.Inputs;
+using N8Engine;
+using N8Engine.Inputs;
 using N8Engine.Mathematics;
 
 namespace SampleProject
 {
-    public sealed class WasdAndArrowKeyInputs
+    public sealed class PlayerInputs : GameObject
     {
-        public Vector InputVector
+        private const float COYOTE_TIME = 0.3f;
+        private float _jumpInputTimer;
+        
+        public Vector Axis
         {
             get
             {
@@ -20,6 +24,14 @@ namespace SampleProject
                     axisInput.Y = -1f;
                 return axisInput;
             }
+        }
+        public bool JustPressedJump => _jumpInputTimer > 0f;
+
+        protected override void OnUpdate(float deltaTime)
+        {
+            _jumpInputTimer -= deltaTime;
+            if (Key.W.WasJustPressed() || Key.UpArrow.WasJustPressed())
+                _jumpInputTimer = COYOTE_TIME;
         }
     }
 }

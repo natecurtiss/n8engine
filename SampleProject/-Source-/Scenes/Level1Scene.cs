@@ -10,8 +10,8 @@ namespace SampleProject
         protected override void OnSceneLoaded()
         {
             GameObject.Create<Player>("player").Transform.Position = new Vector(-250f, 30f);
-            AutoTilemap<EmptyWall, RightWall, EmptyWall, BottomWall, RightWall, EmptyWall, BottomRightWall, EmptyWall, EmptyWall>
-                .Place(new Vector(-340f, 50f), new Vector(8, 3), new Vector(24f, 12f), TilePivot.BottomLeft);
+            AutoTilemap<EmptyGameObject, RightWall, EmptyGameObject, BottomWall, RightWall, EmptyGameObject, BottomRightWall, EmptyGameObject, EmptyGameObject>
+                .Place(new Vector(-340f, 50f), new Vector(8, 3), new Vector(12f, 12f), TilePivot.BottomLeft);
         }
     }
 }

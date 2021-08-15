@@ -1,0 +1,49 @@
+using System;
+using System.Linq;
+using N8Engine;
+using N8Engine.Physics;
+
+namespace SampleProject
+{
+    public sealed class GroundCheck<TGround> : GameObject where TGround : GameObject
+    {
+        public event Action OnLandedOnTheGround;
+        public event Action OnJumpedOffTheGround;
+        
+        private const float COYOTE_TIME = 0.3f;
+        private float _groundedTimer;
+        
+        public bool IsGrounded
+        {
+            get => _groundedTimer > 0f;
+            private set => _groundedTimer = value ? COYOTE_TIME : 0f;
+        }
+
+        protected override void OnStart() => Collider.IsTrigger = true;
+
+        protected override void OnEarlyUpdate(float deltaTime)
+        {
+            var isGroundedThisFrame = false;
+            var wasGroundedLastFrame = IsGrounded;
+            foreach (var collider in Collider.Contacts)
+                if (collider.GameObject.Is<TGround>())
+                {
+                    isGroundedThisFrame = true;
+                    break;
+                }
+            _groundedTimer -= deltaTime;
+            if (isGroundedThisFrame)
+            {
+                IsGrounded = true;
+                if (!wasGroundedLastFrame)
+                    OnLandedOnTheGround?.Invoke();
+            }
+            else
+            {
+                if (wasGroundedLastFrame && !IsGrounded)
+                    OnJumpedOffTheGround?.Invoke();
+            }
+
+        }
+    }
+}

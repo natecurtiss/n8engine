@@ -6,6 +6,7 @@ namespace N8Engine.Rendering
 {
     internal static class Window
     {
+        public const float RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS = 2f;
         public static bool UseExternalErrorConsole { get; set; } = true;
         
         private static readonly float _width = Console.WindowWidth;

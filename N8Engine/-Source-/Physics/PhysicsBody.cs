@@ -19,11 +19,14 @@ namespace N8Engine.Physics
 
         internal void OnCollisionWith(Direction directionOfCollision)
         {
-            Velocity = new Vector
-            (
-                directionOfCollision is Direction.Left or Direction.Right ? 0f : Velocity.X,
-                directionOfCollision is Direction.Top or Direction.Down ? 0f : Velocity.Y
-            );
+            if (directionOfCollision == Direction.None) 
+                Velocity = Vector.Zero;
+            else
+                Velocity = new Vector
+                (
+                    directionOfCollision is Direction.Left or Direction.Right ? 0f : Velocity.X,
+                    directionOfCollision is Direction.Top or Direction.Down ? 0f : Velocity.Y
+                );
         }
         
         internal void ApplyVelocity(float deltaTime) => Transform.Position += Velocity * deltaTime;

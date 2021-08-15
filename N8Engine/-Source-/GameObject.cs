@@ -8,7 +8,7 @@ namespace N8Engine
 {
     public abstract class GameObject
     {
-        public string Name { get; set; }
+        public string Name { get; private set; }
         public Transform Transform { get; private set; }
         public SpriteRenderer SpriteRenderer { get; private set; }
         public Collider Collider { get; private set; }
@@ -19,20 +19,29 @@ namespace N8Engine
         {
             var gameObject = new T();
             SceneManager.CurrentScene.GameObjects.Add(gameObject);
-            gameObject.Initialize();
-            gameObject.Name = name;
+            gameObject.Initialize(name);
             return gameObject;
         }
 
         internal static T Create<T>(T type, string name = "new gameobject") where T : GameObject, new() => Create<T>();
 
         public virtual void OnCollidedWith(Collider otherCollider) { }
+        
+        public virtual void OnStoppedCollidingWith(Collider otherCollider) { }
 
         public virtual void OnTriggeredBy(Collider otherTrigger) { }
         
+        public virtual void OnStoppedBeingTriggeredBy(Collider otherTrigger) { }
+        
         protected virtual void OnStart() { }
         
+        protected virtual void OnEarlyUpdate(float deltaTime) { }
+        
         protected virtual void OnUpdate(float deltaTime) { }
+        
+        protected virtual void OnLateUpdate(float deltaTime) { }
+        
+        protected virtual void OnDestroy() { }
 
         public bool Is<T>(out T type) where T : GameObject
         {
@@ -44,22 +53,28 @@ namespace N8Engine
 
         public void Destroy()
         {
+            OnDestroy();
+            GameLoop.OnEarlyUpdate -= OnEarlyUpdate;
             GameLoop.OnUpdate -= OnUpdate;
             GameLoop.OnPostUpdate -= OnPostUpdate;
             GameLoop.OnPhysicsUpdate -= OnPhysicsUpdate;
+            GameLoop.OnLateUpdate -= OnLateUpdate;
             GameLoop.OnRender -= OnRender;
         }
 
-        private void Initialize()
+        private void Initialize(string name)
         {
+            Name = name;
             Transform = new Transform(this);
             PhysicsBody = new PhysicsBody(this);
             Collider = new Collider(this);
             SpriteRenderer = new SpriteRenderer(this);
             AnimationPlayer = new AnimationPlayer(this);
+            GameLoop.OnEarlyUpdate += OnEarlyUpdate;
             GameLoop.OnUpdate += OnUpdate;
             GameLoop.OnPostUpdate += OnPostUpdate;
             GameLoop.OnPhysicsUpdate += OnPhysicsUpdate;
+            GameLoop.OnLateUpdate += OnLateUpdate;
             GameLoop.OnRender += OnRender;
             OnStart();
         }

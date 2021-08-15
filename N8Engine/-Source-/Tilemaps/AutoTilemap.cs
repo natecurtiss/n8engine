@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using N8Engine.Mathematics;
+using N8Engine.Rendering;
 
 namespace N8Engine.Tilemaps
 {
@@ -23,7 +23,8 @@ namespace N8Engine.Tilemaps
         public static void Place(Vector position, Vector sizeOfChunkInTiles, Vector tileSize, TilePivot pivot, string name = "tilemap")
         {
             if (sizeOfChunkInTiles.X <= 0 || sizeOfChunkInTiles.Y <= 0) return;
-            
+
+            tileSize = new Vector(tileSize.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, tileSize.Y);
             var tiles = new List<GameObject>();
             for (var y = 0; y < (int) sizeOfChunkInTiles.Y; y++)
             {
@@ -49,6 +50,12 @@ namespace N8Engine.Tilemaps
             }
             foreach (var tile in tiles)
                 tile.Transform.Position = GetPositionFromPivot(pivot, tile.Transform.Position, sizeOfChunkInTiles * tileSize);
+
+            return;
+            var emptyGameObject = GameObject.Create<EmptyGameObject>(name);
+            emptyGameObject.Transform.Position = position + sizeOfChunkInTiles * tileSize / 2;
+            emptyGameObject.Collider.Size = new Vector(2f, 100f);
+            emptyGameObject.Collider.IsDebugModeEnabled = true;
         }
 
         private static TileType GetTileType(Vector tilePosition, Vector numberOfTiles)
