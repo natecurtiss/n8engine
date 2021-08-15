@@ -44,16 +44,19 @@ namespace N8Engine.Physics
                 if (otherCollider.Size == Vector.Zero) continue;
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
-                    var directionOfCollision = BoundingBoxCurrentFrame.DirectionRelativeTo(otherCollider.BoundingBoxCurrentFrame);
-                    var wasCollision = directionOfCollision != Direction.None;
-                    if (wasCollision)
+                    if (otherCollider.IsTrigger || IsTrigger)
                     {
-                        PhysicsBody.OnCollisionWith(directionOfCollision);
-                        if (otherCollider.IsTrigger || IsTrigger)
-                            GameObject.OnTriggeredBy(otherCollider);
-                        else
+                        GameObject.OnTriggeredBy(otherCollider);
+                    }
+                    else
+                    {
+                        var directionOfCollision = BoundingBoxCurrentFrame.DirectionRelativeTo(otherCollider.BoundingBoxCurrentFrame);
+                        var wasCollision = directionOfCollision != Direction.None;
+                        if (wasCollision)
+                        {
+                            PhysicsBody.OnCollisionWith(directionOfCollision);
                             GameObject.OnCollidedWith(otherCollider);
-                        break;
+                        }
                     }
                 }
             }

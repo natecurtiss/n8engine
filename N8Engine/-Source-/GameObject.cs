@@ -9,22 +9,22 @@ namespace N8Engine
     public abstract class GameObject
     {
         public string Name { get; set; }
-        public bool IsStatic { get; private set; }
         public Transform Transform { get; private set; }
         public SpriteRenderer SpriteRenderer { get; private set; }
         public Collider Collider { get; private set; }
         public PhysicsBody PhysicsBody { get; private set; }
         public AnimationPlayer AnimationPlayer { get; private set; }
 
+        private bool IsStaticAndWillNotBeCovered { get; set; }
         private bool _hasRenderedOnce;
-        
-        public static T Create<T>(string name = "new gameobject", bool isStatic = false) where T : GameObject, new()
+
+        public static T Create<T>(string name = "new gameobject", bool isStaticAndWillNotBeCovered = false) where T : GameObject, new()
         {
             var gameObject = new T();
             SceneManager.CurrentScene.GameObjects.Add(gameObject);
             gameObject.Initialize();
             gameObject.Name = name;
-            gameObject.IsStatic = isStatic;
+            gameObject.IsStaticAndWillNotBeCovered = isStaticAndWillNotBeCovered;
             return gameObject;
         }
 
@@ -80,11 +80,11 @@ namespace N8Engine
         
         private void OnRender()
         {
-            if (IsStatic && _hasRenderedOnce) return;
+            if (IsStaticAndWillNotBeCovered && _hasRenderedOnce) return;
             if (SpriteRenderer.Sprite != null)
-                Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder, IsStatic);
+                Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder, IsStaticAndWillNotBeCovered);
             if (Collider.IsDebugModeEnabled)
-                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, Math.INFINITY - 1, IsStatic);
+                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, Math.INFINITY - 1);
             if (!_hasRenderedOnce) _hasRenderedOnce = true;
         }
     }

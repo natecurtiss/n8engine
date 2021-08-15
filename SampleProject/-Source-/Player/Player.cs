@@ -1,4 +1,5 @@
 ﻿using N8Engine;
+using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
 
@@ -28,12 +29,13 @@ namespace SampleProject
             get => _groundedTimer > 0f;
             set => _groundedTimer = value ? COYOTE_TIME : 0f;
         }
-        private bool CanJump => IsGrounded && _inputTimer > 0f;
+        private bool CanJump => Key.W.WasJustPressed();
 
         protected override void OnStart()
         {
             Collider.Size = new Vector(10f, 7f);
             Collider.Offset = Vector.Down;
+            SpriteRenderer.SortingOrder = 1;
             PhysicsBody.UseGravity = true;
             AnimationPlayer.Animation = _idleAnimation;
             AnimationPlayer.Play();

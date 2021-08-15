@@ -15,15 +15,13 @@ namespace N8Engine.Rendering
         
         public Vector Position { get; }
         public int SortingOrder { get; set; }
-        public bool IsStatic { get; set; }
 
-        public Pixel(ConsoleColor foregroundColor, ConsoleColor backgroundColor, Vector position, bool isStatic = false)
+        public Pixel(ConsoleColor foregroundColor, ConsoleColor backgroundColor, Vector position)
         {
             ForegroundColor = foregroundColor;
             BackgroundColor = backgroundColor;
             Position = position;
             SortingOrder = 0;
-            IsStatic = isStatic;
         }
         
         public override bool Equals(object obj) => obj is Pixel other && this == other;
