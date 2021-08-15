@@ -5,11 +5,7 @@ namespace SampleProject
 {
     internal static class Program
     {
-        private static void Main()
-        {
-            // Application.UseExternalErrorConsole = false;
-            Application.Start(OnLaunch, OnNewFrame);
-        }
+        private static void Main() => Application.Start(OnLaunch, OnNewFrame);
 
         private static void OnLaunch() { }
 

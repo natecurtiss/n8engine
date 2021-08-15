@@ -1,6 +1,7 @@
 ﻿using N8Engine;
 using N8Engine.Mathematics;
 using N8Engine.SceneManagement;
+using N8Engine.Tilemaps;
 
 namespace SampleProject
 {
@@ -8,9 +9,9 @@ namespace SampleProject
     {
         protected override void OnSceneLoaded()
         {
-            GameObject.Create<Player>("player");
-            GameObject.Create<Walls.UpperLeftWall>("floor").Transform.Position = new Vector(-300f, 30f);
-            GameObject.Create<Walls.UpperWall>("floor").Transform.Position = new Vector(-276f, 30f);
+            GameObject.Create<Player>("player").Transform.Position = new Vector(-250f, 30f);
+            AutoTilemap<EmptyWall, RightWall, EmptyWall, BottomWall, RightWall, EmptyWall, BottomRightWall, EmptyWall, EmptyWall>
+                .Place(new Vector(-340f, 50f), new Vector(8, 3), new Vector(24f, 12f), TilePivot.BottomLeft);
         }
     }
 }

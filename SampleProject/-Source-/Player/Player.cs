@@ -52,7 +52,7 @@ namespace SampleProject
         public override void OnCollidedWith(Collider otherCollider)
         {
             var isAirborne = !IsGrounded;
-            if (isAirborne && otherCollider.GameObject.Is<Walls.Wall>())
+            if (isAirborne && otherCollider.GameObject.Is<WallBase>())
             {
                 IsGrounded = true;
                 AnimationPlayer.Animation = _currentDirection switch

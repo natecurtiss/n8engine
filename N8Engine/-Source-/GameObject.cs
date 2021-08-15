@@ -23,7 +23,9 @@ namespace N8Engine
             gameObject.Name = name;
             return gameObject;
         }
-        
+
+        internal static T Create<T>(T type, string name = "new gameobject") where T : GameObject, new() => Create<T>();
+
         public virtual void OnCollidedWith(Collider otherCollider) { }
 
         public virtual void OnTriggeredBy(Collider otherTrigger) { }

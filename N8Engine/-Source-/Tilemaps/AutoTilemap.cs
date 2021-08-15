@@ -1,17 +1,18 @@
+using System;
 using System.Collections.Generic;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Tilemaps
 {
-    public abstract class AutoTilemap<TLeft, TRight, TTop, TBottom, TTopRight, TTopLeft, TBottomRight, TBottomLeft, TMiddle>
+    public static class AutoTilemap<TLeft, TRight, TTop, TBottom, TTopRight, TTopLeft, TBottomRight, TBottomLeft, TMiddle>
         where TLeft : GameObject, new()
         where TRight : GameObject, new()
         where TTop : GameObject, new()
         where TBottom : GameObject, new()
         where TTopRight : GameObject, new()
         where TTopLeft : GameObject, new()
-        where TBottomLeft : GameObject, new()
         where TBottomRight : GameObject, new()
+        where TBottomLeft : GameObject, new()
         where TMiddle : GameObject, new()
     {
         private enum TileType
@@ -19,10 +20,10 @@ namespace N8Engine.Tilemaps
             Left, Right, Top, Bottom, TopRight, TopLeft, BottomRight, BottomLeft, Middle
         }
         
-        public static void Place<T>(Vector position, Vector sizeOfChunkInTiles, Vector tileSize, TilePivot pivot) where T : AutoTilemap
-            <TLeft, TRight, TTop, TBottom, TTopRight, TTopLeft, TBottomRight, TBottomLeft, TMiddle>
+        public static void Place(Vector position, Vector sizeOfChunkInTiles, Vector tileSize, TilePivot pivot)
         {
             if (sizeOfChunkInTiles.X <= 0 || sizeOfChunkInTiles.Y <= 0) return;
+            
             var tiles = new List<GameObject>();
             for (var y = 0; y < (int) sizeOfChunkInTiles.Y; y++)
             {
@@ -42,7 +43,7 @@ namespace N8Engine.Tilemaps
                         TileType.Middle => GameObject.Create<TMiddle>(),
                         var _ => GameObject.Create<TMiddle>()
                     });
-                    gameObject.Transform.Position = position + new Vector(x, y) * sizeOfChunkInTiles * tileSize;
+                    gameObject.Transform.Position = position + new Vector(x, y) * tileSize;
                     tiles.Add(gameObject);
                 }
             }
@@ -82,13 +83,13 @@ namespace N8Engine.Tilemaps
             pivot switch
             {
                 TilePivot.Center => originalPosition - size / 2f,
-                TilePivot.Top => originalPosition + new Vector(size.X / 2f, size.Y),
-                TilePivot.Bottom => originalPosition + new Vector(size.X / 2f, 0f),
-                TilePivot.Right => originalPosition + new Vector(size.X, size.Y / 2f),
-                TilePivot.Left => originalPosition + new Vector(0f, size.Y / 2f),
+                TilePivot.Top => originalPosition + new Vector(-size.X / 2f, size.Y),
+                TilePivot.Bottom => originalPosition + new Vector(-size.X / 2f, 0f),
+                TilePivot.Right => originalPosition + new Vector(size.X, -size.Y / 2f),
+                TilePivot.Left => originalPosition + new Vector(0f, -size.Y / 2f),
                 TilePivot.UpperRight => originalPosition + size,
-                TilePivot.UpperLeft => originalPosition + new Vector(0f, size.Y),
-                TilePivot.BottomRight => originalPosition + new Vector(size.X, 0f),
+                TilePivot.UpperLeft => originalPosition + new Vector(0f, -size.Y),
+                TilePivot.BottomRight => originalPosition + new Vector(-size.X, 0f),
                 TilePivot.BottomLeft => originalPosition,
                 var _ => originalPosition
             };
