@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -33,26 +34,29 @@ namespace N8Engine.Physics
 
                 const string green_color = "{Green,Green}";
                 const string clear_color = "{Clear,Clear}";
-                const int top_row = 0;
-                const int first_pixel_in_row = 0;
-                
-                var bottomRow = height - 1;
-                var lastPixelInRow = width - 1;
 
                 var pixelData = new string[height];
-                for (var i = 0; i < width; i++) 
-                    pixelData[top_row] += green_color;
+                var stringBuilder = new StringBuilder();
                 
-                for (var i = 0; i < width; i++) 
-                    pixelData[bottomRow] += green_color;
-                
-                for (var line = 1; line < bottomRow; line++)
+                for (var i = 0; i < width; i++)
+                    stringBuilder.Append(green_color);
+                pixelData[0] = stringBuilder.ToString();
+                stringBuilder.Clear();
+
+                for (var i = 0; i < width; i++)
+                    stringBuilder.Append(green_color);
+                pixelData[height - 1] = stringBuilder.ToString();
+                stringBuilder.Clear();
+
+                for (var line = 1; line < height - 1; line++)
                 {
                     for (var pixel = 0; pixel < width; pixel++)
-                        if (pixel == first_pixel_in_row || pixel == lastPixelInRow)
-                            pixelData[line] += green_color;
+                        if (pixel == 0 || pixel == width - 1)
+                            stringBuilder.Append(green_color);
                         else
-                            pixelData[line] += clear_color;
+                            stringBuilder.Append(clear_color);
+                    pixelData[line] = stringBuilder.ToString();
+                    stringBuilder.Clear();
                 }
                 
                 var data = new N8SpriteData(pixelData);

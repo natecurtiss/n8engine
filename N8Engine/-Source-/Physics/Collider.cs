@@ -15,7 +15,7 @@ namespace N8Engine.Physics
         private Vector _size;
 
         public IEnumerable<Collider> Contacts => _collidersCollidingWithThisFrame;
-        public bool IsDebugModeEnabled { get; set; }
+        public bool ShowDebugCollider { get; set; }
         public bool IsTrigger { get; set; }
         public Vector Offset { get; set; }
         public Vector Size

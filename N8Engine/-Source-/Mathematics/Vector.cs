@@ -23,6 +23,9 @@ namespace N8Engine.Mathematics
         public static readonly Vector Left = new(-1f, 0f);
         public static readonly Vector Right = new(1f, 0f);
         
+        private readonly float _x;
+        private readonly float _y;
+        
         public float X
         {
             get => _x;
@@ -34,9 +37,6 @@ namespace N8Engine.Mathematics
             set => this = new Vector(_x, value);
         }
 
-        private readonly float _x;
-        private readonly float _y;
-        
         public float SquareMagnitude => X * X + Y * Y;
         public float Magnitude => SquareMagnitude.SquareRoot();
         public Vector AbsoluteValue => new(X.AbsoluteValue(), Y.AbsoluteValue());

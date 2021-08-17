@@ -93,7 +93,7 @@ namespace N8Engine
         {
             if (SpriteRenderer.Sprite != null)
                 Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder);
-            if (Collider.IsDebugModeEnabled)
+            if (Collider.ShowDebugCollider)
                 Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, Math.INFINITY - 1);
         }
     }
