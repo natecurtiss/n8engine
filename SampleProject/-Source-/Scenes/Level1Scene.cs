@@ -9,9 +9,9 @@ namespace SampleProject
     {
         protected override void OnSceneLoaded()
         {
-            GameObject.Create<Player>("player").Transform.Position = new Vector(-250f, 30f);
-            AutoTilemap<EmptyGameObject, RightWall, EmptyGameObject, BottomWall, RightWall, EmptyGameObject, BottomRightWall, EmptyGameObject, EmptyGameObject>
-                .Place(new Vector(-340f, 50f), new Vector(8, 3), new Vector(12f, 12f), TilePivot.BottomLeft);
+            GameObject.Create<Player>("player").Transform.Position = Vector.Zero;
+            AutoTilemap<LeftWall, RightWall, TopWall, BottomWall, TopRightWall, TopLeftWall, BottomRightWall, BottomLeftWall, EmptyGameObject>
+                .Place(new Vector(0f, 0f), new Vector(8, 4), new Vector(12f, 12f), TilePivot.Center);
         }
     }
 }

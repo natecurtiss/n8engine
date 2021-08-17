@@ -24,7 +24,7 @@ namespace N8Engine.Tilemaps
         {
             if (sizeOfChunkInTiles.X <= 0 || sizeOfChunkInTiles.Y <= 0) return;
 
-            tileSize = new Vector(tileSize.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, tileSize.Y);
+            var actualTileSize = new Vector(tileSize.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, tileSize.Y);
             var tiles = new List<GameObject>();
             for (var y = 0; y < (int) sizeOfChunkInTiles.Y; y++)
             {
@@ -44,18 +44,19 @@ namespace N8Engine.Tilemaps
                         TileType.Middle => GameObject.Create<TMiddle>($"{name}_middle"),
                         var _ => GameObject.Create<TMiddle>($"{name}_middle")
                     });
-                    gameObject.Transform.Position = position + new Vector(x, y) * tileSize;
+                    gameObject.Transform.Position = position + new Vector(x, y) * actualTileSize;
                     tiles.Add(gameObject);
                 }
             }
+            var size = sizeOfChunkInTiles * actualTileSize;
             foreach (var tile in tiles)
-                tile.Transform.Position = GetPositionFromPivot(pivot, tile.Transform.Position, sizeOfChunkInTiles * tileSize);
-
-            return;
-            var emptyGameObject = GameObject.Create<EmptyGameObject>(name);
-            emptyGameObject.Transform.Position = position + sizeOfChunkInTiles * tileSize / 2;
-            emptyGameObject.Collider.Size = new Vector(2f, 100f);
-            emptyGameObject.Collider.IsDebugModeEnabled = true;
+                tile.Transform.Position = GetTilePositionFromPivot(pivot, tile.Transform.Position, size, actualTileSize);
+            
+            var autoTilemapColliderObject = GameObject.Create<EmptyGameObject>(name);
+            
+            autoTilemapColliderObject.Transform.Position = GetColliderPositionFromPivot(position, pivot, size, actualTileSize);
+            autoTilemapColliderObject.Collider.Size = sizeOfChunkInTiles * tileSize;
+            autoTilemapColliderObject.Collider.IsDebugModeEnabled = true;
         }
 
         private static TileType GetTileType(Vector tilePosition, Vector numberOfTiles)
@@ -86,19 +87,41 @@ namespace N8Engine.Tilemaps
             return TileType.Middle;
         }
 
-        private static Vector GetPositionFromPivot(TilePivot pivot, Vector originalPosition, Vector size) =>
-            pivot switch
+        private static Vector GetTilePositionFromPivot(TilePivot pivot, Vector position, Vector size, Vector actualTileSize)
+        {
+            var newPosition =  pivot switch
             {
-                TilePivot.Center => originalPosition - size / 2f,
-                TilePivot.Top => originalPosition + new Vector(-size.X / 2f, size.Y),
-                TilePivot.Bottom => originalPosition + new Vector(-size.X / 2f, 0f),
-                TilePivot.Right => originalPosition + new Vector(size.X, -size.Y / 2f),
-                TilePivot.Left => originalPosition + new Vector(0f, -size.Y / 2f),
-                TilePivot.UpperRight => originalPosition + size,
-                TilePivot.UpperLeft => originalPosition + new Vector(0f, -size.Y),
-                TilePivot.BottomRight => originalPosition + new Vector(-size.X, 0f),
-                TilePivot.BottomLeft => originalPosition,
-                var _ => originalPosition
+                TilePivot.Center => position - size / 2f,
+                TilePivot.Top => position - size / 2f + new Vector(0f, size.Y / 2f),
+                TilePivot.Bottom => position - size / 2f + new Vector(0f, -size.Y / 2f),
+                TilePivot.Right => position + new Vector(-size.X, -size.Y / 2f),
+                TilePivot.Left => position + new Vector(0f, -size.Y / 2f),
+                TilePivot.TopRight => position + new Vector(-size.X, 0f),
+                TilePivot.TopLeft => position,
+                TilePivot.BottomRight => position - size,
+                TilePivot.BottomLeft => position + new Vector(0f, -size.Y),
+                var _ => position
             };
+            newPosition += actualTileSize / 2f;
+            return newPosition;
+        }
+
+        private static Vector GetColliderPositionFromPivot(Vector position, TilePivot pivot, Vector size, Vector actualTileSize)
+        {
+            var positionWithCenterPivot = pivot switch
+            {
+                TilePivot.Center => position,
+                TilePivot.Top => position + new Vector(0f, size.Y / 2f),
+                TilePivot.Bottom => position + new Vector(0f, -size.Y / 2f),
+                TilePivot.Right => position + new Vector(-size.X / 2f, 0f),
+                TilePivot.Left => position + new Vector(size.X / 2f, 0f),
+                TilePivot.TopRight => position + new Vector(-size.X, size.Y) / 2f,
+                TilePivot.TopLeft => position + new Vector(size.X, size.Y) / 2f,
+                TilePivot.BottomRight => position + new Vector(-size.X, -size.Y) / 2f,
+                TilePivot.BottomLeft => position + new Vector(size.X, -size.Y) / 2f,
+                var _ => position
+            };
+            return positionWithCenterPivot;
+        }
     }
 }

@@ -33,9 +33,9 @@ namespace SampleProject
             
             Collider.Size = new Vector(7f, 7f);
             Collider.Offset = Vector.Right;
-            Collider.IsDebugModeEnabled = true;
+            // Collider.IsDebugModeEnabled = true;
             SpriteRenderer.SortingOrder = 1;
-            PhysicsBody.UseGravity = true;
+            // PhysicsBody.UseGravity = true;
             AnimationPlayer.Animation = _idleAnimation;
             AnimationPlayer.Play();
         }

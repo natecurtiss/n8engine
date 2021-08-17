@@ -7,8 +7,8 @@ namespace N8Engine.Tilemaps
         Bottom,
         Right,
         Left,
-        UpperRight,
-        UpperLeft,
+        TopRight,
+        TopLeft,
         BottomRight,
         BottomLeft
     }

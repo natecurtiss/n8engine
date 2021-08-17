@@ -7,7 +7,9 @@ namespace N8Engine.Mathematics
         public static bool operator ==(Vector first, Vector second) => first.X == second.X && first.Y == second.Y;
         public static bool operator !=(Vector first, Vector second) => !(first == second);
         public static Vector operator +(Vector first, Vector second) => new(first.X + second.X, first.Y + second.Y);
+        public static Vector operator +(Vector vector) => vector;
         public static Vector operator -(Vector first, Vector second) => new(first.X - second.X, first.Y - second.Y);
+        public static Vector operator -(Vector vector) => new(-vector.X, -vector.Y);
         public static Vector operator *(Vector vector, float multiplier) => new(vector.X * multiplier, vector.Y * multiplier);
         public static Vector operator *(float multiplier, Vector vector) => new(vector.X * multiplier, vector.Y * multiplier);
         public static Vector operator *(Vector first, Vector second) => new(first.X * second.X, first.Y * second.Y);
