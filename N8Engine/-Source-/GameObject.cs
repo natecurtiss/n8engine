@@ -43,13 +43,30 @@ namespace N8Engine
         
         protected virtual void OnDestroy() { }
 
-        public bool Is<T>(out T type) where T : GameObject
+        public bool Is<T>(out T type) where T : IGameObjectInterface
+        {
+            if (this is not T t)
+            {
+                type = default;
+                return false;
+            }
+            type = t;
+            return type != null;
+        }
+        
+        public bool Is<T>() where T : IGameObjectInterface
+        {
+            Debug.Log(this.GetType());
+            return this is T;
+        }
+
+        public bool IsA<T>(out T type) where T : GameObject
         {
             type = this as T;
             return type != null;
         }
         
-        public bool Is<T>() where T : GameObject => this is T type;
+        public bool IsA<T>() where T : GameObject => this is T type;
 
         public void Destroy()
         {

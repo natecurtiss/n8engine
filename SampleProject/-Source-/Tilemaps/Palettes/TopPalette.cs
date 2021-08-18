@@ -2,7 +2,7 @@ using N8Engine;
 
 namespace SampleProject
 {
-    public sealed class TopOnlyTilePalette : FullTilePalette
+    public sealed class TopPalette : FullPalette
     {
         public override GameObject Left => GameObject.Create<EmptyGameObject>();
         public override GameObject Right => GameObject.Create<EmptyGameObject>();

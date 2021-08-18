@@ -5,7 +5,7 @@ using N8Engine.Physics;
 
 namespace SampleProject
 {
-    public sealed class GroundCheck<TGround> : GameObject where TGround : GameObject
+    public sealed class GroundCheck<TGround> : GameObject where TGround : IGameObjectInterface
     {
         public event Action OnLandedOnTheGround;
         public event Action OnJumpedOffTheGround;
@@ -16,7 +16,7 @@ namespace SampleProject
         public bool IsGrounded
         {
             get => _groundedTimer > 0f;
-            private set => _groundedTimer = value ? COYOTE_TIME : 0f;
+            set => _groundedTimer = value ? COYOTE_TIME : 0f;
         }
 
         protected override void OnStart() => Collider.IsTrigger = true;

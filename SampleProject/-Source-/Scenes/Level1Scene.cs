@@ -6,12 +6,12 @@ using N8Engine.Tilemaps;
 
 namespace SampleProject
 {
-    public sealed class Level1Scene : Scene
+    public sealed class Level1Scene : LevelSceneBase
     {
         protected override void OnSceneLoaded()
         {
-            GameObject.Create<Player>("player").Transform.Position = Vector.Zero;
-            AutoTilemap<TopOnlyTilePalette>.Place(Window.BottomLeftCorner, new Vector(7, 3),TilePivot.BottomLeft);
+            base.OnSceneLoaded();
+            AutoTilemap<TopAndSidesPalette>.Place(Window.BottomLeftCorner + Vector.Left * 24f, new Vector(20, 3),TilePivot.BottomLeft);
         }
     }
 }

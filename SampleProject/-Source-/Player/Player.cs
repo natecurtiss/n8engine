@@ -1,6 +1,7 @@
 ﻿using N8Engine;
 using N8Engine.Mathematics;
-using N8Engine.Physics;
+using N8Engine.Rendering;
+using N8Engine.SceneManagement;
 
 namespace SampleProject
 {
@@ -17,25 +18,24 @@ namespace SampleProject
         private readonly FlippedPlayerJumpAnimation _flippedJumpAnimation = new();
 
         private Direction _currentDirection = Direction.Right;
-        private GroundCheck<Ground> _groundCheck;
+        private GroundCheck<ICanBeJumpedOn> _groundCheck;
         private PlayerInputs _inputs;
         
         private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJump;
 
         protected override void OnStart()
         {
-            _groundCheck = GameObject.Create<GroundCheck<Ground>>("player ground check");
+            _groundCheck = GameObject.Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += Land;
-            _groundCheck.Collider.Size = new Vector(10f, 2f);
-            _groundCheck.Collider.Offset = Vector.Up * 4f;
+            _groundCheck.Collider.Size = new Vector(10f, 1f);
+            _groundCheck.Collider.Offset = Vector.Up * 5f;
 
             _inputs = GameObject.Create<PlayerInputs>("player inputs");
             
-            Collider.Size = new Vector(7f, 7f);
+            Collider.Size = new Vector(10f, 7f);
             Collider.Offset = Vector.Right;
-            // Collider.IsDebugModeEnabled = true;
             SpriteRenderer.SortingOrder = 1;
-            // PhysicsBody.UseGravity = true;
+            PhysicsBody.UseGravity = true;
             AnimationPlayer.Animation = _idleAnimation;
             AnimationPlayer.Play();
         }
@@ -44,13 +44,21 @@ namespace SampleProject
 
         protected override void OnUpdate(float deltaTime)
         {
+            if (Transform.Position.Y >= Window.BottomSide.Y) Die();
             UpdateDirection();
-            HandleAnimations();
             Move(deltaTime);
             if (CanJump) Jump();
+            HandleAnimations();
         }
 
-        protected override void OnLateUpdate(float deltaTime) => _groundCheck.Transform.Position = Transform.Position;
+        protected override void OnLateUpdate(float deltaTime)
+        {
+            var position = Transform.Position;
+            var offset = Collider.Size.X / 2f + 5f;
+            position.X = position.X.ClampedBetween(Window.LeftSide.X + offset, Window.RightSide.X - offset);
+            Transform.Position = position;
+            _groundCheck.Transform.Position = Transform.Position;
+        }
 
         private void UpdateDirection()
         {
@@ -86,8 +94,12 @@ namespace SampleProject
         
         private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED * deltaTime, PhysicsBody.Velocity.Y);
 
-        private void Jump() => PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
-        
+        private void Jump()
+        {
+            PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
+            _groundCheck.IsGrounded = false;
+        }
+
         private void Land()
         {
             AnimationPlayer.Animation = _currentDirection switch
@@ -97,5 +109,7 @@ namespace SampleProject
                 var _ => _idleAnimation
             };
         }
+
+        private void Die() => SceneManager.LoadCurrentScene();
     }
 }

@@ -4,8 +4,9 @@ using N8Engine.Tilemaps;
 
 namespace SampleProject
 {
-    public class FullTilePalette : TilePalette
+    public class FullPalette : TilePalette
     {
+        public override GameObject BaseTilemapObject => GameObject.Create<BaseTilemapObject>();
         public override GameObject Left => GameObject.Create<LeftWall>();
         public override GameObject Right => GameObject.Create<RightWall>();
         public override GameObject Top => GameObject.Create<TopWall>();

@@ -8,22 +8,12 @@ namespace N8Engine
     public static class Application
     {
         public static int FramesPerSecond => GameLoop.FramesPerSecond;
-        public static int TargetFramerate
-        {
-            get => GameLoop.TargetFramerate;
-            set => GameLoop.TargetFramerate = value;
-        }
-        public static bool UseExternalErrorConsole
-        {
-            get => Window.UseExternalErrorConsole;
-            set => Window.UseExternalErrorConsole = value;
-        }
-        
-        public static void Start(Action onLaunchedCallback = default, Action onNextFrameCallback = default)
+
+        public static void Start(short fontSize = 5, bool maximizeToFullscreen = false, Action onLaunchedCallback = default, Action onNextFrameCallback = default)
         {
             PathExtensions.Initialize();
             Debug.Initialize();
-            Window.Initialize();
+            Window.Initialize(fontSize);
             SceneManager.Initialize();
             Renderer.Initialize();
             Input.Initialize();

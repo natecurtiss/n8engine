@@ -4,6 +4,7 @@ namespace N8Engine.Tilemaps
 {
     public abstract class TilePalette
     {
+        public abstract GameObject BaseTilemapObject { get; }
         public abstract GameObject Left { get; }
         public abstract GameObject Right { get; }
         public abstract GameObject Top { get; }
@@ -14,7 +15,5 @@ namespace N8Engine.Tilemaps
         public abstract GameObject BottomRight { get; }
         public abstract GameObject Middle { get; }
         public abstract Vector TileSize { get; }
-        public virtual string Name { get; } = "tilemap";
-        public virtual bool ShowDebugCollider { get; } = false;
     }
 }

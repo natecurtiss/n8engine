@@ -44,11 +44,10 @@ namespace N8Engine.Tilemaps
             var chunkSize = sizeOfChunkInNumberOfTiles * actualTileSize;
             foreach (var tile in tiles)
                 tile.Transform.Position = GetTilePositionFromPivot(pivot, tile.Transform.Position, chunkSize, actualTileSize);
-            
-            var tilemapCollider = GameObject.Create<EmptyGameObject>(tilePalette.Name);
+
+            var tilemapCollider = tilePalette.BaseTilemapObject;
             tilemapCollider.Transform.Position = GetColliderPositionFromPivot(position, pivot, chunkSize);
             tilemapCollider.Collider.Size = sizeOfChunkInNumberOfTiles * tilePalette.TileSize;
-            tilemapCollider.Collider.ShowDebugCollider = tilePalette.ShowDebugCollider;
         }
 
         private static TileType GetTileType(Vector tilePosition, Vector numberOfTiles)

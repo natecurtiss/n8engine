@@ -11,9 +11,9 @@
             set
             {
                 if (value == _animation) return;
-                // Debug.Log($"{value} {_animation}");
                 _animation?.Reset();
                 _animation = value;
+                SpriteRenderer.Sprite = _animation.CachedFrames[0];
             }
         }
 

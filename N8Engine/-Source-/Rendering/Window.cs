@@ -17,10 +17,14 @@ namespace N8Engine.Rendering
         public static Vector BottomRightCorner { get; private set; }
         public static Vector TopLeftCorner { get; private set; }
         public static Vector TopRightCorner { get; private set; }
+        public static Vector LeftSide { get; private set; }
+        public static Vector RightSide { get; private set; }
+        public static Vector TopSide { get; private set; }
+        public static Vector BottomSide { get; private set; }
         
-        internal static void Initialize()
+        internal static void Initialize(short fontSize)
         {
-            ConsoleFontHelper.SetCurrentFont("Arial", 5);
+            ConsoleFontHelper.SetCurrentFont("Arial", fontSize);
             ConsoleQuickEditModeHelper.IsEnabled = false;
             ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
@@ -29,6 +33,10 @@ namespace N8Engine.Rendering
             BottomRightCorner = new Vector(Console.WindowWidth / 2f, Console.WindowHeight / 2f);
             TopLeftCorner = new Vector(-Console.WindowWidth / 2f, -Console.WindowHeight / 2f);
             TopRightCorner = new Vector(Console.WindowWidth / 2f, -Console.WindowHeight / 2f);
+            LeftSide = new Vector(-Console.WindowWidth / 2f, 0f);
+            RightSide = new Vector(Console.WindowWidth / 2f, 0f);
+            TopSide = new Vector(0f, -Console.WindowHeight / 2f);
+            BottomSide = new Vector(0f, Console.WindowHeight / 2f);
         }
 
         internal static Vector FromWindowPositionToWorldPosition(this Vector position) => position + _span / 2;
