@@ -25,12 +25,11 @@ namespace SampleProject
 
         protected override void OnStart()
         {
-            _groundCheck = GameObject.Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
+            _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += Land;
             _groundCheck.Collider.Size = new Vector(10f, 1f);
             _groundCheck.Collider.Offset = Vector.Up * 5f;
-
-            _inputs = GameObject.Create<PlayerInputs>("player inputs");
+            _inputs = Create<PlayerInputs>("player inputs");
             
             Collider.Size = new Vector(10f, 7f);
             Collider.Offset = Vector.Right;
@@ -53,10 +52,7 @@ namespace SampleProject
 
         protected override void OnLateUpdate(float deltaTime)
         {
-            var position = Transform.Position;
-            var offset = Collider.Size.X / 2f + 5f;
-            position.X = position.X.ClampedBetween(Window.LeftSide.X + offset, Window.RightSide.X - offset);
-            Transform.Position = position;
+            ClampPositionWithinWindow();
             _groundCheck.Transform.Position = Transform.Position;
         }
 
@@ -70,6 +66,24 @@ namespace SampleProject
             };
         }
 
+        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED * deltaTime, PhysicsBody.Velocity.Y);
+
+        private void Jump()
+        {
+            PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
+            _groundCheck.IsGrounded = false;
+        }
+
+        private void Land()
+        {
+            AnimationPlayer.Animation = _currentDirection switch
+            {
+                Direction.Left => _flippedIdleAnimation,
+                Direction.Right => _idleAnimation,
+                var _ => _idleAnimation
+            };
+        }
+        
         private void HandleAnimations()
         {
             if (_groundCheck.IsGrounded)
@@ -91,23 +105,13 @@ namespace SampleProject
                     var _ => AnimationPlayer.Animation
                 };
         }
-        
-        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED * deltaTime, PhysicsBody.Velocity.Y);
 
-        private void Jump()
+        private void ClampPositionWithinWindow()
         {
-            PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
-            _groundCheck.IsGrounded = false;
-        }
-
-        private void Land()
-        {
-            AnimationPlayer.Animation = _currentDirection switch
-            {
-                Direction.Left => _flippedIdleAnimation,
-                Direction.Right => _idleAnimation,
-                var _ => _idleAnimation
-            };
+            var position = Transform.Position;
+            var offset = Collider.Size.X / 2f + 5f;
+            position.X = position.X.ClampedBetween(Window.LeftSide.X + offset, Window.RightSide.X - offset);
+            Transform.Position = position;
         }
 
         private void Die() => SceneManager.LoadCurrentScene();
