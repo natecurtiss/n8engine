@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
@@ -7,6 +8,8 @@ namespace N8Engine.Rendering
     internal static class Renderer
     {
         public const int NUMBER_OF_PIXELS = 2;
+        private const string ANSI_ESCAPE_SEQUENCE_START = "\u001b[";
+        
         private static readonly Dictionary<Vector, Pixel> _pixelsToRender = new();
         private static readonly Dictionary<Vector, Pixel> _pixelsToRenderLastFrame = new();
 
@@ -64,7 +67,8 @@ namespace N8Engine.Rendering
             var lastForegroundColor = ConsoleColor.Black;
             var lastBackgroundColor = ConsoleColor.Black;
             var lastPosition = new Vector();
-            
+            var outputStringBuilder = new StringBuilder();
+
             foreach (var position in _pixelsToRender.Keys)
             {
                 var pixelToRender = _pixelsToRender[position];
@@ -77,18 +81,19 @@ namespace N8Engine.Rendering
                 ) == Vector.Right;
                 
                 if (!pixelIsToTheRightOfPreviousPixel)
-                    Console.SetCursorPosition((int) position.X, (int) position.Y);
+                    outputStringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");
                 lastPosition = position;
-                
-                if (lastForegroundColor != pixelToRender.ForegroundColor) 
-                    Console.ForegroundColor = pixelToRender.ForegroundColor;
+
+                if (lastForegroundColor != pixelToRender.ForegroundColor)
+                    outputStringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{pixelToRender.ForegroundColor.AsAnsiForegroundColor()}");
                 if (lastBackgroundColor != pixelToRender.BackgroundColor) 
-                    Console.BackgroundColor = pixelToRender.BackgroundColor;
+                    outputStringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{pixelToRender.ForegroundColor.AsAnsiBackgroundColor()}");
                 lastForegroundColor = pixelToRender.ForegroundColor;
                 lastBackgroundColor = pixelToRender.BackgroundColor;
 
-                Console.Write("▒");
+                outputStringBuilder.Append("▒");
             }
+            Console.Write(outputStringBuilder.ToString());
         }
 
         private static void ClearOldPixels()
@@ -96,6 +101,7 @@ namespace N8Engine.Rendering
             var lastOldPosition = new Vector();
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Black;
+            var clearedPixelsStringBuilder = new StringBuilder();
             
             foreach (var oldPosition in _pixelsToRenderLastFrame.Keys)
             {
@@ -111,10 +117,10 @@ namespace N8Engine.Rendering
                 lastOldPosition = oldPosition;
                 
                 if (!pixelIsToTheRightOfPreviousPixel)
-                    Console.SetCursorPosition((int) oldPosition.X, (int) oldPosition.Y);
-                
-                Console.Write(" ");
+                    clearedPixelsStringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) oldPosition.Y};{(int) oldPosition.X}H");
+                clearedPixelsStringBuilder.Append(" ");
             }
+            Console.Write(clearedPixelsStringBuilder.ToString());
         }
     }
 }

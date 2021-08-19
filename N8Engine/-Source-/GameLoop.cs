@@ -15,7 +15,7 @@ namespace N8Engine
         public static event Action OnRender;
         public static event Action OnPostRender;
         
-        public static int TargetFramerate { get; set; } = 48;
+        public static int TargetFramerate { get; set; } = 60;
         public static int FramesPerSecond { get; private set; }
         private static float UpdateRate => 1f / TargetFramerate;
 

@@ -7,7 +7,7 @@ namespace SampleProject
 {
     public sealed class Player : GameObject
     {
-        private const int SPEED = 2600;
+        private const int SPEED = 100;
         private const int JUMP_FORCE = -200;
         
         private readonly PlayerWalkAnimation _walkAnimation = new();
@@ -66,7 +66,7 @@ namespace SampleProject
             };
         }
 
-        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED * deltaTime, PhysicsBody.Velocity.Y);
+        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED, PhysicsBody.Velocity.Y);
 
         private void Jump()
         {

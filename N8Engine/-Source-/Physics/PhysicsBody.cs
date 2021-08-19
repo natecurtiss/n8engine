@@ -5,16 +5,17 @@ namespace N8Engine.Physics
     public sealed class PhysicsBody : Component
     {
         private const float GRAVITY = 9.82f;
+        private const float GRAVITY_SCALE = 50f;
 
         public Vector Velocity { get; set; }
         public bool UseGravity { get; set; }
 
         internal PhysicsBody(GameObject gameObject) : base(gameObject) { }
 
-        internal void ApplyGravity()
+        internal void ApplyGravity(float deltaTime)
         {
             if (UseGravity)
-                Velocity += Vector.Up * GRAVITY;
+                Velocity += Vector.Up * GRAVITY * GRAVITY_SCALE * deltaTime;
         }
 
         internal void OnCollisionWith(Direction directionOfCollision)
@@ -28,7 +29,7 @@ namespace N8Engine.Physics
                     directionOfCollision is Direction.Top or Direction.Down ? 0f : Velocity.Y
                 );
         }
-        
+
         internal void ApplyVelocity(float deltaTime) => Transform.Position += Velocity * deltaTime;
     }
 }

@@ -100,7 +100,7 @@ namespace N8Engine
 
         private void OnPhysicsUpdate(float deltaTime)
         {
-            PhysicsBody.ApplyGravity();
+            PhysicsBody.ApplyGravity(deltaTime);
             Collider.UpdateBoundingBoxes(deltaTime);
             Collider.CheckCollisions();
             PhysicsBody.ApplyVelocity(deltaTime);
