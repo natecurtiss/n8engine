@@ -7,7 +7,7 @@ namespace SampleProject
 {
     public sealed class Player : GameObject
     {
-        private const int SPEED = 100;
+        private const int SPEED = 50;
         private const int JUMP_FORCE = -200;
         
         private readonly PlayerWalkAnimation _walkAnimation = new();
@@ -22,6 +22,7 @@ namespace SampleProject
         private PlayerInputs _inputs;
         
         private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJump;
+        private bool IsWalking => _inputs.Axis.X != 0f;
 
         protected override void OnStart()
         {
@@ -78,6 +79,8 @@ namespace SampleProject
         {
             AnimationPlayer.Animation = _currentDirection switch
             {
+                Direction.Left when IsWalking => _flippedWalkAnimation,
+                Direction.Right when IsWalking => _walkAnimation,
                 Direction.Left => _flippedIdleAnimation,
                 Direction.Right => _idleAnimation,
                 var _ => _idleAnimation
