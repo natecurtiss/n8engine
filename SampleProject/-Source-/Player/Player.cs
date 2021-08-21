@@ -7,7 +7,7 @@ namespace SampleProject
 {
     public sealed class Player : GameObject
     {
-        private const int SPEED = 50;
+        private const int SPEED = 100;
         private const int JUMP_FORCE = -200;
         
         private readonly PlayerWalkAnimation _walkAnimation = new();
@@ -20,12 +20,15 @@ namespace SampleProject
         private Direction _currentDirection = Direction.Right;
         private GroundCheck<ICanBeJumpedOn> _groundCheck;
         private PlayerInputs _inputs;
-        
+
         private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJump;
         private bool IsWalking => _inputs.Axis.X != 0f;
+        private Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
 
         protected override void OnStart()
         {
+            Transform.Position = SpawnPosition;
+            
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += Land;
             _groundCheck.Collider.Size = new Vector(10f, 1f);
@@ -117,6 +120,10 @@ namespace SampleProject
             Transform.Position = position;
         }
 
-        private void Die() => SceneManager.LoadCurrentScene();
+        private void Die()
+        {
+            Transform.Position = SpawnPosition;
+            PhysicsBody.Velocity = Vector.Zero;
+        }
     }
 }

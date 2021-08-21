@@ -66,7 +66,7 @@ namespace N8Engine.Rendering
             var backgroundColorName = pixelSet.Split(',')[1];
             if (foregroundColorName == "Clear" && backgroundColorName == "Clear") return null;
             
-            static ConsoleColor AsConsoleColor(string color) => (ConsoleColor) Enum.Parse(typeof(ConsoleColor), color);
+            static ConsoleColor AsConsoleColor(string color) => Enum.Parse<ConsoleColor>(color);
             var foregroundColor = AsConsoleColor(foregroundColorName);
             var backgroundColor = AsConsoleColor(backgroundColorName);
             return new Pixel(foregroundColor, backgroundColor, position);

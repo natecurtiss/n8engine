@@ -4,16 +4,20 @@ using N8Engine.Rendering;
 
 namespace N8Engine.Tilemaps
 {
-    public static class AutoTilemap<T> where T : TilePalette, new()
+    public sealed class AutoTilemap<T> where T : TilePalette, new()
     {
         private enum TileType
         {
             Left, Right, Top, Bottom, TopRight, TopLeft, BottomRight, BottomLeft, Middle
         }
 
-        public static void Place(Vector position, Vector sizeOfChunkInNumberOfTiles, TilePivot pivot)
+        public static AutoTilemap<T> Generator => new();
+
+        private AutoTilemap() { }
+
+        public AutoTilemap<T> Place(Vector position, Vector sizeOfChunkInNumberOfTiles, TilePivot pivot)
         {
-            if (sizeOfChunkInNumberOfTiles.X <= 0 || sizeOfChunkInNumberOfTiles.Y <= 0) return;
+            if (sizeOfChunkInNumberOfTiles.X <= 0 || sizeOfChunkInNumberOfTiles.Y <= 0) return this;
 
             var tilePalette = new T();
             var actualTileSize = new Vector(tilePalette.TileSize.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, tilePalette.TileSize.Y);
@@ -48,9 +52,11 @@ namespace N8Engine.Tilemaps
             var tilemapCollider = tilePalette.BaseTilemapObject;
             tilemapCollider.Transform.Position = GetColliderPositionFromPivot(position, pivot, chunkSize);
             tilemapCollider.Collider.Size = sizeOfChunkInNumberOfTiles * tilePalette.TileSize;
+
+            return this;
         }
 
-        private static TileType GetTileType(Vector tilePosition, Vector numberOfTiles)
+        private TileType GetTileType(Vector tilePosition, Vector numberOfTiles)
         {
             if (numberOfTiles.X == 1)
             {
@@ -77,7 +83,7 @@ namespace N8Engine.Tilemaps
             return TileType.Middle;
         }
 
-        private static Vector GetTilePositionFromPivot(TilePivot pivot, Vector position, Vector chunkSize, Vector actualTileSize)
+        private Vector GetTilePositionFromPivot(TilePivot pivot, Vector position, Vector chunkSize, Vector actualTileSize)
         {
             var newPosition = pivot switch
             {
@@ -96,7 +102,7 @@ namespace N8Engine.Tilemaps
             return newPosition;
         }
 
-        private static Vector GetColliderPositionFromPivot(Vector position, TilePivot pivot, Vector chunkSize)
+        private Vector GetColliderPositionFromPivot(Vector position, TilePivot pivot, Vector chunkSize)
         {
             var positionWithCenterPivot = pivot switch
             {
