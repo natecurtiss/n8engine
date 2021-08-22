@@ -27,7 +27,6 @@ namespace N8Engine.Rendering
             ConsoleFontHelper.SetCurrentFont("Arial", cameraSize);
             ConsoleQuickEditModeHelper.IsEnabled = false;
             ConsoleResizingHelper.Maximize();
-            ConsoleResizingHelper.DisableResizing();
             Console.CursorVisible = false;
 #if DEBUG
             ConsoleErrorHelper.CreateErrorConsole();
