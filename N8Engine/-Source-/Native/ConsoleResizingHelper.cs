@@ -29,9 +29,20 @@ namespace N8Engine.Native
 
         public static void Maximize()
         {
+            ToggleFullscreen();
+            RemoveTitlebar();
+            RemoveScrollbar();
+        }
+
+        private static void ToggleFullscreen()
+        {
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
             ShowWindow(CommonConsoleWindowInfo.Handle, MAXIMIZE_DISPLAY_TYPE);
-            
+        }
+        
+        // https://stackoverflow.com/questions/41172595/how-to-change-console-window-style-at-runtime
+        private static void RemoveTitlebar()
+        {
             var currentWindowStyle = GetWindowLong(CommonConsoleWindowInfo.Handle, NEW_WINDOW_STYLE);
             SetWindowLong(CommonConsoleWindowInfo.Handle, NEW_WINDOW_STYLE, 
                 currentWindowStyle & 
@@ -41,5 +52,8 @@ namespace N8Engine.Native
                 ~WS_BORDER
             );
         }
+
+        // https://stackoverflow.com/questions/50163122/how-to-remove-scroll-bar-from-fullscreen-console-in-c
+        private static void RemoveScrollbar() => Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
     }
 }
