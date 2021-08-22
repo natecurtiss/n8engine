@@ -11,12 +11,12 @@ namespace N8Engine
         public static void Start(Launcher launcher)
         {
             Debug.Initialize(launcher.PathToDebugLogsFile);
-            Window.Initialize(launcher.CameraSize);
+            Window.Initialize(launcher.FontSize);
             SceneManager.Initialize(launcher.Scenes);
             Renderer.Initialize();
             Input.Initialize();
-            launcher.OnLaunched();
-            GameLoop.Run(launcher.OnEveryFrame);
+            launcher.Initialize();
+            GameLoop.Run();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace N8Engine.Rendering
         
         internal static void Initialize(short cameraSize)
         {
+            Console.Title = "-n8engine-";
             ConsoleModeHelper.EnableAnsiEscapeSequences();
             ConsoleFontHelper.SetCurrentFont("Arial", cameraSize);
             ConsoleQuickEditModeHelper.IsEnabled = false;

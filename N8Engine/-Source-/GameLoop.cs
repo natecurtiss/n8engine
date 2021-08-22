@@ -5,6 +5,7 @@ namespace N8Engine
 {
     internal static class GameLoop
     {
+        public static event Action OnStart;
         public static event Action<float> OnPreUpdate;
         public static event Action<float> OnEarlyUpdate;
         public static event Action<float> OnUpdate;
@@ -19,7 +20,7 @@ namespace N8Engine
         public static int FramesPerSecond { get; private set; }
         private static float UpdateRate => 1f / TargetFramerate;
 
-        public static void Run(Action onNextFrameCallback)
+        public static void Run()
         {
             const float milliseconds_to_seconds = 1000f;
             const float one_second = 1f;
@@ -29,6 +30,7 @@ namespace N8Engine
             var previousTimeInMilliseconds = 0.0;
             var stopwatch = new Stopwatch();
             stopwatch.Start();
+            OnStart?.Invoke();
 
             while (true)
             {
@@ -41,7 +43,6 @@ namespace N8Engine
                     timer += timePassed;
                     if (timer >= one_second)
                     {
-                        onNextFrameCallback?.Invoke();
                         FramesPerSecond = frames;
                         frames = 0;
                         timer = 0f;

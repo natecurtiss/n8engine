@@ -10,13 +10,13 @@ namespace SampleProject
         {
             new Level1Scene()
         };
-        public override short CameraSize => 6;
         public override string PathToDebugLogsFile => "../../../.logs";
+        public override short FontSize => 6;
 
         private static void Main() => Application.Start(new Game());
 
-        public override void OnLaunched() { }
+        public override void OnFirstFrame() => Console.Title = "sample n8engine game";
 
-        public override void OnEveryFrame() => Console.Title = Application.FramesPerSecond.ToString();
+        public override void OnEveryDebugFrame() => Console.Title = Application.FramesPerSecond.ToString();
     }
 }
