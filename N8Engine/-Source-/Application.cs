@@ -1,5 +1,4 @@
-﻿using System;
-using N8Engine.Inputs;
+﻿using N8Engine.Inputs;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 
@@ -9,16 +8,15 @@ namespace N8Engine
     {
         public static int FramesPerSecond => GameLoop.FramesPerSecond;
 
-        public static void Start(short fontSize = 5, bool maximizeToFullscreen = false, Action onLaunchedCallback = default, Action onNextFrameCallback = default)
+        public static void Start(Launcher launcher)
         {
-            PathExtensions.Initialize();
-            Debug.Initialize();
-            Window.Initialize(fontSize);
-            SceneManager.Initialize();
+            Debug.Initialize(launcher.PathToDebugLogsFile);
+            Window.Initialize(launcher.CameraSize);
+            SceneManager.Initialize(launcher.Scenes);
             Renderer.Initialize();
             Input.Initialize();
-            onLaunchedCallback?.Invoke();
-            GameLoop.Run(onNextFrameCallback);
+            launcher.OnLaunched();
+            GameLoop.Run(launcher.OnEveryFrame);
         }
     }
 }

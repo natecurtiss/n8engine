@@ -10,20 +10,9 @@ namespace N8Engine.SceneManagement
         public static Scene CurrentScene { get; private set; }
         private static Scene[] _scenes;
 
-        internal static void Initialize()
+        internal static void Initialize(Scene[] scenes)
         {
-            var sceneFile = string.Empty;
-            try
-            {
-                sceneFile = Directory.GetFiles(PathExtensions.PathToRootFolder, "*.scenes", SearchOption.AllDirectories)
-                    .Where(fileName => !fileName.Contains("ignore.scenes")).ToArray()[0];
-            }
-            catch (IndexOutOfRangeException)
-            {
-                throw new FileNotFoundException("No .scenes file was found, please add one :)");
-            }
-            _scenes = new ScenesFile(sceneFile).Scenes;
-            Array.Sort(_scenes, (first, second) => first.Index - second.Index);
+            _scenes = scenes;
             LoadScene(_scenes[0]);
         }
 

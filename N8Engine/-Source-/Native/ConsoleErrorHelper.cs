@@ -13,7 +13,7 @@ namespace N8Engine.Native
         
         public static void CreateErrorConsole()
         {
-            var pathToLogsFolder = PathExtensions.PathToLogsFolder;
+            var pathToLogsFolder = $"{PathExtensions.PathToRootFolder}\\.error_logs";
             File.WriteAllText(pathToLogsFolder, string.Empty);
             
             RedirectToFile(pathToLogsFolder);

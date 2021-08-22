@@ -10,8 +10,7 @@ namespace N8Engine.Rendering
         private static readonly float _width = Console.WindowWidth;
         private static readonly float _height = Console.WindowHeight;
         private static readonly Vector _span = new(_width, _height);
-
-        public static bool UseExternalErrorConsole { get; set; } = true;
+        
         public static Vector BottomLeftCorner { get; private set; }
         public static Vector BottomRightCorner { get; private set; }
         public static Vector TopLeftCorner { get; private set; }
@@ -21,15 +20,16 @@ namespace N8Engine.Rendering
         public static Vector TopSide { get; private set; }
         public static Vector BottomSide { get; private set; }
         
-        internal static void Initialize(short fontSize)
+        internal static void Initialize(short cameraSize)
         {
             ConsoleModeHelper.EnableAnsiEscapeSequences();
-            ConsoleFontHelper.SetCurrentFont("Arial", fontSize);
+            ConsoleFontHelper.SetCurrentFont("Arial", cameraSize);
             ConsoleQuickEditModeHelper.IsEnabled = false;
             ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
+#if DEBUG
             ConsoleErrorHelper.CreateErrorConsole();
-            
+#endif
             BottomLeftCorner = new Vector(-Console.WindowWidth / 2f, Console.WindowHeight / 2f);
             BottomRightCorner = new Vector(Console.WindowWidth / 2f, Console.WindowHeight / 2f);
             TopLeftCorner = new Vector(-Console.WindowWidth / 2f, -Console.WindowHeight / 2f);

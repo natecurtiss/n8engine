@@ -54,11 +54,7 @@ namespace N8Engine
             return type != null;
         }
         
-        public bool Is<T>() where T : IGameObjectInterface
-        {
-            Debug.Log(this.GetType());
-            return this is T;
-        }
+        public bool Is<T>() where T : IGameObjectInterface => this is T;
 
         public bool IsA<T>(out T type) where T : GameObject
         {
