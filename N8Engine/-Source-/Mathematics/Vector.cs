@@ -38,7 +38,7 @@ namespace N8Engine.Mathematics
         }
 
         public float SquareMagnitude => X * X + Y * Y;
-        public float Magnitude => SquareMagnitude.SquareRoot();
+        public float Magnitude => SquareMagnitude.SquareRooted();
         public Vector AbsoluteValue => new(X.AbsoluteValue(), Y.AbsoluteValue());
         public Vector Normalized
         {

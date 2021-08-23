@@ -1,5 +1,8 @@
 ﻿namespace N8Engine.Inputs
 {
+    /// <summary>
+    /// Look down, see those squares with symbols that you're pressing with your fingers?
+    /// </summary>
     public enum Key
     {
         None,

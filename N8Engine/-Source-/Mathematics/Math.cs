@@ -2,11 +2,23 @@
 
 namespace N8Engine.Mathematics
 {
+    /// <summary>
+    /// Pretty sure you didn't enjoy this in school (but maybe I'm wrong.)
+    /// </summary>
     public static class Math
     {
+        /// <summary>
+        /// b i g
+        /// </summary>
         public const int INFINITY = int.MaxValue;
+        /// <summary>
+        /// s m a l l
+        /// </summary>
         public const int NEGATIVE_INFINITY = int.MinValue;
 
+        /// <summary>
+        /// Returns the value clamped inclusively between minimum and maximum values.
+        /// </summary>
         public static float ClampedBetween(this float value, float minimum, float maximum)
         {
             var clampedValue = value;
@@ -17,6 +29,9 @@ namespace N8Engine.Mathematics
             return clampedValue;
         }
         
+        /// <summary>
+        /// Returns the value clamped inclusively between minimum and maximum values.
+        /// </summary>
         public static int ClampedBetween(this int value, int minimum, int maximum)
         {
             var clampedValue = value;
@@ -27,14 +42,29 @@ namespace N8Engine.Mathematics
             return clampedValue;
         }
         
+        /// <summary>
+        /// Returns the value clamped inclusively between 0 and 1.
+        /// </summary>
         public static float ClampedBetweenZeroAndOne(this float value) => value.ClampedBetween(0f, 1f);
 
+        /// <summary>
+        /// Returns the value clamped inclusively between 0 and 1.
+        /// </summary>
         public static int ClampedBetweenZeroAndOne(this int value) => (int) ((float) value).ClampedBetweenZeroAndOne();
         
+        /// <summary>
+        /// Returns the absolute value of the float (shocking, I know.)
+        /// </summary>
         public static float AbsoluteValue(this float value) =>  value >= 0 ? value : value * -1f;
 
+        /// <summary>
+        /// Returns the absolute value of the integer (shocking, I know.)
+        /// </summary>
         public static int AbsoluteValue(this int value) => (int) ((float) value).AbsoluteValue();
 
+        /// <summary>
+        /// Returns the smallest of all the values passed in.
+        /// </summary>
         public static float MinimumOf(params float[] values)
         {
             var minimumValue = (float) INFINITY;
@@ -44,8 +74,14 @@ namespace N8Engine.Mathematics
             return minimumValue;
         }
 
+        /// <summary>
+        /// Returns the smallest of all the values passed in.
+        /// </summary>
         public static int MinimumOf(params int[] values) => (int) MinimumOf(Array.ConvertAll(values, integer => (float) integer));
 
+        /// <summary>
+        /// Returns the largest of all the values passed in.
+        /// </summary>
         public static float MaximumOf(params float[] values)
         {
             var maximumValue = (float) NEGATIVE_INFINITY;
@@ -55,16 +91,35 @@ namespace N8Engine.Mathematics
             return maximumValue;
         }
         
+        /// <summary>
+        /// Returns the largest of all the values passed in.
+        /// </summary>
         public static int MaximumOf(params int[] values) => (int) MaximumOf(Array.ConvertAll(values, integer => (float) integer));
         
+        /// <summary>
+        /// Returns the value rounded to the nearest integer.
+        /// </summary>
         public static int Rounded(this float value) => (int) System.Math.Round(value, 0);
 
+        /// <summary>
+        /// Returns the value rounded to the nearest integer that is less than it (aka: floored.)
+        /// </summary>
         public static int RoundedDown(this float value) => (int) System.Math.Floor(value);
 
+        /// <summary>
+        /// Returns the value rounded to the nearest integer that is greater than the it (aka: ceiling.)
+        /// </summary>
         public static int RoundedUp(this float value) => (int) System.Math.Ceiling(value);
         
-        public static float SquareRoot(this float value) => (float) System.Math.Sqrt(value);
+        /// <summary>
+        /// You'll never guess what this does...it returns the square root of the value passed in, wow!
+        /// </summary>
+        public static float SquareRooted(this float value) => (float) System.Math.Sqrt(value);
         
-        public static bool IsWithinRange(this float value, float minimum, float maximum) => value.ClampedBetween(minimum, maximum) == value;
+        /// <summary>
+        /// Returns true if the value is greater than or equal to the minimum value passed in
+        /// and less than or equal to the maximum value passed in.
+        /// </summary>
+        public static bool IsWithin(this float value, float minimum, float maximum) => value.ClampedBetween(minimum, maximum) == value;
     }
 }

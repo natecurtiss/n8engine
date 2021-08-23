@@ -49,7 +49,7 @@ namespace SampleProject
         {
             if (Transform.Position.Y >= Window.BottomSide.Y) Die();
             UpdateDirection();
-            Move(deltaTime);
+            Move();
             if (CanJump) Jump();
             HandleAnimations();
         }
@@ -70,7 +70,7 @@ namespace SampleProject
             };
         }
 
-        private void Move(float deltaTime) => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED, PhysicsBody.Velocity.Y);
+        private void Move() => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED, PhysicsBody.Velocity.Y);
 
         private void Jump()
         {

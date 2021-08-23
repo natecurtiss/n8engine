@@ -14,9 +14,5 @@ namespace SampleProject
         public override short FontSize => 6;
 
         private static void Main() => Application.Start(new Game());
-
-        public override void OnFirstFrame() => Console.Title = "sample n8engine game";
-
-        public override void OnEveryDebugFrame() => Console.Title = Application.FramesPerSecond.ToString();
     }
 }

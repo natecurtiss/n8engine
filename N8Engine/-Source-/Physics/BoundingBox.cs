@@ -26,8 +26,8 @@ namespace N8Engine.Physics
         }
         
         public bool IsPositionInside(Vector otherPosition) => 
-            otherPosition.X.IsWithinRange(LeftSide.X, RightSide.X) && 
-            otherPosition.Y.IsWithinRange(BottomSide.Y, TopSide.Y);
+            otherPosition.X.IsWithin(LeftSide.X, RightSide.X) && 
+            otherPosition.Y.IsWithin(BottomSide.Y, TopSide.Y);
 
         public bool IsOverlapping(BoundingBox otherBoundingBox)
         {

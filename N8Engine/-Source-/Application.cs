@@ -4,10 +4,20 @@ using N8Engine.SceneManagement;
 
 namespace N8Engine
 {
+    /// <summary>
+    /// I suggest googling the word "application" if you do not know what it means.
+    /// </summary>
     public static class Application
     {
+        /// <summary>
+        /// Get-only property that returns the frames per second of the game, which is capped at 60fps.
+        /// </summary>
         public static int FramesPerSecond => GameLoop.FramesPerSecond;
 
+        /// <summary>
+        /// Call this from the main method to start your game.
+        /// </summary>
+        /// <param name="launcher"> Ideally, the class that contains the main method should inherit from <see cref="Launcher"/> and pass itself in to this method.</param>
         public static void Start(Launcher launcher)
         {
             Debug.Initialize(launcher.PathToDebugLogsFile);
@@ -15,7 +25,6 @@ namespace N8Engine
             SceneManager.Initialize(launcher.Scenes);
             Renderer.Initialize();
             Input.Initialize();
-            launcher.Initialize();
             GameLoop.Run();
         }
     }
