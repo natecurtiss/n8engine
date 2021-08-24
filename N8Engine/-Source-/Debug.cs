@@ -1,24 +1,13 @@
-﻿using System.IO;
+﻿using System;
 
 namespace N8Engine
 {
     public static class Debug
     {
-        private static string _pathToLogsFile;
+        private static Action<string> _onDebugLog;
 
-        internal static void Initialize(string pathToLogsFile)
-        {
-#if DEBUG
-            _pathToLogsFile = Path.GetFullPath(pathToLogsFile);
-            File.WriteAllText(_pathToLogsFile, string.Empty);
-#endif
-        }
+        internal static void Initialize(Launcher launcher) => _onDebugLog = launcher.OnDebugLog;
 
-        public static void Log(object message)
-        {
-#if DEBUG
-            File.AppendAllLinesAsync(_pathToLogsFile, new[] { message.ToString() });
-#endif
-        }
+        public static void Log(object message) => _onDebugLog.Invoke(message.ToString());
     }
 }

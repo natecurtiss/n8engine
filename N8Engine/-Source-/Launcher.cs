@@ -1,3 +1,4 @@
+using System;
 using N8Engine.SceneManagement;
 
 namespace N8Engine
@@ -13,11 +14,14 @@ namespace N8Engine
         /// I find starting at 7 and adjusting from there is a good way to find your game's ideal pixel size.
         /// </summary>
         public abstract short FontSize { get; }
-        /// <summary>
-        /// The path to the file where <see cref="Debug.Log">Debug.Logs</see> should be redirected to.
-        /// This can be any file format that can have text written to it (I use .logs because it looks cool.)
-        /// </summary>
-        public abstract string PathToDebugLogsFile { get; }
+
+        public virtual void OnDebugLog(string message) => System.Diagnostics.Debug.WriteLine(message);
+
+        public virtual void OnExceptionThrown(Exception exception)
+        {
+            Console.Clear();
+            throw exception;
+        }
     }
 
 }

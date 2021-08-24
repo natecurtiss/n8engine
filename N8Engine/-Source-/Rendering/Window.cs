@@ -28,9 +28,6 @@ namespace N8Engine.Rendering
             ConsoleQuickEditModeHelper.IsEnabled = false;
             ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
-#if DEBUG
-            ConsoleErrorHelper.CreateErrorConsole();
-#endif
             BottomLeftCorner = new Vector(-Console.WindowWidth / 2f, Console.WindowHeight / 2f);
             BottomRightCorner = new Vector(Console.WindowWidth / 2f, Console.WindowHeight / 2f);
             TopLeftCorner = new Vector(-Console.WindowWidth / 2f, -Console.WindowHeight / 2f);

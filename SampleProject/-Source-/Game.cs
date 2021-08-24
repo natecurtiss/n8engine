@@ -1,5 +1,4 @@
-﻿using System;
-using N8Engine;
+﻿using N8Engine;
 using N8Engine.SceneManagement;
 
 namespace SampleProject
@@ -10,9 +9,11 @@ namespace SampleProject
         {
             new Level1Scene()
         };
-        public override string PathToDebugLogsFile => "../../../.logs";
         public override short FontSize => 6;
 
-        private static void Main() => Application.Start(new Game());
+        private static void Main()
+        {
+            Application.Start(new Game());
+        }
     }
 }

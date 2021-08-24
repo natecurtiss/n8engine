@@ -4,6 +4,6 @@ namespace SampleProject
 {
     public static class SpritesFolder
     {
-        public static string Path => PathExtensions.PathToRootFolder + "\\SampleProject\\Sprites\\";
+        public static string Path => System.IO.Path.GetFullPath("../../../../") + "\\SampleProject\\Sprites\\";
     }
 }
