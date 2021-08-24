@@ -24,7 +24,7 @@ namespace N8Engine.Rendering
         {
             Console.Title = "-n8engine-";
             ConsoleModeHelper.EnableAnsiEscapeSequences();
-            ConsoleFontHelper.SetCurrentFont("Arial", cameraSize);
+            ConsoleFontHelper.SetCurrentFont("Consolas", cameraSize);
             ConsoleQuickEditModeHelper.IsEnabled = false;
             ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
