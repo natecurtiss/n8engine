@@ -1,4 +1,5 @@
-﻿using N8Engine;
+﻿using System;
+using N8Engine;
 using N8Engine.SceneManagement;
 
 namespace SampleProject
@@ -11,9 +12,6 @@ namespace SampleProject
         };
         public override short FontSize => 6;
 
-        private static void Main()
-        {
-            Application.Start(new Game());
-        }
+        private static void Main() => Application.Start(new Game());
     }
 }

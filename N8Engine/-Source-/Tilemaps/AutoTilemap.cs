@@ -28,7 +28,7 @@ namespace N8Engine.Tilemaps
                 for (var x = 0; x < (int) sizeOfChunkInNumberOfTiles.X; x++)
                 {
                     var tileType = GetTileType(new Vector(x, y), sizeOfChunkInNumberOfTiles);
-                    var gameObject = tileType switch
+                    var sprite = tileType switch
                     {
                         TileType.Left => tilePalette.Left,
                         TileType.Right => tilePalette.Right,
@@ -41,6 +41,8 @@ namespace N8Engine.Tilemaps
                         TileType.Middle => tilePalette.Middle,
                         var _ => tilePalette.Middle
                     };
+                    var gameObject = GameObject.Create<EmptyGameObject>();
+                    gameObject.SpriteRenderer.Sprite = sprite;
                     gameObject.Transform.Position = position + new Vector(x, y) * actualTileSize;
                     tiles.Add(gameObject);
                 }

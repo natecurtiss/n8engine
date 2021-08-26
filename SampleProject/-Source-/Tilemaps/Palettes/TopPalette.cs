@@ -1,15 +1,16 @@
 using N8Engine;
+using N8Engine.Rendering;
 
 namespace SampleProject
 {
     public sealed class TopPalette : FullPalette
     {
-        public override GameObject Left => GameObject.Create<EmptyGameObject>();
-        public override GameObject Right => GameObject.Create<EmptyGameObject>();
-        public override GameObject Bottom => GameObject.Create<EmptyGameObject>();
-        public override GameObject TopLeft => GameObject.Create<TopWall>();
-        public override GameObject TopRight => GameObject.Create<TopWall>();
-        public override GameObject BottomLeft => GameObject.Create<EmptyGameObject>();
-        public override GameObject BottomRight => GameObject.Create<EmptyGameObject>();
+        public override Sprite Left => null;
+        public override Sprite Right => null;
+        public override Sprite Bottom => null;
+        public override Sprite TopLeft => new(SpritesFolder.Path + "wall_top.n8sprite");
+        public override Sprite TopRight => new(SpritesFolder.Path + "wall_top.n8sprite");
+        public override Sprite BottomLeft => null;
+        public override Sprite BottomRight => null;
     }
 }

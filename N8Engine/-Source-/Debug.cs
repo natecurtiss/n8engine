@@ -7,7 +7,13 @@ namespace N8Engine
         private static Action<string> _onDebugLog;
 
         internal static void Initialize(Launcher launcher) => _onDebugLog = launcher.OnDebugLog;
-
-        public static void Log(object message) => _onDebugLog.Invoke(message.ToString());
+        
+#nullable enable
+        public static void Log(object? message)
+        {
+            if (message != null)
+                _onDebugLog.Invoke(message.ToString());
+        }
+#nullable disable
     }
 }

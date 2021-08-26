@@ -1,19 +1,21 @@
 using N8Engine.Mathematics;
+using N8Engine.Rendering;
 
 namespace N8Engine.Tilemaps
 {
     public abstract class TilePalette
     {
-        public abstract GameObject BaseTilemapObject { get; }
-        public abstract GameObject Left { get; }
-        public abstract GameObject Right { get; }
-        public abstract GameObject Top { get; }
-        public abstract GameObject Bottom { get; }
-        public abstract GameObject TopLeft { get; }
-        public abstract GameObject TopRight { get; }
-        public abstract GameObject BottomLeft { get; }
-        public abstract GameObject BottomRight { get; }
-        public abstract GameObject Middle { get; }
+        public abstract Sprite Left { get; }
+        public abstract Sprite Right { get; }
+        public abstract Sprite Top { get; }
+        public abstract Sprite Bottom { get; }
+        public abstract Sprite TopLeft { get; }
+        public abstract Sprite TopRight { get; }
+        public abstract Sprite BottomLeft { get; }
+        public abstract Sprite BottomRight { get; }
+        public abstract Sprite Middle { get; }
         public abstract Vector TileSize { get; }
+        
+        public virtual GameObject BaseTilemapObject => GameObject.Create<EmptyGameObject>();
     }
 }

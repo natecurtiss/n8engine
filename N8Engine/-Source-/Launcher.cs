@@ -15,8 +15,18 @@ namespace N8Engine
         /// </summary>
         public abstract short FontSize { get; }
 
+        /// <summary>
+        /// Called whenever <see cref="Debug.Log">Debug.Log</see> is invoked.
+        /// By default this just uses <see cref="System.Diagnostics.Debug.WriteLine(object?)">System.Diagnostics.Debug.WriteLine(),</see>
+        /// but you're able to override this if you want it redirected to a file or whatever.
+        /// </summary>
         public virtual void OnDebugLog(string message) => System.Diagnostics.Debug.WriteLine(message);
 
+        /// <summary>
+        /// Called whenever an exception is thrown in the program.
+        /// By default this clears and writes to the <see cref="Console">Console,</see>
+        /// but you can override this to redirect to a file or whatever.
+        /// </summary>
         public virtual void OnExceptionThrown(Exception exception)
         {
             Console.Clear();
