@@ -39,12 +39,14 @@ namespace N8Engine.Rendering
             BottomSide = new Vector(0f, Console.WindowHeight / 2f);
         }
 
-        internal static Vector FromWindowPositionToWorldPosition(this Vector position) => position + _span / 2;
-        
-        internal static bool IsWithinWindow(this Vector position) =>
+        internal static IntegerVector FromWindowPositionToWorldPosition(this Vector position) => position + _span / 2;
+
+        internal static bool IsInsideOfTheWorld(this IntegerVector position) =>
             position.X >= 0 &&
             position.Y >= 0 &&
             position.X <= _width - 1 &&
             position.Y <= _height - 1;
+
+        internal static bool IsOutsideOfTheWorld(this IntegerVector position) => !position.IsInsideOfTheWorld();
     }
 }

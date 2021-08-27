@@ -21,19 +21,12 @@ namespace N8Engine
         /// <param name="launcher"> Ideally, the class that contains the main method should inherit from <see cref="Launcher"/> and pass itself in to this method.</param>
         public static void Start(Launcher launcher)
         {
-            try
-            {
-                Debug.Initialize(launcher);
-                Window.Initialize(launcher.FontSize);
-                SceneManager.Initialize(launcher.Scenes);
-                Renderer.Initialize();
-                Input.Initialize();
-                GameLoop.Run();
-            }
-            catch (Exception exception)
-            {
-                launcher.OnExceptionThrown(exception);
-            }
+            Debug.Initialize(launcher);
+            Window.Initialize(launcher.FontSize);
+            SceneManager.Initialize(launcher.Scenes);
+            Renderer.Initialize();
+            Input.Initialize();
+            GameLoop.Run();
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace N8Engine.Mathematics
 {
-    internal struct IntegerVector : IEquatable<IntegerVector>
+    public struct IntegerVector : IEquatable<IntegerVector>
     {
         public static bool operator ==(IntegerVector first, IntegerVector second) => first.X == second.X && first.Y == second.Y;
         public static bool operator !=(IntegerVector first, IntegerVector second) => !(first == second);
@@ -15,6 +15,7 @@ namespace N8Engine.Mathematics
         public static IntegerVector operator *(IntegerVector first, IntegerVector second) => new(first.X * second.X, first.Y * second.Y);
         public static IntegerVector operator /(IntegerVector vector, int divisor) => new(vector.X / divisor, vector.Y / divisor);
         public static IntegerVector operator /(IntegerVector first, IntegerVector second) => new(first.X / second.X, first.Y / second.Y);
+        public static implicit operator IntegerVector(Vector vector) => new((int) vector.X, (int) vector.Y);
 
         public static readonly IntegerVector Zero = new();
         public static readonly IntegerVector One = new(1);

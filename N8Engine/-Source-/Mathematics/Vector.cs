@@ -16,7 +16,8 @@ namespace N8Engine.Mathematics
         public static Vector operator *(Vector first, Vector second) => new(first.X * second.X, first.Y * second.Y);
         public static Vector operator /(Vector vector, float divisor) => new(vector.X / divisor, vector.Y / divisor);
         public static Vector operator /(Vector first, Vector second) => new(first.X / second.X, first.Y / second.Y);
-
+        public static implicit operator Vector(IntegerVector integerVector) => new(integerVector.X, integerVector.Y);
+        
         public static readonly Vector Zero = new();
         public static readonly Vector One = new(1f);
         public static readonly Vector Up = new(0f, 1f);

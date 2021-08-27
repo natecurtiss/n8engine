@@ -21,38 +21,27 @@ namespace N8Engine.Rendering
             Console.BackgroundColor = ConsoleColor.Black;
         }
 
-        private static void OnPreRender()
-        {
-            foreach (var (position, pixel) in _pixelsToRender)
-            {
-                if (_pixelsToRenderLastFrame.ContainsKey(position))
-                    _pixelsToRenderLastFrame[position] = pixel;
-                else
-                    _pixelsToRenderLastFrame.Add(position, pixel);
-            }
-            _pixelsToRender.Clear();
-        }
+        private static void OnPreRender() => UpdatePixelsToRenderLastFrame();
 
-        public static void Render(Sprite sprite, Vector position, int sortingOrder)
+        public static void Render(Sprite sprite, Vector spritePosition, int sortingOrder)
         {
             foreach (var pixel in sprite.Pixels)
             {
-                var newPixel = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position)
+                var windowPosition = pixel.Position + spritePosition;
+                var worldPosition = windowPosition.FromWindowPositionToWorldPosition();
+                var sortedPixel = pixel.WithSortingOrder(sortingOrder);
+                
+                if (worldPosition.IsOutsideOfTheWorld()) continue;
+                if (worldPosition.DoesNotHaveAPixel())
                 {
-                    SortingOrder = sortingOrder,
-                };
-                var pixelPosition = newPixel.Position + position;
-                pixelPosition = pixelPosition.FromWindowPositionToWorldPosition();
-                pixelPosition = new Vector((int) pixelPosition.X, (int) pixelPosition.Y);
-
-                var isPixelOutsideOfWindow = !pixelPosition.IsWithinWindow();
-                var isNoPixelInPosition = !_pixelsToRender.ContainsKey(pixelPosition);
-
-                if (isPixelOutsideOfWindow) continue;
-                if (isNoPixelInPosition)
-                    _pixelsToRender.Add(pixelPosition, newPixel);
-                else if (newPixel.SortingOrder > _pixelsToRender[pixelPosition].SortingOrder)
-                    _pixelsToRender[pixelPosition] = newPixel;
+                    _pixelsToRender.Add(worldPosition, sortedPixel);
+                }
+                else
+                {
+                    var oldPixel = _pixelsToRender[worldPosition];
+                    if (sortedPixel.IsOnTopOf(oldPixel))
+                        _pixelsToRender[worldPosition] = sortedPixel;
+                }
             }
         }
         
@@ -121,5 +110,28 @@ namespace N8Engine.Rendering
             }
             Console.Write(clearedPixelsStringBuilder.ToString());
         }
+        
+        private static void UpdatePixelsToRenderLastFrame()
+        {
+            foreach (var (position, pixel) in _pixelsToRender)
+                if (_pixelsToRenderLastFrame.ContainsKey(position))
+                    _pixelsToRenderLastFrame[position] = pixel;
+                else
+                    _pixelsToRenderLastFrame.Add(position, pixel);
+            _pixelsToRender.Clear();
+        }
+
+        private static Pixel WithSortingOrder(this Pixel pixel, int sortingOrder)
+        {
+            var newPixel = pixel;
+            newPixel.SortingOrder = sortingOrder;
+            return newPixel;
+        }
+
+        private static bool HasAPixel(this IntegerVector position) => _pixelsToRender.ContainsKey(position);
+
+        private static bool DoesNotHaveAPixel(this IntegerVector position) => !position.HasAPixel();
+
+        private static bool IsOnTopOf(this Pixel newPixel, Pixel oldPixel) => newPixel.SortingOrder > oldPixel.SortingOrder;
     }
 }

@@ -22,16 +22,16 @@ namespace N8Engine
         /// </summary>
         public virtual void OnDebugLog(string message) => System.Diagnostics.Debug.WriteLine(message);
 
-        /// <summary>
-        /// Called whenever an exception is thrown in the program.
-        /// By default this clears and writes to the <see cref="Console">Console,</see>
-        /// but you can override this to redirect to a file or whatever.
-        /// </summary>
-        public virtual void OnExceptionThrown(Exception exception)
-        {
-            Console.Clear();
-            throw exception;
-        }
+        // /// <summary>
+        // /// Called whenever an exception is thrown in the program.
+        // /// By default this clears and writes to the <see cref="Console">Console,</see>
+        // /// but you can override this to redirect to a file or whatever.
+        // /// </summary>
+        // public virtual void OnExceptionThrown(Exception exception)
+        // {
+        //     Console.Clear();
+        //     throw exception;
+        // }
     }
 
 }
