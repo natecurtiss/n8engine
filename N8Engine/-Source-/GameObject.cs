@@ -1,7 +1,6 @@
 ﻿using N8Engine.Mathematics;
 using N8Engine.Physics;
 using N8Engine.Rendering;
-using N8Engine.Rendering.Animation;
 using N8Engine.SceneManagement;
 
 namespace N8Engine

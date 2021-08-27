@@ -94,7 +94,7 @@ namespace N8Engine.Rendering
             }
             Console.Write(outputStringBuilder.ToString());
         }
-
+        
         private static void ClearOldPixels()
         {
             var lastOldPosition = new Vector();

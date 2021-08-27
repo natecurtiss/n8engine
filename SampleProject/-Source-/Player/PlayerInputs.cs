@@ -9,20 +9,20 @@ namespace SampleProject
         private const float COYOTE_TIME = 0.3f;
         private float _jumpInputTimer;
         
-        public Vector Axis
+        public Vector<Direction, Direction> Direction
         {
             get
             {
-                var axisInput = new Vector();
-                if (Key.A.IsPressed() || Key.LeftArrow.IsPressed()) 
-                    axisInput.X = -1f;
+                var direction = new Vector<Direction, Direction>();
+                if (Key.A.IsPressed() || Key.LeftArrow.IsPressed())
+                    direction.X = N8Engine.Mathematics.Direction.Left;
                 else if (Key.D.IsPressed() || Key.RightArrow.IsPressed()) 
-                    axisInput.X = 1f;
+                    direction.X = N8Engine.Mathematics.Direction.Right;
                 if (Key.W.IsPressed() || Key.UpArrow.IsPressed()) 
-                    axisInput.Y = 1f;
+                    direction.Y = N8Engine.Mathematics.Direction.Up;
                 else if (Key.S.IsPressed() || Key.DownArrow.IsPressed()) 
-                    axisInput.Y = -1f;
-                return axisInput;
+                    direction.Y = N8Engine.Mathematics.Direction.Down;
+                return direction;
             }
         }
         public bool JustPressedJump => _jumpInputTimer > 0f;

@@ -5,7 +5,6 @@ namespace N8Engine
 {
     internal static class GameLoop
     {
-        public static event Action OnStart;
         public static event Action<float> OnPreUpdate;
         public static event Action<float> OnEarlyUpdate;
         public static event Action<float> OnUpdate;
@@ -16,7 +15,7 @@ namespace N8Engine
         public static event Action OnRender;
         public static event Action OnPostRender;
         
-        public static int TargetFramerate { get; set; } = 60;
+        public static int TargetFramerate { get; set; } = 90;
         public static int FramesPerSecond { get; private set; }
         private static float UpdateRate => 1f / TargetFramerate;
 
@@ -30,7 +29,6 @@ namespace N8Engine
             var previousTimeInMilliseconds = 0.0;
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            OnStart?.Invoke();
 
             while (true)
             {

@@ -1,7 +1,7 @@
-﻿using N8Engine;
+﻿using System;
+using N8Engine;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
-using N8Engine.SceneManagement;
 
 namespace SampleProject
 {
@@ -9,26 +9,21 @@ namespace SampleProject
     {
         private const int SPEED = 100;
         private const int JUMP_FORCE = -200;
-        
-        private readonly PlayerWalkAnimation _walkAnimation = new();
-        private readonly FlippedPlayerWalkAnimation _flippedWalkAnimation = new();
-        private readonly PlayerIdleAnimation _idleAnimation = new();
-        private readonly FlippedPlayerIdleAnimation _flippedIdleAnimation = new();
-        private readonly PlayerJumpAnimation _jumpAnimation = new();
-        private readonly FlippedPlayerJumpAnimation _flippedJumpAnimation = new();
 
-        private Direction _currentDirection = Direction.Right;
+        private PlayerAnimationController _animationController;
         private GroundCheck<ICanBeJumpedOn> _groundCheck;
         private PlayerInputs _inputs;
+        private Direction _lastDirectionOfInputX = Direction.Right;
 
         private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJump;
-        private bool IsWalking => _inputs.Axis.X != 0f;
+        private bool IsWalking => _inputs.Direction.X != 0f;
         private Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
 
         protected override void OnStart()
         {
             Transform.Position = SpawnPosition;
-            
+
+            _animationController = new PlayerAnimationController(AnimationPlayer);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += Land;
             _groundCheck.Collider.Size = new Vector(10f, 1f);
@@ -39,7 +34,6 @@ namespace SampleProject
             Collider.Offset = Vector.Right;
             SpriteRenderer.SortingOrder = 1;
             PhysicsBody.UseGravity = true;
-            AnimationPlayer.Animation = _idleAnimation;
             AnimationPlayer.Play();
         }
 
@@ -47,30 +41,34 @@ namespace SampleProject
 
         protected override void OnUpdate(float deltaTime)
         {
-            if (Transform.Position.Y >= Window.BottomSide.Y) Die();
-            UpdateDirection();
             Move();
             if (CanJump) Jump();
-            HandleAnimations();
+            HandleWalkingAnimations();
         }
 
         protected override void OnLateUpdate(float deltaTime)
         {
             ClampPositionWithinWindow();
             _groundCheck.Transform.Position = Transform.Position;
+            UpdateLastDirection();
+            if (Transform.Position.Y >= Window.BottomSide.Y) Die();
         }
 
-        private void UpdateDirection()
+        private void UpdateLastDirection()
         {
-            _currentDirection = _inputs.Axis.X switch
+            _lastDirectionOfInputX = _inputs.Direction.X switch
             {
                 > 0 => Direction.Right,
                 < 0 => Direction.Left,
-                var _ => _currentDirection
+                var _ => _lastDirectionOfInputX
             };
         }
 
-        private void Move() => PhysicsBody.Velocity = new Vector(_inputs.Axis.X * SPEED, PhysicsBody.Velocity.Y);
+        private void Move()
+        {
+            var horizontalInput = _inputs.Direction.X.AsVector().X;
+            PhysicsBody.Velocity = new Vector(horizontalInput * SPEED, PhysicsBody.Velocity.Y);
+        }
 
         private void Jump()
         {
@@ -78,39 +76,11 @@ namespace SampleProject
             _groundCheck.IsGrounded = false;
         }
 
-        private void Land()
-        {
-            AnimationPlayer.Animation = _currentDirection switch
-            {
-                Direction.Left when IsWalking => _flippedWalkAnimation,
-                Direction.Right when IsWalking => _walkAnimation,
-                Direction.Left => _flippedIdleAnimation,
-                Direction.Right => _idleAnimation,
-                var _ => _idleAnimation
-            };
-        }
-        
-        private void HandleAnimations()
-        {
-            if (_groundCheck.IsGrounded)
-                AnimationPlayer.Animation = _inputs.Axis.X switch
-                {
-                    > 0 => _walkAnimation,
-                    < 0 => _flippedWalkAnimation,
-                    0 when _currentDirection == Direction.Right => _idleAnimation,
-                    0 when _currentDirection == Direction.Left => _flippedIdleAnimation,
-                    var _ => AnimationPlayer.Animation
-                };
-            else
-                AnimationPlayer.Animation = _inputs.Axis.X switch
-                {
-                    > 0 => _jumpAnimation,
-                    < 0 => _flippedJumpAnimation,
-                    0 when _currentDirection == Direction.Right => _jumpAnimation,
-                    0 when _currentDirection == Direction.Left => _flippedJumpAnimation,
-                    var _ => AnimationPlayer.Animation
-                };
-        }
+        private void Land() => _animationController.HandleLandAnimation
+            (_inputs.Direction.X, _lastDirectionOfInputX);
+
+        private void HandleWalkingAnimations() => _animationController.HandleWalkingAnimation
+                (_groundCheck.IsGrounded, _inputs.Direction.X, _lastDirectionOfInputX);
 
         private void ClampPositionWithinWindow()
         {

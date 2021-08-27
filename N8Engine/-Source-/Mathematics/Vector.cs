@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace N8Engine.Mathematics
 {
@@ -70,5 +71,36 @@ namespace N8Engine.Mathematics
         public override string ToString() => $"({X.ToString()},{Y.ToString()})";
         
         public bool Equals(Vector other) => X.Equals(other.X) && Y.Equals(other.Y);
+    }
+
+    public struct Vector<TX, TY> : IEquatable<Vector<TX, TY>>
+    {
+        private readonly TX _x;
+        private readonly TY _y;
+        
+        public TX X
+        {
+            get => _x;
+            set => this = new Vector<TX, TY>(value, _y);
+        }
+        public TY Y
+        {
+            get => _y;
+            set => this = new Vector<TX, TY>(_x, value);
+        }
+        
+        public Vector(TX x, TY y)
+        {
+            _x = x;
+            _y = y;
+        }
+        
+        public override bool Equals(object obj) => obj is Vector<TX, TY> other && Equals(other);
+        
+        public override int GetHashCode() => HashCode.Combine(X, Y);
+        
+        public override string ToString() => $"({X.ToString()},{Y.ToString()})";
+
+        public bool Equals(Vector<TX, TY> other) => X.Equals(other.X) && Y.Equals(other.Y);
     }
 }

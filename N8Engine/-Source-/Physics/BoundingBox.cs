@@ -48,7 +48,7 @@ namespace N8Engine.Physics
             var isToTheLeftOfOtherRectangle = RightSide.X <= otherBoundingBox.LeftSide.X;
             
             if (isUnderOtherRectangle) return Direction.Down;
-            if (isOverOtherRectangle) return Direction.Top;
+            if (isOverOtherRectangle) return Direction.Up;
             if (isToTheRightOfOtherRectangle) return Direction.Right;
             if (isToTheLeftOfOtherRectangle) return Direction.Left;
             return Direction.None;

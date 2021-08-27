@@ -1,4 +1,4 @@
-﻿namespace N8Engine.Rendering.Animation
+﻿namespace N8Engine.Rendering
 {
     public abstract class Animation
     {

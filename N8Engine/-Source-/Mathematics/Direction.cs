@@ -1,10 +1,10 @@
 ﻿namespace N8Engine.Mathematics
 {
     /// <summary>
-    /// Represents a direction; either left, right, top, down, or nothing.
+    /// Represents a direction; either left, right, up, down, or nothing.
     /// </summary>
     public enum Direction
     {
-        Left, Right, Top, Down, None
+        None, Left, Right, Up, Down
     }
 }
