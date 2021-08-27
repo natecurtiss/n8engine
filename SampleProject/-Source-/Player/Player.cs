@@ -13,9 +13,9 @@ namespace SampleProject
         private PlayerAnimationController _animationController;
         private GroundCheck<ICanBeJumpedOn> _groundCheck;
         private PlayerInputs _inputs;
-        private Direction _lastDirectionOfInputX = Direction.Right;
+        private Vector<Direction, Direction> _lastDirectionOfInput;
 
-        private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJump;
+        private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJumpButton;
         private bool IsWalking => _inputs.Direction.X != 0f;
         private Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
 
@@ -56,11 +56,17 @@ namespace SampleProject
 
         private void UpdateLastDirection()
         {
-            _lastDirectionOfInputX = _inputs.Direction.X switch
+            _lastDirectionOfInput.X = _inputs.Direction.X switch
             {
                 > 0 => Direction.Right,
                 < 0 => Direction.Left,
-                var _ => _lastDirectionOfInputX
+                var _ => _lastDirectionOfInput.X
+            };
+            _lastDirectionOfInput.Y = _inputs.Direction.Y switch
+            {
+                > 0 => Direction.Up,
+                < 0 => Direction.Down,
+                var _ => _lastDirectionOfInput.Y
             };
         }
 
@@ -77,10 +83,10 @@ namespace SampleProject
         }
 
         private void Land() => _animationController.HandleLandAnimation
-            (_inputs.Direction.X, _lastDirectionOfInputX);
+            (_inputs.Direction.X, _lastDirectionOfInput.X);
 
         private void HandleWalkingAnimations() => _animationController.HandleWalkingAnimation
-                (_groundCheck.IsGrounded, _inputs.Direction.X, _lastDirectionOfInputX);
+                (_groundCheck.IsGrounded, _inputs.Direction.X, _lastDirectionOfInput.X);
 
         private void ClampPositionWithinWindow()
         {

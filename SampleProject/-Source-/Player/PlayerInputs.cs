@@ -25,7 +25,7 @@ namespace SampleProject
                 return direction;
             }
         }
-        public bool JustPressedJump => _jumpInputTimer > 0f;
+        public bool JustPressedJumpButton => _jumpInputTimer > 0f;
 
         protected override void OnUpdate(float deltaTime)
         {

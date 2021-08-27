@@ -29,19 +29,19 @@ namespace SampleProject
             if (isGrounded)
                 _animationPlayer.Animation = currentDirectionOfInput switch
                 {
-                    > 0 => _walkAnimation,
-                    < 0 => _flippedWalkAnimation,
-                    0 when wasFacingRight => _idleAnimation,
-                    0 when wasFacingLeft => _flippedIdleAnimation,
+                    Direction.Right => _walkAnimation,
+                    Direction.Left => _flippedWalkAnimation,
+                    Direction.None when wasFacingRight => _idleAnimation,
+                    Direction.None when wasFacingLeft => _flippedIdleAnimation,
                     var _ => _animationPlayer.Animation
                 };
             else
                 _animationPlayer.Animation = currentDirectionOfInput switch
                 {
-                    > 0 => _fallAnimation,
-                    < 0 => _flippedFallAnimation,
-                    0 when wasFacingRight => _jumpAnimation,
-                    0 when wasFacingLeft => _flippedJumpAnimation,
+                    Direction.Right => _fallAnimation,
+                    Direction.Left => _flippedFallAnimation,
+                    Direction.None when wasFacingRight => _jumpAnimation,
+                    Direction.None when wasFacingLeft => _flippedJumpAnimation,
                     var _ => _animationPlayer.Animation
                 };
         }

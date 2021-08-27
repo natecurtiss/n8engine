@@ -17,8 +17,6 @@ namespace N8Engine.Rendering
         {
             GameLoop.OnPreRender += OnPreRender;
             GameLoop.OnPostRender += OnPostRender;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.BackgroundColor = ConsoleColor.Black;
         }
 
         private static void OnPreRender() => UpdatePixelsToRenderLastFrame();
@@ -53,8 +51,8 @@ namespace N8Engine.Rendering
 
         private static void RenderNewPixels()
         {
-            var lastForegroundColor = ConsoleColor.Black;
-            var lastBackgroundColor = ConsoleColor.Black;
+            var lastForegroundColor = Console.ForegroundColor;
+            var lastBackgroundColor = Console.BackgroundColor;
             var lastPosition = new Vector();
             var outputStringBuilder = new StringBuilder();
 
