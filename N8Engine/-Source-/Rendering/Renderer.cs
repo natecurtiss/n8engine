@@ -7,7 +7,7 @@ namespace N8Engine.Rendering
 { 
     internal static class Renderer
     {
-        public const int NUMBER_OF_PIXELS = 2;
+        public const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
         private const string ANSI_ESCAPE_SEQUENCE_START = "\u001b[";
         
         private static readonly Dictionary<Vector, Pixel> _pixelsToRender = new();

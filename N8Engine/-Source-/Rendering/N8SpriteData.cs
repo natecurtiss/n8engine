@@ -23,12 +23,12 @@ namespace N8Engine.Rendering
                     for (var pixel = 0; pixel < (int) _dimensions.X; pixel++)
                     {
                         var currentPixel = pixelsInCurrentLine[pixel];
-                        for (var fractionOfAPixel = 0; fractionOfAPixel < Renderer.NUMBER_OF_PIXELS; fractionOfAPixel++)
+                        for (var fractionOfAPixel = 0; fractionOfAPixel < Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL; fractionOfAPixel++)
                         {
                             var fractionOfCurrentPixel = SeparatePixel
                             (
                                 currentPixel,
-                                new Vector(pixel * Renderer.NUMBER_OF_PIXELS + fractionOfAPixel, lineFlippedUpsideDown)
+                                new Vector(pixel * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL + fractionOfAPixel, lineFlippedUpsideDown)
                             );
                             if (fractionOfCurrentPixel.HasValue) pixels.Add(fractionOfCurrentPixel.Value);
                         }
