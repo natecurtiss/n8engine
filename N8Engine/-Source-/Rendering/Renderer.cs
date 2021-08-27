@@ -9,9 +9,11 @@ namespace N8Engine.Rendering
     {
         public const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
         private const string ANSI_ESCAPE_SEQUENCE_START = "\u001b[";
-        
-        private static readonly Dictionary<Vector, Pixel> _pixelsToRender = new();
-        private static readonly Dictionary<Vector, Pixel> _pixelsToRenderLastFrame = new();
+        private const string PIXEL_CHARACTER = "▒";
+        private const string DELETE_CHARACTER = " ";
+
+        private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRender = new();
+        private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRenderLastFrame = new();
 
         public static void Initialize()
         {
@@ -53,56 +55,48 @@ namespace N8Engine.Rendering
         {
             var lastForegroundColor = Console.ForegroundColor;
             var lastBackgroundColor = Console.BackgroundColor;
-            var lastPosition = new Vector();
-            var outputStringBuilder = new StringBuilder();
+            var lastPosition = new IntegerVector();
+            var output = new StringBuilder();
 
             foreach (var (position, pixel) in _pixelsToRender)
             {
-                if (HasPixelNotMoved(position, pixel)) continue;
-                if (!IsPixelToTheRightOfLastPixel(position, lastPosition))
-                    outputStringBuilder.MoveCursorTo(position);
+                if (HasPixelNotMovedSinceLastFrame(position, pixel)) continue;
+                if (position.IsNotToTheRightOf(lastPosition))
+                    output.MoveCursorTo(position);
                 lastPosition = position;
 
                 var currentForegroundColor = pixel.ForegroundColor;
-                var currentBackgroundColor = pixel.BackgroundColor;
                 if (currentForegroundColor.IsDifferentThan(lastForegroundColor))
-                    outputStringBuilder.SetConsoleForegroundColorTo(currentForegroundColor);
+                    output.SetConsoleForegroundColorTo(currentForegroundColor);
+                
+                var currentBackgroundColor = pixel.BackgroundColor;
                 if (currentBackgroundColor.IsDifferentThan(lastBackgroundColor)) 
-                    outputStringBuilder.SetConsoleBackgroundColorTo(currentBackgroundColor);
+                    output.SetConsoleBackgroundColorTo(currentBackgroundColor);
                 
                 lastForegroundColor = pixel.ForegroundColor;
                 lastBackgroundColor = pixel.BackgroundColor;
 
-                outputStringBuilder.Append("▒");
+                output.Append(PIXEL_CHARACTER);
             }
-            Console.Write(outputStringBuilder.ToString());
+            Console.Write(output.ToString());
         }
-        
+
         private static void ClearOldPixels()
         {
-            var lastOldPosition = new Vector();
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.BackgroundColor = ConsoleColor.Black;
-            var clearedPixelsStringBuilder = new StringBuilder();
+            Console.ResetColor(); 
+            var lastPosition = new IntegerVector();
+            var output = new StringBuilder();
             
-            foreach (var oldPosition in _pixelsToRenderLastFrame.Keys)
+            foreach (var (position, _) in _pixelsToRenderLastFrame)
             {
-                var positionHasPixel = _pixelsToRender.ContainsKey(oldPosition);
-                if (positionHasPixel) continue;
-                
-                _pixelsToRenderLastFrame.Remove(oldPosition);
-                
-                var pixelIsToTheRightOfPreviousPixel = 
-                    new Vector((int) oldPosition.X, (int) oldPosition.Y) - 
-                    new Vector((int) lastOldPosition.X, (int) lastOldPosition.Y) 
-                    == Vector.Right;
-                lastOldPosition = oldPosition;
-                
-                if (!pixelIsToTheRightOfPreviousPixel)
-                    clearedPixelsStringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) oldPosition.Y};{(int) oldPosition.X}H");
-                clearedPixelsStringBuilder.Append(" ");
+                if (position.HasAPixel()) continue;
+                if (position.IsNotToTheRightOf(lastPosition))
+                    output.MoveCursorTo(position);
+                lastPosition = position;
+                output.Append(DELETE_CHARACTER);
             }
-            Console.Write(clearedPixelsStringBuilder.ToString());
+            _pixelsToRenderLastFrame.Clear();
+            Console.Write(output.ToString());
         }
         
         private static void UpdatePixelsToRenderLastFrame()
@@ -128,11 +122,11 @@ namespace N8Engine.Rendering
 
         private static bool IsOnTopOf(this Pixel newPixel, Pixel oldPixel) => newPixel.SortingOrder > oldPixel.SortingOrder;
 
-        private static bool HasPixelNotMoved(Vector position, Pixel pixel) => 
+        private static bool HasPixelNotMovedSinceLastFrame(Vector position, Pixel pixel) => 
             _pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixel;
         
-        private static bool IsPixelToTheRightOfLastPixel(Vector currentPosition, Vector lastPosition) => 
-            currentPosition - lastPosition == Vector.Right;
+        private static bool IsNotToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
+            currentPosition - lastPosition != IntegerVector.Right;
 
         private static void MoveCursorTo(this StringBuilder stringBuilder, Vector position) => 
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");
