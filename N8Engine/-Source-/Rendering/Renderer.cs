@@ -56,26 +56,22 @@ namespace N8Engine.Rendering
             var lastPosition = new Vector();
             var outputStringBuilder = new StringBuilder();
 
-            foreach (var position in _pixelsToRender.Keys)
+            foreach (var (position, pixel) in _pixelsToRender)
             {
-                var pixelToRender = _pixelsToRender[position];
-                var pixelHasNotMoved = _pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixelToRender;
-                if (pixelHasNotMoved) continue;
-
-                var pixelIsToTheRightOfPreviousPixel = 
-                    new Vector((int) position.X, (int) position.Y) - 
-                    new Vector((int) lastPosition.X, (int) lastPosition.Y) == Vector.Right;
-                
-                if (!pixelIsToTheRightOfPreviousPixel)
-                    outputStringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");
+                if (HasPixelNotMoved(position, pixel)) continue;
+                if (!IsPixelToTheRightOfLastPixel(position, lastPosition))
+                    outputStringBuilder.MoveCursorTo(position);
                 lastPosition = position;
 
-                if (lastForegroundColor != pixelToRender.ForegroundColor)
-                    outputStringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{pixelToRender.ForegroundColor.AsAnsiForegroundColor()}");
-                if (lastBackgroundColor != pixelToRender.BackgroundColor) 
-                    outputStringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{pixelToRender.BackgroundColor.AsAnsiBackgroundColor()}");
-                lastForegroundColor = pixelToRender.ForegroundColor;
-                lastBackgroundColor = pixelToRender.BackgroundColor;
+                var currentForegroundColor = pixel.ForegroundColor;
+                var currentBackgroundColor = pixel.BackgroundColor;
+                if (currentForegroundColor.IsDifferentThan(lastForegroundColor))
+                    outputStringBuilder.SetConsoleForegroundColorTo(currentForegroundColor);
+                if (currentBackgroundColor.IsDifferentThan(lastBackgroundColor)) 
+                    outputStringBuilder.SetConsoleBackgroundColorTo(currentBackgroundColor);
+                
+                lastForegroundColor = pixel.ForegroundColor;
+                lastBackgroundColor = pixel.BackgroundColor;
 
                 outputStringBuilder.Append("▒");
             }
@@ -131,5 +127,22 @@ namespace N8Engine.Rendering
         private static bool DoesNotHaveAPixel(this IntegerVector position) => !position.HasAPixel();
 
         private static bool IsOnTopOf(this Pixel newPixel, Pixel oldPixel) => newPixel.SortingOrder > oldPixel.SortingOrder;
+
+        private static bool HasPixelNotMoved(Vector position, Pixel pixel) => 
+            _pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixel;
+        
+        private static bool IsPixelToTheRightOfLastPixel(Vector currentPosition, Vector lastPosition) => 
+            currentPosition - lastPosition == Vector.Right;
+
+        private static void MoveCursorTo(this StringBuilder stringBuilder, Vector position) => 
+            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");
+
+        private static bool IsDifferentThan(this ConsoleColor first, ConsoleColor second) => first != second;
+        
+        private static void SetConsoleForegroundColorTo(this StringBuilder stringBuilder, ConsoleColor foregroundColor) =>
+            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{foregroundColor.AsAnsiForegroundColor()}");
+
+        private static void SetConsoleBackgroundColorTo(this StringBuilder stringBuilder, ConsoleColor backgroundColor) =>
+            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{backgroundColor.AsAnsiBackgroundColor()}");
     }
 }
