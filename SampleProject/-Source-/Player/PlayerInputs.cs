@@ -15,13 +15,13 @@ namespace SampleProject
             {
                 var direction = new Vector<Direction, Direction>();
                 if (Key.A.IsPressed() || Key.LeftArrow.IsPressed())
-                    direction.X = N8Engine.Mathematics.Direction.Left;
+                    direction.First = N8Engine.Mathematics.Direction.Left;
                 else if (Key.D.IsPressed() || Key.RightArrow.IsPressed()) 
-                    direction.X = N8Engine.Mathematics.Direction.Right;
+                    direction.First = N8Engine.Mathematics.Direction.Right;
                 if (Key.W.IsPressed() || Key.UpArrow.IsPressed()) 
-                    direction.Y = N8Engine.Mathematics.Direction.Up;
+                    direction.Second = N8Engine.Mathematics.Direction.Up;
                 else if (Key.S.IsPressed() || Key.DownArrow.IsPressed()) 
-                    direction.Y = N8Engine.Mathematics.Direction.Down;
+                    direction.Second = N8Engine.Mathematics.Direction.Down;
                 return direction;
             }
         }

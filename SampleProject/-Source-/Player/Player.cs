@@ -16,7 +16,7 @@ namespace SampleProject
         private Vector<Direction, Direction> _lastDirectionOfInput;
 
         private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJumpButton;
-        private bool IsWalking => _inputs.Direction.X != 0f;
+        private bool IsWalking => _inputs.Direction.First != 0f;
         private Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
 
         protected override void OnStart()
@@ -56,23 +56,23 @@ namespace SampleProject
 
         private void UpdateLastDirection()
         {
-            _lastDirectionOfInput.X = _inputs.Direction.X switch
+            _lastDirectionOfInput.First = _inputs.Direction.First switch
             {
                 > 0 => Direction.Right,
                 < 0 => Direction.Left,
-                var _ => _lastDirectionOfInput.X
+                var _ => _lastDirectionOfInput.First
             };
-            _lastDirectionOfInput.Y = _inputs.Direction.Y switch
+            _lastDirectionOfInput.Second = _inputs.Direction.Second switch
             {
                 > 0 => Direction.Up,
                 < 0 => Direction.Down,
-                var _ => _lastDirectionOfInput.Y
+                var _ => _lastDirectionOfInput.Second
             };
         }
 
         private void Move()
         {
-            var horizontalInput = _inputs.Direction.X.AsVector().X;
+            var horizontalInput = _inputs.Direction.First.AsVector().X;
             PhysicsBody.Velocity = new Vector(horizontalInput * SPEED, PhysicsBody.Velocity.Y);
         }
 
@@ -83,10 +83,10 @@ namespace SampleProject
         }
 
         private void Land() => _animationController.HandleLandAnimation
-            (_inputs.Direction.X, _lastDirectionOfInput.X);
+            (_inputs.Direction.First, _lastDirectionOfInput.First);
 
         private void HandleWalkingAnimations() => _animationController.HandleWalkingAnimation
-                (_groundCheck.IsGrounded, _inputs.Direction.X, _lastDirectionOfInput.X);
+                (_groundCheck.IsGrounded, _inputs.Direction.First, _lastDirectionOfInput.First);
 
         private void ClampPositionWithinWindow()
         {

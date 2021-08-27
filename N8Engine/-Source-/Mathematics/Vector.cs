@@ -74,34 +74,34 @@ namespace N8Engine.Mathematics
         public bool Equals(Vector other) => X.Equals(other.X) && Y.Equals(other.Y);
     }
 
-    public struct Vector<TX, TY> : IEquatable<Vector<TX, TY>>
+    public struct Vector<TFirst, TSecond> : IEquatable<Vector<TFirst, TSecond>>
     {
-        private readonly TX _x;
-        private readonly TY _y;
+        private readonly TFirst _first;
+        private readonly TSecond _second;
         
-        public TX X
+        public TFirst First
         {
-            get => _x;
-            set => this = new Vector<TX, TY>(value, _y);
+            get => _first;
+            set => this = new Vector<TFirst, TSecond>(value, _second);
         }
-        public TY Y
+        public TSecond Second
         {
-            get => _y;
-            set => this = new Vector<TX, TY>(_x, value);
-        }
-        
-        public Vector(TX x, TY y)
-        {
-            _x = x;
-            _y = y;
+            get => _second;
+            set => this = new Vector<TFirst, TSecond>(_first, value);
         }
         
-        public override bool Equals(object obj) => obj is Vector<TX, TY> other && Equals(other);
+        public Vector(TFirst first, TSecond second)
+        {
+            _first = first;
+            _second = second;
+        }
         
-        public override int GetHashCode() => HashCode.Combine(X, Y);
+        public override bool Equals(object obj) => obj is Vector<TFirst, TSecond> other && Equals(other);
         
-        public override string ToString() => $"({X.ToString()},{Y.ToString()})";
+        public override int GetHashCode() => HashCode.Combine(First, Second);
+        
+        public override string ToString() => $"({First.ToString()},{Second.ToString()})";
 
-        public bool Equals(Vector<TX, TY> other) => X.Equals(other.X) && Y.Equals(other.Y);
+        public bool Equals(Vector<TFirst, TSecond> other) => First.Equals(other.First) && Second.Equals(other.Second);
     }
 }
