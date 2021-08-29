@@ -5,15 +5,15 @@ namespace SampleProject
 {
     public sealed class PlayerAnimationController
     {
-        private readonly AnimationPlayer _animationPlayer;
-        private readonly PlayerWalkAnimation _walkAnimation = new();
-        private readonly FlippedPlayerWalkAnimation _flippedWalkAnimation = new();
-        private readonly PlayerIdleAnimation _idleAnimation = new();
-        private readonly FlippedPlayerIdleAnimation _flippedIdleAnimation = new();
-        private readonly PlayerJumpAnimation _jumpAnimation = new();
-        private readonly FlippedPlayerJumpAnimation _flippedJumpAnimation = new();
-        private readonly PlayerJumpAnimation _fallAnimation = new();
-        private readonly FlippedPlayerJumpAnimation _flippedFallAnimation = new();
+        readonly AnimationPlayer _animationPlayer;
+        readonly PlayerWalkAnimation _walkAnimation = new();
+        readonly FlippedPlayerWalkAnimation _flippedWalkAnimation = new();
+        readonly PlayerIdleAnimation _idleAnimation = new();
+        readonly FlippedPlayerIdleAnimation _flippedIdleAnimation = new();
+        readonly PlayerJumpAnimation _jumpAnimation = new();
+        readonly FlippedPlayerJumpAnimation _flippedJumpAnimation = new();
+        readonly PlayerJumpAnimation _fallAnimation = new();
+        readonly FlippedPlayerJumpAnimation _flippedFallAnimation = new();
 
         public PlayerAnimationController(AnimationPlayer animationPlayer)
         {

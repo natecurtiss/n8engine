@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace N8Engine.Mathematics
 {
+    /// <summary>
+    /// A structure with an <see cref="X"/> and <see cref="Y"/> value - used for things like positions and velocity.
+    /// </summary>
     public struct Vector : IEquatable<Vector>
     {
         public static bool operator ==(Vector first, Vector second) => first.X == second.X && first.Y == second.Y;
@@ -25,8 +27,8 @@ namespace N8Engine.Mathematics
         public static readonly Vector Left = new(-1f, 0f);
         public static readonly Vector Right = new(1f, 0f);
         
-        private readonly float _x;
-        private readonly float _y;
+        readonly float _x;
+        readonly float _y;
         
         public float X
         {
@@ -74,10 +76,15 @@ namespace N8Engine.Mathematics
         public bool Equals(Vector other) => X.Equals(other.X) && Y.Equals(other.Y);
     }
 
+    /// <summary>
+    /// A generic <see cref="Vector"/> with a <see cref="First"/> and <see cref="Second"/> value - each of any types passed in.
+    /// </summary>
+    /// <typeparam name="TFirst"> The type of <see cref="First">First.</see> </typeparam>
+    /// <typeparam name="TSecond"> The type of <see cref="Second">Second.</see> </typeparam>
     public struct Vector<TFirst, TSecond> : IEquatable<Vector<TFirst, TSecond>>
     {
-        private readonly TFirst _first;
-        private readonly TSecond _second;
+        readonly TFirst _first;
+        readonly TSecond _second;
         
         public TFirst First
         {

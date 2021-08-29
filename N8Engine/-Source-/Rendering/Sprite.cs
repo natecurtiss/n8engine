@@ -21,14 +21,14 @@ namespace N8Engine.Rendering
             CreateSprite();
         }
 
-        private void CreateSprite(Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
+        void CreateSprite(Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
         {
             OffsetPixels(offset);
             if (shouldFlipHorizontally) FlipPixelsHorizontally();
             if (shouldFlipVertically) FlipPixelsVertically();
         }
 
-        private void OffsetPixels(Vector offset)
+        void OffsetPixels(Vector offset)
         {
             var pixels = new Pixel[Pixels.Length];
             for (var i = 0; i < Pixels.Length; i++)
@@ -39,7 +39,7 @@ namespace N8Engine.Rendering
             Pixels = pixels;
         }
 
-        private void FlipPixelsHorizontally()
+        void FlipPixelsHorizontally()
         {
             var pixels = new Pixel[Pixels.Length];
             for (var i = 0; i < Pixels.Length; i++)
@@ -50,7 +50,7 @@ namespace N8Engine.Rendering
             Pixels = pixels;
         }
 
-        private void FlipPixelsVertically()
+        void FlipPixelsVertically()
         {
             var pixels = new Pixel[Pixels.Length];
             for (var i = 0; i < Pixels.Length; i++)

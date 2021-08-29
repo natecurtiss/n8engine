@@ -4,7 +4,7 @@ using N8Engine.SceneManagement;
 
 namespace SampleProject
 {
-    internal sealed class Game : Launcher
+    sealed class Game : Launcher
     {
         public override Scene[] Scenes => new Scene[]
         {
@@ -12,6 +12,6 @@ namespace SampleProject
         };
         public override short FontSize => 6;
 
-        private static void Main() => Application.Start(new Game());
+        static void Main() => Application.Start(new Game());
     }
 }

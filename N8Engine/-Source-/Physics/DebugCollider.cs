@@ -5,12 +5,12 @@ using N8Engine.Rendering;
 
 namespace N8Engine.Physics
 {
-    internal sealed class DebugCollider
+    sealed class DebugCollider
     {
-        private readonly Collider _collider;
+        readonly Collider _collider;
 
-        private Vector _size;
-        private Sprite _sprite;
+        Vector _size;
+        Sprite _sprite;
 
         public Vector Position => _collider.Position;
         public Sprite Sprite => _sprite ??= new Sprite(Pixels);
@@ -25,7 +25,7 @@ namespace N8Engine.Physics
             }
         }
 
-        private Pixel[] Pixels
+        Pixel[] Pixels
         {
             get
             {

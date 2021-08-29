@@ -9,10 +9,10 @@ namespace N8Engine.Physics
     public sealed class Collider : Component
     {
         internal readonly DebugCollider DebugMode;
-        private readonly List<Collider> _collidersCollidingWithThisFrame = new();
-        private readonly List<Collider> _collidersCollidingWithLastFrame = new();
+        readonly List<Collider> _collidersCollidingWithThisFrame = new();
+        readonly List<Collider> _collidersCollidingWithLastFrame = new();
 
-        private Vector _size;
+        Vector _size;
 
         public IEnumerable<Collider> Contacts => _collidersCollidingWithThisFrame;
         public bool ShowDebugCollider { get; set; }
@@ -30,9 +30,9 @@ namespace N8Engine.Physics
         }
 
         internal Vector Position => Transform.Position + Offset;
-        private Vector ActualSize => new(Size.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, Size.Y);
-        private BoundingBox BoundingBoxCurrentFrame { get; set; }
-        private BoundingBox BoundingBoxNextFrame { get; set; }
+        Vector ActualSize => new(Size.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, Size.Y);
+        BoundingBox BoundingBoxCurrentFrame { get; set; }
+        BoundingBox BoundingBoxNextFrame { get; set; }
 
         internal Collider(GameObject gameObject) : base(gameObject) => DebugMode = new DebugCollider(this);
 

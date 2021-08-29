@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using N8Engine.Mathematics;
 using N8Engine.Native;
 
 namespace N8Engine.Inputs
@@ -12,8 +11,8 @@ namespace N8Engine.Inputs
     /// </summary>
     public static class Input
     {
-        private static readonly Dictionary<Key, KeyState> _keys = new();
-        private enum KeyState { IsPressed, IsReleased, WasJustPressed, WasJustReleased }
+        static readonly Dictionary<Key, KeyState> _keys = new();
+        enum KeyState { IsPressed, IsReleased, WasJustPressed, WasJustReleased }
         
         internal static void Initialize()
         {
@@ -40,8 +39,8 @@ namespace N8Engine.Inputs
         /// True if the <see cref="Key"/> was just pressed in the current frame.
         /// </summary>
         public static bool WasJustPressed(this Key key) => _keys[key] == KeyState.WasJustPressed;
-        
-        private static void OnPreUpdate(float deltaTime)
+
+        static void OnPreUpdate(float deltaTime)
         {
             foreach (var key in _keys.Keys.ToArray())
             {

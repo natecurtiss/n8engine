@@ -2,9 +2,9 @@
 {
     public abstract class Animation
     {
-        private float _timer;
-        private int _currentFrame;
-        private Sprite[] _cachedFrames;
+        float _timer;
+        int _currentFrame;
+        Sprite[] _cachedFrames;
 
         protected abstract Sprite[] Frames { get; }
         protected abstract float TimeBetweenFrames { get; }

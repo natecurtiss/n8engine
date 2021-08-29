@@ -74,7 +74,7 @@ namespace N8Engine
             GameLoop.OnRender -= OnRender;
         }
 
-        private void Initialize(string name)
+        void Initialize(string name)
         {
             Name = name;
             Transform = new Transform(this);
@@ -91,17 +91,17 @@ namespace N8Engine
             OnStart();
         }
 
-        private void OnPostUpdate(float deltaTime) => AnimationPlayer.Tick(deltaTime);
+        void OnPostUpdate(float deltaTime) => AnimationPlayer.Tick(deltaTime);
 
-        private void OnPhysicsUpdate(float deltaTime)
+        void OnPhysicsUpdate(float deltaTime)
         {
             PhysicsBody.ApplyGravity(deltaTime);
             Collider.UpdateBoundingBoxes(deltaTime);
             Collider.CheckCollisions();
             PhysicsBody.ApplyVelocity(deltaTime);
         }
-        
-        private void OnRender()
+
+        void OnRender()
         {
             if (SpriteRenderer.Sprite != null)
                 Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder);

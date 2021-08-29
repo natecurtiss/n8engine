@@ -3,7 +3,7 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    internal struct Pixel
+    struct Pixel
     {
         public static bool operator ==(Pixel first, Pixel second) => 
             first.ForegroundColor == second.ForegroundColor && 

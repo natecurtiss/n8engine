@@ -6,14 +6,14 @@ namespace N8Engine.Tilemaps
 {
     public sealed class AutoTilemap<T> where T : TilePalette, new()
     {
-        private enum TileType
+        enum TileType
         {
             Left, Right, Top, Bottom, TopRight, TopLeft, BottomRight, BottomLeft, Middle
         }
 
         public static AutoTilemap<T> Generator => new();
 
-        private AutoTilemap() { }
+        AutoTilemap() { }
 
         public AutoTilemap<T> Place(Vector position, Vector sizeOfChunkInNumberOfTiles, TilePivot pivot)
         {
@@ -58,7 +58,7 @@ namespace N8Engine.Tilemaps
             return this;
         }
 
-        private TileType GetTileType(Vector tilePosition, Vector numberOfTiles)
+        TileType GetTileType(Vector tilePosition, Vector numberOfTiles)
         {
             if (numberOfTiles.X == 1)
             {
@@ -85,7 +85,7 @@ namespace N8Engine.Tilemaps
             return TileType.Middle;
         }
 
-        private Vector GetTilePositionFromPivot(TilePivot pivot, Vector position, Vector chunkSize, Vector actualTileSize)
+        Vector GetTilePositionFromPivot(TilePivot pivot, Vector position, Vector chunkSize, Vector actualTileSize)
         {
             var newPosition = pivot switch
             {
@@ -104,7 +104,7 @@ namespace N8Engine.Tilemaps
             return newPosition;
         }
 
-        private Vector GetColliderPositionFromPivot(Vector position, TilePivot pivot, Vector chunkSize)
+        Vector GetColliderPositionFromPivot(Vector position, TilePivot pivot, Vector chunkSize)
         {
             var positionWithCenterPivot = pivot switch
             {

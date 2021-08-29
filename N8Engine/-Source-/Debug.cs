@@ -4,7 +4,7 @@ namespace N8Engine
 {
     public static class Debug
     {
-        private static Action<string> _onDebugLog;
+        static Action<string> _onDebugLog;
 
         internal static void Initialize(Launcher launcher) => _onDebugLog = launcher.OnDebugLog;
         

@@ -2,6 +2,9 @@ using System;
 
 namespace N8Engine.Mathematics
 {
+    /// <summary>
+    /// A <see cref="Vector"/> with <see cref="int">integer</see> values.
+    /// </summary>
     public struct IntegerVector : IEquatable<IntegerVector>
     {
         public static bool operator ==(IntegerVector first, IntegerVector second) => first.X == second.X && first.Y == second.Y;
@@ -23,9 +26,9 @@ namespace N8Engine.Mathematics
         public static readonly IntegerVector Down = new(0, -1);
         public static readonly IntegerVector Left = new(-1, 0);
         public static readonly IntegerVector Right = new(1, 0);
-        
-        private readonly int _x;
-        private readonly int _y;
+
+        readonly int _x;
+        readonly int _y;
         
         public int X
         {

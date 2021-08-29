@@ -4,16 +4,16 @@ using System.Text;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
-{ 
-    internal static class Renderer
+{
+    static class Renderer
     {
         public const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
-        private const string ANSI_ESCAPE_SEQUENCE_START = "\u001b[";
-        private const string PIXEL_CHARACTER = "▒";
-        private const string DELETE_CHARACTER = " ";
+        const string ANSI_ESCAPE_SEQUENCE_START = "\u001b[";
+        const string PIXEL_CHARACTER = "▒";
+        const string DELETE_CHARACTER = " ";
 
-        private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRender = new();
-        private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRenderLastFrame = new();
+        static readonly Dictionary<IntegerVector, Pixel> _pixelsToRender = new();
+        static readonly Dictionary<IntegerVector, Pixel> _pixelsToRenderLastFrame = new();
 
         public static void Initialize()
         {
@@ -21,7 +21,7 @@ namespace N8Engine.Rendering
             GameLoop.OnPostRender += OnPostRender;
         }
 
-        private static void OnPreRender() => UpdatePixelsToRenderLastFrame();
+        static void OnPreRender() => UpdatePixelsToRenderLastFrame();
 
         public static void Render(Sprite sprite, Vector spritePosition, int sortingOrder)
         {
@@ -44,14 +44,14 @@ namespace N8Engine.Rendering
                 }
             }
         }
-        
-        private static void OnPostRender()
+
+        static void OnPostRender()
         {
             RenderNewPixels();
             ClearOldPixels();
         }
 
-        private static void RenderNewPixels()
+        static void RenderNewPixels()
         {
             var lastForegroundColor = Console.ForegroundColor;
             var lastBackgroundColor = Console.BackgroundColor;
@@ -81,7 +81,7 @@ namespace N8Engine.Rendering
             Console.Write(output.ToString());
         }
 
-        private static void ClearOldPixels()
+        static void ClearOldPixels()
         {
             Console.ResetColor(); 
             var lastPosition = new IntegerVector();
@@ -98,8 +98,8 @@ namespace N8Engine.Rendering
             _pixelsToRenderLastFrame.Clear();
             Console.Write(output.ToString());
         }
-        
-        private static void UpdatePixelsToRenderLastFrame()
+
+        static void UpdatePixelsToRenderLastFrame()
         {
             foreach (var (position, pixel) in _pixelsToRender)
                 if (_pixelsToRenderLastFrame.ContainsKey(position))
@@ -109,34 +109,34 @@ namespace N8Engine.Rendering
             _pixelsToRender.Clear();
         }
 
-        private static Pixel WithSortingOrder(this Pixel pixel, int sortingOrder)
+        static Pixel WithSortingOrder(this Pixel pixel, int sortingOrder)
         {
             var newPixel = pixel;
             newPixel.SortingOrder = sortingOrder;
             return newPixel;
         }
 
-        private static bool HasAPixel(this IntegerVector position) => _pixelsToRender.ContainsKey(position);
+        static bool HasAPixel(this IntegerVector position) => _pixelsToRender.ContainsKey(position);
 
-        private static bool DoesNotHaveAPixel(this IntegerVector position) => !position.HasAPixel();
+        static bool DoesNotHaveAPixel(this IntegerVector position) => !position.HasAPixel();
 
-        private static bool IsOnTopOf(this Pixel newPixel, Pixel oldPixel) => newPixel.SortingOrder > oldPixel.SortingOrder;
+        static bool IsOnTopOf(this Pixel newPixel, Pixel oldPixel) => newPixel.SortingOrder > oldPixel.SortingOrder;
 
-        private static bool HasPixelNotMovedSinceLastFrame(Vector position, Pixel pixel) => 
+        static bool HasPixelNotMovedSinceLastFrame(Vector position, Pixel pixel) => 
             _pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixel;
-        
-        private static bool IsNotToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
+
+        static bool IsNotToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
             currentPosition - lastPosition != IntegerVector.Right;
 
-        private static void MoveCursorTo(this StringBuilder stringBuilder, Vector position) => 
+        static void MoveCursorTo(this StringBuilder stringBuilder, Vector position) => 
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");
 
-        private static bool IsDifferentThan(this ConsoleColor first, ConsoleColor second) => first != second;
-        
-        private static void SetConsoleForegroundColorTo(this StringBuilder stringBuilder, ConsoleColor foregroundColor) =>
+        static bool IsDifferentThan(this ConsoleColor first, ConsoleColor second) => first != second;
+
+        static void SetConsoleForegroundColorTo(this StringBuilder stringBuilder, ConsoleColor foregroundColor) =>
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{foregroundColor.AsAnsiForegroundColor()}");
 
-        private static void SetConsoleBackgroundColorTo(this StringBuilder stringBuilder, ConsoleColor backgroundColor) =>
+        static void SetConsoleBackgroundColorTo(this StringBuilder stringBuilder, ConsoleColor backgroundColor) =>
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{backgroundColor.AsAnsiBackgroundColor()}");
     }
 }

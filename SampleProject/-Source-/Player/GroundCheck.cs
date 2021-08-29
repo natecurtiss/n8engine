@@ -9,9 +9,9 @@ namespace SampleProject
     {
         public event Action OnLandedOnTheGround;
         public event Action OnJumpedOffTheGround;
-        
-        private const float COYOTE_TIME = 0.3f;
-        private float _groundedTimer;
+
+        const float COYOTE_TIME = 0.3f;
+        float _groundedTimer;
         
         public bool IsGrounded
         {

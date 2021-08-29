@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace N8Engine
 {
-    internal static class GameLoop
+    static class GameLoop
     {
         public static event Action<float> OnPreUpdate;
         public static event Action<float> OnEarlyUpdate;
@@ -17,19 +17,19 @@ namespace N8Engine
         
         public static int TargetFramerate { get; set; } = 90;
         public static int FramesPerSecond { get; private set; }
-        private static float UpdateRate => 1f / TargetFramerate;
+        static float UpdateRate => 1f / TargetFramerate;
 
         public static void Run()
         {
-            const float milliseconds_to_seconds = 1000f;
-            const float one_second = 1f;
-            
             var frames = 0;
             var timer = 0f;
             var previousTimeInMilliseconds = 0.0;
             var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            
+            const float milliseconds_to_seconds = 1000f;
+            const float one_second = 1f;
 
+            stopwatch.Start();
             while (true)
             {
                 var currentTimeInMilliseconds = stopwatch.ElapsedMilliseconds;
@@ -51,7 +51,7 @@ namespace N8Engine
             }
         }
 
-        private static void InvokeEventsForCurrentFrame(float deltaTime)
+        static void InvokeEventsForCurrentFrame(float deltaTime)
         {
             OnPreUpdate?.Invoke(deltaTime);
             OnEarlyUpdate?.Invoke(deltaTime);

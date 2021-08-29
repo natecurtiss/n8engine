@@ -3,16 +3,16 @@ using System.Runtime.InteropServices;
 
 namespace N8Engine.Native
 {
-    internal static class ConsoleModeHelper
+    static class ConsoleModeHelper
     {
-        private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
-        private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
+        const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
+        const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
 
         [DllImport("kernel32.dll")]
-        private static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+        static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
 
         [DllImport("kernel32.dll")]
-        private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+        static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
 
         internal static void EnableAnsiEscapeSequences()
         {

@@ -6,22 +6,25 @@ namespace SampleProject
 {
     public sealed class PlayerInputs : GameObject
     {
-        private const float COYOTE_TIME = 0.3f;
-        private float _jumpInputTimer;
+        const float COYOTE_TIME = 0.3f;
+        float _jumpInputTimer;
         
         public Vector<Direction, Direction> Direction
         {
             get
             {
                 var direction = new Vector<Direction, Direction>();
+                
                 if (Key.A.IsPressed() || Key.LeftArrow.IsPressed())
                     direction.First = N8Engine.Mathematics.Direction.Left;
                 else if (Key.D.IsPressed() || Key.RightArrow.IsPressed()) 
                     direction.First = N8Engine.Mathematics.Direction.Right;
+                
                 if (Key.W.IsPressed() || Key.UpArrow.IsPressed()) 
                     direction.Second = N8Engine.Mathematics.Direction.Up;
                 else if (Key.S.IsPressed() || Key.DownArrow.IsPressed()) 
                     direction.Second = N8Engine.Mathematics.Direction.Down;
+                
                 return direction;
             }
         }

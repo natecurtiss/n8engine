@@ -2,16 +2,14 @@
 
 namespace N8Engine.Physics
 {
-    internal readonly struct BoundingBox
+    readonly struct BoundingBox
     {
-        public readonly Vector Position;
-        
-        private Vector LeftSide { get; }
-        private Vector RightSide { get; }
-        private Vector TopSide { get; }
-        private Vector BottomSide { get; }
-        private Vector TopLeft { get; }
-        private Vector BottomRight { get; }
+        Vector LeftSide { get; }
+        Vector RightSide { get; }
+        Vector TopSide { get; }
+        Vector BottomSide { get; }
+        Vector TopLeft { get; }
+        Vector BottomRight { get; }
         
         public BoundingBox(Vector size, Vector position = default)
         {
@@ -22,12 +20,7 @@ namespace N8Engine.Physics
             BottomSide = new Vector(0f, -extents.Y) + position;
             TopLeft = new Vector(-extents.X, extents.Y) + position;
             BottomRight = new Vector(extents.X, -extents.Y) + position;
-            Position = position;
         }
-        
-        public bool IsPositionInside(Vector otherPosition) => 
-            otherPosition.X.IsWithin(LeftSide.X, RightSide.X) && 
-            otherPosition.Y.IsWithin(BottomSide.Y, TopSide.Y);
 
         public bool IsOverlapping(BoundingBox otherBoundingBox)
         {

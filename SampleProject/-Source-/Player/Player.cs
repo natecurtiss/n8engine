@@ -7,17 +7,17 @@ namespace SampleProject
 {
     public sealed class Player : GameObject
     {
-        private const int SPEED = 100;
-        private const int JUMP_FORCE = -200;
+        const int SPEED = 100;
+        const int JUMP_FORCE = -200;
 
-        private PlayerAnimationController _animationController;
-        private GroundCheck<ICanBeJumpedOn> _groundCheck;
-        private PlayerInputs _inputs;
-        private Vector<Direction, Direction> _lastDirectionOfInput;
+        PlayerAnimationController _animationController;
+        GroundCheck<ICanBeJumpedOn> _groundCheck;
+        PlayerInputs _inputs;
+        Vector<Direction, Direction> _lastDirectionOfInput;
 
-        private bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJumpButton;
-        private bool IsWalking => _inputs.Direction.First != 0f;
-        private Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
+        bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJumpButton;
+        bool IsWalking => _inputs.Direction.First != 0f;
+        Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
 
         protected override void OnStart()
         {
@@ -54,7 +54,7 @@ namespace SampleProject
             if (Transform.Position.Y >= Window.BottomSide.Y) Die();
         }
 
-        private void UpdateLastDirection()
+        void UpdateLastDirection()
         {
             _lastDirectionOfInput.First = _inputs.Direction.First switch
             {
@@ -70,25 +70,25 @@ namespace SampleProject
             };
         }
 
-        private void Move()
+        void Move()
         {
             var horizontalInput = _inputs.Direction.First.AsVector().X;
             PhysicsBody.Velocity = new Vector(horizontalInput * SPEED, PhysicsBody.Velocity.Y);
         }
 
-        private void Jump()
+        void Jump()
         {
             PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
             _groundCheck.IsGrounded = false;
         }
 
-        private void Land() => _animationController.HandleLandAnimation
+        void Land() => _animationController.HandleLandAnimation
             (_inputs.Direction.First, _lastDirectionOfInput.First);
 
-        private void HandleWalkingAnimations() => _animationController.HandleWalkingAnimation
+        void HandleWalkingAnimations() => _animationController.HandleWalkingAnimation
                 (_groundCheck.IsGrounded, _inputs.Direction.First, _lastDirectionOfInput.First);
 
-        private void ClampPositionWithinWindow()
+        void ClampPositionWithinWindow()
         {
             var position = Transform.Position;
             var offset = Collider.Size.X / 2f + 5f;
@@ -96,7 +96,7 @@ namespace SampleProject
             Transform.Position = position;
         }
 
-        private void Die()
+        void Die()
         {
             Transform.Position = SpawnPosition;
             PhysicsBody.Velocity = Vector.Zero;

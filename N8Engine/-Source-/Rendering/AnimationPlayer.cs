@@ -2,7 +2,7 @@
 {
     public sealed class AnimationPlayer : Component
     {
-        private Animation _animation;
+        Animation _animation;
 
         public bool IsPlaying { get; private set; }
         public Animation Animation
