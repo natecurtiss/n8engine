@@ -1,6 +1,7 @@
 using N8Engine;
 using N8Engine.Inputs;
 using N8Engine.Mathematics;
+using static N8Engine.Mathematics.Direction;
 
 namespace SampleProject
 {
@@ -9,32 +10,28 @@ namespace SampleProject
         const float COYOTE_TIME = 0.3f;
         float _jumpInputTimer;
         
-        public Vector<Direction, Direction> Direction
+        public Direction CurrentDirection
         {
             get
             {
-                var direction = new Vector<Direction, Direction>();
-                
                 if (Key.A.IsPressed() || Key.LeftArrow.IsPressed())
-                    direction.First = N8Engine.Mathematics.Direction.Left;
-                else if (Key.D.IsPressed() || Key.RightArrow.IsPressed()) 
-                    direction.First = N8Engine.Mathematics.Direction.Right;
-                
-                if (Key.W.IsPressed() || Key.UpArrow.IsPressed()) 
-                    direction.Second = N8Engine.Mathematics.Direction.Up;
-                else if (Key.S.IsPressed() || Key.DownArrow.IsPressed()) 
-                    direction.Second = N8Engine.Mathematics.Direction.Down;
-                
-                return direction;
+                    return Left;
+                if (Key.D.IsPressed() || Key.RightArrow.IsPressed()) 
+                    return Right;
+                return Direction.None;
             }
         }
+        public Direction LastDirectionWhenThereWasInput { get; private set; }
         public bool JustPressedJumpButton => _jumpInputTimer > 0f;
 
-        protected override void OnUpdate(float deltaTime)
+        protected override void OnEarlyUpdate(float deltaTime)
         {
             _jumpInputTimer -= deltaTime;
             if (Key.W.WasJustPressed() || Key.UpArrow.WasJustPressed())
                 _jumpInputTimer = COYOTE_TIME;
+
+            if (CurrentDirection is Left or Right)
+                LastDirectionWhenThereWasInput = CurrentDirection;
         }
     }
 }

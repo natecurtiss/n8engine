@@ -9,7 +9,6 @@ namespace SampleProject
         const int SPEED = 100;
         const int JUMP_FORCE = -200;
 
-        Vector<Direction, Direction> _lastDirectionOfInput;
         PlayerAnimationController _animationController;
         GroundCheck<ICanBeJumpedOn> _groundCheck;
         PlayerInputs _inputs;
@@ -47,29 +46,12 @@ namespace SampleProject
         {
             ClampPositionWithinWindow();
             _groundCheck.Transform.Position = Transform.Position;
-            UpdateLastDirection();
             if (Transform.Position.Y >= Window.BottomSide.Y) Die();
-        }
-
-        void UpdateLastDirection()
-        {
-            _lastDirectionOfInput.First = _inputs.Direction.First switch
-            {
-                > 0 => Direction.Right,
-                < 0 => Direction.Left,
-                var _ => _lastDirectionOfInput.First
-            };
-            _lastDirectionOfInput.Second = _inputs.Direction.Second switch
-            {
-                > 0 => Direction.Up,
-                < 0 => Direction.Down,
-                var _ => _lastDirectionOfInput.Second
-            };
         }
 
         void Move()
         {
-            var horizontalInput = _inputs.Direction.First.AsVector().X;
+            var horizontalInput = _inputs.CurrentDirection.First.AsVector().X;
             PhysicsBody.Velocity = new Vector(horizontalInput * SPEED, PhysicsBody.Velocity.Y);
         }
 
@@ -80,10 +62,10 @@ namespace SampleProject
         }
 
         void Land() => _animationController.HandleLandAnimation
-            (_inputs.Direction.First, _lastDirectionOfInput.First);
+            (_inputs.CurrentDirection.First, _inputs.LastDirectionWhenThereWasInput.First);
 
         void HandleWalkingAnimations() => _animationController.HandleWalkingAnimation
-                (_groundCheck.IsGrounded, _inputs.Direction.First, _lastDirectionOfInput.First);
+                (_groundCheck.IsGrounded, _inputs.CurrentDirection.First, _inputs.LastDirectionWhenThereWasInput.First);
 
         void ClampPositionWithinWindow()
         {
