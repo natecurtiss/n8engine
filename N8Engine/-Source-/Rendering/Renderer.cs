@@ -60,8 +60,8 @@ namespace N8Engine.Rendering
 
             foreach (var (position, pixel) in _pixelsToRender)
             {
-                if (HasPixelNotMovedSinceLastFrame(position, pixel)) continue;
-                if (position.IsNotToTheRightOf(lastPosition))
+                if (!HasPixelMovedSinceLastFrame(position, pixel)) continue;
+                if (!position.IsToTheRightOf(lastPosition))
                     output.MoveCursorTo(position);
                 lastPosition = position;
 
@@ -90,7 +90,7 @@ namespace N8Engine.Rendering
             foreach (var (position, _) in _pixelsToRenderLastFrame)
             {
                 if (position.HasAPixel()) continue;
-                if (position.IsNotToTheRightOf(lastPosition))
+                if (!position.IsToTheRightOf(lastPosition))
                     output.MoveCursorTo(position);
                 lastPosition = position;
                 output.Append(DELETE_CHARACTER);
@@ -122,11 +122,11 @@ namespace N8Engine.Rendering
 
         static bool IsOnTopOf(this Pixel newPixel, Pixel oldPixel) => newPixel.SortingOrder > oldPixel.SortingOrder;
 
-        static bool HasPixelNotMovedSinceLastFrame(Vector position, Pixel pixel) => 
-            _pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixel;
+        static bool HasPixelMovedSinceLastFrame(IntegerVector position, Pixel pixel) => 
+            !(_pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixel);
 
-        static bool IsNotToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
-            currentPosition - lastPosition != IntegerVector.Right;
+        static bool IsToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
+            currentPosition - lastPosition == IntegerVector.Right;
 
         static void MoveCursorTo(this StringBuilder stringBuilder, Vector position) => 
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");

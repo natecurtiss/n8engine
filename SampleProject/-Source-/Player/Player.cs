@@ -1,5 +1,4 @@
-﻿using System;
-using N8Engine;
+﻿using N8Engine;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -10,19 +9,16 @@ namespace SampleProject
         const int SPEED = 100;
         const int JUMP_FORCE = -200;
 
+        Vector<Direction, Direction> _lastDirectionOfInput;
         PlayerAnimationController _animationController;
         GroundCheck<ICanBeJumpedOn> _groundCheck;
         PlayerInputs _inputs;
-        Vector<Direction, Direction> _lastDirectionOfInput;
 
         bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJumpButton;
-        bool IsWalking => _inputs.Direction.First != 0f;
         Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
 
         protected override void OnStart()
         {
-            Transform.Position = SpawnPosition;
-
             _animationController = new PlayerAnimationController(AnimationPlayer);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += Land;
@@ -30,6 +26,7 @@ namespace SampleProject
             _groundCheck.Collider.Offset = Vector.Up * 5f;
             _inputs = Create<PlayerInputs>("player inputs");
             
+            Transform.Position = SpawnPosition;
             Collider.Size = new Vector(10f, 7f);
             Collider.Offset = Vector.Right;
             SpriteRenderer.SortingOrder = 1;

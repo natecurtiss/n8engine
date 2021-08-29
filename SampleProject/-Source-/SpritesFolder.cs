@@ -1,5 +1,3 @@
-using N8Engine;
-
 namespace SampleProject
 {
     public static class SpritesFolder

@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using N8Engine.Mathematics;
+﻿using N8Engine.Mathematics;
 
 namespace N8Engine.SceneManagement
 {
