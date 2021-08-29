@@ -43,6 +43,7 @@ namespace N8Engine.Tilemaps
                     };
                     var gameObject = GameObject.Create<EmptyGameObject>();
                     gameObject.SpriteRenderer.Sprite = sprite;
+                    gameObject.SpriteRenderer.SortingOrder = tilePalette.SortingOrder;
                     gameObject.Transform.Position = position + new Vector(x, y) * actualTileSize;
                     tiles.Add(gameObject);
                 }
