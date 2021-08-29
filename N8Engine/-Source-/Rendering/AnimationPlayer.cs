@@ -2,6 +2,7 @@
 {
     public sealed class AnimationPlayer : Component
     {
+        readonly SpriteRenderer _spriteRenderer;
         Animation _animation;
 
         public bool IsPlaying { get; private set; }
@@ -13,11 +14,11 @@
                 if (value == _animation) return;
                 _animation?.Reset();
                 _animation = value;
-                SpriteRenderer.Sprite = _animation.CachedFrames[0];
+                _spriteRenderer.Sprite = _animation.CachedFrames[0];
             }
         }
 
-        internal AnimationPlayer(GameObject gameObject) : base(gameObject) { }
+        internal AnimationPlayer(GameObject gameObject) : base(gameObject) => _spriteRenderer = gameObject.SpriteRenderer;
 
         public void Play() => IsPlaying = true;
 
@@ -26,7 +27,7 @@
         internal void Tick(float deltaTime)
         {
             if (!IsPlaying) return;
-            Animation?.Tick(SpriteRenderer, deltaTime);
+            Animation?.Tick(_spriteRenderer, deltaTime);
         }
     }
 }

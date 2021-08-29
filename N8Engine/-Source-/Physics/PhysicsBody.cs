@@ -7,6 +7,7 @@ namespace N8Engine.Physics
         const float GRAVITY = 9.82f;
         const float GRAVITY_SCALE = 50f;
 
+        public Transform Transform => GameObject.Transform;
         public Vector Velocity { get; set; }
         public bool UseGravity { get; set; }
 

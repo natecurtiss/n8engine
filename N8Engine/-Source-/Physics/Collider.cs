@@ -11,9 +11,10 @@ namespace N8Engine.Physics
         internal readonly DebugCollider DebugMode;
         readonly List<Collider> _collidersCollidingWithThisFrame = new();
         readonly List<Collider> _collidersCollidingWithLastFrame = new();
-
+        readonly PhysicsBody _physicsBody;
         Vector _size;
 
+        public Transform Transform => GameObject.Transform;
         public IEnumerable<Collider> Contacts => _collidersCollidingWithThisFrame;
         public bool ShowDebugCollider { get; set; }
         public bool IsTrigger { get; set; }
@@ -28,18 +29,22 @@ namespace N8Engine.Physics
                 _size = value;
             }
         }
-
         internal Vector Position => Transform.Position + Offset;
+        
         Vector ActualSize => new(Size.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, Size.Y);
         BoundingBox BoundingBoxCurrentFrame { get; set; }
         BoundingBox BoundingBoxNextFrame { get; set; }
 
-        internal Collider(GameObject gameObject) : base(gameObject) => DebugMode = new DebugCollider(this);
+        internal Collider(GameObject gameObject) : base(gameObject)
+        {
+            DebugMode = new DebugCollider(this);
+            _physicsBody = gameObject.PhysicsBody;
+        }
 
         internal void UpdateBoundingBoxes(float deltaTime)
         {
             BoundingBoxCurrentFrame = new BoundingBox(ActualSize, Position);
-            BoundingBoxNextFrame = new BoundingBox(ActualSize, Position + PhysicsBody.Velocity * deltaTime);
+            BoundingBoxNextFrame = new BoundingBox(ActualSize, Position + _physicsBody.Velocity * deltaTime);
         }
 
         internal void CheckCollisions()
@@ -67,7 +72,7 @@ namespace N8Engine.Physics
                     else
                     {
                         var directionOfCollision = BoundingBoxCurrentFrame.DirectionRelativeTo(otherCollider.BoundingBoxCurrentFrame);
-                        PhysicsBody.OnCollisionWith(directionOfCollision);
+                        _physicsBody.OnCollisionWith(directionOfCollision);
                         GameObject.OnCollidedWith(otherCollider);
                     }
                 }

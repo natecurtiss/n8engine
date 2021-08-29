@@ -14,7 +14,7 @@ namespace N8Engine.Mathematics
 
         static void OnUpdate(float deltaTime)
         {
-            foreach (var sequence in _sequencesToExecute)
+            foreach (var sequence in _sequencesToExecute.ToArray())
                 sequence.Tick(deltaTime);
         }
     }
