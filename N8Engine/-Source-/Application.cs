@@ -1,4 +1,5 @@
 ﻿using N8Engine.Inputs;
+using N8Engine.Mathematics;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 
@@ -25,6 +26,7 @@ namespace N8Engine
             SceneManager.Initialize(launcher.Scenes);
             Renderer.Initialize();
             Input.Initialize();
+            SequenceManager.Initialize();
             GameLoop.Run();
         }
     }

@@ -13,8 +13,8 @@ namespace SampleProject
         PlayerAnimationController _animationController;
         GroundCheck<ICanBeJumpedOn> _groundCheck;
 
-        bool CanJump => _groundCheck.IsGrounded && _input.JustPressedJumpButton;
         Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
+        bool CanJump => _groundCheck.IsGrounded && _input.JustPressedJumpButton;
 
         protected override void OnStart()
         {
