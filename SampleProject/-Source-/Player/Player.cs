@@ -11,19 +11,19 @@ namespace SampleProject
 
         PlayerAnimationController _animationController;
         GroundCheck<ICanBeJumpedOn> _groundCheck;
-        PlayerInputs _inputs;
+        PlayerInputs _input;
 
-        bool CanJump => _groundCheck.IsGrounded && _inputs.JustPressedJumpButton;
+        bool CanJump => _groundCheck.IsGrounded && _input.JustPressedJumpButton;
         Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
 
         protected override void OnStart()
         {
-            _animationController = new PlayerAnimationController(AnimationPlayer);
+            _animationController = new PlayerAnimationController(AnimationPlayer, _input);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
-            _groundCheck.OnLandedOnTheGround += Land;
+            _groundCheck.OnLandedOnTheGround += _animationController.HandleLandAnimation;
             _groundCheck.Collider.Size = new Vector(10f, 1f);
             _groundCheck.Collider.Offset = Vector.Up * 5f;
-            _inputs = Create<PlayerInputs>("player inputs");
+            _input = Create<PlayerInputs>("player inputs");
             
             Transform.Position = SpawnPosition;
             Collider.Size = new Vector(10f, 7f);
@@ -33,13 +33,13 @@ namespace SampleProject
             AnimationPlayer.Play();
         }
 
-        protected override void OnDestroy() => _groundCheck.OnLandedOnTheGround -= Land;
+        protected override void OnDestroy() => _groundCheck.OnLandedOnTheGround -= _animationController.HandleLandAnimation;
 
         protected override void OnUpdate(float deltaTime)
         {
             Move();
             if (CanJump) Jump();
-            HandleWalkingAnimations();
+            _animationController.HandleWalkingAnimation(_groundCheck.IsGrounded);
         }
 
         protected override void OnLateUpdate(float deltaTime)
@@ -51,7 +51,7 @@ namespace SampleProject
 
         void Move()
         {
-            var horizontalInput = _inputs.CurrentDirection.First.AsVector().X;
+            var horizontalInput = _input.CurrentDirection.AsVector().X;
             PhysicsBody.Velocity = new Vector(horizontalInput * SPEED, PhysicsBody.Velocity.Y);
         }
 
@@ -60,12 +60,6 @@ namespace SampleProject
             PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
             _groundCheck.IsGrounded = false;
         }
-
-        void Land() => _animationController.HandleLandAnimation
-            (_inputs.CurrentDirection.First, _inputs.LastDirectionWhenThereWasInput.First);
-
-        void HandleWalkingAnimations() => _animationController.HandleWalkingAnimation
-                (_groundCheck.IsGrounded, _inputs.CurrentDirection.First, _inputs.LastDirectionWhenThereWasInput.First);
 
         void ClampPositionWithinWindow()
         {

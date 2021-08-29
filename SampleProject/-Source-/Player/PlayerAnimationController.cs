@@ -5,6 +5,7 @@ namespace SampleProject
 {
     public sealed class PlayerAnimationController
     {
+        readonly PlayerInputs _input;
         readonly AnimationPlayer _animationPlayer;
         readonly PlayerWalkAnimation _walkAnimation = new();
         readonly FlippedPlayerWalkAnimation _flippedWalkAnimation = new();
@@ -15,19 +16,20 @@ namespace SampleProject
         readonly PlayerJumpAnimation _fallAnimation = new();
         readonly FlippedPlayerJumpAnimation _flippedFallAnimation = new();
 
-        public PlayerAnimationController(AnimationPlayer animationPlayer)
+        public PlayerAnimationController(AnimationPlayer animationPlayer, PlayerInputs input)
         {
             _animationPlayer = animationPlayer;
             _animationPlayer.Animation = _idleAnimation;
+            _input = input;
         }
 
-        public void HandleWalkingAnimation(bool isGrounded, Direction currentDirectionOfInput, Direction lastDirectionOfInput)
+        public void HandleWalkingAnimation(bool isGrounded)
         {
-            var wasFacingRight = lastDirectionOfInput == Direction.Right;
-            var wasFacingLeft = lastDirectionOfInput == Direction.Left;
+            var wasFacingRight = _input.LastDirectionWhenThereWasInput == Direction.Right;
+            var wasFacingLeft = _input.LastDirectionWhenThereWasInput == Direction.Left;
             
             if (isGrounded)
-                _animationPlayer.Animation = currentDirectionOfInput switch
+                _animationPlayer.Animation = _input.CurrentDirection switch
                 {
                     Direction.Right => _walkAnimation,
                     Direction.Left => _flippedWalkAnimation,
@@ -36,7 +38,7 @@ namespace SampleProject
                     var _ => _animationPlayer.Animation
                 };
             else
-                _animationPlayer.Animation = currentDirectionOfInput switch
+                _animationPlayer.Animation = _input.CurrentDirection switch
                 {
                     Direction.Right => _fallAnimation,
                     Direction.Left => _flippedFallAnimation,
@@ -46,10 +48,10 @@ namespace SampleProject
                 };
         }
         
-        public void HandleLandAnimation(Direction currentDirectionOfInput, Direction lastDirectionOfInput)
+        public void HandleLandAnimation()
         {
-            var isWalking = currentDirectionOfInput != Direction.None;
-            _animationPlayer.Animation = lastDirectionOfInput switch
+            var isWalking = _input.CurrentDirection != Direction.None;
+            _animationPlayer.Animation = _input.LastDirectionWhenThereWasInput switch
             {
                 Direction.Right when isWalking => _walkAnimation,
                 Direction.Left when isWalking => _flippedWalkAnimation,
