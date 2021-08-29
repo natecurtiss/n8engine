@@ -9,9 +9,7 @@ namespace N8Engine.Mathematics
 
         Action _onComplete;
         float _timeRemaining;
-        
-        public bool IsPlaying { get; private set; }
-        
+
         public Sequence(Action<float> onTick, float duration)
         {
             _onTick = onTick;
@@ -20,14 +18,12 @@ namespace N8Engine.Mathematics
 
         public void Play()
         {
-            IsPlaying = true;
-            _timeRemaining = _duration;
             SequenceManager.Add(this);
+            _timeRemaining = _duration;
         }
         
         public void Kill()
         {
-            IsPlaying = false;
             SequenceManager.Remove(this);
             _onComplete?.Invoke();
         }

@@ -1,5 +1,4 @@
 ﻿using N8Engine;
-using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -41,7 +40,6 @@ namespace SampleProject
             Move();
             if (CanJump) Jump();
             _animationController.HandleWalkingAnimation(_groundCheck.IsGrounded);
-            if (Key.Spacebar.WasJustPressed()) EventManager.OnKeyCollected.Invoke();
         }
 
         protected override void OnLateUpdate(float deltaTime)

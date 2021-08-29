@@ -21,6 +21,7 @@ namespace N8Engine.Mathematics
             var speed = targetPosition - Position;
             var sequence = new Sequence(deltaTime => Position += speed * deltaTime, duration);
             sequence.OnComplete(() => _playingSequences.Remove(sequence)).Play();
+            
             if (shouldKillPlayingSequences)
                 foreach (var playingSequences in _playingSequences.ToArray())
                     playingSequences.Kill();
