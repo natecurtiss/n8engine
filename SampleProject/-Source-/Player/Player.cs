@@ -28,7 +28,7 @@ namespace SampleProject
             Transform.Position = SpawnPosition;
             Collider.Size = new Vector(10f, 7f);
             Collider.Offset = Vector.Right;
-            SpriteRenderer.SortingOrder = 1;
+            SpriteRenderer.SortingOrder = -2;
             PhysicsBody.UseGravity = true;
             AnimationPlayer.Play();
         }

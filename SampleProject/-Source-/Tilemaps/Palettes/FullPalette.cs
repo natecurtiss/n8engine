@@ -18,5 +18,6 @@ namespace SampleProject
         public override Sprite BottomRight => new(SpritesFolder.Path + "wall_bottom-right.n8sprite");
         public override Sprite Middle => null;
         public override Vector TileSize => new(12f, 12f);
+        public override int SortingOrder => 0;
     }
 }
