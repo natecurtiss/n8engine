@@ -9,9 +9,9 @@ namespace SampleProject
         const int SPEED = 100;
         const int JUMP_FORCE = -200;
 
+        readonly PlayerInputs _input = new();
         PlayerAnimationController _animationController;
         GroundCheck<ICanBeJumpedOn> _groundCheck;
-        PlayerInputs _input;
 
         bool CanJump => _groundCheck.IsGrounded && _input.JustPressedJumpButton;
         Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
@@ -23,8 +23,7 @@ namespace SampleProject
             _groundCheck.OnLandedOnTheGround += _animationController.HandleLandAnimation;
             _groundCheck.Collider.Size = new Vector(10f, 1f);
             _groundCheck.Collider.Offset = Vector.Up * 5f;
-            _input = Create<PlayerInputs>("player inputs");
-            
+
             Transform.Position = SpawnPosition;
             Collider.Size = new Vector(10f, 7f);
             Collider.Offset = Vector.Right;
@@ -37,6 +36,7 @@ namespace SampleProject
 
         protected override void OnUpdate(float deltaTime)
         {
+            _input.GetInputs(deltaTime);
             Move();
             if (CanJump) Jump();
             _animationController.HandleWalkingAnimation(_groundCheck.IsGrounded);

@@ -1,11 +1,10 @@
-using N8Engine;
 using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using static N8Engine.Mathematics.Direction;
 
 namespace SampleProject
 {
-    public sealed class PlayerInputs : GameObject
+    public sealed class PlayerInputs
     {
         const float COYOTE_TIME = 0.3f;
         float _jumpInputTimer;
@@ -24,7 +23,7 @@ namespace SampleProject
         public Direction LastDirectionWhenThereWasInput { get; private set; }
         public bool JustPressedJumpButton => _jumpInputTimer > 0f;
 
-        protected override void OnEarlyUpdate(float deltaTime)
+        public void GetInputs(float deltaTime)
         {
             _jumpInputTimer -= deltaTime;
             if (Key.W.WasJustPressed() || Key.UpArrow.WasJustPressed())
