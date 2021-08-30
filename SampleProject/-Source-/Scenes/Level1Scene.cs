@@ -10,7 +10,7 @@ namespace SampleProject
         {
             AutoTilemap<FullPalette>.Generator
                 .Place(Window.BottomLeftCorner, new Vector(10, 3), TilePivot.BottomLeft)
-                .Place(Vector.Zero, new Vector(10, 3), TilePivot.BottomRight);
+                .Place(Vector.Zero, new Vector(10, 3), TilePivot.BottomLeft);
             door.Transform.Position += new Vector(252f, 39f);
         }
     }

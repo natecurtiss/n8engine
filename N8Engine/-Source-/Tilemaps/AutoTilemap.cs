@@ -11,6 +11,8 @@ namespace N8Engine.Tilemaps
             Left, Right, Top, Bottom, TopRight, TopLeft, BottomRight, BottomLeft, Middle
         }
 
+        private Vector _lastPosition;
+
         public static AutoTilemap<T> Generator => new();
 
         private AutoTilemap() { }
@@ -58,6 +60,8 @@ namespace N8Engine.Tilemaps
 
             return this;
         }
+
+        public AutoTilemap<T> PlaceOffOfLastChunk(Vector sizeOfChunkInNumberOfTiles, TilePivot pivot) => Place(_lastPosition, sizeOfChunkInNumberOfTiles, pivot);
 
         private TileType GetTileType(Vector tilePosition, Vector numberOfTiles)
         {
@@ -172,6 +176,7 @@ namespace N8Engine.Tilemaps
 //              //////////////XXX
 //                               [=][=]
 //                               [=][=]
+                
                 TilePivot.BottomLeft => center + moveRight + moveUp,
 //                                     /////////////////
 //                                     /////////////////

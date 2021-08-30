@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using N8Engine.Mathematics;
+using N8Engine.Native;
 
 namespace N8Engine.Rendering
 {
     internal static class Renderer
     {
         public const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
-        private const string ANSI_ESCAPE_SEQUENCE_START = "\u001b[";
         private const string PIXEL_CHARACTER = "▒";
         private const string DELETE_CHARACTER = " ";
 
@@ -126,13 +126,5 @@ namespace N8Engine.Rendering
         private static bool IsToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
             currentPosition - lastPosition == IntegerVector.Right;
 
-        private static void MoveCursorTo(this StringBuilder stringBuilder, Vector position) => 
-            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");
-
-        private static void SetConsoleForegroundColorTo(this StringBuilder stringBuilder, ConsoleColor foregroundColor) =>
-            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{foregroundColor.AsAnsiForegroundColor()}");
-
-        private static void SetConsoleBackgroundColorTo(this StringBuilder stringBuilder, ConsoleColor backgroundColor) =>
-            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{backgroundColor.AsAnsiBackgroundColor()}");
     }
 }
