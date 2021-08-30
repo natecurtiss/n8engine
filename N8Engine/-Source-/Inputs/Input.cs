@@ -11,8 +11,8 @@ namespace N8Engine.Inputs
     /// </summary>
     public static class Input
     {
-        static readonly Dictionary<Key, KeyState> _keys = new();
-        enum KeyState { IsPressed, IsReleased, WasJustPressed, WasJustReleased }
+        private static readonly Dictionary<Key, KeyState> _keys = new();
+        private enum KeyState { IsPressed, IsReleased, WasJustPressed, WasJustReleased }
         
         internal static void Initialize()
         {
@@ -40,7 +40,7 @@ namespace N8Engine.Inputs
         /// </summary>
         public static bool WasJustPressed(this Key key) => _keys[key] == KeyState.WasJustPressed;
 
-        static void OnPreUpdate(float deltaTime)
+        private static void OnPreUpdate(float deltaTime)
         {
             foreach (var key in _keys.Keys.ToArray())
             {

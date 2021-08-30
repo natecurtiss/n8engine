@@ -12,7 +12,7 @@ namespace N8Engine.Mathematics
         /// </summary>
         public Vector Position { get; set; }
 
-        readonly List<Sequence> _playingSequences = new();
+        private readonly List<Sequence> _playingSequences = new();
 
         internal Transform(GameObject gameObject) : base(gameObject) { }
 

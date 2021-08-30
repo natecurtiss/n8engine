@@ -6,15 +6,15 @@ namespace SampleProject
 {
     public sealed class Player : GameObject, ICanCollectAKey
     {
-        const int SPEED = 100;
-        const int JUMP_FORCE = -200;
-        readonly PlayerInputs _input = new();
-        
-        PlayerAnimationController _animationController;
-        GroundCheck<ICanBeJumpedOn> _groundCheck;
-        Vector _spawnPosition;
+        private const int SPEED = 100;
+        private const int JUMP_FORCE = -200;
+        private readonly PlayerInputs _input = new();
 
-        bool CanJump => _groundCheck.IsGrounded && _input.JustPressedJumpButton;
+        private PlayerAnimationController _animationController;
+        private GroundCheck<ICanBeJumpedOn> _groundCheck;
+        private Vector _spawnPosition;
+
+        private bool CanJump => _groundCheck.IsGrounded && _input.JustPressedJumpButton;
 
         protected override void OnStart()
         {
@@ -50,19 +50,19 @@ namespace SampleProject
             if (Transform.Position.Y >= Window.BottomSide.Y) Die();
         }
 
-        void Move()
+        private void Move()
         {
             var horizontalInput = _input.CurrentDirection.AsVector().X;
             PhysicsBody.Velocity = new Vector(horizontalInput * SPEED, PhysicsBody.Velocity.Y);
         }
 
-        void Jump()
+        private void Jump()
         {
             PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
             _groundCheck.IsGrounded = false;
         }
 
-        void ClampPositionWithinWindow()
+        private void ClampPositionWithinWindow()
         {
             var position = Transform.Position;
             var offset = Collider.Size.X / 2f + 5f;
@@ -70,7 +70,7 @@ namespace SampleProject
             Transform.Position = position;
         }
 
-        void Die()
+        private void Die()
         {
             Transform.Position = _spawnPosition;
             PhysicsBody.Velocity = Vector.Zero;

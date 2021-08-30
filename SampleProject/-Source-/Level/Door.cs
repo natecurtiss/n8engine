@@ -6,8 +6,8 @@ namespace SampleProject
 {
     public sealed class Door : GameObject
     {
-        const float SPROUT_DISTANCE = -9f;
-        const float SPROUT_DURATION = 0.6f;
+        private const float SPROUT_DISTANCE = -9f;
+        private const float SPROUT_DURATION = 0.6f;
 
         protected override void OnStart()
         {
@@ -18,6 +18,6 @@ namespace SampleProject
 
         protected override void OnDestroy() => EventManager.OnKeyCollected.RemoveListener(SproutUpFromTheGround);
 
-        void SproutUpFromTheGround() => Transform.MoveInDirection(Direction.Up, SPROUT_DISTANCE, SPROUT_DURATION);
+        private void SproutUpFromTheGround() => Transform.MoveInDirection(Direction.Up, SPROUT_DISTANCE, SPROUT_DURATION);
     }
 }

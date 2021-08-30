@@ -4,14 +4,14 @@ using N8Engine.Inputs;
 
 namespace N8Engine.Native
 {
-    static class ConsoleInputHelper
+    internal static class ConsoleInputHelper
     {
         // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getkeystate
         [DllImport("user32.dll")]
-        static extern short GetKeyState(Key key);
+        private static extern short GetKeyState(Key key);
         
         // https://stackoverflow.com/questions/6331868/using-getkeystate
-        const int IS_KEY_PRESSED = 0x8000;
+        private const int IS_KEY_PRESSED = 0x8000;
         
         public static bool IsKeyDown(Key key) => Convert.ToBoolean(GetKeyState(key) & IS_KEY_PRESSED);
     }

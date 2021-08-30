@@ -3,17 +3,17 @@ using System.Runtime.InteropServices;
 
 namespace N8Engine.Native
 {
-    static class ConsoleFontHelper
+    internal static class ConsoleFontHelper
     {
         // https://docs.microsoft.com/en-us/windows/console/getcurrentconsolefontex
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        static extern bool GetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool useMaximumWindow, ref FontInfo currentConsoleFontOutput);
+        private static extern bool GetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool useMaximumWindow, ref FontInfo currentConsoleFontOutput);
         
         // https://docs.microsoft.com/en-us/windows/console/setcurrentconsolefontex
         [return: MarshalAs(UnmanagedType.Bool)]
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        static extern bool SetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool useMaximumWindow, ref FontInfo currentConsoleFontOutput);
+        private static extern bool SetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool useMaximumWindow, ref FontInfo currentConsoleFontOutput);
         
         public static void SetCurrentFont(string font, short fontSize = 1, bool useMaximumWindow = false)
         {
@@ -37,7 +37,7 @@ namespace N8Engine.Native
 
     // https://docs.microsoft.com/en-us/windows/console/console-font-infoex
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    struct FontInfo
+    internal struct FontInfo
     {
         public int SizeInBytes;
         public int FontIndex;

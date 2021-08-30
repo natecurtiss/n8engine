@@ -2,7 +2,7 @@ using System;
 
 namespace N8Engine.Rendering
 {
-    static class ConsoleColorExtensions
+    internal static class ConsoleColorExtensions
     {
         public static string AsAnsiForegroundColor(this ConsoleColor consoleColor)
         {

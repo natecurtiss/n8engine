@@ -8,9 +8,9 @@ namespace N8Engine.Rendering
     {
         internal const float RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS = 2f;
 
-        static readonly float _width = Console.WindowWidth;
-        static readonly float _height = Console.WindowHeight;
-        static readonly Vector _span = new(_width, _height);
+        private static readonly float _width = Console.WindowWidth;
+        private static readonly float _height = Console.WindowHeight;
+        private static readonly Vector _span = new(_width, _height);
         public static Vector BottomLeftCorner { get; private set; }
         public static Vector BottomRightCorner { get; private set; }
         public static Vector TopLeftCorner { get; private set; }

@@ -5,10 +5,10 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    readonly struct N8SpriteData
+    internal readonly struct N8SpriteData
     {
-        readonly Vector _dimensions;
-        readonly string[] _dataText;
+        private readonly Vector _dimensions;
+        private readonly string[] _dataText;
 
         public List<Pixel> Pixels
         {
@@ -50,7 +50,7 @@ namespace N8Engine.Rendering
             _dimensions = new Vector(SeparateLine(_dataText[0]).Count, _dataText.Length - 1);
         }
 
-        List<string> SeparateLine(string line)
+        private List<string> SeparateLine(string line)
         {
             var pixels = line.Split('{').ToList();
             pixels.RemoveAll(pixel => pixel == string.Empty);
@@ -59,7 +59,7 @@ namespace N8Engine.Rendering
             return pixels;
         }
 
-        Pixel? SeparatePixel(string pixelSet, Vector position)
+        private Pixel? SeparatePixel(string pixelSet, Vector position)
         {
             var foregroundColorName = pixelSet.Split(',')[0];
             var backgroundColorName = pixelSet.Split(',')[1];
@@ -70,10 +70,10 @@ namespace N8Engine.Rendering
             var backgroundColor = AsConsoleColor(backgroundColorName);
             return new Pixel(foregroundColor, backgroundColor, position);
         }
-        
-        Vector LocalPositionRelativeToCenterPixel(IReadOnlyCollection<Pixel> allPixels, Pixel pixel) => pixel.Position - CenterPixelPositionOf(allPixels);
 
-        Vector CenterPixelPositionOf(IReadOnlyCollection<Pixel> pixels)
+        private Vector LocalPositionRelativeToCenterPixel(IReadOnlyCollection<Pixel> allPixels, Pixel pixel) => pixel.Position - CenterPixelPositionOf(allPixels);
+
+        private Vector CenterPixelPositionOf(IReadOnlyCollection<Pixel> pixels)
         {
             var height = pixels.Last().Position.Y;
             var width = pixels.Last().Position.X;

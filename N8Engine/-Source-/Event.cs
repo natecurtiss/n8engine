@@ -4,7 +4,7 @@ namespace N8Engine
 {
     public sealed class Event
     {
-        event Action OnInvoked;
+        private event Action OnInvoked;
 
         public void AddListener(Action listener) => OnInvoked += listener;
 
@@ -15,7 +15,7 @@ namespace N8Engine
     
     public sealed class Event<T>
     {
-        event Action<T> OnInvoked;
+        private event Action<T> OnInvoked;
 
         public void AddListener(Action<T> listener) => OnInvoked += listener;
 
@@ -26,7 +26,7 @@ namespace N8Engine
     
     public sealed class Event<T1, T2>
     {
-        event Action<T1, T2> OnInvoked;
+        private event Action<T1, T2> OnInvoked;
 
         public void AddListener(Action<T1, T2> listener) => OnInvoked += listener;
 

@@ -27,8 +27,8 @@ namespace N8Engine.Mathematics
         public static readonly IntegerVector Left = new(-1, 0);
         public static readonly IntegerVector Right = new(1, 0);
 
-        readonly int _x;
-        readonly int _y;
+        private readonly int _x;
+        private readonly int _y;
         
         public int X
         {

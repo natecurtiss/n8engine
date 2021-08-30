@@ -26,9 +26,9 @@ namespace N8Engine.Mathematics
         public static readonly Vector Down = new(0f, -1f);
         public static readonly Vector Left = new(-1f, 0f);
         public static readonly Vector Right = new(1f, 0f);
-        
-        readonly float _x;
-        readonly float _y;
+
+        private readonly float _x;
+        private readonly float _y;
         
         public float X
         {
@@ -83,8 +83,8 @@ namespace N8Engine.Mathematics
     /// <typeparam name="TSecond"> The type of <see cref="Second">Second.</see> </typeparam>
     public struct Vector<TFirst, TSecond> : IEquatable<Vector<TFirst, TSecond>>
     {
-        readonly TFirst _first;
-        readonly TSecond _second;
+        private readonly TFirst _first;
+        private readonly TSecond _second;
         
         public TFirst First
         {

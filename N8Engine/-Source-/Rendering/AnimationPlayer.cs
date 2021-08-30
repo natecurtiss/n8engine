@@ -2,8 +2,8 @@
 {
     public sealed class AnimationPlayer : Component
     {
-        readonly SpriteRenderer _spriteRenderer;
-        Animation _animation;
+        private readonly SpriteRenderer _spriteRenderer;
+        private Animation _animation;
 
         public bool IsPlaying { get; private set; }
         public Animation Animation

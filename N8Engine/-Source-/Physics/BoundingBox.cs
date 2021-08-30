@@ -2,14 +2,14 @@
 
 namespace N8Engine.Physics
 {
-    readonly struct BoundingBox
+    internal readonly struct BoundingBox
     {
-        Vector LeftSide { get; }
-        Vector RightSide { get; }
-        Vector TopSide { get; }
-        Vector BottomSide { get; }
-        Vector TopLeft { get; }
-        Vector BottomRight { get; }
+        private Vector LeftSide { get; }
+        private Vector RightSide { get; }
+        private Vector TopSide { get; }
+        private Vector BottomSide { get; }
+        private Vector TopLeft { get; }
+        private Vector BottomRight { get; }
         
         public BoundingBox(Vector size, Vector position = default)
         {

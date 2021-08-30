@@ -7,7 +7,7 @@ namespace N8Engine
 {
     public abstract class GameObject
     {
-        const string DEFAULT_NAME = "new gameobject";
+        private const string DEFAULT_NAME = "new gameobject";
         
         public string Name { get; private set; }
         public Transform Transform { get; private set; }
@@ -75,7 +75,7 @@ namespace N8Engine
             GameLoop.OnRender -= OnRender;
         }
 
-        void Initialize(string name)
+        private void Initialize(string name)
         {
             Name = name;
             Transform = new Transform(this);
@@ -92,9 +92,9 @@ namespace N8Engine
             OnStart();
         }
 
-        void OnPostUpdate(float deltaTime) => AnimationPlayer.Tick(deltaTime);
+        private void OnPostUpdate(float deltaTime) => AnimationPlayer.Tick(deltaTime);
 
-        void OnPhysicsUpdate(float deltaTime)
+        private void OnPhysicsUpdate(float deltaTime)
         {
             PhysicsBody.ApplyGravity(deltaTime);
             Collider.UpdateBoundingBoxes(deltaTime);
@@ -102,7 +102,7 @@ namespace N8Engine
             PhysicsBody.ApplyVelocity(deltaTime);
         }
 
-        void OnRender()
+        private void OnRender()
         {
             if (SpriteRenderer.Sprite != null)
                 Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder);

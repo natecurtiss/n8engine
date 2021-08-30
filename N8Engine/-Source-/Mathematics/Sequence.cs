@@ -4,11 +4,11 @@ namespace N8Engine.Mathematics
 {
     public sealed class Sequence
     {
-        readonly Action<float> _onTick;
-        readonly float _duration;
+        private readonly Action<float> _onTick;
+        private readonly float _duration;
 
-        Action _onComplete;
-        float _timeRemaining;
+        private Action _onComplete;
+        private float _timeRemaining;
 
         public Sequence(Action<float> onTick, float duration)
         {

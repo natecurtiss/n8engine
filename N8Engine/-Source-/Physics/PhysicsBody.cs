@@ -4,8 +4,8 @@ namespace N8Engine.Physics
 {
     public sealed class PhysicsBody : Component
     {
-        const float GRAVITY = 9.82f;
-        const float GRAVITY_SCALE = 50f;
+        private const float GRAVITY = 9.82f;
+        private const float GRAVITY_SCALE = 50f;
 
         public Transform Transform => GameObject.Transform;
         public Vector Velocity { get; set; }

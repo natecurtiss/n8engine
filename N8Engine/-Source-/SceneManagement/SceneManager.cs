@@ -5,7 +5,7 @@ namespace N8Engine.SceneManagement
     public static class SceneManager
     {
         public static Scene CurrentScene { get; private set; }
-        static Scene[] _scenes;
+        private static Scene[] _scenes;
 
         internal static void Initialize(Scene[] scenes)
         {
@@ -49,7 +49,7 @@ namespace N8Engine.SceneManagement
 
         public static void LoadCurrentScene() => LoadScene(CurrentScene);
 
-        static void LoadScene(Scene scene)
+        private static void LoadScene(Scene scene)
         {
             CurrentScene?.Unload();
             CurrentScene = scene;

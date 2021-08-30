@@ -6,8 +6,8 @@ namespace SampleProject
 {
     public sealed class PlayerInputs
     {
-        const float COYOTE_TIME = 0.3f;
-        float _jumpInputTimer;
+        private const float COYOTE_TIME = 0.3f;
+        private float _jumpInputTimer;
         
         public Direction CurrentDirection
         {

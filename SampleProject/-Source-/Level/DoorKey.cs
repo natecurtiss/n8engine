@@ -9,8 +9,6 @@ namespace SampleProject
     {
         protected override void OnStart()
         {
-            // TODO remove this line
-            EventManager.OnKeyCollected.Invoke();
             SpriteRenderer.Sprite = new Sprite(SpritesFolder.Path + "key.n8sprite");
             Collider.Size = new Vector(10f, 7f);
             Collider.IsTrigger = true;
