@@ -12,7 +12,7 @@ namespace N8Engine.Native
         
         // https://stackoverflow.com/questions/6331868/using-getkeystate
         private const int IS_KEY_PRESSED = 0x8000;
-        
+
         public static bool IsKeyDown(Key key) => Convert.ToBoolean(GetKeyState(key) & IS_KEY_PRESSED);
     }
 }

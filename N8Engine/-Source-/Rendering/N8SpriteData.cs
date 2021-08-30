@@ -15,7 +15,6 @@ namespace N8Engine.Rendering
             get
             {
                 var pixels = new List<Pixel>();
-                var lineFlippedUpsideDown = 0;
                 for (var line = (int) _dimensions.Y; line >= 0; line--)
                 {
                     var currentLine = _dataText[line];
@@ -28,12 +27,11 @@ namespace N8Engine.Rendering
                             var fractionOfCurrentPixel = SeparatePixel
                             (
                                 currentPixel,
-                                new Vector(pixel * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL + fractionOfAPixel, lineFlippedUpsideDown)
+                                new Vector(pixel * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL + fractionOfAPixel, line)
                             );
                             if (fractionOfCurrentPixel.HasValue) pixels.Add(fractionOfCurrentPixel.Value);
                         }
                     }
-                    lineFlippedUpsideDown++;
                 }
                 for (var i = 0; i < pixels.Count; i++)
                 {

@@ -23,24 +23,24 @@ namespace N8Engine.Rendering
 
         private static void OnPreRender() => UpdatePixelsToRenderLastFrame();
 
-        public static void Render(Sprite sprite, Vector spritePosition, int sortingOrder)
+        public static void Render(Sprite sprite, Vector spritePosition, int sortingOrder, string name)
         {
             foreach (var pixel in sprite.Pixels)
             {
-                var windowPosition = pixel.Position + spritePosition;
-                var worldPosition = windowPosition.FromWindowPositionToWorldPosition();
+                var worldPosition = pixel.Position + spritePosition;
+                var windowPosition = worldPosition.FromWorldPositionToWindowPosition();
                 var sortedPixel = pixel.WithSortingOrder(sortingOrder);
                 
-                if (worldPosition.IsOutsideOfTheWorld()) continue;
-                if (worldPosition.DoesNotHaveAPixel())
+                if (windowPosition.IsOutsideOfTheWorld()) continue;
+                if (windowPosition.DoesNotHaveAPixel())
                 {
-                    _pixelsToRender.Add(worldPosition, sortedPixel);
+                    _pixelsToRender.Add(windowPosition, sortedPixel);
                 }
                 else
                 {
-                    var oldPixel = _pixelsToRender[worldPosition];
+                    var oldPixel = _pixelsToRender[windowPosition];
                     if (sortedPixel.IsOnTopOf(oldPixel))
-                        _pixelsToRender[worldPosition] = sortedPixel;
+                        _pixelsToRender[windowPosition] = sortedPixel;
                 }
             }
         }
@@ -64,14 +64,12 @@ namespace N8Engine.Rendering
                 if (!position.IsToTheRightOf(lastPosition))
                     output.MoveCursorTo(position);
                 lastPosition = position;
-
-                var currentForegroundColor = pixel.ForegroundColor;
-                if (currentForegroundColor.IsDifferentThan(lastForegroundColor))
-                    output.SetConsoleForegroundColorTo(currentForegroundColor);
                 
-                var currentBackgroundColor = pixel.BackgroundColor;
-                if (currentBackgroundColor.IsDifferentThan(lastBackgroundColor)) 
-                    output.SetConsoleBackgroundColorTo(currentBackgroundColor);
+                if (pixel.ForegroundColor != lastForegroundColor)
+                    output.SetConsoleForegroundColorTo(pixel.ForegroundColor);
+                
+                if (pixel.BackgroundColor != lastBackgroundColor) 
+                    output.SetConsoleBackgroundColorTo(pixel.BackgroundColor);
                 
                 lastForegroundColor = pixel.ForegroundColor;
                 lastBackgroundColor = pixel.BackgroundColor;
@@ -130,8 +128,6 @@ namespace N8Engine.Rendering
 
         private static void MoveCursorTo(this StringBuilder stringBuilder, Vector position) => 
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");
-
-        private static bool IsDifferentThan(this ConsoleColor first, ConsoleColor second) => first != second;
 
         private static void SetConsoleForegroundColorTo(this StringBuilder stringBuilder, ConsoleColor foregroundColor) =>
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{foregroundColor.AsAnsiForegroundColor()}");

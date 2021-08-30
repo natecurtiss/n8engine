@@ -62,7 +62,7 @@ namespace N8Engine
             return type != null;
         }
         
-        public bool IsA<T>() where T : GameObject => this is T type;
+        public bool IsA<T>() where T : GameObject => this is T;
 
         public void Destroy()
         {
@@ -105,9 +105,9 @@ namespace N8Engine
         private void OnRender()
         {
             if (SpriteRenderer.Sprite != null)
-                Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder);
+                Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder, Name);
             if (Collider.ShowDebugCollider)
-                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, Math.INFINITY - 1);
+                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, Math.INFINITY - 1, Name);
         }
     }
 }

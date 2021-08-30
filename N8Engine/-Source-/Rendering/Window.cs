@@ -29,24 +29,30 @@ namespace N8Engine.Rendering
             ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
             
-            BottomLeftCorner = new Vector(-Console.WindowWidth / 2f, Console.WindowHeight / 2f);
-            BottomRightCorner = new Vector(Console.WindowWidth / 2f, Console.WindowHeight / 2f);
-            TopLeftCorner = new Vector(-Console.WindowWidth / 2f, -Console.WindowHeight / 2f);
-            TopRightCorner = new Vector(Console.WindowWidth / 2f, -Console.WindowHeight / 2f);
-            LeftSide = new Vector(-Console.WindowWidth / 2f, 0f);
-            RightSide = new Vector(Console.WindowWidth / 2f, 0f);
-            TopSide = new Vector(0f, -Console.WindowHeight / 2f);
-            BottomSide = new Vector(0f, Console.WindowHeight / 2f);
+            LeftSide = new Vector(-_width / 2f + Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, 0f);
+            RightSide = new Vector(_width / 2f - Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, 0f);
+            TopSide = new Vector(0f, _height / 2f - Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL);
+            BottomSide = new Vector(0f, -_height / 2f + Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL);
+            BottomLeftCorner = new Vector(LeftSide.X, BottomSide.Y);
+            BottomRightCorner = new Vector(RightSide.X, BottomSide.Y);
+            TopLeftCorner = new Vector(LeftSide.X, TopSide.Y);
+            TopRightCorner = new Vector(RightSide.X, TopSide.Y);
+;
         }
 
-        internal static IntegerVector FromWindowPositionToWorldPosition(this Vector position) => position + _span / 2;
-
-        internal static bool IsInsideOfTheWorld(this IntegerVector position) =>
-            position.X >= 0 &&
-            position.Y >= 0 &&
-            position.X <= _width - 1 &&
-            position.Y <= _height - 1;
+        internal static IntegerVector FromWorldPositionToWindowPosition(this Vector position)
+        {
+            var worldPosition = new Vector(position.X, -position.Y);
+            var windowPosition = (IntegerVector) (worldPosition + _span / 2);
+            return windowPosition;
+        }
 
         internal static bool IsOutsideOfTheWorld(this IntegerVector position) => !position.IsInsideOfTheWorld();
+        
+        private static bool IsInsideOfTheWorld(this IntegerVector position) =>
+            position.X >= 0 &&
+            position.Y >= 0 &&
+            position.X <= _width -1 &&
+            position.Y <= _height - 1;
     }
 }

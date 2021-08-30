@@ -16,7 +16,7 @@ namespace SampleProject
         public override Sprite TopRight => new(SpritesFolder.Path + "wall_top-right.n8sprite");
         public override Sprite BottomLeft => new(SpritesFolder.Path + "wall_bottom-left.n8sprite");
         public override Sprite BottomRight => new(SpritesFolder.Path + "wall_bottom-right.n8sprite");
-        public override Sprite Middle => null;
+        public override Sprite Middle => new(SpritesFolder.Path + "wall_middle.n8sprite");
         public override Vector TileSize => new(12f, 12f);
         public override int SortingOrder => 0;
     }

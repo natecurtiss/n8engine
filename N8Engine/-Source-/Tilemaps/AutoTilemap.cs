@@ -63,26 +63,26 @@ namespace N8Engine.Tilemaps
         {
             if (numberOfTiles.X == 1)
             {
-                if (tilePosition.Y == 0) return TileType.Top;
-                if (tilePosition.Y == numberOfTiles.Y - 1) return TileType.Bottom;                
+                if (tilePosition.Y == 0) return TileType.Bottom;
+                if (tilePosition.Y == numberOfTiles.Y - 1) return TileType.Top;                
                 return TileType.Middle;
             }
             if (tilePosition.X == 0)
             {
-                if (tilePosition.Y == 0) return TileType.TopLeft;
-                if (tilePosition.Y == numberOfTiles.Y - 1) return TileType.BottomLeft;
+                if (tilePosition.Y == 0) return TileType.BottomLeft;
+                if (tilePosition.Y == numberOfTiles.Y - 1) return TileType.TopLeft;
                 return TileType.Left;
             }
             if (tilePosition.X == numberOfTiles.X - 1)
             {
-                if (tilePosition.Y == 0) return TileType.TopRight;
-                if (tilePosition.Y == numberOfTiles.Y - 1) return TileType.BottomRight;;
+                if (tilePosition.Y == 0) return TileType.BottomRight;
+                if (tilePosition.Y == numberOfTiles.Y - 1) return TileType.TopRight;
                 return TileType.Right;
             }
             if (tilePosition.Y == 0)
-                return TileType.Top;
-            if (tilePosition.Y == numberOfTiles.Y - 1)
                 return TileType.Bottom;
+            if (tilePosition.Y == numberOfTiles.Y - 1)
+                return TileType.Top;
             return TileType.Middle;
         }
 
@@ -90,18 +90,18 @@ namespace N8Engine.Tilemaps
         {
             var newPosition = pivot switch
             {
-                TilePivot.Center => position - chunkSize / 2f,
-                TilePivot.Top => position - chunkSize / 2f + new Vector(0f, chunkSize.Y / 2f),
+                TilePivot.Center => position + chunkSize / 2f,
+                TilePivot.Top => position + chunkSize / 2f + new Vector(0f, chunkSize.Y / 2f),
                 TilePivot.Bottom => position - chunkSize / 2f + new Vector(0f, -chunkSize.Y / 2f),
                 TilePivot.Right => position + new Vector(-chunkSize.X, -chunkSize.Y / 2f),
                 TilePivot.Left => position + new Vector(0f, -chunkSize.Y / 2f),
                 TilePivot.TopRight => position + new Vector(-chunkSize.X, 0f),
                 TilePivot.TopLeft => position,
-                TilePivot.BottomRight => position - chunkSize,
-                TilePivot.BottomLeft => position + new Vector(0f, -chunkSize.Y),
+                TilePivot.BottomRight => position + new Vector(-chunkSize.X, 0),
+                TilePivot.BottomLeft => position,
                 var _ => position
             };
-            newPosition += actualTileSize / 2f;
+            newPosition += Vector.Right * actualTileSize / 2f;
             return newPosition;
         }
 
