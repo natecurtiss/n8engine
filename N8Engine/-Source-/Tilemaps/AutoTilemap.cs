@@ -88,18 +88,101 @@ namespace N8Engine.Tilemaps
 
         private Vector GetTilePositionFromPivot(TilePivot pivot, Vector position, Vector chunkSize, Vector actualTileSize)
         {
+            var center = position - chunkSize / 2f;
+            var moveLeft = new Vector(-chunkSize.X, 0) / 2f;
+            var moveRight = new Vector(chunkSize.X, 0) / 2f;
+            var moveUp = new Vector(0, chunkSize.Y) / 2f;
+            var moveDown = new Vector(0, -chunkSize.Y) / 2f;
+            
+            // [=] is the center.
+            // X's are the pivot.
+            // Slashes are the tilemap.
             var newPosition = pivot switch
             {
-                TilePivot.Center => position + chunkSize / 2f,
-                TilePivot.Top => position + chunkSize / 2f + new Vector(0f, chunkSize.Y / 2f),
-                TilePivot.Bottom => position - chunkSize / 2f + new Vector(0f, -chunkSize.Y / 2f),
-                TilePivot.Right => position + new Vector(-chunkSize.X, -chunkSize.Y / 2f),
-                TilePivot.Left => position + new Vector(0f, -chunkSize.Y / 2f),
-                TilePivot.TopRight => position + new Vector(-chunkSize.X, 0f),
-                TilePivot.TopLeft => position,
-                TilePivot.BottomRight => position + new Vector(-chunkSize.X, 0),
-                TilePivot.BottomLeft => position,
-                var _ => position
+                TilePivot.Center => center,
+//                           /////////////////   
+//                           /////////////////   
+//                           //////XXXX///////  
+//                           //////XXXX/////// 
+//                           /////////////////   
+//                           /////////////////
+                
+                TilePivot.Top => center + moveUp,
+//                                [=][=]
+//                                [=][=] 
+//                           //////XXXX///////   
+//                           //////XXXX///////   
+//                           /////////////////  
+//                           ///////////////// 
+//                           /////////////////   
+//                           /////////////////
+
+                TilePivot.Bottom => center + moveDown,
+//                           /////////////////   
+//                           /////////////////   
+//                           /////////////////  
+//                           ///////////////// 
+//                           ///////XXXX//////   
+//                           ///////XXXX//////
+//                                 [=][=]
+//                                 [=][=]                
+
+                TilePivot.Right => center + moveLeft,
+//              /////////////////   
+//              /////////////////   
+//              //////////////XXX [=][=] 
+//              //////////////XXX [=][=]
+//              /////////////////   
+//              /////////////////
+
+                TilePivot.Left => center + moveRight,
+//                                      /////////////////
+//                                      /////////////////
+//                               [=][=] XXX////////////// 
+//                               [=][=] XXX////////////// 
+//                                      /////////////////
+//                                      /////////////////
+                
+                TilePivot.TopRight => center + moveLeft + moveDown,
+//                               [=][=]
+//                               [=][=]
+//              //////////////XXX
+//              //////////////XXX
+//              /////////////////
+//              /////////////////
+//              /////////////////
+//              /////////////////         
+                
+                TilePivot.TopLeft => center + moveRight + moveDown,
+//                               [=][=]
+//                               [=][=]
+//                                     XXX//////////////
+//                                     XXX//////////////
+//                                     /////////////////
+//                                     /////////////////
+//                                     /////////////////
+//                                     /////////////////
+                
+                TilePivot.BottomRight => center + moveLeft + moveUp,
+//              /////////////////
+//              /////////////////
+//              /////////////////
+//              /////////////////
+//              //////////////XXX
+//              //////////////XXX
+//                               [=][=]
+//                               [=][=]
+                TilePivot.BottomLeft => center + moveRight + moveUp,
+//                                     /////////////////
+//                                     /////////////////
+//                                     /////////////////
+//                                     /////////////////
+//                                     XXX//////////////
+//                                     XXX//////////////
+//                               [=][=]
+//                               [=][=]
+                
+                var _ => center
             };
             newPosition += Vector.Right * actualTileSize / 2f;
             return newPosition;
