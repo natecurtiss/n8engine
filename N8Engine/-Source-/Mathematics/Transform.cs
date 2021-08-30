@@ -18,7 +18,7 @@ namespace N8Engine.Mathematics
 
         public Sequence MoveTo(Vector targetPosition, float duration, bool shouldKillPlayingSequences = false)
         {
-            var speed = targetPosition - Position;
+            var speed = (targetPosition - Position) / duration;
             var sequence = new Sequence(deltaTime => Position += speed * deltaTime, duration);
             sequence.OnComplete(() => _playingSequences.Remove(sequence)).Play();
             

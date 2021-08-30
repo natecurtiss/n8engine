@@ -6,7 +6,7 @@ namespace SampleProject
 {
     public sealed class Door : GameObject
     {
-        const float SPROUT_DISTANCE = -10f;
+        const float SPROUT_DISTANCE = -9f;
         const float SPROUT_DURATION = 0.6f;
 
         protected override void OnStart()

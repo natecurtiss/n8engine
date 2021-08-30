@@ -1,4 +1,6 @@
 using N8Engine;
+using N8Engine.Mathematics;
+using N8Engine.Physics;
 using N8Engine.Rendering;
 
 namespace SampleProject
@@ -7,7 +9,20 @@ namespace SampleProject
     {
         protected override void OnStart()
         {
+            // TODO remove this line
+            EventManager.OnKeyCollected.Invoke();
             SpriteRenderer.Sprite = new Sprite(SpritesFolder.Path + "key.n8sprite");
+            Collider.Size = new Vector(10f, 7f);
+            Collider.IsTrigger = true;
+        }
+
+        public override void OnTriggeredBy(Collider otherTrigger)
+        {
+            if (otherTrigger.GameObject.Is<ICanCollectAKey>())
+            {
+                EventManager.OnKeyCollected.Invoke();
+                Destroy();
+            }
         }
     }
 }

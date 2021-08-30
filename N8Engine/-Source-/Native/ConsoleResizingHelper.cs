@@ -12,7 +12,7 @@ namespace N8Engine.Native
         // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlonga
         [DllImport("user32.dll")]
         static extern uint GetWindowLong(IntPtr hWnd, int nIndex);
-        
+
         // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlonga
         [DllImport("user32.dll")]
         static extern uint SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);

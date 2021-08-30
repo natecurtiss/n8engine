@@ -17,6 +17,7 @@ namespace N8Engine.Rendering
 
         public static void Initialize()
         {
+            
             GameLoop.OnPreRender += OnPreRender;
             GameLoop.OnPostRender += OnPostRender;
         }

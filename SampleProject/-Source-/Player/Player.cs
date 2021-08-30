@@ -4,27 +4,28 @@ using N8Engine.Rendering;
 
 namespace SampleProject
 {
-    public sealed class Player : GameObject
+    public sealed class Player : GameObject, ICanCollectAKey
     {
         const int SPEED = 100;
         const int JUMP_FORCE = -200;
-
         readonly PlayerInputs _input = new();
+        
         PlayerAnimationController _animationController;
         GroundCheck<ICanBeJumpedOn> _groundCheck;
+        Vector _spawnPosition;
 
-        Vector SpawnPosition => Window.LeftSide + Vector.Right * 15f;
         bool CanJump => _groundCheck.IsGrounded && _input.JustPressedJumpButton;
 
         protected override void OnStart()
         {
+            Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 15f;
+            
             _animationController = new PlayerAnimationController(AnimationPlayer, _input);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += _animationController.HandleLandAnimation;
             _groundCheck.Collider.Size = new Vector(10f, 1f);
             _groundCheck.Collider.Offset = Vector.Up * 5f;
 
-            Transform.Position = SpawnPosition;
             Collider.Size = new Vector(10f, 7f);
             Collider.Offset = Vector.Right;
             SpriteRenderer.SortingOrder = -2;
@@ -71,7 +72,7 @@ namespace SampleProject
 
         void Die()
         {
-            Transform.Position = SpawnPosition;
+            Transform.Position = _spawnPosition;
             PhysicsBody.Velocity = Vector.Zero;
         }
     }
