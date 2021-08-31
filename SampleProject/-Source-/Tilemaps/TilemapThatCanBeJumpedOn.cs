@@ -1,8 +1,9 @@
 using N8Engine;
+using N8Engine.Tilemaps;
 
 namespace SampleProject
 {
-    public sealed class TilemapThatCanBeJumpedOn : GameObject, ICanBeJumpedOn
+    public sealed class TilemapThatCanBeJumpedOn : BaseTilemapObject, ICanBeJumpedOn
     {
         
     }

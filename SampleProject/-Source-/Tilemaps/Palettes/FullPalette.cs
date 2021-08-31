@@ -7,7 +7,7 @@ namespace SampleProject
 {
     public class FullPalette : TilePalette
     {
-        public override GameObject BaseTilemapObject => GameObject.Create<TilemapThatCanBeJumpedOn>();
+        public override BaseTilemapObject BaseTilemapObject => GameObject.Create<TilemapThatCanBeJumpedOn>();
         public override Sprite Left => new(SpritesFolder.Path + "wall_left.n8sprite");
         public override Sprite Right => new(SpritesFolder.Path + "wall_right.n8sprite");
         public override Sprite Top => new(SpritesFolder.Path + "wall_top.n8sprite");

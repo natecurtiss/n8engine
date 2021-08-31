@@ -17,7 +17,7 @@ namespace N8Engine.Tilemaps
         public abstract IntegerVector TileSize { get; }
         public abstract int SortingOrder { get; }
         
-        public virtual GameObject BaseTilemapObject => GameObject.Create<EmptyGameObject>();
+        public virtual BaseTilemapObject BaseTilemapObject => GameObject.Create<BaseTilemapObject>("tilemap");
         
         internal Sprite SpriteBasedOnTileType(TileType tileType) => tileType switch
         {

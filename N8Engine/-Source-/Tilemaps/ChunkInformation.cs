@@ -4,23 +4,20 @@ namespace N8Engine.Tilemaps
 {
     internal readonly struct ChunkInformation
     {
-        public readonly Vector Position;
-        public readonly IntegerVector SizeOfEachTile;
-        public readonly TilePivot Pivot;
-        public readonly TilePalette TilePalette;
-        
+        private readonly Vector _position;
+        private readonly IntegerVector _sizeOfEachTile;
+        private readonly TilePivot _pivot;
         private readonly IntegerVector _sizeInTiles;
 
-        public IntegerVector TotalSize => _sizeInTiles * SizeOfEachTile;
-        private Vector HalfOfATileToTheRight => Vector.Right * (Vector) SizeOfEachTile / 2f;
+        private IntegerVector TotalSize => _sizeInTiles * _sizeOfEachTile;
+        private Vector HalfOfATileToTheRight => Vector.Right * (Vector) _sizeOfEachTile / 2f;
 
-        public ChunkInformation(Vector position, IntegerVector sizeInTiles, IntegerVector sizeOfEachTile, TilePivot pivot, TilePalette tilePalette)
+        public ChunkInformation(Vector position, IntegerVector sizeInTiles, IntegerVector sizeOfEachTile, TilePivot pivot)
         {
-            Position = position;
+            _position = position;
             _sizeInTiles = sizeInTiles;
-            SizeOfEachTile = sizeOfEachTile;
-            Pivot = pivot;
-            TilePalette = tilePalette;
+            _sizeOfEachTile = sizeOfEachTile;
+            _pivot = pivot;
         }
 
         public TileType TileTypeOf(IntegerVector localPosition)
@@ -59,7 +56,7 @@ namespace N8Engine.Tilemaps
 
         public Vector TilePositionBasedOnPivot(IntegerVector localPosition)
         {
-            var tilePosition = (Vector) (localPosition * SizeOfEachTile) + Position;  
+            var tilePosition = (Vector) (localPosition * _sizeOfEachTile) + _position;  
             var chunkSize = (Vector) TotalSize;
             var center = tilePosition - chunkSize / 2f;
             var moveLeft = new Vector(-chunkSize.X, 0) / 2f;
@@ -70,7 +67,7 @@ namespace N8Engine.Tilemaps
             // [=] is the center.
             // X's are the pivot.
             // Slashes are the tilemap.
-            var newPosition = Pivot switch
+            var newPosition = _pivot switch
             {
                 TilePivot.Center => center,
 //                           /////////////////   

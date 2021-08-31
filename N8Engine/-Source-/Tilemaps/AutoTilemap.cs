@@ -16,13 +16,13 @@ namespace N8Engine.Tilemaps
 
             var tilePalette = new T();
             var tileSize = new IntegerVector(tilePalette.TileSize.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, tilePalette.TileSize.Y);
-            var chunkInformation = new ChunkInformation(position, sizeInTiles, tileSize, pivot, tilePalette);
+            var chunkInformation = new ChunkInformation(position, sizeInTiles, tileSize, pivot);
 
             for (var y = 0; y < sizeInTiles.Y; y++)
                 for (var x = 0; x < sizeInTiles.X; x++)
                 {
                     var localPosition = new IntegerVector(x, y);
-                    GameObject.Create<Tile>().Initialize(localPosition, chunkInformation);
+                    GameObject.Create<Tile>().Initialize(localPosition, tilePalette, chunkInformation);
                 }
             var chunkSize = sizeInTiles * tileSize;
 
