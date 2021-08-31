@@ -31,7 +31,7 @@ namespace N8Engine.Physics
         }
         internal Vector Position => Transform.Position + Offset;
 
-        private Vector ActualSize => new(Size.X * Window.RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS, Size.Y);
+        private Vector ActualSize => new(Size.X * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, Size.Y);
         private BoundingBox BoundingBoxCurrentFrame { get; set; }
         private BoundingBox BoundingBoxNextFrame { get; set; }
 

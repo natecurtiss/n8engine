@@ -4,17 +4,17 @@ namespace N8Engine.Tilemaps
 {
     internal readonly struct ChunkInformation
     {
-        private readonly Vector _position;
+        public readonly Vector Position;
         private readonly IntegerVector _sizeOfEachTile;
         private readonly TilePivot _pivot;
         private readonly IntegerVector _sizeInTiles;
 
-        private IntegerVector TotalSize => _sizeInTiles * _sizeOfEachTile;
-        private Vector HalfOfATileToTheRight => Vector.Right * (Vector) _sizeOfEachTile / 2f;
+        public IntegerVector TotalSize => _sizeInTiles * _sizeOfEachTile;
+        public Vector HalfOfATileToTheRight => Vector.Right * (Vector) _sizeOfEachTile / 2f;
 
         public ChunkInformation(Vector position, IntegerVector sizeInTiles, IntegerVector sizeOfEachTile, TilePivot pivot)
         {
-            _position = position;
+            Position = position;
             _sizeInTiles = sizeInTiles;
             _sizeOfEachTile = sizeOfEachTile;
             _pivot = pivot;
@@ -56,7 +56,12 @@ namespace N8Engine.Tilemaps
 
         public Vector TilePositionBasedOnPivot(IntegerVector localPosition)
         {
-            var tilePosition = (Vector) (localPosition * _sizeOfEachTile) + _position;  
+            var tilePosition = (Vector) (localPosition * _sizeOfEachTile) + Position;
+            return TilePositionBasedOnPivot(tilePosition);
+        }
+
+        public Vector TilePositionBasedOnPivot(Vector tilePosition)
+        {
             var chunkSize = (Vector) TotalSize;
             var center = tilePosition - chunkSize / 2f;
             var moveLeft = new Vector(-chunkSize.X, 0) / 2f;

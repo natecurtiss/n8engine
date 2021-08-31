@@ -6,8 +6,6 @@ namespace N8Engine.Rendering
 {
     public static class Window
     {
-        internal const int RATIO_OF_HORIZONTAL_PIXELS_TO_VERTICAL_PIXELS = 2;
-
         private static readonly float _width = Console.WindowWidth;
         private static readonly float _height = Console.WindowHeight;
         private static readonly Vector _span = new(_width, _height);
