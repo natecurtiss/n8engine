@@ -1,25 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace N8Engine.SceneManagement
 {
-    public abstract class Scene
+    public abstract class Scene : IEnumerable<GameObject>
     {
-        internal readonly List<GameObject> GameObjects = new();
+        private readonly List<GameObject> _gameObjects = new();
 
-        public int Index { get; internal set; }
-        public string Name { get; internal set; }
+        public int Index { get; }
+        public string Name { get; }
+        
+        public IEnumerator<GameObject> GetEnumerator() => _gameObjects.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        
+        public void Add(GameObject gameObject) => _gameObjects.Add(gameObject);
+
+        public void Remove(GameObject gameObject) => _gameObjects.Remove(gameObject);
 
         internal void Load() => OnSceneLoaded();
 
         internal void Unload()
         {
-            foreach (var gameObject in GameObjects) 
+            foreach (var gameObject in _gameObjects) 
                 gameObject.Destroy();
-            GameObjects.Clear();
         }
-
+        
         protected abstract void OnSceneLoaded();
-        
-        
     }
 }

@@ -19,7 +19,7 @@ namespace N8Engine
         public static T Create<T>(string name = DEFAULT_NAME) where T : GameObject, new()
         {
             var gameObject = new T();
-            SceneManager.CurrentScene.GameObjects.Add(gameObject);
+            SceneManager.CurrentScene.Add(gameObject);
             if (name == DEFAULT_NAME) name = $"new {gameObject.GetType()}";
             gameObject.Initialize(name);
             return gameObject;
@@ -66,6 +66,7 @@ namespace N8Engine
 
         public void Destroy()
         {
+            SceneManager.CurrentScene.Remove(this);
             OnDestroy();
             GameLoop.OnEarlyUpdate -= OnEarlyUpdate;
             GameLoop.OnUpdate -= OnUpdate;

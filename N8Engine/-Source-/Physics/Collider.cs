@@ -56,7 +56,7 @@ namespace N8Engine.Physics
 
             if (Size == Vector.Zero) return;
             
-            foreach (var otherGameObject in SceneManager.CurrentScene.GameObjects)
+            foreach (var otherGameObject in SceneManager.CurrentScene)
             {
                 var otherCollider = otherGameObject.Collider;
                 if (otherCollider == this) continue;
@@ -77,11 +77,12 @@ namespace N8Engine.Physics
                     }
                 }
             }
-            foreach (var collider in _collidersCollidingWithLastFrame.Where(collider => !_collidersCollidingWithThisFrame.Contains(collider)))
-                if (collider.IsTrigger || IsTrigger)
-                    GameObject.OnStoppedBeingTriggeredBy(collider);
-                else
-                    GameObject.OnStoppedCollidingWith(collider);
+            foreach (var collider in _collidersCollidingWithLastFrame)
+                if (!_collidersCollidingWithThisFrame.Contains(collider))
+                    if (collider.IsTrigger || IsTrigger)
+                        GameObject.OnStoppedBeingTriggeredBy(collider);
+                    else
+                        GameObject.OnStoppedCollidingWith(collider);
         }
     }
 }
