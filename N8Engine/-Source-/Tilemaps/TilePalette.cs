@@ -14,9 +14,23 @@ namespace N8Engine.Tilemaps
         public abstract Sprite BottomLeft { get; }
         public abstract Sprite BottomRight { get; }
         public abstract Sprite Middle { get; }
-        public abstract Vector TileSize { get; }
+        public abstract IntegerVector TileSize { get; }
         public abstract int SortingOrder { get; }
         
         public virtual GameObject BaseTilemapObject => GameObject.Create<EmptyGameObject>();
+        
+        internal Sprite SpriteBasedOnTileType(TileType tileType) => tileType switch
+        {
+            TileType.Left => Left,
+            TileType.Right => Right,
+            TileType.Top => Top,
+            TileType.Bottom => Bottom,
+            TileType.TopLeft => TopLeft,
+            TileType.TopRight => TopRight,
+            TileType.BottomLeft => BottomLeft,
+            TileType.BottomRight => BottomRight,
+            TileType.Middle => Middle,
+            var _ => Middle
+        };
     }
 }

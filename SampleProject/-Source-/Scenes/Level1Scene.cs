@@ -8,10 +8,9 @@ namespace SampleProject
     {
         protected override void OnLevelLoaded(Door door, DoorKey key)
         {
-            AutoTilemap<FullPalette>.Generator
-                .Place(Window.BottomLeftCorner, new Vector(10, 3), TilePivot.BottomLeft)
-                .Place(Vector.Zero, new Vector(10, 3), TilePivot.BottomLeft);
-            door.Transform.Position += new Vector(252f, 39f);
+            AutoTilemap<TopAndSidesPalette>.Generator
+                .PlaceChunk(Window.BottomLeftCorner + Vector.Left * 24f, new IntegerVector(10, 3), TilePivot.BottomLeft);
+            door.Transform.Position += new Vector(252f, -39f);
         }
     }
 }
