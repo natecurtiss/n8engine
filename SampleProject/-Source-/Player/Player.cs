@@ -1,5 +1,6 @@
 ﻿using N8Engine;
 using N8Engine.Mathematics;
+using N8Engine.Physics;
 using N8Engine.Rendering;
 
 namespace SampleProject
@@ -23,8 +24,8 @@ namespace SampleProject
             _animationController = new PlayerAnimationController(AnimationPlayer, _input);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += _animationController.HandleLandAnimation;
-            _groundCheck.Collider.Size = new Vector(10f, 1f);
-            _groundCheck.Collider.Offset = Vector.Up * 5f;
+            _groundCheck.Collider.Size = new Vector(10f, 10f);
+            _groundCheck.Collider.Offset = Vector.Down * 1f;
 
             Collider.Size = new Vector(7, 7);
             Collider.Offset = Vector.Right;
@@ -48,6 +49,11 @@ namespace SampleProject
             ClampPositionWithinWindow();
             _groundCheck.Transform.Position = Transform.Position;
             if (Transform.Position.Y <= Window.BottomSide.Y) Die();
+        }
+
+        public override void OnCollidedWith(Collider otherCollider)
+        {
+            Debug.Log(otherCollider.GameObject.Name);
         }
 
         private void Move()

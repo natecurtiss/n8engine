@@ -16,6 +16,7 @@ namespace N8Engine.Tilemaps
             
             var chunk = new Chunk(positionAdjustedToPivot, sizeInTiles, _palette);
             chunk.GenerateTiles();
+            chunk.CreateCollider();
             return this;
         }
     }

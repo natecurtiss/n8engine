@@ -5,6 +5,12 @@ namespace N8Engine.Tilemaps
 {
     internal readonly struct Chunk
     {
+        // Sort of a magic number - but at least it works.
+        private Vector Center => _position + new Vector(HalfOfTheChunk.X - _palette.HalfATile.X, 0f);
+        private Vector ColliderSize => _palette.TileSize * _sizeInTiles;
+        private Vector HalfOfTheChunk => Size / 2f;
+        private Vector Size => _palette.ActualTileSize * _sizeInTiles;
+
         private readonly Vector _position;
         private readonly IntegerVector _sizeInTiles;
         private readonly TilePalette _palette;
@@ -26,12 +32,19 @@ namespace N8Engine.Tilemaps
                     var localPosition = new IntegerVector(tile, row);
                     tileObject.Transform.Position = _position;
                     tileObject.Transform.Position += localPosition * _palette.ActualTileSize;
-                    // tileObject.Transform.Position += _palette.HalfATile;
                     tileObject.SpriteRenderer.Sprite = _palette.GetSpriteInChunk(localPosition, _sizeInTiles);
+                    tileObject.SpriteRenderer.SortingOrder = _palette.SortingOrder;
                 }
             }
         }
 
         public void GenerateTiles() => GenerateTiles<Tile>();
+
+        public void CreateCollider()
+        {
+            var tilemapBase = _palette.BaseObject;
+            tilemapBase.Transform.Position = Center;
+            tilemapBase.Collider.Size = ColliderSize;
+        }
     }
 }
