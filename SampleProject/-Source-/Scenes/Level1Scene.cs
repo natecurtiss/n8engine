@@ -1,6 +1,5 @@
 ﻿using N8Engine.Mathematics;
-using N8Engine.Rendering;
-using N8Engine.Tilemaps;
+using N8Engine.Physics;
 
 namespace SampleProject
 {
@@ -8,9 +7,9 @@ namespace SampleProject
     {
         protected override void OnLevelLoaded(Door door, DoorKey key)
         {
-            AutoTilemap<TopAndSidesPalette>.Generator
-                .PlaceChunk(Window.BottomLeftCorner + Vector.Right * 24f, new IntegerVector(10, 3), TilePivot.BottomLeft);
+
             door.Transform.Position += new Vector(252f, -39f);
+            PhysicsSettings.ShouldShowAllColliders = true;
         }
     }
 }

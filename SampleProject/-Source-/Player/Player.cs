@@ -7,7 +7,7 @@ namespace SampleProject
     public sealed class Player : GameObject, ICanCollectAKey
     {
         private const int SPEED = 100;
-        private const int JUMP_FORCE = -200;
+        private const int JUMP_FORCE = 200;
         private readonly PlayerInputs _input = new();
 
         private PlayerAnimationController _animationController;
@@ -26,7 +26,7 @@ namespace SampleProject
             _groundCheck.Collider.Size = new Vector(10f, 1f);
             _groundCheck.Collider.Offset = Vector.Up * 5f;
 
-            Collider.Size = new Vector(10f, 7f);
+            Collider.Size = new Vector(7, 7);
             Collider.Offset = Vector.Right;
             SpriteRenderer.SortingOrder = -2;
             PhysicsBody.UseGravity = true;
@@ -47,7 +47,7 @@ namespace SampleProject
         {
             ClampPositionWithinWindow();
             _groundCheck.Transform.Position = Transform.Position;
-            if (Transform.Position.Y >= Window.BottomSide.Y) Die();
+            if (Transform.Position.Y <= Window.BottomSide.Y) Die();
         }
 
         private void Move()

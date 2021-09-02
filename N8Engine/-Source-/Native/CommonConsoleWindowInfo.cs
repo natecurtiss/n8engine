@@ -20,7 +20,6 @@ namespace N8Engine.Native
         public static readonly IntPtr StandardInputHandle = GetStdHandle(STANDARD_INPUT_HANDLE_NUMBER);
         public static readonly IntPtr StandardOutputHandle = GetStdHandle(STANDARD_OUTPUT_HANDLE_NUMBER);
         public static readonly IntPtr StandardErrorHandle = GetStdHandle(STANDARD_ERROR_HANDLE_NUMBER);
-
         public static readonly IntPtr Handle = GetConsoleWindow();
         
         [StructLayout(LayoutKind.Sequential)]

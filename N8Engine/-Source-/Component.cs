@@ -5,5 +5,7 @@ namespace N8Engine
         public readonly GameObject GameObject;
         
         internal Component(GameObject gameObject) => GameObject = gameObject;
+
+        public override string ToString() => GameObject.Name;
     }
 }

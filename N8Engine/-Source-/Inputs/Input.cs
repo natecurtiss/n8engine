@@ -12,11 +12,13 @@ namespace N8Engine.Inputs
     public static class Input
     {
         private static readonly Dictionary<Key, KeyState> _keys = new();
+        private static readonly Key[] _allKeys = (Key[]) Enum.GetValues(typeof(Key));
         private enum KeyState { IsPressed, IsReleased, WasJustPressed, WasJustReleased }
         
         internal static void Initialize()
         {
-            foreach (var key in (Key[]) Enum.GetValues(typeof(Key))) _keys.Add(key, KeyState.IsReleased);
+            foreach (var key in _allKeys) 
+                _keys.Add(key, KeyState.IsReleased);
             GameLoop.OnPreUpdate += OnPreUpdate;
         }
         
@@ -42,7 +44,7 @@ namespace N8Engine.Inputs
 
         private static void OnPreUpdate(float deltaTime)
         {
-            foreach (var key in _keys.Keys.ToArray())
+            foreach (var key in _allKeys)
             {
                 var previousKeyState = _keys[key];
                 var newKeyState = KeyState.IsReleased;

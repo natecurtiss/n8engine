@@ -25,6 +25,8 @@ namespace N8Engine
             return gameObject;
         }
 
+        public override string ToString() => Name;
+
         public virtual void OnCollidedWith(Collider otherCollider) { }
         
         public virtual void OnStoppedCollidingWith(Collider otherCollider) { }
@@ -107,8 +109,8 @@ namespace N8Engine
         {
             if (SpriteRenderer.Sprite != null)
                 Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder, Name);
-            if (Collider.ShowDebugCollider)
-                Renderer.Render(Collider.DebugMode.Sprite, Collider.DebugMode.Position, Math.INFINITY - 1, Name);
+            if (Collider.IsVisible || PhysicsSettings.ShouldShowAllColliders)
+                Renderer.Render(Collider.Sprite, Collider.Position, Math.INFINITY - 1, Name);
         }
     }
 }

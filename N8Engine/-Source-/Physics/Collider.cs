@@ -8,7 +8,7 @@ namespace N8Engine.Physics
 {
     public sealed class Collider : Component
     {
-        internal readonly DebugCollider DebugMode;
+        private readonly ColliderVisualization _visualization;
         private readonly List<Collider> _collidersCollidingWithThisFrame = new();
         private readonly List<Collider> _collidersCollidingWithLastFrame = new();
         private readonly PhysicsBody _physicsBody;
@@ -16,7 +16,7 @@ namespace N8Engine.Physics
 
         public Transform Transform => GameObject.Transform;
         public IEnumerable<Collider> Contacts => _collidersCollidingWithThisFrame;
-        public bool ShowDebugCollider { get; set; }
+        public bool IsVisible { get; set; }
         public bool IsTrigger { get; set; }
         public Vector Offset { get; set; }
         public Vector Size
@@ -25,19 +25,20 @@ namespace N8Engine.Physics
             set
             {
                 if (_size == value) return;
-                DebugMode.Size = value;
+                _visualization.Size = value;
                 _size = value;
             }
         }
         internal Vector Position => Transform.Position + Offset;
-
-        private Vector ActualSize => new(Size.X * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, Size.Y);
+        internal Sprite Sprite => Size == Vector.Zero ? Sprite.Empty : _visualization.Sprite;
+        internal Vector ActualSize => new(Size.X * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, Size.Y);
+        
         private BoundingBox BoundingBoxCurrentFrame { get; set; }
         private BoundingBox BoundingBoxNextFrame { get; set; }
 
         internal Collider(GameObject gameObject) : base(gameObject)
         {
-            DebugMode = new DebugCollider(this);
+            _visualization = new ColliderVisualization(this);
             _physicsBody = gameObject.PhysicsBody;
         }
 
@@ -56,12 +57,19 @@ namespace N8Engine.Physics
 
             if (Size == Vector.Zero) return;
             
-            foreach (var otherGameObject in SceneManager.CurrentScene)
+            foreach (var otherGameObject in SceneManager.CurrentScene.ToArray())
             {
                 var otherCollider = otherGameObject.Collider;
                 if (otherCollider == this) continue;
                 if (otherCollider.Size == Vector.Zero) continue;
                 
+                if (ToString() == "player" && otherCollider.ToString() == "new SampleProject.TilemapThatCanBeJumpedOn") 
+                    Debug.Log("" +
+                              $"{BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame)} " +
+                              $"{otherCollider.BoundingBoxNextFrame.Top} " +
+                              $"{otherCollider.BoundingBoxNextFrame.Position} " +
+                              $"{Position} " +
+                              $"{BoundingBoxNextFrame.Top}");
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
                     _collidersCollidingWithThisFrame.Add(otherCollider);
@@ -77,7 +85,7 @@ namespace N8Engine.Physics
                     }
                 }
             }
-            foreach (var collider in _collidersCollidingWithLastFrame)
+            foreach (var collider in _collidersCollidingWithLastFrame.ToArray())
                 if (!_collidersCollidingWithThisFrame.Contains(collider))
                     if (collider.IsTrigger || IsTrigger)
                         GameObject.OnStoppedBeingTriggeredBy(collider);

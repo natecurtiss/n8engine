@@ -4,22 +4,24 @@ namespace N8Engine.Physics
 {
     internal readonly struct BoundingBox
     {
-        private Vector LeftSide { get; }
-        private Vector RightSide { get; }
-        private Vector TopSide { get; }
-        private Vector BottomSide { get; }
-        private Vector TopLeft { get; }
-        private Vector BottomRight { get; }
+        public Vector Left { get; }
+        public Vector Right { get; }
+        public Vector Top { get; }
+        public Vector BottomSide { get; }
+        public Vector TopLeft { get; }
+        public Vector BottomRight { get; }
+        public Vector Position { get; }
         
         public BoundingBox(Vector size, Vector position = default)
         {
             var extents = size / 2f;
-            LeftSide = new Vector(-extents.X, 0f) + position;
-            RightSide = new Vector(extents.X, 0f) + position;
-            TopSide = new Vector(0f, extents.Y) + position;
+            Left = new Vector(-extents.X, 0f) + position;
+            Right = new Vector(extents.X, 0f) + position;
+            Top = new Vector(0f, extents.Y) + position;
             BottomSide = new Vector(0f, -extents.Y) + position;
             TopLeft = new Vector(-extents.X, extents.Y) + position;
             BottomRight = new Vector(extents.X, -extents.Y) + position;
+            Position = position;
         }
 
         public bool IsOverlapping(BoundingBox otherBoundingBox)
@@ -35,10 +37,10 @@ namespace N8Engine.Physics
 
         public Direction DirectionRelativeTo(BoundingBox otherBoundingBox)
         {
-            var isUnderOtherRectangle = TopSide.Y <= otherBoundingBox.BottomSide.Y;
-            var isOverOtherRectangle = BottomSide.Y >= otherBoundingBox.TopSide.Y;
-            var isToTheRightOfOtherRectangle = LeftSide.X >= otherBoundingBox.RightSide.X;
-            var isToTheLeftOfOtherRectangle = RightSide.X <= otherBoundingBox.LeftSide.X;
+            var isUnderOtherRectangle = Top.Y <= otherBoundingBox.BottomSide.Y;
+            var isOverOtherRectangle = BottomSide.Y >= otherBoundingBox.Top.Y;
+            var isToTheRightOfOtherRectangle = Left.X >= otherBoundingBox.Right.X;
+            var isToTheLeftOfOtherRectangle = Right.X <= otherBoundingBox.Left.X;
             
             if (isUnderOtherRectangle) return Direction.Down;
             if (isOverOtherRectangle) return Direction.Up;

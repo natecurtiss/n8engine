@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
     public sealed class Sprite
     {
+        public static readonly Sprite Empty = new(Array.Empty<Pixel>());
         internal Pixel[] Pixels { get; private set; }
 
         public Sprite(string path, Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)

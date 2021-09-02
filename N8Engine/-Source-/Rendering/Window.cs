@@ -35,7 +35,6 @@ namespace N8Engine.Rendering
             BottomRightCorner = new Vector(RightSide.X, BottomSide.Y);
             TopLeftCorner = new Vector(LeftSide.X, TopSide.Y);
             TopRightCorner = new Vector(RightSide.X, TopSide.Y);
-;
         }
 
         internal static IntegerVector FromWorldPositionToWindowPosition(this Vector position)

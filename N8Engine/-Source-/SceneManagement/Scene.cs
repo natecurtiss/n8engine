@@ -7,6 +7,7 @@ namespace N8Engine.SceneManagement
     {
         private readonly List<GameObject> _gameObjects = new();
 
+        // TODO set these somewhere.
         public int Index { get; }
         public string Name { get; }
         

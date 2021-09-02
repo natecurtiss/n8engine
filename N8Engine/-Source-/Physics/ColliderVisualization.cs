@@ -5,16 +5,13 @@ using N8Engine.Rendering;
 
 namespace N8Engine.Physics
 {
-    internal sealed class DebugCollider
+    internal sealed class ColliderVisualization
     {
-        private readonly Collider _collider;
-
-        private Vector _size;
+        private IntegerVector _size;
         private Sprite _sprite;
-
-        public Vector Position => _collider.Position;
+        
         public Sprite Sprite => _sprite ??= new Sprite(Pixels);
-        public Vector Size
+        public IntegerVector Size
         {
             get => _size;
             set
@@ -29,8 +26,8 @@ namespace N8Engine.Physics
         {
             get
             {
-                var width = (int) Size.X;
-                var height = (int) Size.Y;
+                var width = Size.X;
+                var height = Size.Y;
 
                 const string green_color = "{Green,Green}";
                 const string clear_color = "{Clear,Clear}";
@@ -71,10 +68,6 @@ namespace N8Engine.Physics
             }
         }
 
-        public DebugCollider(Collider collider)
-        {
-            _collider = collider;
-            Size = _collider.Size;
-        }
+        public ColliderVisualization(Collider collider) => Size = collider.Size;
     }
 }
