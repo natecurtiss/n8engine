@@ -7,7 +7,7 @@ namespace SampleProject
     {
         public override Scene[] Scenes => new Scene[]
         {
-            new Level1Scene()
+            new Level1()
         };
         public override short FontSize => 6;
 
