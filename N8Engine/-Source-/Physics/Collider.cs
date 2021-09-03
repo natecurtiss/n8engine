@@ -31,8 +31,7 @@ namespace N8Engine.Physics
         }
         internal Vector Position => Transform.Position + Offset;
         internal Sprite Sprite => Size == Vector.Zero ? Sprite.Empty : _visualization.Sprite;
-        private Vector ActualSize => new(Size.X * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, Size.Y);
-        
+
         private BoundingBox BoundingBoxThisFrame { get; set; }
         private BoundingBox BoundingBoxNextFrame { get; set; }
 
@@ -44,8 +43,8 @@ namespace N8Engine.Physics
 
         internal void UpdateBoundingBoxes(float deltaTime)
         {
-            BoundingBoxThisFrame = new BoundingBox(GameObject.Name, ActualSize, Position);
-            BoundingBoxNextFrame = new BoundingBox(GameObject.Name, ActualSize, Position + _physicsBody.Velocity * deltaTime);
+            BoundingBoxThisFrame = new BoundingBox(GameObject.Name, Size, Position);
+            BoundingBoxNextFrame = new BoundingBox(GameObject.Name, Size, Position + _physicsBody.Velocity * deltaTime);
         }
 
         internal void CheckCollisions()

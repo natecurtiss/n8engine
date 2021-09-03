@@ -9,7 +9,7 @@ namespace N8Engine.Tilemaps
         private Vector Center => _position + new Vector(HalfOfTheChunk.X - _palette.HalfATile.X, 0f);
         private Vector ColliderSize => _palette.TileSize * _sizeInTiles;
         private Vector HalfOfTheChunk => Size / 2f;
-        private Vector Size => _palette.ActualTileSize * _sizeInTiles;
+        private Vector Size => _palette.TileSize * _sizeInTiles;
 
         private readonly Vector _position;
         private readonly IntegerVector _sizeInTiles;
@@ -31,7 +31,7 @@ namespace N8Engine.Tilemaps
                     var tileObject = GameObject.Create<TTile>();
                     var localPosition = new IntegerVector(tile, row);
                     tileObject.Transform.Position = _position;
-                    tileObject.Transform.Position += localPosition * _palette.ActualTileSize;
+                    tileObject.Transform.Position += localPosition * _palette.TileSize;
                     tileObject.SpriteRenderer.Sprite = _palette.GetSpriteInChunk(localPosition, _sizeInTiles);
                     tileObject.SpriteRenderer.SortingOrder = _palette.SortingOrder;
                 }

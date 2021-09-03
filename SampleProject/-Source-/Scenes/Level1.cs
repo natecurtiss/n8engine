@@ -18,7 +18,7 @@ namespace SampleProject
             GameObject.Create<Player>("player");
             GameObject.Create<Door>("door").Transform.Position += new Vector(252f, -39f);
             GameObject.Create<DoorKey>("key");
-            PhysicsSettings.ShouldShowAllColliders = true;
+            // PhysicsSettings.ShouldShowAllColliders = true;
         }
     }
 }

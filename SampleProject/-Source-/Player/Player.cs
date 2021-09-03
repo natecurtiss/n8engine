@@ -8,7 +8,7 @@ namespace SampleProject
 {
     public sealed class Player : GameObject, ICanCollectAKey
     {
-        private const int SPEED = 100;
+        private const int SPEED = 50;
         private const int JUMP_FORCE = 200;
         private readonly PlayerInputs _input = new();
 
@@ -31,7 +31,7 @@ namespace SampleProject
             Collider.Size = new Vector(7, 8);
             Collider.Offset = new Vector(1f, 0f);
             SpriteRenderer.SortingOrder = -2;
-            Collider.IsVisible = true;
+            // Collider.IsVisible = true;
             PhysicsBody.UseGravity = true;
             AnimationPlayer.Play();
         }

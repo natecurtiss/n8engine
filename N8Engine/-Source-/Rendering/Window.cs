@@ -27,10 +27,10 @@ namespace N8Engine.Rendering
             ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
             
-            LeftSide = new Vector(-_width / 2f + Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, 0f);
-            RightSide = new Vector(_width / 2f - Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, 0f);
-            TopSide = new Vector(0f, _height / 2f - Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL);
-            BottomSide = new Vector(0f, -_height / 2f + Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL);
+            LeftSide = new Vector(-_width / 2f, 0f);
+            RightSide = new Vector(_width / 2f, 0f);
+            TopSide = new Vector(0f, _height / 2f);
+            BottomSide = new Vector(0f, -_height / 2f);
             BottomLeftCorner = new Vector(LeftSide.X, BottomSide.Y);
             BottomRightCorner = new Vector(RightSide.X, BottomSide.Y);
             TopLeftCorner = new Vector(LeftSide.X, TopSide.Y);

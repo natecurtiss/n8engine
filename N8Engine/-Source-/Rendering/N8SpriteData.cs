@@ -7,7 +7,7 @@ namespace N8Engine.Rendering
 {
     internal readonly struct N8SpriteData
     {
-        private readonly Vector _dimensions;
+        private readonly IntegerVector _dimensions;
         private readonly string[] _dataText;
 
         public List<Pixel> Pixels
@@ -15,28 +15,22 @@ namespace N8Engine.Rendering
             get
             {
                 var pixels = new List<Pixel>();
-                for (var line = (int) _dimensions.Y; line >= 0; line--)
+                for (var line = _dimensions.Y; line >= 0; line--)
                 {
                     var currentLine = _dataText[line];
                     var pixelsInCurrentLine = SeparateLine(currentLine);
-                    for (var pixel = 0; pixel < (int) _dimensions.X; pixel++)
+                    for (var pixel = 0; pixel <  _dimensions.X; pixel++)
                     {
                         var currentPixel = pixelsInCurrentLine[pixel];
-                        for (var fractionOfAPixel = 0; fractionOfAPixel < Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL; fractionOfAPixel++)
-                        {
-                            var fractionOfCurrentPixel = SeparatePixel
-                            (
-                                currentPixel,
-                                new Vector(pixel * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL + fractionOfAPixel, line)
-                            );
-                            if (fractionOfCurrentPixel.HasValue) pixels.Add(fractionOfCurrentPixel.Value);
-                        }
+                        var newPixel = SeparatePixel(currentPixel, new IntegerVector(pixel, line));
+                        if (newPixel.HasValue) pixels.Add(newPixel.Value);
                     }
                 }
-                for (var i = 0; i < pixels.Count; i++)
+                for (var pixel = 0; pixel < pixels.Count; pixel++)
                 {
-                    var pixel = pixels[i];
-                    pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, LocalPositionRelativeToCenterPixel(pixels, pixel));
+                    var newPixel = pixels[pixel];
+                    newPixel.Position = LocalPositionRelativeToCenterPixel(pixels, newPixel);
+                    pixels[pixel] = newPixel;
                 }
                 return pixels;
             }
@@ -45,7 +39,7 @@ namespace N8Engine.Rendering
         public N8SpriteData(string[] dataText) : this()
         {
             _dataText = dataText;
-            _dimensions = new Vector(SeparateLine(_dataText[0]).Count, _dataText.Length - 1);
+            _dimensions = new IntegerVector(SeparateLine(_dataText[0]).Count, _dataText.Length - 1);
         }
 
         private List<string> SeparateLine(string line)
@@ -57,7 +51,7 @@ namespace N8Engine.Rendering
             return pixels;
         }
 
-        private Pixel? SeparatePixel(string pixelSet, Vector position)
+        private Pixel? SeparatePixel(string pixelSet, IntegerVector position)
         {
             var foregroundColorName = pixelSet.Split(',')[0];
             var backgroundColorName = pixelSet.Split(',')[1];
@@ -69,15 +63,15 @@ namespace N8Engine.Rendering
             return new Pixel(foregroundColor, backgroundColor, position);
         }
 
-        private Vector LocalPositionRelativeToCenterPixel(IReadOnlyCollection<Pixel> allPixels, Pixel pixel) => pixel.Position - CenterPixelPositionOf(allPixels);
+        private IntegerVector LocalPositionRelativeToCenterPixel(IReadOnlyCollection<Pixel> allPixels, Pixel pixel) => pixel.Position - CenterPixelPositionOf(allPixels);
 
-        private Vector CenterPixelPositionOf(IReadOnlyCollection<Pixel> pixels)
+        private IntegerVector CenterPixelPositionOf(IReadOnlyCollection<Pixel> pixels)
         {
             var height = pixels.Last().Position.Y;
             var width = pixels.Last().Position.X;
             var centerY = (int) (height / 2f);
             var centerX = (int) (width / 2f);
-            var center = new Vector(centerX, centerY);
+            var center = new IntegerVector(centerX, centerY);
             return center;
         }
     }

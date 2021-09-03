@@ -13,7 +13,7 @@ namespace N8Engine.Tilemaps
         public AutoTilemap<TPalette> Place(Vector position, IntegerVector sizeInTiles, Pivot pivot)
         {
             var bottomLeft = position;
-            var totalSize = sizeInTiles * _palette.ActualTileSize;
+            var totalSize = sizeInTiles * _palette.TileSize;
             var positionAdjustedToPivot = bottomLeft.AdjustToPivot(totalSize, pivot);
             
             var chunk = new Chunk(positionAdjustedToPivot, sizeInTiles, _palette);

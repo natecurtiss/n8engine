@@ -9,9 +9,8 @@ namespace N8Engine.Rendering
     internal static class Renderer
     {
         private const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
-        private const char PIXEL_CHARACTER = '▒';
-        private const char DELETE_CHARACTER = ' ';
-
+        private static readonly string _pixelCharacter = new('▒', NUMBER_OF_CHARACTERS_PER_PIXEL);
+        private static readonly string _deleteCharacter = new(' ', NUMBER_OF_CHARACTERS_PER_PIXEL);
         private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRender = new();
         private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRenderLastFrame = new();
 
@@ -62,7 +61,7 @@ namespace N8Engine.Rendering
             {
                 if (!HasPixelMovedSinceLastFrame(position, pixel)) continue;
                 if (!position.IsToTheRightOf(lastPosition))
-                    output.MoveCursorTo(position);
+                    output.MoveCursorTo(position * new IntegerVector(NUMBER_OF_CHARACTERS_PER_PIXEL, 1));
                 lastPosition = position;
                 
                 if (pixel.ForegroundColor != lastForegroundColor)
@@ -73,9 +72,8 @@ namespace N8Engine.Rendering
                 
                 lastForegroundColor = pixel.ForegroundColor;
                 lastBackgroundColor = pixel.BackgroundColor;
-
-                for (var i = 0; i < NUMBER_OF_CHARACTERS_PER_PIXEL; i++)
-                    output.Append(PIXEL_CHARACTER);
+                
+                output.Append(_pixelCharacter);
             }
             Console.Write(output.ToString());
         }
@@ -90,10 +88,9 @@ namespace N8Engine.Rendering
             {
                 if (position.HasAPixel()) continue;
                 if (!position.IsToTheRightOf(lastPosition))
-                    output.MoveCursorTo(position);
+                    output.MoveCursorTo(position * new IntegerVector(NUMBER_OF_CHARACTERS_PER_PIXEL, 1));
                 lastPosition = position;
-                for (var i = 0; i < NUMBER_OF_CHARACTERS_PER_PIXEL; i++)
-                    output.Append(DELETE_CHARACTER);
+                output.Append(_deleteCharacter);
             }
             _pixelsToRenderLastFrame.Clear();
             Console.Write(output.ToString());
