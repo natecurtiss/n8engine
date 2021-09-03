@@ -13,9 +13,11 @@ namespace N8Engine.Physics
         public Vector TopLeft { get; }
         public Vector BottomRight { get; }
         public Vector Position { get; }
+        public string Name { get; }
         
-        public BoundingBox(Vector size, Vector position = default)
+        public BoundingBox(string name, Vector size, Vector position = default)
         {
+            Name = name;
             Extents = size / 2f;
             Left = new Vector(-Extents.X, 0f) + position;
             Right = new Vector(Extents.X, 0f) + position;
@@ -26,14 +28,18 @@ namespace N8Engine.Physics
             Position = position;
         }
 
-        public bool IsOverlapping(BoundingBox otherBoundingBox)
+        public bool IsOverlapping(BoundingBox otherBoundingBox, bool debug = false)
         {
             var oneIsToTheRight = TopLeft.X > otherBoundingBox.BottomRight.X || otherBoundingBox.TopLeft.X > BottomRight.X;
             if (oneIsToTheRight)
                 return false;
             var oneIsOnTop = BottomRight.Y > otherBoundingBox.TopLeft.Y || otherBoundingBox.BottomRight.Y > TopLeft.Y;
             if (oneIsOnTop)
+            {
+                if (debug)
+                    Debug.Log(this + " " + otherBoundingBox);
                 return false;
+            }
             return true;
         }
 
@@ -50,5 +56,18 @@ namespace N8Engine.Physics
             if (isToTheLeftOfOtherRectangle) return Direction.Left;
             return Direction.None;
         }
+
+        public override string ToString() =>
+            $"\n {Name} " +
+            "\n { " +
+            $"\n \t center: {Position}" + 
+            $"\n \t extents: {Extents}" + 
+            $"\n \t left: {Left}," +
+            $"\n \t right: {Right}," +
+            $"\n \t top: {Top}, " +
+            $"\n \t bottom {Bottom}," +
+            $"\n \t top left: {TopLeft}" +
+            $"\n \t bottom right: {BottomRight}" +
+            "\n }";
     }
 }

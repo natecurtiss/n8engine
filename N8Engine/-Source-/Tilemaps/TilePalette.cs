@@ -17,10 +17,8 @@ namespace N8Engine.Tilemaps
         protected abstract Sprite BottomLeft { get; }
         protected abstract Sprite BottomRight { get; }
         protected abstract Sprite Middle { get; }
-
-        // There are roughly twice as many pixels horizontally as there are vertically, so I have to adjust for that here.
-        internal IntegerVector ActualTileSize => new(TileSize.X * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, TileSize.Y);
-        internal Vector HalfATile => (Vector) ActualTileSize / 2f;
+        
+        internal Vector HalfATile => (Vector) TileSize / 2f;
         
         public Sprite GetSpriteInChunk(IntegerVector localPosition, IntegerVector chunkSizeInTiles)
         {

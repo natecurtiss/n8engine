@@ -10,64 +10,58 @@ namespace N8Engine.Physics
         private IntegerVector _size;
         private Sprite _sprite;
         
-        public Sprite Sprite => _sprite ??= new Sprite(Pixels);
-        public IntegerVector Size
+        public Sprite Sprite => _sprite ??= new Sprite(GeneratePixels());
+
+        public void Redraw(IntegerVector size)
         {
-            get => _size;
-            set
-            {
-                if (_size == value) return;
-                _size = value;
-                _sprite = new Sprite(Pixels);
-            }
+            _size = size;
+            if (_size.X == 0 || _size.Y == 0) return;
+            _sprite = new Sprite(GeneratePixels());
         }
 
-        private Pixel[] Pixels
+        private Pixel[] GeneratePixels()
         {
-            get
+            var width = _size.X;
+            var height = _size.Y;
+
+            const string green_color = "{Green,Green}";
+            const string clear_color = "{Clear,Clear}";
+
+            var pixelData = new string[height];
+            var stringBuilder = new StringBuilder();
+
+            for (var i = 0; i < width; i++)
+                stringBuilder.Append(green_color);
+            pixelData[0] = stringBuilder.ToString();
+            stringBuilder.Clear();
+
+            for (var i = 0; i < width; i++)
+                stringBuilder.Append(green_color);
+            pixelData[height - 1] = stringBuilder.ToString();
+            stringBuilder.Clear();
+
+            for (var line = 1; line < height - 1; line++)
             {
-                var width = Size.X;
-                var height = Size.Y;
-
-                const string green_color = "{Green,Green}";
-                const string clear_color = "{Clear,Clear}";
-
-                var pixelData = new string[height];
-                var stringBuilder = new StringBuilder();
-                
-                for (var i = 0; i < width; i++)
-                    stringBuilder.Append(green_color);
-                pixelData[0] = stringBuilder.ToString();
+                for (var pixel = 0; pixel < width; pixel++)
+                    if (pixel == 0 || pixel == width - 1)
+                        stringBuilder.Append(green_color);
+                    else
+                        stringBuilder.Append(clear_color);
+                pixelData[line] = stringBuilder.ToString();
                 stringBuilder.Clear();
-
-                for (var i = 0; i < width; i++)
-                    stringBuilder.Append(green_color);
-                pixelData[height - 1] = stringBuilder.ToString();
-                stringBuilder.Clear();
-
-                for (var line = 1; line < height - 1; line++)
-                {
-                    for (var pixel = 0; pixel < width; pixel++)
-                        if (pixel == 0 || pixel == width - 1)
-                            stringBuilder.Append(green_color);
-                        else
-                            stringBuilder.Append(clear_color);
-                    pixelData[line] = stringBuilder.ToString();
-                    stringBuilder.Clear();
-                }
-                
-                var data = new N8SpriteData(pixelData);
-                var sortedPixels = new List<Pixel>();
-                foreach (var pixel in data.Pixels)
-                {
-                    var sortedPixel = pixel;
-                    sortedPixel.SortingOrder = 1;
-                    sortedPixels.Add(sortedPixel);
-                }
-                return sortedPixels.ToArray();
             }
+
+            var data = new N8SpriteData(pixelData);
+            var sortedPixels = new List<Pixel>();
+            foreach (var pixel in data.Pixels)
+            {
+                var sortedPixel = pixel;
+                sortedPixel.SortingOrder = 1;
+                sortedPixels.Add(sortedPixel);
+            }
+            return sortedPixels.ToArray();
         }
 
-        public ColliderVisualization(Collider collider) => Size = collider.Size;
+        public ColliderVisualization(Collider collider) => Redraw(collider.Size);
     }
 }

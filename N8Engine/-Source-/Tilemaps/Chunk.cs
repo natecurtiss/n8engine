@@ -40,11 +40,12 @@ namespace N8Engine.Tilemaps
 
         public void GenerateTiles() => GenerateTiles<Tile>();
 
-        public void CreateCollider()
+        public TilemapBase CreateCollider()
         {
             var tilemapBase = _palette.BaseObject;
             tilemapBase.Transform.Position = Center;
             tilemapBase.Collider.Size = ColliderSize;
+            return tilemapBase;
         }
     }
 }

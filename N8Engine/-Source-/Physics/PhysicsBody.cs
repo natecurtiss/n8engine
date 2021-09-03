@@ -29,6 +29,9 @@ namespace N8Engine.Physics
             );
         }
 
-        internal void ApplyVelocity(float deltaTime) => Transform.Position += Velocity * deltaTime;
+        internal void ApplyVelocity(float deltaTime)
+        {
+            Transform.Position += Velocity * deltaTime;
+        }
     }
 }

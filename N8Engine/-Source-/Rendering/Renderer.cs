@@ -8,9 +8,9 @@ namespace N8Engine.Rendering
 {
     internal static class Renderer
     {
-        public const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
-        private const string PIXEL_CHARACTER = "▒";
-        private const string DELETE_CHARACTER = " ";
+        private const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
+        private const char PIXEL_CHARACTER = '▒';
+        private const char DELETE_CHARACTER = ' ';
 
         private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRender = new();
         private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRenderLastFrame = new();
@@ -74,7 +74,8 @@ namespace N8Engine.Rendering
                 lastForegroundColor = pixel.ForegroundColor;
                 lastBackgroundColor = pixel.BackgroundColor;
 
-                output.Append(PIXEL_CHARACTER);
+                for (var i = 0; i < NUMBER_OF_CHARACTERS_PER_PIXEL; i++)
+                    output.Append(PIXEL_CHARACTER);
             }
             Console.Write(output.ToString());
         }
@@ -91,7 +92,8 @@ namespace N8Engine.Rendering
                 if (!position.IsToTheRightOf(lastPosition))
                     output.MoveCursorTo(position);
                 lastPosition = position;
-                output.Append(DELETE_CHARACTER);
+                for (var i = 0; i < NUMBER_OF_CHARACTERS_PER_PIXEL; i++)
+                    output.Append(DELETE_CHARACTER);
             }
             _pixelsToRenderLastFrame.Clear();
             Console.Write(output.ToString());

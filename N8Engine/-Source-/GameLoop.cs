@@ -46,9 +46,9 @@ namespace N8Engine
                         timer = 0f;
                     }
                     previousTimeInMilliseconds = currentTimeInMilliseconds;
-                    InvokeEventsForCurrentFrame(timePassed);
+                    InvokeEventsForCurrentFrame(UpdateRate);
                 }
-                // Console.ReadKey();
+                Console.ReadKey();
             }
         }
 

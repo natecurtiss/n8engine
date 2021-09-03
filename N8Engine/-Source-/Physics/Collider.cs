@@ -25,13 +25,13 @@ namespace N8Engine.Physics
             set
             {
                 if (_size == value) return;
-                _visualization.Size = value;
+                _visualization.Redraw(value);
                 _size = value;
             }
         }
         internal Vector Position => Transform.Position + Offset;
         internal Sprite Sprite => Size == Vector.Zero ? Sprite.Empty : _visualization.Sprite;
-        internal Vector ActualSize => new(Size.X * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, Size.Y);
+        private Vector ActualSize => new(Size.X * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, Size.Y);
         
         private BoundingBox BoundingBoxThisFrame { get; set; }
         private BoundingBox BoundingBoxNextFrame { get; set; }
@@ -44,8 +44,8 @@ namespace N8Engine.Physics
 
         internal void UpdateBoundingBoxes(float deltaTime)
         {
-            BoundingBoxThisFrame = new BoundingBox(ActualSize, Position);
-            BoundingBoxNextFrame = new BoundingBox(ActualSize, Position + _physicsBody.Velocity * deltaTime);
+            BoundingBoxThisFrame = new BoundingBox(GameObject.Name, ActualSize, Position);
+            BoundingBoxNextFrame = new BoundingBox(GameObject.Name, ActualSize, Position + _physicsBody.Velocity * deltaTime);
         }
 
         internal void CheckCollisions()
@@ -61,11 +61,12 @@ namespace N8Engine.Physics
                 var otherCollider = otherGameObject.Collider;
                 if (otherCollider == this) continue;
                 if (otherCollider.Size == Vector.Zero) continue;
+                
+                if (this.ToString() == "player" && otherCollider.ToString() == "tilemap")
+                    Debug.Log(BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame, true));
+                
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
-                    // TODO remove these
-                    if (this.ToString() == "player")
-                        Debug.Log(System.DateTime.Now.Millisecond + " " + otherCollider + " overlap");
                     _collidersCollidingWithThisFrame.Add(otherCollider);
                     if (otherCollider.IsTrigger || IsTrigger)
                     {
@@ -74,9 +75,6 @@ namespace N8Engine.Physics
                     }
                     else
                     {
-                        // TODO remove these
-                        if (this.ToString() == "player")
-                            Debug.Log(System.DateTime.Now.Millisecond + " " + otherCollider + " collide");
                         var directionOfCollision = BoundingBoxThisFrame.DirectionRelativeTo(otherCollider.BoundingBoxThisFrame);
                         _physicsBody.OnCollisionWith(directionOfCollision);
                         if (!_collidersCollidingWithLastFrame.Contains(otherCollider)) 

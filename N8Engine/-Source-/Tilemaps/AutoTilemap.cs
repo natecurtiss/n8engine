@@ -5,6 +5,8 @@ namespace N8Engine.Tilemaps
     public sealed class AutoTilemap<TPalette> where TPalette : TilePalette, new()
     {
         private readonly TPalette _palette;
+        
+        public TilemapBase GameObject { get; private set; }
 
         public AutoTilemap() => _palette = new TPalette();
 
@@ -16,7 +18,7 @@ namespace N8Engine.Tilemaps
             
             var chunk = new Chunk(positionAdjustedToPivot, sizeInTiles, _palette);
             chunk.GenerateTiles();
-            chunk.CreateCollider();
+            GameObject = chunk.CreateCollider();
             return this;
         }
     }
