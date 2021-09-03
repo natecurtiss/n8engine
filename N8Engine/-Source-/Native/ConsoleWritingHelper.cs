@@ -9,8 +9,8 @@ namespace N8Engine.Native
     {
         private const string ANSI_ESCAPE_SEQUENCE_START = "\u001b[";
         
-        public static void MoveCursorTo(this StringBuilder stringBuilder, Vector position) => 
-            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{(int) position.Y};{(int) position.X}H");
+        public static void MoveCursorTo(this StringBuilder stringBuilder, IntegerVector position) => 
+            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{position.Y};{position.X}H");
         
         public static void SetConsoleForegroundColorTo(this StringBuilder stringBuilder, ConsoleColor foregroundColor) =>
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{foregroundColor.AsAnsiForegroundColor()}");

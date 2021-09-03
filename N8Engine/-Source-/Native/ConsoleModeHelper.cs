@@ -14,11 +14,11 @@ namespace N8Engine.Native
         [DllImport("kernel32.dll")]
         private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
 
-        internal static void EnableAnsiEscapeSequences()
+        public static void EnableAnsiEscapeSequences()
         {
-            GetConsoleMode(CommonConsoleWindowInfo.StandardOutputHandle, out var outConsoleMode);
-            outConsoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN;
-            SetConsoleMode(CommonConsoleWindowInfo.StandardOutputHandle, outConsoleMode);
+            GetConsoleMode(CommonConsoleWindowInfo.StandardOutputHandle, out var consoleMode);
+            consoleMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN;
+            SetConsoleMode(CommonConsoleWindowInfo.StandardOutputHandle, consoleMode);
         }
     }
 }

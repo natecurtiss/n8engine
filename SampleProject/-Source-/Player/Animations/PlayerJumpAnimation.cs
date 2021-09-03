@@ -7,7 +7,7 @@ namespace SampleProject
     {
         protected override Sprite[] Frames => new Sprite[]
         {
-            new(SpritesFolder.Path + "player_5.n8sprite", new Vector(0f, -3f), ShouldFlipHorizontally)
+            new(SpritesFolder.Path + "player_5.n8sprite", Vector.Zero, ShouldFlipHorizontally)
         };
         protected override float TimeBetweenFrames => 0f;
         

@@ -19,17 +19,18 @@ namespace SampleProject
 
         protected override void OnStart()
         {
-            Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 15f;
+            Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 90f;
             
             _animationController = new PlayerAnimationController(AnimationPlayer, _input);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += _animationController.HandleLandAnimation;
-            _groundCheck.Collider.Size = new Vector(10f, 10f);
-            _groundCheck.Collider.Offset = Vector.Down * 1f;
+            _groundCheck.Collider.Size = new Vector(7f, 3f);
+            _groundCheck.Collider.Offset = new Vector(1f, -3f);
 
-            Collider.Size = new Vector(7, 7);
-            Collider.Offset = Vector.Right;
+            Collider.Size = new Vector(7, 8);
+            Collider.Offset = new Vector(1f, 0f);
             SpriteRenderer.SortingOrder = -2;
+            Collider.IsVisible = true;
             PhysicsBody.UseGravity = true;
             AnimationPlayer.Play();
         }
@@ -49,11 +50,6 @@ namespace SampleProject
             ClampPositionWithinWindow();
             _groundCheck.Transform.Position = Transform.Position;
             if (Transform.Position.Y <= Window.BottomSide.Y) Die();
-        }
-
-        public override void OnCollidedWith(Collider otherCollider)
-        {
-            Debug.Log(otherCollider.GameObject.Name);
         }
 
         private void Move()

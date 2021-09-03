@@ -33,7 +33,7 @@ namespace N8Engine.Physics
         internal Sprite Sprite => Size == Vector.Zero ? Sprite.Empty : _visualization.Sprite;
         internal Vector ActualSize => new(Size.X * Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL, Size.Y);
         
-        private BoundingBox BoundingBoxCurrentFrame { get; set; }
+        private BoundingBox BoundingBoxThisFrame { get; set; }
         private BoundingBox BoundingBoxNextFrame { get; set; }
 
         internal Collider(GameObject gameObject) : base(gameObject)
@@ -44,7 +44,7 @@ namespace N8Engine.Physics
 
         internal void UpdateBoundingBoxes(float deltaTime)
         {
-            BoundingBoxCurrentFrame = new BoundingBox(ActualSize, Position);
+            BoundingBoxThisFrame = new BoundingBox(ActualSize, Position);
             BoundingBoxNextFrame = new BoundingBox(ActualSize, Position + _physicsBody.Velocity * deltaTime);
         }
 
@@ -56,32 +56,29 @@ namespace N8Engine.Physics
             _collidersCollidingWithThisFrame.Clear();
 
             if (Size == Vector.Zero) return;
-            
             foreach (var otherGameObject in SceneManager.CurrentScene.ToArray())
             {
                 var otherCollider = otherGameObject.Collider;
                 if (otherCollider == this) continue;
                 if (otherCollider.Size == Vector.Zero) continue;
-                
-                if (ToString() == "player" && otherCollider.ToString() == "new SampleProject.TilemapThatCanBeJumpedOn") 
-                    Debug.Log("" +
-                              $"{BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame)} " +
-                              $"{otherCollider.BoundingBoxNextFrame.Top} " +
-                              $"{otherCollider.BoundingBoxNextFrame.Position} " +
-                              $"{Position} " +
-                              $"{BoundingBoxNextFrame.Top}");
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
+                    if (this.ToString() == "player")
+                        Debug.Log(System.DateTime.Now.Millisecond + " " + otherCollider + " overlap");
                     _collidersCollidingWithThisFrame.Add(otherCollider);
                     if (otherCollider.IsTrigger || IsTrigger)
                     {
-                        GameObject.OnTriggeredBy(otherCollider);
+                        if (!_collidersCollidingWithLastFrame.Contains(otherCollider)) 
+                            GameObject.OnTriggeredBy(otherCollider);
                     }
                     else
                     {
-                        var directionOfCollision = BoundingBoxCurrentFrame.DirectionRelativeTo(otherCollider.BoundingBoxCurrentFrame);
+                        if (this.ToString() == "player")
+                            Debug.Log(System.DateTime.Now.Millisecond + " " + otherCollider + " collide");
+                        var directionOfCollision = BoundingBoxThisFrame.DirectionRelativeTo(otherCollider.BoundingBoxThisFrame);
                         _physicsBody.OnCollisionWith(directionOfCollision);
-                        GameObject.OnCollidedWith(otherCollider);
+                        if (!_collidersCollidingWithLastFrame.Contains(otherCollider)) 
+                            GameObject.OnCollidedWith(otherCollider);
                     }
                 }
             }

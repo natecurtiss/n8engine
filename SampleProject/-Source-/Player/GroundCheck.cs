@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using N8Engine;
+using N8Engine.Physics;
 
 namespace SampleProject
 {
@@ -41,7 +43,6 @@ namespace SampleProject
                 if (wasGroundedLastFrame && !IsGrounded)
                     OnJumpedOffTheGround?.Invoke();
             }
-
         }
     }
 }
