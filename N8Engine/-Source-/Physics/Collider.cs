@@ -63,6 +63,7 @@ namespace N8Engine.Physics
                 if (otherCollider.Size == Vector.Zero) continue;
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
+                    // TODO remove these
                     if (this.ToString() == "player")
                         Debug.Log(System.DateTime.Now.Millisecond + " " + otherCollider + " overlap");
                     _collidersCollidingWithThisFrame.Add(otherCollider);
@@ -73,6 +74,7 @@ namespace N8Engine.Physics
                     }
                     else
                     {
+                        // TODO remove these
                         if (this.ToString() == "player")
                             Debug.Log(System.DateTime.Now.Millisecond + " " + otherCollider + " collide");
                         var directionOfCollision = BoundingBoxThisFrame.DirectionRelativeTo(otherCollider.BoundingBoxThisFrame);

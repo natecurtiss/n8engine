@@ -12,7 +12,7 @@ namespace N8Engine.Inputs
     public static class Input
     {
         private static readonly Dictionary<Key, KeyState> _keys = new();
-        private static readonly Key[] _allKeys = (Key[]) Enum.GetValues(typeof(Key));
+        private static readonly Key[] _allKeys = Enum.GetValues<Key>();
         private enum KeyState { IsPressed, IsReleased, WasJustPressed, WasJustReleased }
         
         internal static void Initialize()
