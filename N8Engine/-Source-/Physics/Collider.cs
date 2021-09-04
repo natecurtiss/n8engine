@@ -61,8 +61,8 @@ namespace N8Engine.Physics
                 if (otherCollider == this) continue;
                 if (otherCollider.Size == Vector.Zero) continue;
                 
-                if (this.ToString() == "player" && otherCollider.ToString() == "tilemap")
-                    Debug.Log(BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame, true));
+                // if (this.ToString() == "player" && otherCollider.ToString() == "tilemap")
+                //     Debug.Log(BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame, true));
                 
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {

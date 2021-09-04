@@ -6,9 +6,9 @@ namespace N8Engine.Rendering
 {
     public static class Window
     {
-        private static readonly float _width = Console.WindowWidth;
-        private static readonly float _height = Console.WindowHeight;
-        private static readonly Vector _span = new(_width, _height);
+        private static float _width;
+        private static float _height;
+        private static Vector _span;
         public static Vector BottomLeftCorner { get; private set; }
         public static Vector BottomRightCorner { get; private set; }
         public static Vector TopLeftCorner { get; private set; }
@@ -20,6 +20,8 @@ namespace N8Engine.Rendering
 
         internal static void Initialize(short cameraSize)
         {
+            GameLoop.OnPreUpdate += _ => UpdateWindowSize();
+            
             Console.Title = "-n8engine-";
             ConsoleModeHelper.EnableAnsiEscapeSequences();
             ConsoleFontHelper.SetCurrentFont("Consolas", cameraSize);
@@ -27,14 +29,7 @@ namespace N8Engine.Rendering
             ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
             
-            LeftSide = new Vector(-_width / 2f, 0f);
-            RightSide = new Vector(_width / 2f, 0f);
-            TopSide = new Vector(0f, _height / 2f);
-            BottomSide = new Vector(0f, -_height / 2f);
-            BottomLeftCorner = new Vector(LeftSide.X, BottomSide.Y);
-            BottomRightCorner = new Vector(RightSide.X, BottomSide.Y);
-            TopLeftCorner = new Vector(LeftSide.X, TopSide.Y);
-            TopRightCorner = new Vector(RightSide.X, TopSide.Y);
+            UpdateWindowSize();
         }
 
         internal static IntegerVector FromWorldPositionToWindowPosition(this Vector position)
@@ -51,5 +46,22 @@ namespace N8Engine.Rendering
             position.Y >= 0 &&
             position.X <= _width -1 &&
             position.Y <= _height - 1;
+
+        private static void UpdateWindowSize()
+        {
+            if (Console.WindowWidth == _width && Console.WindowHeight == _height) return;
+            Console.Clear();
+            _width = Console.WindowWidth;
+            _height = Console.WindowHeight;
+            _span = new Vector(_width, _height);
+            LeftSide = new Vector(-_width / 2f, 0f);
+            RightSide = new Vector(_width / 2f, 0f);
+            TopSide = new Vector(0f, _height / 2f);
+            BottomSide = new Vector(0f, -_height / 2f);
+            BottomLeftCorner = new Vector(LeftSide.X, BottomSide.Y);
+            BottomRightCorner = new Vector(RightSide.X, BottomSide.Y);
+            TopLeftCorner = new Vector(LeftSide.X, TopSide.Y);
+            TopRightCorner = new Vector(RightSide.X, TopSide.Y);
+        }
     }
 }

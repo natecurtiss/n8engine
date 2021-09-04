@@ -50,7 +50,7 @@ namespace SampleProject
         {
             ClampPositionWithinWindow();
             _groundCheck.Transform.Position = Transform.Position;
-            if (Transform.Position.Y <= Window.BottomSide.Y) Die();
+            if (Transform.Position.Y <= -100f) Die();
         }
 
         private void Move()

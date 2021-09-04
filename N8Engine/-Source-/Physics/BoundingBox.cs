@@ -36,8 +36,8 @@ namespace N8Engine.Physics
             var oneIsOnTop = BottomRight.Y > otherBoundingBox.TopLeft.Y || otherBoundingBox.BottomRight.Y > TopLeft.Y;
             if (oneIsOnTop)
             {
-                if (debug)
-                    Debug.Log(this + " " + otherBoundingBox);
+                // if (debug)
+                //     Debug.Log(this + " " + otherBoundingBox);
                 return false;
             }
             return true;
