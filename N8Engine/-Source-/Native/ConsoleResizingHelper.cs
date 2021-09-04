@@ -33,18 +33,22 @@ namespace N8Engine.Native
 
         // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlonga
         private const int NEW_WINDOW_STYLE = -16;
+        // https://docs.microsoft.com/en-us/windows/win32/winmsg/window-styles
         // http://pinvoke.net/default.aspx/Constants/Window%20styles.html
         private const uint WS_MAXIMIZE_BOX = 0x00010000;
         private const uint WS_MINIMIZE_BOX = 0x00020000;
         private const uint WS_SIZE_BOX = 0x00040000;
-        private const uint WS_BORDER = 0x00800000;
+        private const uint WS_CAPTION = 0x00C00000;
+        private const uint WS_DLG_FRAME = 0x00400000;
+        private const uint WS_POPUP = 0x80000000;
 
-        public static void Maximize()
+        public static void RemoveTitlebarAndScrollbar()
         {
-            ToggleFullscreen();
             RemoveTitlebar(); 
             RemoveScrollbar();
         }
+
+        public static void Maximize() => ToggleFullscreen();
 
         private static void ToggleFullscreen()
         {
@@ -63,8 +67,9 @@ namespace N8Engine.Native
                 currentWindowStyle & 
                 ~WS_MAXIMIZE_BOX & 
                 ~WS_MINIMIZE_BOX & 
-                ~WS_SIZE_BOX & 
-                ~WS_BORDER
+                ~WS_SIZE_BOX |
+                WS_CAPTION |
+                WS_POPUP
             );
         }
 
