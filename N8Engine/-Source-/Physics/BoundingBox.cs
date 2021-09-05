@@ -28,18 +28,14 @@ namespace N8Engine.Physics
             Position = position;
         }
 
-        public bool IsOverlapping(BoundingBox otherBoundingBox, bool debug = false)
+        public bool IsOverlapping(BoundingBox otherBoundingBox)
         {
-            var oneIsToTheRight = TopLeft.X > otherBoundingBox.BottomRight.X || otherBoundingBox.TopLeft.X > BottomRight.X;
-            if (oneIsToTheRight)
+            var isOneToTheRight = TopLeft.X > otherBoundingBox.BottomRight.X || otherBoundingBox.TopLeft.X > BottomRight.X;
+            if (isOneToTheRight)
                 return false;
-            var oneIsOnTop = BottomRight.Y > otherBoundingBox.TopLeft.Y || otherBoundingBox.BottomRight.Y > TopLeft.Y;
-            if (oneIsOnTop)
-            {
-                // if (debug)
-                //     Debug.Log(this + " " + otherBoundingBox);
+            var isOneOnTop = BottomRight.Y > otherBoundingBox.TopLeft.Y || otherBoundingBox.BottomRight.Y > TopLeft.Y;
+            if (isOneOnTop)
                 return false;
-            }
             return true;
         }
 

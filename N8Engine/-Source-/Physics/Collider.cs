@@ -60,10 +60,7 @@ namespace N8Engine.Physics
                 var otherCollider = otherGameObject.Collider;
                 if (otherCollider == this) continue;
                 if (otherCollider.Size == Vector.Zero) continue;
-                
-                // if (this.ToString() == "player" && otherCollider.ToString() == "tilemap")
-                //     Debug.Log(BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame, true));
-                
+
                 if (BoundingBoxNextFrame.IsOverlapping(otherCollider.BoundingBoxNextFrame))
                 {
                     _collidersCollidingWithThisFrame.Add(otherCollider);

@@ -6,9 +6,9 @@ namespace N8Engine.Rendering
 {
     public static class Window
     {
-        private static readonly int _width = Console.WindowWidth;
-        private static readonly int _height = Console.WindowHeight;
-        private static readonly IntegerVector _span = new(_width, _height);
+        public static readonly int Width = Console.WindowWidth / Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL;
+        public static readonly int Height = Console.WindowHeight / Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL;
+
         public static Vector BottomLeftCorner { get; private set; }
         public static Vector BottomRightCorner { get; private set; }
         public static Vector TopLeftCorner { get; private set; }
@@ -28,29 +28,14 @@ namespace N8Engine.Rendering
             ConsoleResizingHelper.Maximize();
             Console.CursorVisible = false;
             
-            LeftSide = new Vector(-_width / 2f, 0f);
-            RightSide = new Vector(_width / 2f, 0f);
-            TopSide = new Vector(0f, _height / 2f);
-            BottomSide = new Vector(0f, -_height / 2f);
+            LeftSide = new Vector(-Width / 2f, 0f);
+            RightSide = new Vector(Width / 2f, 0f);
+            TopSide = new Vector(0f, Height / 2f);
+            BottomSide = new Vector(0f, -Height / 2f);
             BottomLeftCorner = new Vector(LeftSide.X, BottomSide.Y);
             BottomRightCorner = new Vector(RightSide.X, BottomSide.Y);
             TopLeftCorner = new Vector(LeftSide.X, TopSide.Y);
             TopRightCorner = new Vector(RightSide.X, TopSide.Y);
         }
-
-        internal static IntegerVector FromWorldPositionToWindowPosition(this Vector position)
-        {
-            var worldPosition = new Vector(position.X, -position.Y);
-            var windowPosition = (IntegerVector) (worldPosition + _span / 2);
-            return windowPosition;
-        }
-
-        internal static bool IsOutsideOfTheWorld(this IntegerVector position) => !position.IsInsideOfTheWorld();
-        
-        private static bool IsInsideOfTheWorld(this IntegerVector position) =>
-            position.X >= 0 &&
-            position.Y >= 0 &&
-            position.X <= _width -1 &&
-            position.Y <= _height - 1;
     }
 }

@@ -10,16 +10,16 @@ namespace N8Engine.Physics
         private IntegerVector _size;
         private Sprite _sprite;
         
-        public Sprite Sprite => _sprite ??= new Sprite(GeneratePixels());
+        public Sprite Sprite => _sprite ??= new Sprite(GeneratePixelData());
 
         public void Redraw(IntegerVector size)
         {
             _size = size;
             if (_size.X == 0 || _size.Y == 0) return;
-            _sprite = new Sprite(GeneratePixels());
+            _sprite = new Sprite(GeneratePixelData());
         }
 
-        private Pixel[] GeneratePixels()
+        private string[] GeneratePixelData()
         {
             var width = _size.X;
             var height = _size.Y;
@@ -50,16 +50,7 @@ namespace N8Engine.Physics
                 pixelData[line] = stringBuilder.ToString();
                 stringBuilder.Clear();
             }
-
-            var data = new N8SpriteData(pixelData);
-            var sortedPixels = new List<Pixel>();
-            foreach (var pixel in data.Pixels)
-            {
-                var sortedPixel = pixel;
-                sortedPixel.SortingOrder = 1;
-                sortedPixels.Add(sortedPixel);
-            }
-            return sortedPixels.ToArray();
+            return pixelData;
         }
 
         public ColliderVisualization(Collider collider) => Redraw(collider.Size);

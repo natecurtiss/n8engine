@@ -8,11 +8,12 @@ namespace N8Engine.Rendering
 {
     internal static class Renderer
     {
-        private const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
+        internal const int NUMBER_OF_CHARACTERS_PER_PIXEL = 2;
         private static readonly string _pixelCharacter = new('▒', NUMBER_OF_CHARACTERS_PER_PIXEL);
         private static readonly string _deleteCharacter = new(' ', NUMBER_OF_CHARACTERS_PER_PIXEL);
         private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRender = new();
         private static readonly Dictionary<IntegerVector, Pixel> _pixelsToRenderLastFrame = new();
+        private static readonly IntegerVector _windowSize = new(Console.WindowWidth, Console.WindowHeight);
 
         public static void Initialize()
         {
@@ -27,10 +28,12 @@ namespace N8Engine.Rendering
             foreach (var pixel in sprite.Pixels)
             {
                 var worldPosition = pixel.Position + spritePosition;
+                worldPosition.X *= NUMBER_OF_CHARACTERS_PER_PIXEL;
                 var windowPosition = worldPosition.FromWorldPositionToWindowPosition();
+                Debug.Log(worldPosition + " " + windowPosition);
                 var sortedPixel = pixel.WithSortingOrder(sortingOrder);
                 
-                if (windowPosition.IsOutsideOfTheWorld()) continue;
+                if (windowPosition.IsOutsideOfTheWindow()) continue;
                 if (windowPosition.DoesNotHaveAPixel())
                 {
                     _pixelsToRender.Add(windowPosition, sortedPixel);
@@ -61,7 +64,7 @@ namespace N8Engine.Rendering
             {
                 if (!HasPixelMovedSinceLastFrame(position, pixel)) continue;
                 if (!position.IsToTheRightOf(lastPosition))
-                    output.MoveCursorTo(position * new IntegerVector(NUMBER_OF_CHARACTERS_PER_PIXEL, 1));
+                    output.MoveCursorTo(position);
                 lastPosition = position;
                 
                 if (pixel.ForegroundColor != lastForegroundColor)
@@ -75,6 +78,7 @@ namespace N8Engine.Rendering
                 
                 output.Append(_pixelCharacter);
             }
+            Debug.Log(output);
             Console.Write(output.ToString());
         }
 
@@ -88,7 +92,7 @@ namespace N8Engine.Rendering
             {
                 if (position.HasAPixel()) continue;
                 if (!position.IsToTheRightOf(lastPosition))
-                    output.MoveCursorTo(position * new IntegerVector(NUMBER_OF_CHARACTERS_PER_PIXEL, 1));
+                    output.MoveCursorTo(position);
                 lastPosition = position;
                 output.Append(_deleteCharacter);
             }
@@ -124,6 +128,21 @@ namespace N8Engine.Rendering
 
         private static bool IsToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
             currentPosition - lastPosition == IntegerVector.Right;
+
+        private static IntegerVector FromWorldPositionToWindowPosition(this Vector position)
+        {
+            var worldPosition = new Vector(position.X, -position.Y);
+            var windowPosition = (IntegerVector) (worldPosition + _windowSize / 2);
+            return windowPosition;
+        }
+
+        private static bool IsOutsideOfTheWindow(this IntegerVector position) => !position.IsInsideOfTheWorld();
+        
+        private static bool IsInsideOfTheWorld(this IntegerVector position) =>
+            position.X >= 0 &&
+            position.Y >= 0 &&
+            position.X <= _windowSize.X -1 &&
+            position.Y <= _windowSize.Y - 1;
 
     }
 }

@@ -4,39 +4,43 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    public sealed class Sprite
+    public sealed partial class Sprite
     {
-        public static readonly Sprite Empty = new(Array.Empty<Pixel>());
+        public static Sprite Empty => new();
         internal Pixel[] Pixels { get; private set; }
 
         public Sprite(string path, Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
         {
-            var file = File.ReadAllLines(path);
-            var data = new N8SpriteData(file);
-            Pixels = data.Pixels.ToArray();
+            var fileData = File.ReadAllLines(path);
+            var data = new SpriteData(fileData);
+            Pixels = data.GetPixels().ToArray();
             CreateSprite(offset, shouldFlipHorizontally, shouldFlipVertically);
         }
 
-        internal Sprite(Pixel[] pixels)
+        internal Sprite(string[] pixels)
         {
-            Pixels = pixels;
+            if (pixels.Length == 0) return;
+            var data = new SpriteData(pixels);
+            Pixels = data.GetPixels().ToArray();
             CreateSprite();
         }
+        
+        private Sprite() { }
 
-        private void CreateSprite(Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
+        private void CreateSprite(IntegerVector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
         {
             OffsetPixels(offset);
             if (shouldFlipHorizontally) FlipPixelsHorizontally();
             if (shouldFlipVertically) FlipPixelsVertically();
         }
 
-        private void OffsetPixels(Vector offset)
+        private void OffsetPixels(IntegerVector offset)
         {
             var pixels = new Pixel[Pixels.Length];
             for (var i = 0; i < Pixels.Length; i++)
             {
                 var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position + new Vector(offset.X, -offset.Y));
+                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position + new IntegerVector(offset.X, -offset.Y));
             }
             Pixels = pixels;
         }
@@ -47,7 +51,7 @@ namespace N8Engine.Rendering
             for (var i = 0; i < Pixels.Length; i++)
             {
                 var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new Vector(-1f, 1f));
+                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new IntegerVector(-1, 1));
             }
             Pixels = pixels;
         }
@@ -58,7 +62,7 @@ namespace N8Engine.Rendering
             for (var i = 0; i < Pixels.Length; i++)
             {
                 var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new Vector(1f, -1f));
+                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new IntegerVector(1, -1));
             }
             Pixels = pixels;
         }

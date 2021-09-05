@@ -13,11 +13,12 @@ namespace SampleProject
         protected override void OnSceneLoaded()
         {
             var tilemap = new AutoTilemap<FullPalette>();
-            tilemap.Place(Window.BottomLeftCorner, new IntegerVector(10, 4), Pivot.BottomLeft);
+            // tilemap.Place(Window.BottomLeftCorner, new IntegerVector(10, 4), Pivot.BottomLeft);
 
-            GameObject.Create<Player>("player");
-            GameObject.Create<Door>("door").Transform.Position += new Vector(252f, -39f);
-            GameObject.Create<DoorKey>("key");
+            // GameObject.Create<Player>("player");
+            // GameObject.Create<Door>("door").Transform.Position += new Vector(252f, -39f);
+            // GameObject.Create<DoorKey>("key");
+            GameObject.Create<Line>("line").MakeColor("Red");
             // PhysicsSettings.ShouldShowAllColliders = true;
         }
     }
