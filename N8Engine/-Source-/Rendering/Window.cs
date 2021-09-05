@@ -7,7 +7,7 @@ namespace N8Engine.Rendering
     public static class Window
     {
         public static readonly int Width = Console.WindowWidth / Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL;
-        public static readonly int Height = Console.WindowHeight / Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL;
+        public static readonly int Height = Console.WindowHeight;
 
         public static Vector BottomLeftCorner { get; private set; }
         public static Vector BottomRightCorner { get; private set; }

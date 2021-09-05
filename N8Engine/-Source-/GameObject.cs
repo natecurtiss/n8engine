@@ -109,7 +109,7 @@ namespace N8Engine
         {
             if (SpriteRenderer.Sprite != null)
                 Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder, Name);
-            if (Collider.IsVisible || PhysicsSettings.ShouldShowAllColliders)
+            if ((Collider.IsVisible || PhysicsSettings.ShouldShowAllColliders) && Collider.Size != Vector.Zero)
                 Renderer.Render(Collider.Sprite, Collider.Position, Math.INFINITY - 1, Name);
         }
     }

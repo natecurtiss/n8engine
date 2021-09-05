@@ -5,8 +5,7 @@ namespace N8Engine.Tilemaps
 {
     internal readonly struct Chunk
     {
-        // Sort of a magic number - but at least it works.
-        private Vector Center => _position + new Vector(HalfOfTheChunk.X - _palette.HalfATile.X, 0f);
+        private Vector Center => _position + HalfOfTheChunk - _palette.HalfATile;
         private Vector ColliderSize => _palette.TileSize * _sizeInTiles;
         private Vector HalfOfTheChunk => Size / 2f;
         private Vector Size => _palette.TileSize * _sizeInTiles;

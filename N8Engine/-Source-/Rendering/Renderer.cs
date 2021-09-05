@@ -28,9 +28,7 @@ namespace N8Engine.Rendering
             foreach (var pixel in sprite.Pixels)
             {
                 var worldPosition = pixel.Position + spritePosition;
-                worldPosition.X *= NUMBER_OF_CHARACTERS_PER_PIXEL;
                 var windowPosition = worldPosition.FromWorldPositionToWindowPosition();
-                Debug.Log(worldPosition + " " + windowPosition);
                 var sortedPixel = pixel.WithSortingOrder(sortingOrder);
                 
                 if (windowPosition.IsOutsideOfTheWindow()) continue;
@@ -78,7 +76,6 @@ namespace N8Engine.Rendering
                 
                 output.Append(_pixelCharacter);
             }
-            Debug.Log(output);
             Console.Write(output.ToString());
         }
 
@@ -127,12 +124,15 @@ namespace N8Engine.Rendering
             !(_pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixel);
 
         private static bool IsToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
-            currentPosition - lastPosition == IntegerVector.Right;
+            currentPosition - lastPosition == IntegerVector.Right * NUMBER_OF_CHARACTERS_PER_PIXEL;
 
         private static IntegerVector FromWorldPositionToWindowPosition(this Vector position)
         {
             var worldPosition = new Vector(position.X, -position.Y);
-            var windowPosition = (IntegerVector) (worldPosition + _windowSize / 2);
+            var windowPosition = (IntegerVector) worldPosition;
+            windowPosition.X *= NUMBER_OF_CHARACTERS_PER_PIXEL;
+            windowPosition.X += _windowSize.X / 2;
+            windowPosition.Y += _windowSize.Y / 2;
             return windowPosition;
         }
 
