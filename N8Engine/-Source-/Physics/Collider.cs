@@ -6,6 +6,10 @@ using N8Engine.SceneManagement;
 
 namespace N8Engine.Physics
 {
+    /// <summary>
+    /// The <see cref="Component"/> of a <see cref="GameObject"/> that handles collision.
+    /// </summary>
+    /// <seealso cref="PhysicsBody"/> <seealso cref="PhysicsSettings"/>
     public sealed class Collider : Component
     {
         private readonly ColliderVisualization _visualization;
@@ -14,11 +18,32 @@ namespace N8Engine.Physics
         private readonly PhysicsBody _physicsBody;
         private Vector _size;
 
+        /// <summary>
+        /// The <see cref="Transform"/> attached to the same <see cref="GameObject"/> as the <see cref="Collider">Collider.</see>
+        /// </summary>
         public Transform Transform => GameObject.Transform;
+        /// <summary>
+        /// Every <see cref="Collider"/> regardless of if <see cref="IsTrigger"/> is true or false colliding with this <see cref="Collider"/> in the current frame.
+        /// </summary>
         public IEnumerable<Collider> Contacts => _collidersCollidingWithThisFrame;
+        /// <summary>
+        /// Shows a debug visualization of the collider if true.
+        /// </summary>
         public bool IsVisible { get; set; }
+        /// <summary>
+        /// If true: other <see cref="Collider">Colliders</see> are able to pass through ignoring any collisions and trigger
+        /// <see cref="GameObject.OnTriggeredBy"/> and <see cref="GameObject.OnStoppedBeingTriggeredBy"/> event methods.
+        /// If false (default): other <see cref="Collider">Colliders</see> with <see cref="IsTrigger"/> equal to false are stopped when colliding with this and
+        /// trigger <see cref="GameObject.OnCollidedWith"/> and <see cref="GameObject.OnStoppedCollidingWith"/> event methods.
+        /// </summary>
         public bool IsTrigger { get; set; }
+        /// <summary>
+        /// The <see cref="Vector">offset</see> of <see cref="Position">Collider.Position</see> from <see cref="N8Engine.Mathematics.Transform.Position">Transform.Position.</see>
+        /// </summary>
         public Vector Offset { get; set; }
+        /// <summary>
+        /// The size of the <see cref="Collider">Collider.</see>
+        /// </summary>
         public Vector Size
         {
             get => _size;
@@ -29,7 +54,10 @@ namespace N8Engine.Physics
                 _size = value;
             }
         }
-        internal Vector Position => Transform.Position + Offset;
+        /// <summary>
+        /// <see cref="N8Engine.Mathematics.Transform.Position">Transform.Position</see> + <see cref="Offset">Collider.Offset.</see>
+        /// </summary>
+        public Vector Position => Transform.Position + Offset;
         internal Sprite Sprite => Size == Vector.Zero ? Sprite.Empty : _visualization.Sprite;
 
         private BoundingBox BoundingBoxThisFrame { get; set; }

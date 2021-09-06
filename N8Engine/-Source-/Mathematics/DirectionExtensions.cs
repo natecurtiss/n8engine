@@ -10,6 +10,7 @@ namespace N8Engine.Mathematics
         /// <see cref="Direction.Right">Direction.Right</see> returns a <see cref="Vector.Right">Vector of (1, 0)</see>,
         /// <see cref="Direction.Down">Direction.Down</see> returns a <see cref="Vector.Down">Vector of (0, -1)</see>, etc.
         /// </summary>
+        /// <seealso cref="Vector"/>
         public static Vector AsVector(this Direction direction) => direction switch
         {
             Direction.Left => Vector.Left,

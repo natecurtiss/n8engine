@@ -9,11 +9,19 @@ namespace N8Engine.Inputs
     /// Just like <see cref="Application">Application,</see>
     /// I suggest going to your search engine of choice to find out what "input" is in the context of a game engine if you do not already know.
     /// </summary>
+    /// <seealso cref="Key"/>
     public static class Input
     {
+        private enum KeyState
+        {
+            IsPressed, 
+            IsReleased, 
+            WasJustPressed, 
+            WasJustReleased
+        }
+        
         private static readonly Dictionary<Key, KeyState> _keys = new();
-        private static readonly Key[] _allKeys = Enum.GetValues<Key>();
-        private enum KeyState { IsPressed, IsReleased, WasJustPressed, WasJustReleased }
+        private static readonly IReadOnlyCollection<Key> _allKeys = Enum.GetValues<Key>();
         
         internal static void Initialize()
         {

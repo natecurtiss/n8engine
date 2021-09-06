@@ -3,6 +3,7 @@
     /// <summary>
     /// Look down, see those squares with symbols that you're pressing with your fingers?
     /// </summary>
+    /// <seealso cref="Input"/>
     public enum Key
     {
         None,
