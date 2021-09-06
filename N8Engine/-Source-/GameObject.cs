@@ -1,4 +1,5 @@
-﻿using N8Engine.Mathematics;
+﻿using System.Diagnostics.CodeAnalysis;
+using N8Engine.Mathematics;
 using N8Engine.Physics;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
@@ -84,7 +85,7 @@ namespace N8Engine
             Transform = new Transform(this);
             PhysicsBody = new PhysicsBody(this);
             Collider = new Collider(this);
-            SpriteRenderer = new SpriteRenderer(this);
+            SpriteRenderer = new SpriteRenderer(gameObject: this);
             AnimationPlayer = new AnimationPlayer(this);
             GameLoop.OnEarlyUpdate += OnEarlyUpdate;
             GameLoop.OnUpdate += OnUpdate;

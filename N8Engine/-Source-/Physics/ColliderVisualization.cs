@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -19,7 +18,7 @@ namespace N8Engine.Physics
             Debug.Log(_size);
             _sprite = new Sprite(GeneratePixelData());
         }
-
+        
         private string[] GeneratePixelData()
         {
             var width = _size.X;
