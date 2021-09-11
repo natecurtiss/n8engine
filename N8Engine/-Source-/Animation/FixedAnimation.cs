@@ -1,3 +1,4 @@
+using System;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Animation
@@ -7,8 +8,9 @@ namespace N8Engine.Animation
         private float _timeRemainingUntilNextKeyframe;
         private int _elapsedKeyframes;
 
-        protected abstract Keyframe[] Keyframes { get; }
+        protected abstract Action<GameObject, float>[] Keyframes { get; }
         protected abstract float TimeBetweenEachKeyframe { get; }
+        protected abstract bool ShouldLoop { get; }
 
         internal override void OnChangedTo() => Reset();
 
@@ -24,7 +26,7 @@ namespace N8Engine.Animation
             if (_timeRemainingUntilNextKeyframe == 0f)
             {
                 _elapsedKeyframes++;
-                Keyframes[_elapsedKeyframes].OnTick(gameObject, deltaTime);
+                Keyframes[_elapsedKeyframes](gameObject, deltaTime);
                 _timeRemainingUntilNextKeyframe = TimeBetweenEachKeyframe;
             }
         }

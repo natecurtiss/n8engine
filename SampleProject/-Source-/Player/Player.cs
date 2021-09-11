@@ -22,7 +22,7 @@ namespace SampleProject
         {
             Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 90f;
             
-            _animationController = new PlayerAnimationController(Animator, _input);
+            _animationController = new PlayerAnimationController(Animator, _input, SpriteRenderer);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += _animationController.HandleLandAnimation;
             _groundCheck.Collider.Size = new Vector(7f, 3f);

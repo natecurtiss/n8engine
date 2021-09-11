@@ -8,7 +8,9 @@ namespace N8Engine.Animation
         private int _elapsedKeyframes;
 
         protected abstract float TimeBetweenEachKeyframe { get; }
+        protected abstract bool ShouldLoop { get; }
         protected virtual int NumberOfKeyframes { get; } = 0;
+        // TODO probably have two separate versions of this that loop and don't loop.
 
         protected abstract void OnEveryKeyframe(GameObject gameObject, float deltaTime);
 

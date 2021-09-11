@@ -4,8 +4,8 @@ namespace N8Engine.Animation
 {
     public abstract partial class Animation
     {
-        protected abstract bool ShouldLoop { get; }
-
+        public static readonly Animation Nothing = new EmptyAnimation();
+        
         public static T Create<T>() where T : Animation, new()
         {
             var animation = new T();

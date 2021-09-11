@@ -11,11 +11,12 @@ namespace N8Engine.Rendering
         public static Sprite Empty => new();
         
         internal IEnumerable<Pixel> Pixels { get; }
+        // TODO fix orientation with pivot.
         internal Sprite FlippedHorizontally { get; }
         internal Sprite FlippedVertically { get; }
         internal Sprite FlippedHorizontallyAndVertically { get; }
         
-        public Sprite(string path, Pivot pivot = Center, IntegerVector offset = default)
+        public Sprite(string path, Vector offset = default, Pivot pivot = Center)
         {
             var image = new Bitmap(path);
             var pixels = image.AsPixels();

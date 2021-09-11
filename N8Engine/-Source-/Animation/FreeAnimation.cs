@@ -9,7 +9,8 @@ namespace N8Engine.Animation
         private int _currentKeyframeIndex;
         
         protected abstract Keyframe[] Keyframes { get; }
-        
+        protected abstract bool ShouldLoop { get; }
+
         private float Duration => _orderedKeyframes[^1].Time;
         private Keyframe CurrentKeyFrame => _orderedKeyframes[_currentKeyframeIndex];
         
