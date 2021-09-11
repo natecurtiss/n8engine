@@ -12,23 +12,6 @@ namespace N8Engine.Mathematics
         /// </summary>
         public Vector Position { get; set; }
 
-        private readonly List<Sequence> _playingSequences = new();
-
         internal Transform(GameObject gameObject) : base(gameObject) { }
-
-        public Sequence MoveTo(Vector targetPosition, float duration, bool shouldKillPlayingSequences = false)
-        {
-            var speed = (targetPosition - Position) / duration;
-            var sequence = new Sequence(deltaTime => Position += speed * deltaTime, duration);
-            sequence.OnComplete(() => _playingSequences.Remove(sequence)).Play();
-            
-            if (shouldKillPlayingSequences)
-                foreach (var playingSequences in _playingSequences.ToArray())
-                    playingSequences.Kill();
-            _playingSequences.Add(sequence);
-            return sequence;
-        }
-
-        public Sequence MoveInDirection(Direction direction, float distance, float duration, bool shouldKillPlayingSequences = false) => MoveTo(Position + direction.AsVector() * distance, duration, shouldKillPlayingSequences);
     }
 }

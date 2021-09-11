@@ -26,7 +26,6 @@ namespace N8Engine
             SceneManager.Initialize(launcher.Scenes);
             Renderer.Initialize();
             Input.Initialize();
-            SequenceManager.Initialize();
             GameLoop.Run();
         }
     }

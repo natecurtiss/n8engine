@@ -5,6 +5,8 @@ namespace N8Engine.Rendering
 {
     public sealed class SpriteRenderer : Component
     {
+        private Sprite _normalSprite;
+
         public Sprite Sprite
         {
             get => ShouldFlip switch
@@ -19,7 +21,6 @@ namespace N8Engine.Rendering
         }
         public int SortingOrder { get; set; }
         public Orientation ShouldFlip { get; set; }
-        private Sprite _normalSprite;
 
         internal SpriteRenderer(GameObject gameObject) : base(gameObject) { }
     }

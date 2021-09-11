@@ -18,6 +18,6 @@ namespace SampleProject
 
         protected override void OnDestroy() => EventManager.OnKeyCollected.RemoveListener(SproutUpFromTheGround);
 
-        private void SproutUpFromTheGround() => Transform.MoveInDirection(Direction.Up, SPROUT_DISTANCE, SPROUT_DURATION);
+        private void SproutUpFromTheGround() { }
     }
 }
