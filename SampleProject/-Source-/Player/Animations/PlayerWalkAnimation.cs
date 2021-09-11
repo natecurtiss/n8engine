@@ -7,10 +7,10 @@ namespace SampleProject
     {
         protected override Sprite[] Frames => new Sprite[]
         {
-            new(SpritesFolder.Path + "player_1.n8sprite", Vector.Zero, ShouldFlipHorizontally),
-            new(SpritesFolder.Path + "player_2.n8sprite", Vector.Down, ShouldFlipHorizontally),
-            new(SpritesFolder.Path + "player_3.n8sprite", Vector.Zero, ShouldFlipHorizontally),
-            new(SpritesFolder.Path + "player_4.n8sprite", Vector.Down, ShouldFlipHorizontally)
+            new(SpritesFolder.Path + "player_1.png", Vector.Zero),
+            new(SpritesFolder.Path + "player_2.png", Vector.Down),
+            new(SpritesFolder.Path + "player_3.png", Vector.Zero),
+            new(SpritesFolder.Path + "player_4.png", Vector.Down)
         };
         protected override float TimeBetweenFrames => 0.075f;
 

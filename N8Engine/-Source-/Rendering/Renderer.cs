@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using N8Engine.Mathematics;
 using N8Engine.Native;
@@ -53,8 +54,7 @@ namespace N8Engine.Rendering
 
         private static void RenderNewPixels()
         {
-            var lastForegroundColor = Console.ForegroundColor;
-            var lastBackgroundColor = Console.BackgroundColor;
+            var lastColor = new Color();
             var lastPosition = new IntegerVector();
             var output = new StringBuilder();
 
@@ -65,14 +65,9 @@ namespace N8Engine.Rendering
                     output.MoveCursorTo(position);
                 lastPosition = position;
                 
-                if (pixel.ForegroundColor != lastForegroundColor)
-                    output.SetConsoleForegroundColorTo(pixel.ForegroundColor);
-                
-                if (pixel.BackgroundColor != lastBackgroundColor) 
-                    output.SetConsoleBackgroundColorTo(pixel.BackgroundColor);
-                
-                lastForegroundColor = pixel.ForegroundColor;
-                lastBackgroundColor = pixel.BackgroundColor;
+                if (pixel.Color != lastColor)
+                    output.SetConsoleColorTo(pixel.Color);
+                lastColor = pixel.Color;
                 
                 output.Append(_pixelCharacter);
             }

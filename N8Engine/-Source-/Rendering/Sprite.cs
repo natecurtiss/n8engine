@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using N8Engine.Mathematics;
 
@@ -7,64 +9,29 @@ namespace N8Engine.Rendering
     public sealed partial class Sprite
     {
         public static Sprite Empty => new();
-        internal Pixel[] Pixels { get; private set; }
+        
+        internal IEnumerable<Pixel> Pixels { get; private set; }
+        internal Sprite FlippedHorizontally { get; private set; }
+        internal Sprite FlippedVertically { get; private set; }
+        internal Sprite FlippedBoth { get; private set; }
 
-        public Sprite(string path, Vector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
+        public Sprite(string path, Vector offset = default)
         {
-            var fileData = File.ReadAllLines(path);
-            var data = new SpriteData(fileData);
-            Pixels = data.GetPixels().ToArray();
-            CreateSprite(offset, shouldFlipHorizontally, shouldFlipVertically);
+            var image = new Bitmap(path);
+            var pixels = image.AsPixels();
+            pixels.Offset(offset);
+            pixels.Center(new IntegerVector(image.Width, image.Height));
+            Pixels = pixels;
         }
 
         internal Sprite(string[] pixels)
         {
             if (pixels.Length == 0) return;
-            var data = new SpriteData(pixels);
-            Pixels = data.GetPixels().ToArray();
-            CreateSprite();
+            return;
         }
+
+        private Sprite(Pixel[] pixels) => Pixels = pixels;
         
         private Sprite() { }
-
-        private void CreateSprite(IntegerVector offset = default, bool shouldFlipHorizontally = false, bool shouldFlipVertically = false)
-        {
-            OffsetPixels(offset);
-            if (shouldFlipHorizontally) FlipPixelsHorizontally();
-            if (shouldFlipVertically) FlipPixelsVertically();
-        }
-
-        private void OffsetPixels(IntegerVector offset)
-        {
-            var pixels = new Pixel[Pixels.Length];
-            for (var i = 0; i < Pixels.Length; i++)
-            {
-                var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position + new IntegerVector(offset.X, -offset.Y));
-            }
-            Pixels = pixels;
-        }
-
-        private void FlipPixelsHorizontally()
-        {
-            var pixels = new Pixel[Pixels.Length];
-            for (var i = 0; i < Pixels.Length; i++)
-            {
-                var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new IntegerVector(-1, 1));
-            }
-            Pixels = pixels;
-        }
-
-        private void FlipPixelsVertically()
-        {
-            var pixels = new Pixel[Pixels.Length];
-            for (var i = 0; i < Pixels.Length; i++)
-            {
-                var pixel = Pixels[i];
-                pixels[i] = new Pixel(pixel.ForegroundColor, pixel.BackgroundColor, pixel.Position * new IntegerVector(1, -1));
-            }
-            Pixels = pixels;
-        }
     }
 }

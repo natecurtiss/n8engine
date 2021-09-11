@@ -1,25 +1,22 @@
 ﻿using System;
+using System.Drawing;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
     internal struct Pixel
     {
-        public static bool operator ==(Pixel first, Pixel second) => 
-            first.ForegroundColor == second.ForegroundColor && 
-            first.BackgroundColor == second.BackgroundColor;
+        public static bool operator ==(Pixel first, Pixel second) => first.Color == second.Color;
         public static bool operator !=(Pixel first, Pixel second) => !(first == second);
 
-        public readonly ConsoleColor ForegroundColor;
-        public readonly ConsoleColor BackgroundColor;
+        public readonly Color Color;
         
         public IntegerVector Position { get; set; }
         public int SortingOrder { get; set; }
 
-        public Pixel(ConsoleColor foregroundColor, ConsoleColor backgroundColor, IntegerVector position)
+        public Pixel(Color color, IntegerVector position)
         {
-            ForegroundColor = foregroundColor;
-            BackgroundColor = backgroundColor;
+            Color = color;
             Position = position;
             SortingOrder = 0;
         }

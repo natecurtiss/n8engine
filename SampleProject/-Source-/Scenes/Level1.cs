@@ -12,8 +12,8 @@ namespace SampleProject
     {
         protected override void OnSceneLoaded()
         {
-            var tilemap = new AutoTilemap<TopAndSidesPalette>();
-            tilemap.Place(Window.BottomLeftCorner, new IntegerVector(10, 4), Pivot.BottomLeft);
+            // var tilemap = new AutoTilemap<TopAndSidesPalette>();
+            // tilemap.Place(Window.BottomLeftCorner, new IntegerVector(10, 4), Pivot.BottomLeft);
 
             GameObject.Create<Player>("player");
             // GameObject.Create<Door>("door").Transform.Position += new Vector(252f, -39f);

@@ -1,6 +1,6 @@
 using System;
 
-namespace N8Engine.Rendering
+namespace N8Engine.Native
 {
     internal static class ConsoleColorExtensions
     {

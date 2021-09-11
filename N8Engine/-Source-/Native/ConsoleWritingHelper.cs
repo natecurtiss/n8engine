@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Text;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
@@ -17,5 +18,11 @@ namespace N8Engine.Native
         
         public static void SetConsoleBackgroundColorTo(this StringBuilder stringBuilder, ConsoleColor backgroundColor) =>
             stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}{backgroundColor.AsAnsiBackgroundColor()}");
+
+        public static void SetConsoleColorTo(this StringBuilder stringBuilder, Color color)
+        {
+            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}38;2;{color.R};{color.G};{color.B}m");
+            stringBuilder.Append($"{ANSI_ESCAPE_SEQUENCE_START}48;2;{color.R};{color.G};{color.B}m");
+        }
     }
 }
