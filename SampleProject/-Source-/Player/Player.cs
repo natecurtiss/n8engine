@@ -22,7 +22,7 @@ namespace SampleProject
         {
             Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 90f;
             
-            _animationController = new PlayerAnimationController(AnimationPlayer, _input);
+            _animationController = new PlayerAnimationController(Animator, _input);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += _animationController.HandleLandAnimation;
             _groundCheck.Collider.Size = new Vector(7f, 3f);
@@ -32,7 +32,6 @@ namespace SampleProject
             Collider.Offset = new Vector(1f, 0f);
             SpriteRenderer.SortingOrder = -2;
             PhysicsBody.UseGravity = true;
-            AnimationPlayer.Play();
         }
 
         protected override void OnDestroy() => _groundCheck.OnLandedOnTheGround -= _animationController.HandleLandAnimation;

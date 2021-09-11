@@ -1,3 +1,4 @@
+using N8Engine.Animation;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -6,7 +7,7 @@ namespace SampleProject
     public sealed class PlayerAnimationController
     {
         private readonly PlayerInputs _input;
-        private readonly AnimationPlayer _animationPlayer;
+        private readonly Animator _animator;
         private readonly PlayerWalkAnimation _walkAnimation = new();
         private readonly FlippedPlayerWalkAnimation _flippedWalkAnimation = new();
         private readonly PlayerIdleAnimation _idleAnimation = new();
@@ -16,10 +17,10 @@ namespace SampleProject
         private readonly PlayerJumpAnimation _fallAnimation = new();
         private readonly FlippedPlayerJumpAnimation _flippedFallAnimation = new();
 
-        public PlayerAnimationController(AnimationPlayer animationPlayer, PlayerInputs input)
+        public PlayerAnimationController(Animator animator, PlayerInputs input)
         {
-            _animationPlayer = animationPlayer;
-            _animationPlayer.Animation = _idleAnimation;
+            _animator = animator;
+            _animator.ChangeAnimation(_idleAnimation);
             _input = input;
         }
 
@@ -29,29 +30,29 @@ namespace SampleProject
             var wasFacingLeft = _input.LastDirectionWhenThereWasInput == Direction.Left;
             
             if (isGrounded)
-                _animationPlayer.Animation = _input.CurrentDirection switch
+                _animator.Animation = _input.CurrentDirection switch
                 {
                     Direction.Right => _walkAnimation,
                     Direction.Left => _flippedWalkAnimation,
                     Direction.None when wasFacingRight => _idleAnimation,
                     Direction.None when wasFacingLeft => _flippedIdleAnimation,
-                    var _ => _animationPlayer.Animation
+                    var _ => _animator.Animation
                 };
             else
-                _animationPlayer.Animation = _input.CurrentDirection switch
+                _animator.Animation = _input.CurrentDirection switch
                 {
                     Direction.Right => _fallAnimation,
                     Direction.Left => _flippedFallAnimation,
                     Direction.None when wasFacingRight => _jumpAnimation,
                     Direction.None when wasFacingLeft => _flippedJumpAnimation,
-                    var _ => _animationPlayer.Animation
+                    var _ => _animator.Animation
                 };
         }
         
         public void HandleLandAnimation()
         {
             var isWalking = _input.CurrentDirection != Direction.None;
-            _animationPlayer.Animation = _input.LastDirectionWhenThereWasInput switch
+            _animator.Animation = _input.LastDirectionWhenThereWasInput switch
             {
                 Direction.Right when isWalking => _walkAnimation,
                 Direction.Left when isWalking => _flippedWalkAnimation,

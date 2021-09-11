@@ -121,5 +121,21 @@ namespace N8Engine.Mathematics
         /// and less than or equal to the maximum value passed in.
         /// </summary>
         public static bool IsWithin(this float value, float minimum, float maximum) => value.ClampedBetween(minimum, maximum) == value;
+
+        public static float KeepAboveZero(this ref float value) => value = value.KeptAboveZero();
+
+        public static float KeepBelowZero(this ref float value) => value = value.KeptBelowZero();
+
+        public static float KeepAbove(this ref float value, float threshold) => value = value.KeptAbove(threshold);
+ 
+        public static float KeepBelow(this ref float value, float threshold) => value = value.KeptBelow(threshold);
+
+        public static float KeptAboveZero(this float value) => MaximumOf(value, 0f);
+
+        public static float KeptBelowZero(this float value) => MinimumOf(value, 0f);
+
+        public static float KeptAbove(this float value, float threshold) => MaximumOf(value, threshold);
+        
+        public static float KeptBelow(this float value, float threshold) => MinimumOf(value, threshold);
     }
 }

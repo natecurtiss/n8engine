@@ -9,7 +9,7 @@ namespace SampleProject
     {
         protected override void OnStart()
         {
-            SpriteRenderer.Sprite = new Sprite(SpritesFolder.Path + "key.n8sprite");
+            SpriteRenderer.Sprite = new(SpritesFolder.Path + "key.n8sprite");
             Collider.Size = new Vector(10f, 7f);
             Collider.IsTrigger = true;
         }

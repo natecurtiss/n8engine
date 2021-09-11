@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using N8Engine.Animation;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
 using N8Engine.Rendering;
@@ -15,7 +16,7 @@ namespace N8Engine
         public SpriteRenderer SpriteRenderer { get; private set; }
         public Collider Collider { get; private set; }
         public PhysicsBody PhysicsBody { get; private set; }
-        public AnimationPlayer AnimationPlayer { get; private set; }
+        public Animator Animator { get; private set; }
 
         public static T Create<T>(string name = DEFAULT_NAME) where T : GameObject, new()
         {
@@ -86,7 +87,7 @@ namespace N8Engine
             PhysicsBody = new PhysicsBody(this);
             Collider = new Collider(this);
             SpriteRenderer = new SpriteRenderer(gameObject: this);
-            AnimationPlayer = new AnimationPlayer(this);
+            Animator = new Animator(this);
             GameLoop.OnEarlyUpdate += OnEarlyUpdate;
             GameLoop.OnUpdate += OnUpdate;
             GameLoop.OnPostUpdate += OnPostUpdate;
@@ -96,7 +97,7 @@ namespace N8Engine
             OnStart();
         }
 
-        private void OnPostUpdate(float deltaTime) => AnimationPlayer.Tick(deltaTime);
+        private void OnPostUpdate(float deltaTime) => Animator.Tick(deltaTime);
 
         private void OnPhysicsUpdate(float deltaTime)
         {
