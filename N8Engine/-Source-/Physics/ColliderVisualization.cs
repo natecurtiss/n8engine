@@ -15,7 +15,6 @@ namespace N8Engine.Physics
         {
             _size = size;
             if (_size.X == 0 || _size.Y == 0) return;
-            Debug.Log(_size);
             _sprite = new Sprite(GeneratePixelData());
         }
         

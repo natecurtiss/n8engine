@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using N8Engine.Mathematics;
-using static N8Engine.Mathematics.Flip;
-using static N8Engine.Mathematics.Pivot;
 
 namespace N8Engine.Rendering
 {
@@ -15,18 +13,24 @@ namespace N8Engine.Rendering
         internal Sprite FlippedVertically { get; }
         internal Sprite FlippedHorizontallyAndVertically { get; }
         
-        public Sprite(string path, Vector offset = default, Pivot pivot = Center)
+        public Sprite(string path, Vector offset = default, Pivot pivot = Pivot.Center)
         {
             var image = new Bitmap(path);
             var pixels = image.AsPixels();
             var size = new IntegerVector(image.Width, image.Height);
-            pixels.Offset(offset);
-            pixels.AdjustToPivot(size, pivot);
+            for (var i = 0; i < pixels.Length; i++)
+            {
+                var position = pixels[i].Position;
+                var newPosition = position.AdjustedToPivot(Pivot.BottomLeft, size, pivot);
+                pixels[i].Position = newPosition + offset;
+            }
+            // pixels.Offset(offset);
+            // pixels.AdjustToPivot(size, pivot);
             
             Pixels = pixels;
-            FlippedHorizontally = new Sprite(pixels.Flipped(Horizontal, size));
-            FlippedVertically = new Sprite(pixels.Flipped(Vertical, size));
-            FlippedHorizontallyAndVertically = new Sprite(pixels.Flipped(HorizontalAndVertical, size));
+            FlippedHorizontally = Flipped(pixels, Flip.Horizontal, size);
+            FlippedVertically = Flipped(pixels, Flip.Vertical, size);
+            FlippedHorizontallyAndVertically = Flipped(pixels, Flip.HorizontalAndVertical, size);
         }
 
         internal Sprite(string[] pixels)
@@ -38,5 +42,31 @@ namespace N8Engine.Rendering
         private Sprite(IEnumerable<Pixel> pixels) => Pixels = pixels;
         
         private Sprite() { }
+        
+        private static Sprite Flipped(IReadOnlyList<Pixel> pixels, Flip flip, IntegerVector size)
+        {
+            var flippedPixels = new Pixel[pixels.Count];
+            var flipScale = flip switch
+            {
+                Flip.Horizontal => new IntegerVector(-1, 1),
+                Flip.Vertical => new IntegerVector(1, -1),
+                Flip.HorizontalAndVertical => new IntegerVector(-1, -1),
+                var _ => IntegerVector.One
+            };
+            var flipOffset = flip switch
+            {
+                Flip.Horizontal => new IntegerVector(size.X, 0),
+                Flip.Vertical => new IntegerVector(0, size.Y),
+                Flip.HorizontalAndVertical => size,
+                var _ => IntegerVector.Zero
+            };
+            for (var index = 0; index < pixels.Count; index++)
+            {
+                var pixel = pixels[index];
+                var flippedPixel = new Pixel(pixel.Color, pixel.Position * flipScale + flipOffset);
+                flippedPixels[index] = flippedPixel;
+            }
+            return new Sprite(flippedPixels);
+        }
     }
 }

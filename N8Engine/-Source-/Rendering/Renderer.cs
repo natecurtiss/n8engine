@@ -28,7 +28,8 @@ namespace N8Engine.Rendering
         {
             foreach (var pixel in sprite.Pixels)
             {
-                var worldPosition = pixel.Position + spritePosition;
+                var integerSpritePosition = (IntegerVector) spritePosition;
+                var worldPosition = pixel.Position + integerSpritePosition;
                 var windowPosition = worldPosition.FromWorldPositionToWindowPosition();
                 var sortedPixel = pixel.WithSortingOrder(sortingOrder);
                 
@@ -121,10 +122,9 @@ namespace N8Engine.Rendering
         private static bool IsToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
             currentPosition - lastPosition == IntegerVector.Right * NUMBER_OF_CHARACTERS_PER_PIXEL;
 
-        private static IntegerVector FromWorldPositionToWindowPosition(this Vector position)
+        private static IntegerVector FromWorldPositionToWindowPosition(this IntegerVector position)
         {
-            var worldPosition = new Vector(position.X, -position.Y);
-            var windowPosition = (IntegerVector) worldPosition;
+            var windowPosition = new IntegerVector(position.X, -position.Y);
             windowPosition.X *= NUMBER_OF_CHARACTERS_PER_PIXEL;
             windowPosition.X += _windowSize.X / 2;
             windowPosition.Y += _windowSize.Y / 2;

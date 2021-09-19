@@ -1,4 +1,5 @@
 using N8Engine.Mathematics;
+using static N8Engine.Mathematics.Pivot;
 
 namespace N8Engine.Tilemaps
 {
@@ -14,7 +15,7 @@ namespace N8Engine.Tilemaps
         {
             var bottomLeft = position;
             var totalSize = sizeInTiles * _palette.TileSize;
-            var positionAdjustedToPivot = bottomLeft.AdjustedToPivot(totalSize, pivot);
+            var positionAdjustedToPivot = bottomLeft.AdjustedToPivot(BottomLeft, totalSize, pivot);
             
             var chunk = new Chunk(positionAdjustedToPivot, sizeInTiles, _palette);
             chunk.GenerateTiles();

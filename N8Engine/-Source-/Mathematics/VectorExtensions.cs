@@ -1,4 +1,4 @@
-using static N8Engine.Mathematics.Pivot;
+using System;
 
 namespace N8Engine.Mathematics
 {
@@ -8,24 +8,40 @@ namespace N8Engine.Mathematics
     public static class VectorExtensions
     {
         /// <summary>
-        /// Returns the <see cref="Vector">position</see> of the object adjusted the to match a given <see cref="Pivot"/> based on its current <see cref="Vector">position</see> (assuming it's the bottom left of the object) and its total size.
-        /// <para>In short: we just change the <see cref="Pivot"/> of an object with a bottom left <see cref="Pivot"/>
-        /// (things generally start at 0, 0 and work their way up, which is why it's assumed that the current <see cref="Pivot"/> is the bottom left.)</para>
+        /// Returns the <see cref="Vector">position</see> of the object adjusted to match a given <see cref="Pivot"/> based on its current <see cref="Vector">position</see> and <see cref="Pivot">Pivot.</see>
         /// </summary>
-        // TODO change this to work with any pivot and make the first parameter ref.
-        public static Vector AdjustedToPivot(this Vector bottomLeft, Vector sizeOfObject, Pivot pivot)
+        /// <param name="position"> The current <see cref="Vector">position</see> of the object. </param>
+        /// <param name="currentPivot"> The current <see cref="Pivot"/> of the object. </param>
+        /// <param name="sizeOfObject"> The <see cref="Vector">size</see> of the entire object. </param>
+        /// <param name="newPivot"> The <see cref="Pivot"/> to adjust the <see cref="Vector">position</see> to. </param>
+        /// <seealso cref="IntegerVectorExtensions.AdjustedToPivot"/>
+        public static Vector AdjustedToPivot(this Vector position, Pivot currentPivot, Vector sizeOfObject, Pivot newPivot)
         {
-            var center = bottomLeft - sizeOfObject / 2f;
             var moveLeftByHalf = new Vector(-sizeOfObject.X, 0) / 2f;
             var moveRightByHalf = new Vector(sizeOfObject.X, 0) / 2f;
             var moveUpByHalf = new Vector(0, sizeOfObject.Y) / 2f;
             var moveDownByHalf = new Vector(0, -sizeOfObject.Y) / 2f;
             
-            // I've included diagrams here to represent where these numbers come from.
-            // The darkest part is the pivot, the lightest part is the object, and the mid-toned shape is where the center pivot is.
-            return pivot switch
+            // TODO: document this.
+            var center = currentPivot switch
             {
-                Center => center,
+                Pivot.Center => position,
+                Pivot.Top => position + moveUpByHalf,
+                Pivot.Bottom => position + moveDownByHalf,
+                Pivot.Left => position + moveLeftByHalf,
+                Pivot.Right => position + moveRightByHalf,
+                Pivot.TopLeft => position + moveUpByHalf + moveLeftByHalf,
+                Pivot.TopRight => position + moveUpByHalf + moveRightByHalf,
+                Pivot.BottomLeft => position + moveDownByHalf + moveLeftByHalf,
+                Pivot.BottomRight => position + moveDownByHalf + moveRightByHalf,
+                var _ => position
+            };
+
+            // I've included diagrams here to represent where these numbers come from.
+            // The darkest part is the pivot, the lightest part is the object, and the mid-toned shape is where a sample object in the center of the screen is.
+            var newPosition = newPivot switch
+            {
+                Pivot.Center => center,
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   
 //                          ▓▓▓▓▓▓▒▒░░▒▓▓▓▓▓▓
@@ -33,7 +49,7 @@ namespace N8Engine.Mathematics
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 
 
-                Top => center + moveDownByHalf,
+                Pivot.Top => center + moveDownByHalf,
 //                                ▒▒▒▒▒ 
 //                                ▒▒▒▒▒
 //                          ▓▓▓▓▓▓░░░░░▓▓▓▓▓▓
@@ -43,7 +59,7 @@ namespace N8Engine.Mathematics
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ 
 
-                Bottom => center + moveUpByHalf,
+                Pivot.Bottom => center + moveUpByHalf,
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  
@@ -53,7 +69,7 @@ namespace N8Engine.Mathematics
 //                                ▒▒▒▒▒ 
 //                                ▒▒▒▒▒
 
-                Right => center + moveLeftByHalf,
+                Pivot.Right => center + moveLeftByHalf,
 //              ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //              ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //              ▓▓▓▓▓▓▓▓▓▓▓▓░░░░░ ▒▒▒▒▒  
@@ -61,7 +77,7 @@ namespace N8Engine.Mathematics
 //              ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //              ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-                Left => center + moveRightByHalf,
+                Pivot.Left => center + moveRightByHalf,
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                                 ▒▒▒▒▒ ░░░░░▓▓▓▓▓▓▓▓▓▓▓▓  
@@ -69,7 +85,7 @@ namespace N8Engine.Mathematics
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-                TopRight => center + moveLeftByHalf + moveDownByHalf,
+                Pivot.TopRight => center + moveLeftByHalf + moveDownByHalf,
 //                                 ▒▒▒▒▒
 //                                 ▒▒▒▒▒
 //               ▓▓▓▓▓▓▓▓▓▓▓▓░░░░░
@@ -79,7 +95,7 @@ namespace N8Engine.Mathematics
 //               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓         
 
-                TopLeft => center + moveRightByHalf + moveDownByHalf,
+                Pivot.TopLeft => center + moveRightByHalf + moveDownByHalf,
 //                                 ▒▒▒▒▒
 //                                 ▒▒▒▒▒
 //                                       ░░░░░▓▓▓▓▓▓▓▓▓▓▓▓
@@ -89,7 +105,7 @@ namespace N8Engine.Mathematics
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
-                BottomRight => center + moveLeftByHalf + moveUpByHalf,
+                Pivot.BottomRight => center + moveLeftByHalf + moveUpByHalf,
 //               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //               ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -99,7 +115,7 @@ namespace N8Engine.Mathematics
 //                                 ▒▒▒▒▒
 //                                 ▒▒▒▒▒
 
-                BottomLeft => center + moveRightByHalf + moveUpByHalf,
+                Pivot.BottomLeft => center + moveRightByHalf + moveUpByHalf,
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //                                       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -111,6 +127,7 @@ namespace N8Engine.Mathematics
 
                 var _ => center
             };
+            return newPosition;
         }
     }
 }

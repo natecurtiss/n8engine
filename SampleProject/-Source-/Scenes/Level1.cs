@@ -1,4 +1,5 @@
 ﻿using N8Engine;
+using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 
 namespace SampleProject

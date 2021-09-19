@@ -18,7 +18,7 @@ namespace N8Engine.Mathematics
         public static IntegerVector operator *(IntegerVector first, IntegerVector second) => new(first.X * second.X, first.Y * second.Y);
         public static IntegerVector operator /(IntegerVector vector, int divisor) => new(vector.X / divisor, vector.Y / divisor);
         public static IntegerVector operator /(IntegerVector first, IntegerVector second) => new(first.X / second.X, first.Y / second.Y);
-        public static implicit operator IntegerVector(Vector vector) => new((int) vector.X, (int) vector.Y);
+        public static implicit operator IntegerVector(Vector vector) => new(vector.X.RoundedDown(), vector.Y.RoundedDown());
 
         /// <summary>
         /// The equivalent of an <see cref="IntegerVector"/> with values of (0, 0).
