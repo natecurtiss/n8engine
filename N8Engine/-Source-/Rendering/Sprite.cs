@@ -24,9 +24,7 @@ namespace N8Engine.Rendering
                 var newPosition = position.AdjustedToPivot(Pivot.BottomLeft, size, pivot);
                 pixels[i].Position = newPosition + offset;
             }
-            // pixels.Offset(offset);
-            // pixels.AdjustToPivot(size, pivot);
-            
+
             Pixels = pixels;
             FlippedHorizontally = Flipped(pixels, Flip.Horizontal, size);
             FlippedVertically = Flipped(pixels, Flip.Vertical, size);
@@ -53,17 +51,10 @@ namespace N8Engine.Rendering
                 Flip.HorizontalAndVertical => new IntegerVector(-1, -1),
                 var _ => IntegerVector.One
             };
-            var flipOffset = flip switch
-            {
-                Flip.Horizontal => new IntegerVector(size.X, 0),
-                Flip.Vertical => new IntegerVector(0, size.Y),
-                Flip.HorizontalAndVertical => size,
-                var _ => IntegerVector.Zero
-            };
             for (var index = 0; index < pixels.Count; index++)
             {
                 var pixel = pixels[index];
-                var flippedPixel = new Pixel(pixel.Color, pixel.Position * flipScale + flipOffset);
+                var flippedPixel = new Pixel(pixel.Color, pixel.Position * flipScale);
                 flippedPixels[index] = flippedPixel;
             }
             return new Sprite(flippedPixels);
