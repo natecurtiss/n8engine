@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using N8Engine.Animation;
+﻿using N8Engine.Animation;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
 using N8Engine.Rendering;

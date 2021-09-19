@@ -14,7 +14,7 @@ namespace N8Engine.Tilemaps
         {
             var bottomLeft = position;
             var totalSize = sizeInTiles * _palette.TileSize;
-            var positionAdjustedToPivot = bottomLeft.AdjustToPivot(totalSize, pivot);
+            var positionAdjustedToPivot = bottomLeft.AdjustedToPivot(totalSize, pivot);
             
             var chunk = new Chunk(positionAdjustedToPivot, sizeInTiles, _palette);
             chunk.GenerateTiles();

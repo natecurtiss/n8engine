@@ -1,7 +1,6 @@
 using N8Engine;
 using N8Engine.Mathematics;
 using N8Engine.Physics;
-using N8Engine.Rendering;
 
 namespace SampleProject
 {

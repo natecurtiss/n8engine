@@ -1,7 +1,5 @@
-﻿using System;
-using N8Engine;
+﻿using N8Engine;
 using N8Engine.Mathematics;
-using N8Engine.Physics;
 using N8Engine.Rendering;
 
 namespace SampleProject
@@ -20,7 +18,7 @@ namespace SampleProject
 
         protected override void OnStart()
         {
-            Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 90f;
+            // Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 90f;
             
             _animationController = new PlayerAnimationController(Animator, _input, SpriteRenderer);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");

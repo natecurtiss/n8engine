@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.Text;
 using N8Engine.Mathematics;
-using N8Engine.Rendering;
 
 namespace N8Engine.Native
 {

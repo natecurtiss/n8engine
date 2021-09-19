@@ -4,18 +4,56 @@ namespace N8Engine.Animation
 {
     public abstract partial class Animation
     {
-        public static readonly Animation Nothing = new EmptyAnimation();
+        internal static Animation Nothing => new EmptyAnimation();
         
-        public static T Create<T>() where T : Animation, new()
+        private int _currentKeyframeIndex;
+        private float _keyframeTimer;
+        private bool _isDone;
+        
+        protected abstract bool ShouldLoop { get; }
+        protected abstract Keyframe[] Keyframes { get; }
+        
+        private Keyframe CurrentKeyframe => Keyframes[_currentKeyframeIndex];
+        private bool IsOnLastKeyframe => _currentKeyframeIndex + 1 == Keyframes.Length;
+
+        internal void OnChangedTo()
         {
-            var animation = new T();
-            animation.OnInitialize();
-            return animation;
+            _currentKeyframeIndex = 0;
+            _keyframeTimer = CurrentKeyframe.ExecutionDelay;
+            _isDone = false;
         }
 
-        internal virtual void OnChangedTo() { }
-        private protected virtual void OnInitialize() { }
+        internal void Tick(GameObject gameObject, float deltaTime)
+        {
+            if (_isDone) return;
+            
+            _keyframeTimer = (_keyframeTimer - deltaTime).KeptAbove(0f);
+            if (_keyframeTimer == 0)
+            {
+                CurrentKeyframe.Execute(gameObject, deltaTime);
+                NextKeyframe();
+            }
+        }
 
-        internal abstract void Tick(GameObject gameObject, float deltaTime);
+        private void NextKeyframe()
+        {
+            if (IsOnLastKeyframe)
+            {
+                if (ShouldLoop)
+                {
+                    _currentKeyframeIndex = 0;
+                    _keyframeTimer = CurrentKeyframe.ExecutionDelay;
+                }
+                else
+                {
+                    _isDone = true;
+                }
+            }
+            else
+            {
+                _currentKeyframeIndex += 1;
+                _keyframeTimer = CurrentKeyframe.ExecutionDelay;
+            }
+        }
     }
 }

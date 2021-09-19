@@ -5,10 +5,14 @@ using N8Engine.Rendering;
 
 namespace SampleProject
 {
-    public sealed class PlayerJumpAnimation : SingleKeyframeAnimation
+    public sealed class PlayerJumpAnimation : Animation
     {
-        private readonly Sprite _sprite = new(SpritesFolder.Path + "player_5.png", Vector.Up);
+        private readonly Sprite _1 = new(SpritesFolder.Path + "player_5.png", Vector.Up);
 
-        protected override void OnKeyframe(GameObject gameObject) => gameObject.SpriteRenderer.Sprite = _sprite;
+        protected override Keyframe[] Keyframes => new Keyframe[]
+        {
+            Do(gameObject => gameObject.SpriteRenderer.Sprite = _1),
+        };
+        protected override bool ShouldLoop => true;
     }
 }

@@ -2,13 +2,11 @@ using N8Engine.Animation;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 using static N8Engine.Mathematics.Direction;
-using static N8Engine.Mathematics.Orientation;
 
 namespace SampleProject
 {
     public sealed class PlayerAnimationController
     {
-        // TODO convert animation constructor calls to Animation.Create<T>()
         private readonly PlayerInputs _input;
         private readonly Animator _animator;
         private readonly SpriteRenderer _spriteRenderer;
@@ -30,8 +28,8 @@ namespace SampleProject
         {
             _spriteRenderer.ShouldFlip = _input.CurrentDirection switch
             {
-                Right => Orientation.None,
-                Left => Horizontal,
+                Right => Flip.None,
+                Left => Flip.Horizontal,
                 var _ => _spriteRenderer.ShouldFlip
             };
             if (isGrounded)

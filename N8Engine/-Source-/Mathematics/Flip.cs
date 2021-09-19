@@ -1,6 +1,6 @@
 namespace N8Engine.Mathematics
 {
-    public enum Orientation
+    public enum Flip
     {
         None,
         Horizontal,

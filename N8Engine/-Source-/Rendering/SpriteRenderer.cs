@@ -1,5 +1,4 @@
-﻿using System;
-using N8Engine.Mathematics;
+﻿using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
@@ -11,16 +10,16 @@ namespace N8Engine.Rendering
         {
             get => ShouldFlip switch
             {
-                Orientation.None => _normalSprite,
-                Orientation.Horizontal => _normalSprite.FlippedHorizontally,
-                Orientation.Vertical => _normalSprite.FlippedVertically,
-                Orientation.HorizontalAndVertical => _normalSprite.FlippedHorizontallyAndVertically,
+                Flip.None => _normalSprite,
+                Flip.Horizontal => _normalSprite.FlippedHorizontally,
+                Flip.Vertical => _normalSprite.FlippedVertically,
+                Flip.HorizontalAndVertical => _normalSprite.FlippedHorizontallyAndVertically,
                 var _ => _normalSprite    
             };
             set => _normalSprite = value;
         }
         public int SortingOrder { get; set; }
-        public Orientation ShouldFlip { get; set; }
+        public Flip ShouldFlip { get; set; }
 
         internal SpriteRenderer(GameObject gameObject) : base(gameObject) { }
     }

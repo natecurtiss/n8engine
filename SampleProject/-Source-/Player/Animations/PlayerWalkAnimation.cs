@@ -6,21 +6,26 @@ using N8Engine.Rendering;
 
 namespace SampleProject
 {
-    public sealed class PlayerWalkAnimation : FixedAnimation
+    public sealed class PlayerWalkAnimation : Animation
     {
-        private readonly Sprite _firstFrame = new(SpritesFolder.Path + "player_1.png");
-        private readonly Sprite _secondFrame = new(SpritesFolder.Path + "player_2.png", Vector.Down);
-        private readonly Sprite _thirdFrame = new(SpritesFolder.Path + "player_3.png");
-        private readonly Sprite _fourthFrame = new(SpritesFolder.Path + "player_4.png", Vector.Down);
+        private const float TIME_BETWEEN_FRAMES = 0.075f;
+        
+        private readonly Sprite _1 = new(SpritesFolder.Path + "player_1.png");
+        private readonly Sprite _2 = new(SpritesFolder.Path + "player_2.png", Vector.Down);
+        private readonly Sprite _3 = new(SpritesFolder.Path + "player_3.png");
+        private readonly Sprite _4 = new(SpritesFolder.Path + "player_4.png", Vector.Down);
 
-        protected override Action<GameObject, float>[] Keyframes => new Action<GameObject, float>[]
+        protected override Keyframe[] Keyframes => new Keyframe[]
         {
-            (gameObject, _) => gameObject.SpriteRenderer.Sprite = _firstFrame,
-            (gameObject, _) => gameObject.SpriteRenderer.Sprite = _secondFrame,
-            (gameObject, _) => gameObject.SpriteRenderer.Sprite = _thirdFrame,
-            (gameObject, _) => gameObject.SpriteRenderer.Sprite = _fourthFrame
+            Do(gameObject => gameObject.SpriteRenderer.Sprite = _1),
+            Wait(TIME_BETWEEN_FRAMES),
+            Do(gameObject => gameObject.SpriteRenderer.Sprite = _2),
+            Wait(TIME_BETWEEN_FRAMES),
+            Do(gameObject => gameObject.SpriteRenderer.Sprite = _3),
+            Wait(TIME_BETWEEN_FRAMES),
+            Do(gameObject => gameObject.SpriteRenderer.Sprite = _4),
+            Wait(TIME_BETWEEN_FRAMES),
         };
-        protected override float TimeBetweenEachKeyframe => 0.075f;
         protected override bool ShouldLoop => true;
     }
 }

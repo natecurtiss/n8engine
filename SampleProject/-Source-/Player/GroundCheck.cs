@@ -1,7 +1,5 @@
 using System;
-using System.Linq;
 using N8Engine;
-using N8Engine.Physics;
 
 namespace SampleProject
 {

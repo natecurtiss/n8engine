@@ -1,7 +1,11 @@
 namespace N8Engine.Animation
 {
-    internal sealed class EmptyAnimation : SingleKeyframeAnimation
+    internal sealed class EmptyAnimation : Animation
     {
-        protected override void OnKeyframe(GameObject gameObject) { }
+        protected override bool ShouldLoop => false;
+        protected override Keyframe[] Keyframes => new Keyframe[]
+        {
+            Wait(0f)
+        };
     }
 }

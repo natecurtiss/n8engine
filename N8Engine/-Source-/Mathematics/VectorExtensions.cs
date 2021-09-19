@@ -12,7 +12,8 @@ namespace N8Engine.Mathematics
         /// <para>In short: we just change the <see cref="Pivot"/> of an object with a bottom left <see cref="Pivot"/>
         /// (things generally start at 0, 0 and work their way up, which is why it's assumed that the current <see cref="Pivot"/> is the bottom left.)</para>
         /// </summary>
-        public static Vector AdjustToPivot(this Vector bottomLeft, Vector sizeOfObject, Pivot pivot)
+        // TODO change this to work with any pivot and make the first parameter ref.
+        public static Vector AdjustedToPivot(this Vector bottomLeft, Vector sizeOfObject, Pivot pivot)
         {
             var center = bottomLeft - sizeOfObject / 2f;
             var moveLeftByHalf = new Vector(-sizeOfObject.X, 0) / 2f;
