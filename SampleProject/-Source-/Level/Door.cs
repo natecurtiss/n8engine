@@ -10,7 +10,7 @@ namespace SampleProject
         protected override void OnStart()
         {
             SpriteRenderer.SortingOrder = -1;
-            SpriteRenderer.Sprite = new(SpritesFolder.Path + "door.n8sprite");
+            SpriteRenderer.Sprite = new(SpritesFolder.Path + "door.png");
             EventManager.OnKeyCollected.AddListener(SproutUpFromTheGround);
         }
 
