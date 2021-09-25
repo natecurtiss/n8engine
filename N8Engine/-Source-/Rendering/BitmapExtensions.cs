@@ -18,6 +18,7 @@ namespace N8Engine.Rendering
                 for (var x = 0; x < width; x++)
                 {
                     pixels[index] = new Pixel(image.GetPixel(x, upsideDownY), new IntegerVector(x, y));
+                    Debug.Log(pixels[index].Color);
                     index++;
                 }
                 upsideDownY--;

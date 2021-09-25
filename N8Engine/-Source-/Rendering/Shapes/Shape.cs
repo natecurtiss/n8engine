@@ -15,7 +15,7 @@ namespace N8Engine.Rendering
         protected abstract IntegerVector Size { get; }
         protected abstract Vector Offset { get; }
         protected abstract Pivot Pivot { get; }
-        
+
         private Sprite Sprite => _sprite ??= new Sprite(GeneratePixels(Colors, Size), Size, Offset, Pivot);
 
         private Pixel[] GeneratePixels(IReadOnlyList<Color> colors, IntegerVector size)

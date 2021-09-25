@@ -18,14 +18,8 @@ namespace SampleProject
             // GameObject.Create<Door>("door").Transform.Position += new Vector(252f, -39f);
             // GameObject.Create<DoorKey>("key");
 
-            const string line_name = "line";
-            var line = new Line(Color.White, Window.Width);
-            GameObject.CreateStaticSprite(line, line_name).Transform.Position = Vector.Zero;
-            for (var i = 0; i < 5; i++)
-            {
-                GameObject.CreateStaticSprite(line, line_name).Transform.Position = Vector.Up * 10f * i;
-                GameObject.CreateStaticSprite(line, line_name).Transform.Position = Vector.Down * 10f * i;
-            }
+            var square = new OutlinedRectangle(Color.White, IntegerVector.One * 20);
+            GameObject.CreateStaticSprite(square);
         }
     }
 }
