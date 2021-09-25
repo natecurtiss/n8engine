@@ -7,12 +7,12 @@ namespace N8Engine.Rendering
     public sealed class Sprite
     {
         public static Sprite Empty => new();
-        
-        internal IEnumerable<Pixel> Pixels { get; }
-        internal Sprite FlippedHorizontally { get; }
-        internal Sprite FlippedVertically { get; }
-        internal Sprite FlippedHorizontallyAndVertically { get; }
-        
+
+        internal readonly IEnumerable<Pixel> NotFlipped;
+        internal readonly IEnumerable<Pixel> FlippedHorizontally;
+        internal readonly IEnumerable<Pixel> FlippedVertically;
+        internal readonly IEnumerable<Pixel> FlippedHorizontallyAndVertically;
+
         public Sprite(string path, Vector offset = default, Pivot pivot = Pivot.Center)
         {
             var image = new Bitmap(path);
@@ -25,10 +25,10 @@ namespace N8Engine.Rendering
                 pixels[i].Position = newPosition + offset;
             }
 
-            Pixels = pixels;
-            FlippedHorizontally = Flipped(pixels, Flip.Horizontal, size);
-            FlippedVertically = Flipped(pixels, Flip.Vertical, size);
-            FlippedHorizontallyAndVertically = Flipped(pixels, Flip.HorizontalAndVertical, size);
+            NotFlipped = pixels;
+            FlippedHorizontally = Flipped(pixels, Flip.Horizontal);
+            FlippedVertically = Flipped(pixels, Flip.Vertical);
+            FlippedHorizontallyAndVertically = Flipped(pixels, Flip.HorizontalAndVertical);
         }
 
         internal Sprite(string[] pixels)
@@ -37,13 +37,11 @@ namespace N8Engine.Rendering
             return;
         }
 
-        private Sprite(IEnumerable<Pixel> pixels) => Pixels = pixels;
-        
         private Sprite() { }
         
-        private static Sprite Flipped(IReadOnlyList<Pixel> pixels, Flip flip, IntegerVector size)
+        private static IEnumerable<Pixel> Flipped(IReadOnlyList<Pixel> notFlippedPixels, Flip flip)
         {
-            var flippedPixels = new Pixel[pixels.Count];
+            var flippedPixels = new Pixel[notFlippedPixels.Count];
             var flipScale = flip switch
             {
                 Flip.Horizontal => new IntegerVector(-1, 1),
@@ -51,13 +49,13 @@ namespace N8Engine.Rendering
                 Flip.HorizontalAndVertical => new IntegerVector(-1, -1),
                 var _ => IntegerVector.One
             };
-            for (var index = 0; index < pixels.Count; index++)
+            for (var index = 0; index < notFlippedPixels.Count; index++)
             {
-                var pixel = pixels[index];
+                var pixel = notFlippedPixels[index];
                 var flippedPixel = new Pixel(pixel.Color, pixel.Position * flipScale);
                 flippedPixels[index] = flippedPixel;
             }
-            return new Sprite(flippedPixels);
+            return flippedPixels;
         }
     }
 }

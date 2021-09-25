@@ -24,9 +24,9 @@ namespace N8Engine.Rendering
 
         private static void OnPreRender() => UpdatePixelsToRenderLastFrame();
 
-        public static void Render(Sprite sprite, Vector spritePosition, int sortingOrder)
+        public static void Render(IEnumerable<Pixel> pixels, Vector spritePosition, int sortingOrder)
         {
-            foreach (var pixel in sprite.Pixels)
+            foreach (var pixel in pixels)
             {
                 var integerSpritePosition = (IntegerVector) spritePosition;
                 var worldPosition = pixel.Position + integerSpritePosition;

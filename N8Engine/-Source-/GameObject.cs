@@ -109,9 +109,9 @@ namespace N8Engine
         private void OnRender()
         {
             if (SpriteRenderer.Sprite != null)
-                Renderer.Render(SpriteRenderer.Sprite, Transform.Position, SpriteRenderer.SortingOrder);
+                Renderer.Render(SpriteRenderer.SpritePixels, Transform.Position, SpriteRenderer.SortingOrder);
             if ((Collider.IsVisible || PhysicsSettings.ShouldShowAllColliders) && Collider.Size != Vector.Zero)
-                Renderer.Render(Collider.Sprite, Collider.Position, Math.INFINITY - 1);
+                Renderer.Render(Collider.Sprite.NotFlipped, Collider.Position, Math.INFINITY - 1);
         }
     }
 }

@@ -1,25 +1,23 @@
-﻿using N8Engine.Mathematics;
+﻿using System;
+using System.Collections.Generic;
+using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
     public sealed class SpriteRenderer : Component
     {
-        private Sprite _normalSprite;
-
-        public Sprite Sprite
-        {
-            get => ShouldFlip switch
-            {
-                Flip.None => _normalSprite,
-                Flip.Horizontal => _normalSprite.FlippedHorizontally,
-                Flip.Vertical => _normalSprite.FlippedVertically,
-                Flip.HorizontalAndVertical => _normalSprite.FlippedHorizontallyAndVertically,
-                var _ => _normalSprite    
-            };
-            set => _normalSprite = value;
-        }
+        public Sprite Sprite { get; set; }
         public int SortingOrder { get; set; }
         public Flip ShouldFlip { get; set; }
+
+        internal IEnumerable<Pixel> SpritePixels => ShouldFlip switch
+        {
+            Flip.None => Sprite.NotFlipped,
+            Flip.Horizontal => Sprite.FlippedHorizontally,
+            Flip.Vertical => Sprite.FlippedVertically,
+            Flip.HorizontalAndVertical => Sprite.FlippedHorizontallyAndVertically,
+            var _ => Sprite.NotFlipped
+        };
 
         internal SpriteRenderer(GameObject gameObject) : base(gameObject) { }
     }
