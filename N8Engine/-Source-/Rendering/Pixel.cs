@@ -13,6 +13,8 @@ namespace N8Engine.Rendering
         public IntegerVector Position { get; set; }
         public int SortingOrder { get; set; }
 
+        public bool IsClear => Color.A == 0;
+
         public Pixel(Color color, IntegerVector position)
         {
             Color = color;

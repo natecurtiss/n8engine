@@ -28,7 +28,7 @@ namespace N8Engine.Rendering
         {
             foreach (var pixel in pixels)
             {
-                if (pixel.Color.A == 0) continue;
+                if (pixel.IsClear) continue;
                 
                 var integerSpritePosition = (IntegerVector) spritePosition;
                 var worldPosition = pixel.Position + integerSpritePosition;

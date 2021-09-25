@@ -26,8 +26,8 @@ namespace SampleProject
             _groundCheck.Collider.Size = new Vector(7f, 3f);
             _groundCheck.Collider.Offset = new Vector(1f, -3f);
 
-            Collider.Size = new Vector(7, 7);
-            Collider.Offset = new Vector(1f, 0f);
+            Collider.Size = new Vector(8, 8);
+            Collider.IsVisible = true;
             SpriteRenderer.SortingOrder = -2;
             PhysicsBody.UseGravity = true;
         }

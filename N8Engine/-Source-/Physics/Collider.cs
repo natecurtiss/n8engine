@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
@@ -12,11 +13,13 @@ namespace N8Engine.Physics
     /// <seealso cref="PhysicsBody"/> <seealso cref="PhysicsSettings"/>
     public sealed class Collider : Component
     {
-        private readonly ColliderVisualization _visualization;
+        private readonly Color _visualizationColor = Color.Lime;
         private readonly List<Collider> _collidersCollidingWithThisFrame = new();
         private readonly List<Collider> _collidersCollidingWithLastFrame = new();
         private readonly PhysicsBody _physicsBody;
+        
         private Vector _size;
+        private OutlinedRectangle _visualization;
 
         /// <summary>
         /// The <see cref="Transform"/> attached to the same <see cref="GameObject"/> as the <see cref="Collider">Collider.</see>
@@ -50,7 +53,7 @@ namespace N8Engine.Physics
             set
             {
                 if (_size == value) return;
-                _visualization.Redraw(value);
+                _visualization = new OutlinedRectangle(_visualizationColor, value);
                 _size = value;
             }
         }
@@ -58,14 +61,14 @@ namespace N8Engine.Physics
         /// <see cref="N8Engine.Mathematics.Transform.Position">Transform.Position</see> + <see cref="Offset">Collider.Offset.</see>
         /// </summary>
         public Vector Position => Transform.Position + Offset;
-        internal Sprite Sprite => Size == Vector.Zero ? Sprite.Empty : _visualization.Sprite;
+        internal Sprite Sprite => Size == Vector.Zero ? Sprite.Empty : _visualization;
 
         private BoundingBox BoundingBoxThisFrame { get; set; }
         private BoundingBox BoundingBoxNextFrame { get; set; }
 
         internal Collider(GameObject gameObject) : base(gameObject)
         {
-            _visualization = new ColliderVisualization(this);
+            _visualization = new OutlinedRectangle(_visualizationColor, Size);
             _physicsBody = gameObject.PhysicsBody;
         }
 
