@@ -1,4 +1,5 @@
-﻿using N8Engine;
+﻿using System.Drawing;
+using N8Engine;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
@@ -16,17 +17,15 @@ namespace SampleProject
             GameObject.Create<Player>("player");
             // GameObject.Create<Door>("door").Transform.Position += new Vector(252f, -39f);
             // GameObject.Create<DoorKey>("key");
-            // GameObject.Create<Line>("line").MakeColor("White")
-            //     .Copy(Vector.Up * 10f)
-            //     .Copy(Vector.Down * 10f)
-            //     .Copy(Vector.Up * 20f)
-            //     .Copy(Vector.Down * 20f)
-            //     .Copy(Vector.Up * 30f)
-            //     .Copy(Vector.Down * 30f)
-            //     .Copy(Vector.Up * 40f)
-            //     .Copy(Vector.Down * 40f)
-            //     .Copy(Vector.Up * 50f)
-            //     .Copy(Vector.Down * 50f);
+
+            const string line_name = "line";
+            var line = new Line(Color.White, Window.Width);
+            GameObject.CreateStaticSprite(line, line_name).Transform.Position = Vector.Zero;
+            for (var i = 0; i < 5; i++)
+            {
+                GameObject.CreateStaticSprite(line, line_name).Transform.Position = Vector.Up * 10f * i;
+                GameObject.CreateStaticSprite(line, line_name).Transform.Position = Vector.Down * 10f * i;
+            }
         }
     }
 }

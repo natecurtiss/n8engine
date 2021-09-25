@@ -8,8 +8,6 @@ namespace N8Engine
 {
     public abstract class GameObject
     {
-        private const string DEFAULT_NAME = "new gameobject";
-        
         public string Name { get; private set; }
         public Transform Transform { get; private set; }
         public SpriteRenderer SpriteRenderer { get; private set; }
@@ -17,12 +15,27 @@ namespace N8Engine
         public PhysicsBody PhysicsBody { get; private set; }
         public Animator Animator { get; private set; }
 
-        public static T Create<T>(string name = DEFAULT_NAME) where T : GameObject, new()
+        public static T Create<T>(string name) where T : GameObject, new()
         {
             var gameObject = new T();
             SceneManager.CurrentScene.Add(gameObject);
-            if (name == DEFAULT_NAME) name = $"new {gameObject.GetType()}";
             gameObject.Initialize(name);
+            return gameObject;
+        }
+
+        public static T Create<T>() where T : GameObject, new()
+        {
+            var gameObject = new T();
+            SceneManager.CurrentScene.Add(gameObject);
+            gameObject.Initialize($"{gameObject.GetType()}");
+            return gameObject;
+        }
+
+        public static GameObject CreateStaticSprite(Sprite sprite, string name = "static sprite", int sortingOrder = 0)
+        {
+            var gameObject = GameObject.Create<EmptyGameObject>(name);
+            gameObject.SpriteRenderer.Sprite = sprite;
+            gameObject.SpriteRenderer.SortingOrder = sortingOrder;
             return gameObject;
         }
 

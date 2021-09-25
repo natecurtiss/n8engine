@@ -8,28 +8,20 @@ namespace N8Engine.Rendering
     {
         public static Sprite Empty => new();
 
-        internal readonly IEnumerable<Pixel> NotFlipped;
-        internal readonly IEnumerable<Pixel> FlippedHorizontally;
-        internal readonly IEnumerable<Pixel> FlippedVertically;
-        internal readonly IEnumerable<Pixel> FlippedHorizontallyAndVertically;
+        internal IEnumerable<Pixel> NotFlipped { get; private set; }
+        internal IEnumerable<Pixel> FlippedHorizontally { get; private set; }
+        internal IEnumerable<Pixel> FlippedVertically { get; private set; }
+        internal IEnumerable<Pixel> FlippedHorizontallyAndVertically { get; private set; }
 
         public Sprite(string path, Vector offset = default, Pivot pivot = Pivot.Center)
         {
             var image = new Bitmap(path);
             var pixels = image.AsPixels();
             var size = new IntegerVector(image.Width, image.Height);
-            for (var i = 0; i < pixels.Length; i++)
-            {
-                var position = pixels[i].Position;
-                var newPosition = position.AdjustedToPivot(Pivot.BottomLeft, size, pivot);
-                pixels[i].Position = newPosition + offset;
-            }
-
-            NotFlipped = pixels;
-            FlippedHorizontally = Flipped(pixels, Flip.Horizontal);
-            FlippedVertically = Flipped(pixels, Flip.Vertical);
-            FlippedHorizontallyAndVertically = Flipped(pixels, Flip.HorizontalAndVertical);
+            CreateSprite(pixels, size, offset, pivot);
         }
+
+        internal Sprite(Pixel[] pixels, IntegerVector size, Vector offset, Pivot pivot) => CreateSprite(pixels, size, offset, pivot);
 
         internal Sprite(string[] pixels)
         {
@@ -38,8 +30,8 @@ namespace N8Engine.Rendering
         }
 
         private Sprite() { }
-        
-        private static IEnumerable<Pixel> Flipped(IReadOnlyList<Pixel> notFlippedPixels, Flip flip)
+
+        private IEnumerable<Pixel> Flipped(IReadOnlyList<Pixel> notFlippedPixels, Flip flip)
         {
             var flippedPixels = new Pixel[notFlippedPixels.Count];
             var flipScale = flip switch
@@ -56,6 +48,21 @@ namespace N8Engine.Rendering
                 flippedPixels[index] = flippedPixel;
             }
             return flippedPixels;
+        }
+
+        private void CreateSprite(Pixel[] pixels, IntegerVector size, IntegerVector offset, Pivot pivot)
+        {
+            for (var i = 0; i < pixels.Length; i++)
+            {
+                var position = pixels[i].Position;
+                var newPosition = position.AdjustedToPivot(Pivot.BottomLeft, size, pivot);
+                pixels[i].Position = newPosition + offset;
+            }
+
+            NotFlipped = pixels;
+            FlippedHorizontally = Flipped(pixels, Flip.Horizontal);
+            FlippedVertically = Flipped(pixels, Flip.Vertical);
+            FlippedHorizontallyAndVertically = Flipped(pixels, Flip.HorizontalAndVertical);
         }
     }
 }

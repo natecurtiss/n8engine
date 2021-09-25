@@ -23,5 +23,7 @@ namespace N8Engine.Rendering
         public override bool Equals(object obj) => obj is Pixel other && this == other;
 
         public override int GetHashCode() => base.GetHashCode();
+
+        public override string ToString() => $"pixel at {Position} with color {Color}";
     }
 }
