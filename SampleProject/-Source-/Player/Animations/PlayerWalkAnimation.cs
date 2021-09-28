@@ -11,9 +11,9 @@ namespace SampleProject
         private const float TIME_BETWEEN_FRAMES = 0.075f;
         
         private readonly Sprite _1 = new(SpritesFolder.Path + "player_1.png");
-        private readonly Sprite _2 = new(SpritesFolder.Path + "player_2.png", Vector.Down);
+        private readonly Sprite _2 = new(SpritesFolder.Path + "player_2.png", Vector.Up);
         private readonly Sprite _3 = new(SpritesFolder.Path + "player_3.png");
-        private readonly Sprite _4 = new(SpritesFolder.Path + "player_4.png", Vector.Down);
+        private readonly Sprite _4 = new(SpritesFolder.Path + "player_4.png", Vector.Up);
 
         protected override Keyframe[] Keyframes => new Keyframe[]
         {

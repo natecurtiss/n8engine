@@ -11,6 +11,7 @@ namespace N8Engine.Animation
 
         public void ChangeAnimation([NotNull] Animation animation)
         {
+            if (Animation == animation) return;
             Animation = animation;
             Animation.OnChangedTo();
         }

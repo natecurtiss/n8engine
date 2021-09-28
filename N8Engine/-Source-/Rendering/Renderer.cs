@@ -30,8 +30,7 @@ namespace N8Engine.Rendering
             {
                 if (pixel.IsClear) continue;
                 
-                var integerSpritePosition = (IntegerVector) spritePosition;
-                var worldPosition = pixel.Position + integerSpritePosition;
+                var worldPosition = pixel.Position + (IntegerVector) spritePosition;
                 var windowPosition = worldPosition.FromWorldPositionToWindowPosition();
                 var sortedPixel = pixel.WithSortingOrder(sortingOrder);
                 
@@ -98,7 +97,7 @@ namespace N8Engine.Rendering
         private static void UpdatePixelsToRenderLastFrame()
         {
             foreach (var (position, pixel) in _pixelsToRender)
-                if (_pixelsToRenderLastFrame.ContainsKey(position))
+                if (position.HadAPixel())
                     _pixelsToRenderLastFrame[position] = pixel;
                 else
                     _pixelsToRenderLastFrame.Add(position, pixel);
@@ -113,6 +112,8 @@ namespace N8Engine.Rendering
         }
 
         private static bool HasAPixel(this IntegerVector position) => _pixelsToRender.ContainsKey(position);
+
+        private static bool HadAPixel(this IntegerVector position) => _pixelsToRenderLastFrame.ContainsKey(position);
 
         private static bool DoesNotHaveAPixel(this IntegerVector position) => !position.HasAPixel();
 
@@ -138,8 +139,8 @@ namespace N8Engine.Rendering
         private static bool IsInsideOfTheWorld(this IntegerVector position) =>
             position.X >= 0 &&
             position.Y >= 0 &&
-            position.X <= _windowSize.X -1 &&
-            position.Y <= _windowSize.Y - 1;
+            position.X <= _windowSize.X - (NUMBER_OF_CHARACTERS_PER_PIXEL - 1) &&
+            position.Y <= _windowSize.Y - (NUMBER_OF_CHARACTERS_PER_PIXEL - 1);
 
     }
 }

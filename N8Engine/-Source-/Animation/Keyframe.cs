@@ -19,6 +19,8 @@ namespace N8Engine.Animation
             }
 
             internal void Execute(GameObject gameObject, float deltaTime) => _key?.Invoke(gameObject, deltaTime);
+
+            public override string ToString() => $"(delay: {ExecutionDelay}, key: {_key})";
         }
 
         protected readonly struct Delay

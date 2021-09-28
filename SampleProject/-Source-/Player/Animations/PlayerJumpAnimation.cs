@@ -7,7 +7,7 @@ namespace SampleProject
 {
     public sealed class PlayerJumpAnimation : Animation
     {
-        private readonly Sprite _1 = new(SpritesFolder.Path + "player_5.png", Vector.Up);
+        private readonly Sprite _1 = new(SpritesFolder.Path + "player_5.png", Vector.Down);
 
         protected override Keyframe[] Keyframes => new Keyframe[]
         {
