@@ -9,9 +9,9 @@ namespace SampleProject
     {
         private readonly Sprite _1 = new(SpritesFolder.Path + "player_5.png", Vector.Down);
 
-        protected override Keyframe[] Keyframes => new Keyframe[]
+        protected override Sequence[] Keyframes => new[]
         {
-            Do(gameObject => gameObject.SpriteRenderer.Sprite = _1),
+            new Sequence().Do(gameObject => gameObject.SpriteRenderer.Sprite = _1)
         };
         protected override bool ShouldLoop => true;
     }

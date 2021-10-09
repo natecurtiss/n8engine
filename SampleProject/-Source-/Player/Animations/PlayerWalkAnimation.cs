@@ -8,23 +8,28 @@ namespace SampleProject
 {
     public sealed class PlayerWalkAnimation : Animation
     {
-        private const float TIME_BETWEEN_FRAMES = 0.075f;
-        
-        private readonly Sprite _1 = new(SpritesFolder.Path + "player_1.png");
-        private readonly Sprite _2 = new(SpritesFolder.Path + "player_2.png", Vector.Up);
-        private readonly Sprite _3 = new(SpritesFolder.Path + "player_3.png");
-        private readonly Sprite _4 = new(SpritesFolder.Path + "player_4.png", Vector.Up);
-
-        protected override Keyframe[] Keyframes => new Keyframe[]
+        private const float TIME_BETWEEN_FRAMES = 0.05f;
+        private readonly Sprite[] _frames = 
         {
-            Do(gameObject => gameObject.SpriteRenderer.Sprite = _1),
-            Wait(TIME_BETWEEN_FRAMES),
-            Do(gameObject => gameObject.SpriteRenderer.Sprite = _2),
-            Wait(TIME_BETWEEN_FRAMES),
-            Do(gameObject => gameObject.SpriteRenderer.Sprite = _3),
-            Wait(TIME_BETWEEN_FRAMES),
-            Do(gameObject => gameObject.SpriteRenderer.Sprite = _4),
-            Wait(TIME_BETWEEN_FRAMES),
+            new(SpritesFolder.Path + "player_1.png"),
+            new(SpritesFolder.Path + "player_2.png", Vector.Up),
+            new(SpritesFolder.Path + "player_3.png"),
+            new(SpritesFolder.Path + "player_4.png", Vector.Up),
+        };
+        private int _currentFrame;
+        private int CurrentFrame
+        {
+            get => _currentFrame;
+            set => _currentFrame = value >= _frames.Length ? 0 : value.KeptAboveZero();
+        }
+
+        protected override Sequence[] Keyframes => new[]
+        {
+            new Sequence()
+                .Do(gameObject => gameObject.SpriteRenderer.Sprite = _frames[CurrentFrame])
+                .Wait(TIME_BETWEEN_FRAMES)
+                .Do(() => CurrentFrame++)
+                .Repeat(_frames.Length)
         };
         protected override bool ShouldLoop => true;
     }

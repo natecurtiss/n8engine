@@ -1,25 +1,34 @@
-﻿using N8Engine.Mathematics;
+﻿using System.Collections.Generic;
+using N8Engine.Mathematics;
 
 namespace N8Engine.Animation
 {
-    public abstract partial class Animation
+    public abstract class Animation
     {
-        internal static Animation Nothing => new EmptyAnimation();
+        internal static readonly Animation Nothing = Animation.Create<EmptyAnimation>();
         
         private int _currentKeyframeIndex;
         private float _keyframeTimer;
         private bool _isDone;
-        
+        private Sequence _allKeyframes;
+
         protected abstract bool ShouldLoop { get; }
-        protected abstract Keyframe[] Keyframes { get; }
-        
-        private Keyframe CurrentKeyframe => Keyframes[_currentKeyframeIndex];
-        private bool IsOnLastKeyframe => _currentKeyframeIndex + 1 == Keyframes.Length;
+        protected abstract Sequence[] Keyframes { get; }
+
+        private Keyframe CurrentKeyframe => _allKeyframes[_currentKeyframeIndex];
+        private bool IsOnLastKeyframe => _currentKeyframeIndex + 1 == _allKeyframes.Length;
+
+        public static T Create<T>() where T : Animation, new()
+        {
+            var animation = new T();
+            animation.Initialize();
+            return animation;
+        }
 
         internal void OnChangedTo()
         {
-            _currentKeyframeIndex = 0;
-            _keyframeTimer = CurrentKeyframe.ExecutionDelay;
+            _currentKeyframeIndex.Reset();
+            _keyframeTimer = CurrentKeyframe.Delay;
             _isDone = false;
         }
 
@@ -35,14 +44,20 @@ namespace N8Engine.Animation
             }
         }
 
+        private void Initialize()
+        {
+            _allKeyframes = Sequence.Merge(Keyframes);
+            Debug.Log(System.DateTime.Now.Millisecond);
+        }
+
         private void NextKeyframe()
         {
             if (IsOnLastKeyframe)
             {
                 if (ShouldLoop)
                 {
-                    _currentKeyframeIndex = 0;
-                    _keyframeTimer = CurrentKeyframe.ExecutionDelay;
+                    _currentKeyframeIndex.Reset();
+                    _keyframeTimer = CurrentKeyframe.Delay;
                 }
                 else
                 {
@@ -52,7 +67,7 @@ namespace N8Engine.Animation
             else
             {
                 _currentKeyframeIndex += 1;
-                _keyframeTimer = CurrentKeyframe.ExecutionDelay;
+                _keyframeTimer = CurrentKeyframe.Delay;
             }
         }
     }

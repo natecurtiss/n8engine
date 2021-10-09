@@ -137,5 +137,27 @@ namespace N8Engine.Mathematics
         public static float KeptAbove(this float value, float threshold) => MaximumOf(value, threshold);
         
         public static float KeptBelow(this float value, float threshold) => MinimumOf(value, threshold);
+        
+        public static int KeepAboveZero(this ref int value) => value = value.KeptAboveZero();
+
+        public static int KeepBelowZero(this ref int value) => value = value.KeptBelowZero();
+
+        public static int KeepAbove(this ref int value, int threshold) => value = value.KeptAbove(threshold);
+ 
+        public static int KeepBelow(this ref int value, int threshold) => value = value.KeptBelow(threshold);
+
+        public static int KeptAboveZero(this int value) => MaximumOf(value, 0);
+
+        public static int KeptBelowZero(this int value) => MinimumOf(value, 0);
+
+        public static int KeptAbove(this int value, int threshold) => MaximumOf(value, threshold);
+        
+        public static int KeptBelow(this int value, int threshold) => MinimumOf(value, threshold);
+        
+        public static float Reset(this ref float value) => value = 0f;
+        
+        public static float Reset(this ref int value) => value = 0;
+        
+        // TODO: the ref methods here might not work.
     }
 }

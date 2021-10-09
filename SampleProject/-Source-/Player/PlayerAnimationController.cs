@@ -11,9 +11,9 @@ namespace SampleProject
         private readonly PlayerInputs _input;
         private readonly Animator _animator;
         private readonly SpriteRenderer _spriteRenderer;
-        private readonly PlayerWalkAnimation _walk = new();
-        private readonly PlayerIdleAnimation _idle = new();
-        private readonly PlayerJumpAnimation _airborne = new();
+        private readonly PlayerWalkAnimation _walk = Animation.Create<PlayerWalkAnimation>();
+        private readonly PlayerIdleAnimation _idle = Animation.Create<PlayerIdleAnimation>();
+        private readonly PlayerJumpAnimation _airborne = Animation.Create<PlayerJumpAnimation>();
         
         private bool IsWalking => _input.CurrentDirection is Right or Left;
 

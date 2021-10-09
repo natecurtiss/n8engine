@@ -3,9 +3,9 @@ namespace N8Engine.Animation
     internal sealed class EmptyAnimation : Animation
     {
         protected override bool ShouldLoop => false;
-        protected override Keyframe[] Keyframes => new Keyframe[]
+        protected override Sequence[] Keyframes => new[]
         {
-            Wait(0f)
+            new Sequence().Wait(0f).Do(() => { })
         };
     }
 }
