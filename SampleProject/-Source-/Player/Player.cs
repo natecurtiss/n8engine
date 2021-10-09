@@ -64,7 +64,7 @@ namespace SampleProject
         private void ClampPositionWithinWindow()
         {
             var position = Transform.Position;
-            var offset = Collider.Size.X / 2f + 5f;
+            var offset = Collider.Size.X / 2f;
             position.X = position.X.ClampedBetween(Window.LeftSide.X + offset, Window.RightSide.X - offset);
             Transform.Position = position;
         }

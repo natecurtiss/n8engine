@@ -6,21 +6,14 @@ using N8Engine.Rendering;
 
 namespace SampleProject
 {
-    public sealed class PlayerIdleAnimation : Animation
+    public sealed class PlayerIdleAnimation : FrameByFrameAnimation
     {
-        private const float TIME_BETWEEN_KEYFRAMES = 0.35f;
-
-        private readonly Sprite _1 = new(SpritesFolder.Path + "player_1.png");
-        private readonly Sprite _2 = new(SpritesFolder.Path + "player_5.png", Vector.Down);
-
-        protected override Sequence[] Keyframes => new[]
-        {
-            new Sequence()
-                .Do(gameObject => gameObject.SpriteRenderer.Sprite = _1)
-                .Wait(TIME_BETWEEN_KEYFRAMES)
-                .Do(gameObject => gameObject.SpriteRenderer.Sprite = _2)
-                .Wait(TIME_BETWEEN_KEYFRAMES)
-        };
         protected override bool ShouldLoop => true;
+        protected override float TimeBetweenFrames => 0.35f;
+        protected override Sprite[] Frames => new Sprite[]
+        {
+            new(SpritesFolder.Path + "player_1.png"),
+            new(SpritesFolder.Path + "player_5.png", Vector.Down)
+        };
     }
 }
