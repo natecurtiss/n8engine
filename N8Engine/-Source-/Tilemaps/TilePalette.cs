@@ -5,7 +5,6 @@ namespace N8Engine.Tilemaps
 {
     public abstract class TilePalette
     {
-        public abstract TilemapBase BaseObject { get; }
         public abstract IntegerVector TileSize { get; }
         public abstract int SortingOrder { get; }
         protected abstract Sprite Left { get; }

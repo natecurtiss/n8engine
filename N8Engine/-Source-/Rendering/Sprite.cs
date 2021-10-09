@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
@@ -22,13 +23,6 @@ namespace N8Engine.Rendering
         }
 
         internal Sprite(Pixel[] pixels, IntegerVector size, Vector offset, Pivot pivot) => CreateSprite(pixels, size, offset, pivot);
-
-        internal Sprite(string[] pixels)
-        {
-            if (pixels.Length == 0) return;
-            return;
-        }
-
         private Sprite() { }
 
         private IEnumerable<Pixel> Flipped(IReadOnlyList<Pixel> notFlippedPixels, Flip flip)

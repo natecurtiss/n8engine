@@ -14,7 +14,7 @@ namespace SampleProject
         {
             // PhysicsSettings.ShouldShowAllColliders = true;
             
-            var tilemap = new AutoTilemap<TopAndSidesPalette>();
+            var tilemap = new AutoTilemap<TopAndSidesPalette, TilemapThatCanBeJumpedOn>();
             tilemap.Place(Window.BottomLeftCorner, new IntegerVector(10, 4), Pivot.BottomLeft);
 
             GameObject.Create<Player>("player");
