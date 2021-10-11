@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
@@ -8,18 +9,8 @@ namespace N8Engine.Animation
     {
         private int _currentFrame;
         private Sprite[] _cachedFrames = Array.Empty<Sprite>();
-        
-        private int NumberOfFrames => _cachedFrames.Length;
-        private int CurrentFrame
-        {
-            get => _currentFrame;
-            set => _currentFrame = value >= _cachedFrames.Length ? 0 : value.KeptAboveZero();
-        }
-        
-        protected abstract float TimeBetweenFrames { get; }
-        protected abstract Sprite[] Frames { get; }
-        
-        protected override Sequence[] Keyframes => new[]
+
+        protected sealed override Sequence[] Keyframes => new[]
         {
             new Sequence()
                 .Do(gameObject => gameObject.SpriteRenderer.Sprite = _cachedFrames[CurrentFrame])
@@ -27,6 +18,16 @@ namespace N8Engine.Animation
                 .Do(() => CurrentFrame++)
                 .Repeat(NumberOfFrames)
         };
+
+        protected abstract float TimeBetweenFrames { get; }
+        protected abstract Sprite[] Frames { get; }
+        
+        private int NumberOfFrames => _cachedFrames.Length;
+        private int CurrentFrame
+        {
+            get => _currentFrame;
+            set => _currentFrame = value >= _cachedFrames.Length ? 0 : value.KeptAboveZero();
+        }
 
         private protected override void OnInitialized() => _cachedFrames = Frames;
     }

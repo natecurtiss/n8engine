@@ -1,11 +1,10 @@
 ﻿using JetBrains.Annotations;
-using static N8Engine.Animation.Animation;
 
 namespace N8Engine.Animation
 {
     public sealed class Animator : Component
     {
-        public Animation Animation { get; private set; } = Nothing;
+        public Animation Animation { get; private set; } = Animation.Nothing;
         
         internal Animator(GameObject gameObject) : base(gameObject) { }
 

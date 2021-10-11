@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Animation
@@ -11,21 +10,21 @@ namespace N8Engine.Animation
         private int _currentKeyframeIndex;
         private float _keyframeTimer;
         private bool _isDone;
-        private Sequence _allKeyframes;
+        private Sequence _cachedKeyframes;
         
         protected abstract Sequence[] Keyframes { get; }
-        protected virtual bool ShouldLoop { get; } = false;
+        protected abstract bool ShouldLoop { get; }
 
-        private Keyframe CurrentKeyframe => _allKeyframes[_currentKeyframeIndex];
-        private bool IsOnLastKeyframe => _currentKeyframeIndex + 1 == _allKeyframes.Length;
-
+        private Keyframe CurrentKeyframe => _cachedKeyframes[_currentKeyframeIndex];
+        private bool IsOnLastKeyframe => _currentKeyframeIndex + 1 == _cachedKeyframes.Length;
+        
         public static T Create<T>() where T : Animation, new()
         {
             var animation = new T();
             animation.Initialize();
             return animation;
         }
-        
+
         private protected virtual void OnInitialized() { }
 
         internal void OnChangedTo()
@@ -49,7 +48,7 @@ namespace N8Engine.Animation
 
         private void Initialize()
         {
-            _allKeyframes = Sequence.Merge(Keyframes);
+            _cachedKeyframes = Sequence.Merge(Keyframes);
             OnInitialized();
         }
 
