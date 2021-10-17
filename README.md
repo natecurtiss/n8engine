@@ -1,3 +1,3 @@
 # n8engine
-An open-source C# console game engine.
-Download the sprite editor: https://github.com/N-8-D-e-v/n8sprite
+An open-source C# pixel-perfect ASCII/terminal game engine.
+https://app.milanote.com/1MzZ1X1Qne4j1f?p=Qh3sqMNrXba
