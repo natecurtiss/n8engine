@@ -1,6 +1,6 @@
 using System;
 
-namespace N8Engine
+namespace N8Engine.Events
 {
     public sealed class Event
     {

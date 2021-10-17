@@ -15,7 +15,6 @@ namespace N8Engine.SceneManagement
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         
         public void Add(GameObject gameObject) => _gameObjects.Add(gameObject);
-
         public void Remove(GameObject gameObject) => _gameObjects.Remove(gameObject);
 
         internal void Load() => OnSceneLoaded();
