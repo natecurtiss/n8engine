@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using N8Engine.Native;
+using N8Engine.External;
 
 namespace N8Engine.Inputs
 {

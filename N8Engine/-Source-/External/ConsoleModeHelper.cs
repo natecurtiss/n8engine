@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace N8Engine.Native
+namespace N8Engine.External
 {
     internal static class ConsoleModeHelper
     {

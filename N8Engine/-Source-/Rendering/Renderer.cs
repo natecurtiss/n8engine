@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 using N8Engine.Mathematics;
-using N8Engine.Native;
+using N8Engine.External;
 
 namespace N8Engine.Rendering
 {

@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Text;
 using N8Engine.Mathematics;
 
-namespace N8Engine.Native
+namespace N8Engine.External
 {
     internal static class ConsoleWritingHelper
     {

@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using N8Engine.Mathematics;
 
-namespace N8Engine.Native
+namespace N8Engine.External
 {
     internal static class ConsoleResizingHelper
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace N8Engine.Native
+namespace N8Engine.External
 {
     // https://stackoverflow.com/questions/13656846/how-to-programmatic-disable-c-sharp-console-applications-quick-edit-modey>
     internal static class ConsoleQuickEditModeHelper
