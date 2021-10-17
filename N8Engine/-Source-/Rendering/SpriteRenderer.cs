@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering

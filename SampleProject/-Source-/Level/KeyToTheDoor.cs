@@ -4,7 +4,7 @@ using N8Engine.Physics;
 
 namespace SampleProject
 {
-    public sealed class DoorKey : GameObject
+    public sealed class KeyToTheDoor : GameObject
     {
         protected override void OnStart()
         {

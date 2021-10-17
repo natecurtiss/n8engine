@@ -1,6 +1,4 @@
-﻿using System;
-using N8Engine;
-using N8Engine.Animation;
+﻿using N8Engine.Animation;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 

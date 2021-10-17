@@ -4,7 +4,7 @@ using N8Engine.Rendering;
 
 namespace SampleProject
 {
-    public sealed class Player : GameObject, ICanCollectAKey
+    public sealed class Player : GameObject, ICanCollectAKey, ICanEnterTheDoor
     {
         private const int SPEED = 50;
         private const int JUMP_FORCE = 200;
@@ -18,16 +18,13 @@ namespace SampleProject
 
         protected override void OnStart()
         {
-            // Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 90f;
-            
             _animationController = new PlayerAnimationController(Animator, _input, SpriteRenderer);
             _groundCheck = Create<GroundCheck<ICanBeJumpedOn>>("player ground check");
             _groundCheck.OnLandedOnTheGround += _animationController.HandleLandAnimation;
-            _groundCheck.Collider.Size = new Vector(7f, 3f);
+            _groundCheck.Collider.Size = new Vector(5f, 3f);
             _groundCheck.Collider.Offset = new Vector(1f, -3f);
 
             Collider.Size = new Vector(8, 8);
-            // Collider.IsVisible = true;
             SpriteRenderer.SortingOrder = -2;
             PhysicsBody.UseGravity = true;
         }
@@ -47,6 +44,12 @@ namespace SampleProject
             ClampPositionWithinWindow();
             _groundCheck.Transform.Position = Transform.Position;
             if (Transform.Position.Y <= -100f) Die();
+        }
+        
+        public Player Spawn()
+        {
+            Transform.Position = _spawnPosition = Window.LeftSide + Vector.Right * 10f;
+            return this;
         }
 
         private void Move()

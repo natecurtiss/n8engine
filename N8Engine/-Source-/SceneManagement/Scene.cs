@@ -22,7 +22,7 @@ namespace N8Engine.SceneManagement
 
         internal void Unload()
         {
-            foreach (var gameObject in _gameObjects) 
+            foreach (var gameObject in _gameObjects.ToArray()) 
                 gameObject.Destroy();
         }
         

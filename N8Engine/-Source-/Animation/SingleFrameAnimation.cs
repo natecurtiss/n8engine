@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using N8Engine.Rendering;
 
 namespace N8Engine.Animation

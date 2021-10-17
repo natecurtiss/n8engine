@@ -1,5 +1,3 @@
-using System;
-
 namespace N8Engine.Mathematics
 {
     /// <summary>

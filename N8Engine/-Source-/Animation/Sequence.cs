@@ -1,11 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using N8Engine.Mathematics;
 
 namespace N8Engine.Animation
 {
+    /// <summary>
+    /// A sequence of <see cref="Keyframe">Keyframes</see> used by andocum <see cref="Animation">Animation.</see>
+    /// </summary>
     public sealed class Sequence
     {
         private readonly List<Keyframe> _keyframes = new();

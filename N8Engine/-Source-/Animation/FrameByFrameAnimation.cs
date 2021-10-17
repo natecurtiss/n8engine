@@ -1,10 +1,12 @@
 using System;
-using System.Collections.Generic;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 
 namespace N8Engine.Animation
 {
+    /// <summary>
+    /// An <see cref="Animation"/> that changes a <see cref="GameObject.SpriteRenderer">SpriteRenderer's</see> <see cref="Sprite"/> every frame.
+    /// </summary>
     public abstract class FrameByFrameAnimation : Animation
     {
         private int _currentFrame;
@@ -19,7 +21,13 @@ namespace N8Engine.Animation
                 .Repeat(NumberOfFrames)
         };
 
+        /// <summary>
+        /// The time between <see cref="Frames">each animation frame.</see>
+        /// </summary>
         protected abstract float TimeBetweenFrames { get; }
+        /// <summary>
+        /// The frames to switch between.
+        /// </summary>
         protected abstract Sprite[] Frames { get; }
         
         private int NumberOfFrames => _cachedFrames.Length;
