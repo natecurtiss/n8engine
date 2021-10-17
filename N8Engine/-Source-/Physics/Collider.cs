@@ -19,7 +19,7 @@ namespace N8Engine.Physics
         private readonly PhysicsBody _physicsBody;
         
         private Vector _size;
-        private OutlinedRectangle _visualization;
+        private Sprite _visualization;
 
         /// <summary>
         /// The <see cref="Transform"/> attached to the same <see cref="GameObject"/> as the <see cref="Collider">Collider.</see>
@@ -45,6 +45,10 @@ namespace N8Engine.Physics
         /// </summary>
         public Vector Offset { get; set; }
         /// <summary>
+        /// <see cref="N8Engine.Mathematics.Transform.Position">Transform.Position</see> + <see cref="Offset">Collider.Offset.</see>
+        /// </summary>
+        public Vector Position => Transform.Position + Offset;
+        /// <summary>
         /// The size of the <see cref="Collider">Collider.</see>
         /// </summary>
         public Vector Size
@@ -57,10 +61,6 @@ namespace N8Engine.Physics
                 _size = value;
             }
         }
-        /// <summary>
-        /// <see cref="N8Engine.Mathematics.Transform.Position">Transform.Position</see> + <see cref="Offset">Collider.Offset.</see>
-        /// </summary>
-        public Vector Position => Transform.Position + Offset;
         internal Sprite Sprite => Size == Vector.Zero ? Sprite.Empty : _visualization;
 
         private BoundingBox BoundingBoxThisFrame { get; set; }

@@ -15,6 +15,8 @@ namespace N8Engine
         public PhysicsBody PhysicsBody { get; private set; }
         public Animator Animator { get; private set; }
 
+        private bool _isDestroyed;
+
         public static T Create<T>(string name) where T : GameObject, new()
         {
             var gameObject = new T();
@@ -82,6 +84,8 @@ namespace N8Engine
 
         public void Destroy()
         {
+            if (_isDestroyed) return;
+            _isDestroyed = true;
             SceneManager.CurrentScene.Remove(this);
             OnDestroy();
             GameLoop.OnEarlyUpdate -= OnEarlyUpdate;
