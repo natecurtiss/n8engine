@@ -10,6 +10,8 @@ namespace N8Engine.SceneManagement
         internal static void Initialize(Scene[] scenes)
         {
             _scenes = scenes;
+            for (var i = 0; i < _scenes.Length; i++)
+                _scenes[i].Index = i;
             LoadScene(_scenes[0]);
         }
 

@@ -6,6 +6,8 @@ namespace SampleProject
 {
     public sealed class Level1 : Level
     {
+        public override string Name => "Level 1";
+        
         protected override void OnSceneLoaded(Player player, KeyToTheDoor key, Door door)
         {
             new AutoTilemap<TopAndSidesPalette, TilemapThatCanBeJumpedOn>()

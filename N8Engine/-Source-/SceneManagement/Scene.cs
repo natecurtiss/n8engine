@@ -7,9 +7,8 @@ namespace N8Engine.SceneManagement
     {
         private readonly List<GameObject> _gameObjects = new();
 
-        // TODO set these somewhere.
-        public int Index { get; }
-        public string Name { get; }
+        public abstract string Name { get; }
+        public int Index { get; internal set; }
         
         public IEnumerator<GameObject> GetEnumerator() => _gameObjects.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
