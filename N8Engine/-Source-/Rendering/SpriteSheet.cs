@@ -20,6 +20,7 @@ namespace N8Engine.Rendering
                 for (var column = 0; column < cells.X; column++)
                 {
                     var cutoutArea = new Rectangle(column * cellSize.X, row * cellSize.Y, cellSize.X, cellSize.Y);
+                    Debug.Log(column * cellSize.X + " " + row * cellSize.Y);
                     var slicedImage = image.Clone(cutoutArea, image.PixelFormat);
                     _sprites[column, row] = new Sprite(slicedImage);
                 }
