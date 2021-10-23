@@ -2,7 +2,6 @@
 using N8Engine.Inputs;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
-using static N8Engine.AttributesHelper;
 
 namespace N8Engine
 {
