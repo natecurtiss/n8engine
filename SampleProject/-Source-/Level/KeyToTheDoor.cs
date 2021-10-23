@@ -8,7 +8,7 @@ namespace SampleProject
     {
         protected override void OnStart()
         {
-            SpriteRenderer.Sprite = new(SpritesFolder.Path + "key.png");
+            SpriteRenderer.Sprite = new(AllSprites.PathToFolder + "key.png");
             Collider.Size = new Vector(10f, 7f);
             Collider.IsTrigger = true;
         }

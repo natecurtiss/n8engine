@@ -13,7 +13,7 @@ namespace SampleProject
         protected override void OnStart()
         {
             SpriteRenderer.SortingOrder = -1;
-            SpriteRenderer.Sprite = new(SpritesFolder.Path + "door.png");
+            SpriteRenderer.Sprite = new(AllSprites.PathToFolder + "door.png");
             Collider.Size = new Vector(8f, 10f);
             Collider.IsTrigger = true;
             EventManager.OnKeyCollected.AddListener(SproutUpFromTheGround);

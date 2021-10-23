@@ -7,8 +7,8 @@ namespace SampleProject
         protected override Sprite Left => null;
         protected override Sprite Right => null;
         protected override Sprite Bottom => null;
-        protected override Sprite TopLeft => new(SpritesFolder.Path + "wall_top.png");
-        protected override Sprite TopRight => new(SpritesFolder.Path + "wall_top.png");
+        protected override Sprite TopLeft => new(AllSprites.PathToFolder + "wall_top.png");
+        protected override Sprite TopRight => new(AllSprites.PathToFolder + "wall_top.png");
         protected override Sprite BottomLeft => null;
         protected override Sprite BottomRight => null;
     }

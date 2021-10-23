@@ -10,8 +10,14 @@ namespace SampleProject
         protected override float TimeBetweenFrames => 0.35f;
         protected override Sprite[] Frames => new Sprite[]
         {
-            new(SpritesFolder.Path + "player_1.png"),
-            new(SpritesFolder.Path + "player_5.png", Vector.Down)
+            new(AllSprites.PathToFolder + "player_1.png"),
+            new(AllSprites.PathToFolder + "player_5.png", Vector.Down)
         };
+        // TODO: make animations not have their own class.
+        // protected override Sprite[] Frames => new[]
+        // {
+        //     AllSprites.Player.Take(0, 0),
+        //     AllSprites.Player.Take(1, 0)
+        // };
     }
 }

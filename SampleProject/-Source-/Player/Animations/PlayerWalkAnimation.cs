@@ -10,10 +10,10 @@ namespace SampleProject
         protected override float TimeBetweenFrames => 0.05f;
         protected override Sprite[] Frames => new Sprite[]
         {
-            new(SpritesFolder.Path + "player_1.png"),
-            new(SpritesFolder.Path + "player_2.png", Vector.Up),
-            new(SpritesFolder.Path + "player_3.png"),
-            new(SpritesFolder.Path + "player_4.png", Vector.Up),
+            new(AllSprites.PathToFolder + "player_1.png"),
+            new(AllSprites.PathToFolder + "player_2.png", Vector.Up),
+            new(AllSprites.PathToFolder + "player_3.png"),
+            new(AllSprites.PathToFolder + "player_4.png", Vector.Up),
         };
     }
 }
