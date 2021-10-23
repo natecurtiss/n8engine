@@ -2,6 +2,7 @@
 using N8Engine.Inputs;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
+using static N8Engine.AttributesHelper;
 
 namespace N8Engine
 {
@@ -27,6 +28,8 @@ namespace N8Engine
             SceneManager.Initialize(launcher.Scenes);
             Renderer.Initialize();
             Input.Initialize();
+            foreach (var method in FindMethods(STATIC).WithCustomAttribute<StaticMethodCalledOnApplicationStartAttribute>())
+                method.Invoke(null, null);
             GameLoop.Run();
         }
     }

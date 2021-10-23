@@ -16,11 +16,10 @@ namespace N8Engine.Rendering
         public Sprite(string path, Vector offset = default, Pivot pivot = Pivot.Center)
         {
             var image = new Bitmap(path);
-            var pixels = image.AsPixels();
-            var size = new IntegerVector(image.Width, image.Height);
-            CreateSprite(pixels, size, offset, pivot);
+            CreateSpriteFromImage(image, offset, pivot);
         }
 
+        internal Sprite(Bitmap image, Vector offset = default, Pivot pivot = Pivot.Center) => CreateSpriteFromImage(image, offset, pivot);
         internal Sprite(Pixel[] pixels, IntegerVector size, Vector offset, Pivot pivot) => CreateSprite(pixels, size, offset, pivot);
         private Sprite() { }
 
@@ -41,6 +40,13 @@ namespace N8Engine.Rendering
                 flippedPixels[index] = flippedPixel;
             }
             return flippedPixels;
+        }
+
+        private void CreateSpriteFromImage(Bitmap image, Vector offset, Pivot pivot)
+        {
+            var pixels = image.AsPixels();
+            var size = new IntegerVector(image.Width, image.Height);
+            CreateSprite(pixels, size, offset, pivot);
         }
 
         private void CreateSprite(Pixel[] pixels, IntegerVector size, IntegerVector offset, Pivot pivot)
