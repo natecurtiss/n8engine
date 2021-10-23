@@ -38,5 +38,7 @@ namespace N8Engine.Animation
         }
 
         private protected override void OnInitialized() => _cachedFrames = Frames;
+
+        private protected override void Reset() => CurrentFrame = 0;
     }
 }

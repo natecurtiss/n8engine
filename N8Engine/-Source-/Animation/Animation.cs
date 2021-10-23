@@ -45,6 +45,11 @@ namespace N8Engine.Animation
         /// Called on the first frame of the <see cref="Animation">Animation's</see> lifetime.
         /// </summary>
         private protected virtual void OnInitialized() { }
+        
+        /// <summary>
+        /// Called after <see cref="OnChangedTo">OnChangedTo().</see>
+        /// </summary>
+        private protected virtual void Reset() { }
 
         /// <summary>
         /// Called after the <see cref="Animation"/> is passed into <see cref="Animator.ChangeAnimation">Animator.ChangeAnimation().</see>
@@ -54,6 +59,7 @@ namespace N8Engine.Animation
             _currentKeyframeIndex.Reset();
             _keyframeTimer = CurrentKeyframe.Delay;
             _isDone = false;
+            Reset();
         }
 
         /// <summary>

@@ -8,12 +8,12 @@ namespace SampleProject
     {
         protected override bool ShouldLoop => true;
         protected override float TimeBetweenFrames => 0.05f;
-        protected override Sprite[] Frames => new Sprite[]
+        protected override Sprite[] Frames => new[]
         {
-            new(AllSprites.PathToFolder + "player_1.png"),
-            new(AllSprites.PathToFolder + "player_2.png", Vector.Up),
-            new(AllSprites.PathToFolder + "player_3.png"),
-            new(AllSprites.PathToFolder + "player_4.png", Vector.Up),
+            AllSprites.Player.Take(0, 1),
+            AllSprites.Player.Take(1, 1),
+            AllSprites.Player.Take(2, 1),
+            AllSprites.Player.Take(3, 1)
         };
     }
 }

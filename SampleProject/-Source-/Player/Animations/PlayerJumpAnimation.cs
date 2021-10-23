@@ -4,8 +4,14 @@ using N8Engine.Rendering;
 
 namespace SampleProject
 {
-    public sealed class PlayerJumpAnimation : SingleFrameAnimation
+    public sealed class PlayerJumpAnimation : FrameByFrameAnimation
     {
-        protected override Sprite Sprite => new(AllSprites.PathToFolder + "player_5.png", Vector.Down);
+        protected override bool ShouldLoop => false;
+        protected override float TimeBetweenFrames => 0.03f;
+        protected override Sprite[] Frames => new[]
+        {
+            AllSprites.Player.Take(0, 2),
+            AllSprites.Player.Take(1, 2)
+        };
     }
 }

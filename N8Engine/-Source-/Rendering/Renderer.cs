@@ -18,6 +18,11 @@ namespace N8Engine.Rendering
 
         public static void Initialize()
         {
+            var clear = new StringBuilder();
+            clear.SetConsoleColorTo(Window.BackgroundColor);
+            Console.WriteLine(clear);
+            Console.Clear();
+            
             GameLoop.OnPreRender += OnPreRender;
             GameLoop.OnPostRender += OnPostRender;
         }
@@ -50,11 +55,11 @@ namespace N8Engine.Rendering
 
         private static void OnPostRender()
         {
-            RenderNewPixels();
+            DrawNewPixels();
             ClearOldPixels();
         }
 
-        private static void RenderNewPixels()
+        private static void DrawNewPixels()
         {
             var lastColor = new Color();
             var lastPosition = new IntegerVector();
@@ -78,9 +83,9 @@ namespace N8Engine.Rendering
 
         private static void ClearOldPixels()
         {
-            Console.ResetColor(); 
             var lastPosition = new IntegerVector();
             var output = new StringBuilder();
+            output.SetConsoleColorTo(Window.BackgroundColor);
             
             foreach (var (position, _) in _pixelsToRenderLastFrame)
             {
@@ -122,7 +127,7 @@ namespace N8Engine.Rendering
         private static bool HasPixelMovedSinceLastFrame(IntegerVector position, Pixel pixel) => 
             !(_pixelsToRenderLastFrame.ContainsKey(position) && _pixelsToRenderLastFrame[position] == pixel);
 
-        private static bool IsToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) => 
+        private static bool IsToTheRightOf(this IntegerVector currentPosition, IntegerVector lastPosition) =>
             currentPosition - lastPosition == IntegerVector.Right * NUMBER_OF_CHARACTERS_PER_PIXEL;
 
         private static IntegerVector FromWorldPositionToWindowPosition(this IntegerVector position)
@@ -140,7 +145,7 @@ namespace N8Engine.Rendering
             position.X >= 0 &&
             position.Y >= 0 &&
             position.X <= _windowSize.X - (NUMBER_OF_CHARACTERS_PER_PIXEL - 1) &&
-            position.Y <= _windowSize.Y - (NUMBER_OF_CHARACTERS_PER_PIXEL - 1);
-
+            position.Y <= _windowSize.Y;
+        // TODO: get rid of the space on the right side of the window.
     }
 }

@@ -1,4 +1,7 @@
+using System.Drawing;
 using N8Engine;
+using N8Engine.Mathematics;
+using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 
 namespace SampleProject
@@ -7,12 +10,11 @@ namespace SampleProject
     {
         protected sealed override void OnSceneLoaded()
         {
+            Window.BackgroundColor = Color.FromArgb(255, 209, 209);
             var player = GameObject.Create<Player>("player").Spawn();
-            var key = GameObject.Create<KeyToTheDoor>("key");
-            var door = GameObject.Create<Door>("door");
-            OnSceneLoaded(player, key, door);
+            OnSceneLoaded(player);
         }
 
-        protected abstract void OnSceneLoaded(Player player, KeyToTheDoor key, Door door);
+        protected abstract void OnSceneLoaded(Player player);
     }
 }

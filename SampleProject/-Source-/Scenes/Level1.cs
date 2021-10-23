@@ -1,4 +1,5 @@
 ﻿using N8Engine.Mathematics;
+using N8Engine.Physics;
 using N8Engine.Rendering;
 using N8Engine.Tilemaps;
 
@@ -8,14 +9,11 @@ namespace SampleProject
     {
         public override string Name => "Level 1";
         
-        protected override void OnSceneLoaded(Player player, KeyToTheDoor key, Door door)
+        protected override void OnSceneLoaded(Player player)
         {
-            new AutoTilemap<TopAndSidesPalette, TilemapThatCanBeJumpedOn>()
-                .Place(Window.BottomLeftCorner + Vector.Left * 20, new IntegerVector(7, 4), Pivot.BottomLeft)
-                .Place(Window.BottomRightCorner + Vector.Right * 20, new IntegerVector(7, 4), Pivot.BottomRight)
-                .Place(Window.BottomSide, new IntegerVector(3, 2), Pivot.Bottom);
-            key.Transform.Position = Vector.Down * 30f;
-            door.Transform.Position = Window.RightSide + Vector.Down * 20f + Vector.Left * 4f;
+            new AutoTilemap<GroundPalette, TilemapThatCanBeJumpedOn>()
+                .Place(Window.BottomLeftCorner + Vector.Left * 20, new IntegerVector(6, 2), Pivot.BottomLeft)
+                .Place(Window.BottomRightCorner + Vector.Right * 20, new IntegerVector(6, 2), Pivot.BottomRight);
         }
     }
 }

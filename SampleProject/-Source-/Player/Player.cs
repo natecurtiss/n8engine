@@ -4,7 +4,7 @@ using N8Engine.Rendering;
 
 namespace SampleProject
 {
-    public sealed class Player : GameObject, ICanCollectAKey, ICanEnterTheDoor
+    public sealed class Player : GameObject
     {
         private const int SPEED = 50;
         private const int JUMP_FORCE = 200;

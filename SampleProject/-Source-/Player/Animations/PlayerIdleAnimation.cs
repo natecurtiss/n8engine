@@ -8,16 +8,10 @@ namespace SampleProject
     {
         protected override bool ShouldLoop => true;
         protected override float TimeBetweenFrames => 0.35f;
-        protected override Sprite[] Frames => new Sprite[]
+        protected override Sprite[] Frames => new[]
         {
-            new(AllSprites.PathToFolder + "player_1.png"),
-            new(AllSprites.PathToFolder + "player_5.png", Vector.Down)
+            AllSprites.Player.Take(0, 0),
+            AllSprites.Player.Take(1, 0)
         };
-        // TODO: make animations not have their own class.
-        // protected override Sprite[] Frames => new[]
-        // {
-        //     AllSprites.Player.Take(0, 0),
-        //     AllSprites.Player.Take(1, 0)
-        // };
     }
 }

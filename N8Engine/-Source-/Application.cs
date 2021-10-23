@@ -1,4 +1,5 @@
-﻿using System.Runtime.Versioning;
+﻿using System;
+using System.Runtime.Versioning;
 using N8Engine.Inputs;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
@@ -28,6 +29,8 @@ namespace N8Engine
             SceneManager.Initialize(launcher.Scenes);
             Renderer.Initialize();
             Input.Initialize();
+            var title = Console.Title;
+            GameLoop.OnEarlyUpdate += deltaTime => Console.Title = $"{title} | fps: {FramesPerSecond} | delta time: {deltaTime}";
             GameLoop.Run();
         }
     }

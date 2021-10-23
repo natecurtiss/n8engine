@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using N8Engine.External;
 using N8Engine.Mathematics;
 
@@ -9,6 +10,8 @@ namespace N8Engine.Rendering
         public static readonly int Width = Console.WindowWidth / Renderer.NUMBER_OF_CHARACTERS_PER_PIXEL;
         public static readonly int Height = Console.WindowHeight;
 
+        public static Color BackgroundColor { get; set; } = Color.Black;
+        
         public static Vector BottomLeftCorner { get; private set; }
         public static Vector BottomRightCorner { get; private set; }
         public static Vector TopLeftCorner { get; private set; }

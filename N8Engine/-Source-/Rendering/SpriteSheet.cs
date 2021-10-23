@@ -8,7 +8,7 @@ namespace N8Engine.Rendering
     {
         private readonly Sprite[,] _sprites;
         
-        public SpriteSheet(string path, IntegerVector cellSize)
+        public SpriteSheet(string path, IntegerVector cellSize, IntegerVector offset = default)
         {
             var image = new Bitmap(path);
             var imageSize = new IntegerVector(image.Width, image.Height);
@@ -22,11 +22,11 @@ namespace N8Engine.Rendering
                     var cutoutArea = new Rectangle(column * cellSize.X, row * cellSize.Y, cellSize.X, cellSize.Y);
                     Debug.Log(column * cellSize.X + " " + row * cellSize.Y);
                     var slicedImage = image.Clone(cutoutArea, image.PixelFormat);
-                    _sprites[column, row] = new Sprite(slicedImage);
+                    _sprites[column, row] = new Sprite(slicedImage, offset);
                 }
             }
         }
 
-        public Sprite Take(int column, int row) => _sprites[column, row];
+        public Sprite Take(int x, int y) => _sprites[x, y];
     }
 }
