@@ -15,7 +15,7 @@ namespace N8Engine
         public static event Action OnRender;
         public static event Action OnPostRender;
         
-        public static int TargetFramerate { get; set; } = 200;
+        public static int TargetFramerate { get; set; } = 90;
         public static int FramesPerSecond { get; private set; }
         private static float UpdateRate => 1f / TargetFramerate;
 
@@ -46,9 +46,8 @@ namespace N8Engine
                         timer = 0f;
                     }
                     previousTimeInMilliseconds = currentTimeInMilliseconds;
-                    InvokeEventsForCurrentFrame(UpdateRate);
+                    InvokeEventsForCurrentFrame(timePassed);
                 }
-                // Console.ReadKey();
             }
         }
 
