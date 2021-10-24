@@ -62,6 +62,7 @@ namespace SampleProject
         {
             PhysicsBody.Velocity = new Vector(PhysicsBody.Velocity.X, JUMP_FORCE);
             _groundCheck.IsGrounded = false;
+            _animationController.Jump();
         }
 
         private void ClampPositionWithinWindow()

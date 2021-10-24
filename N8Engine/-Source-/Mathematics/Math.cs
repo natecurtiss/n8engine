@@ -153,11 +153,5 @@ namespace N8Engine.Mathematics
         public static int KeptAbove(this int value, int threshold) => MaximumOf(value, threshold);
         
         public static int KeptBelow(this int value, int threshold) => MinimumOf(value, threshold);
-        
-        public static float Reset(this ref float value) => value = 0f;
-        
-        public static float Reset(this ref int value) => value = 0;
-        
-        // TODO: the ref methods here might not work.
     }
 }

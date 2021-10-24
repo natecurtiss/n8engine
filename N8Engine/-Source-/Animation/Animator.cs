@@ -10,7 +10,7 @@ namespace N8Engine.Animation
         /// <summary>
         /// The <see cref="Animation"/> that is currently playing.
         /// </summary>
-        /// <seealso cref="ChangeAnimation"/>
+        /// <seealso cref="Play"/>
         public Animation Animation { get; private set; } = Animation.Nothing;
         
         /// <summary>
@@ -23,7 +23,7 @@ namespace N8Engine.Animation
         /// Changes the <see cref="Animation">Animation currently playing.</see> Don't pass in null to this-instead use <see cref="N8Engine.Animation.Animation.Nothing">Animation.Nothing.</see>
         /// </summary>
         /// <param name="animation"> The <see cref="Animation"/> to change to (cannot be null). </param>
-        public void ChangeAnimation([NotNull] Animation animation)
+        public void Play([NotNull] Animation animation)
         {
             if (Animation == animation) return;
             Animation = animation;

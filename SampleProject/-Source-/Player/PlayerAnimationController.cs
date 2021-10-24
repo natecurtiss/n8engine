@@ -1,3 +1,4 @@
+using N8Engine;
 using N8Engine.Animation;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
@@ -10,16 +11,19 @@ namespace SampleProject
         private readonly PlayerInputs _input;
         private readonly Animator _animator;
         private readonly SpriteRenderer _spriteRenderer;
-        private readonly PlayerWalkAnimation _walk = Animation.Create<PlayerWalkAnimation>();
-        private readonly PlayerIdleAnimation _idle = Animation.Create<PlayerIdleAnimation>();
-        private readonly PlayerJumpAnimation _airborne = Animation.Create<PlayerJumpAnimation>();
+        private readonly PlayerWalkAnimation _walk;
+        private readonly PlayerIdleAnimation _idle;
+        private readonly PlayerJumpAnimation _jump;
         
         private bool IsWalking => _input.CurrentDirection is Right or Left;
 
         public PlayerAnimationController(Animator animator, PlayerInputs input, SpriteRenderer spriteRenderer)
         {
+            _idle = Animation.Create<PlayerIdleAnimation>();
+            _walk = Animation.Create<PlayerWalkAnimation>();
+            _jump = Animation.Create<PlayerJumpAnimation>();
             _animator = animator;
-            _animator.ChangeAnimation(_idle);
+            _animator.Play(_idle);
             _input = input;
             _spriteRenderer = spriteRenderer;
         }
@@ -34,19 +38,17 @@ namespace SampleProject
             };
             if (isGrounded)
             {
-                if (IsWalking) _animator.ChangeAnimation(_walk);
-                else _animator.ChangeAnimation(_idle);
-            }
-            else
-            {
-                _animator.ChangeAnimation(_airborne);
+                if (IsWalking) _animator.Play(_walk);
+                else _animator.Play(_idle);
             }
         }
-        
+
+        public void Jump() => _animator.Play(_jump);
+
         public void HandleLandAnimation()
         {
-            if (IsWalking) _animator.ChangeAnimation(_walk);
-            else _animator.ChangeAnimation(_idle);
+            if (IsWalking) _animator.Play(_walk);
+            else _animator.Play(_idle);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace N8Engine.Animation
     public abstract class Animation
     {
         /// <summary>
-        /// A representation of nothing; used in place of null in <see cref="Animator.ChangeAnimation">Animator.ChangeAnimation()</see> when you want to not have any <see cref="Animation"/> playing.
+        /// A representation of nothing; used in place of null in <see cref="Animator.Play">Animator.ChangeAnimation()</see> when you want to not have any <see cref="Animation"/> playing.
         /// </summary>
         public static readonly Animation Nothing = Animation.Create<EmptyAnimation>();
         
@@ -37,6 +37,7 @@ namespace N8Engine.Animation
         public static T Create<T>() where T : Animation, new()
         {
             var animation = new T();
+            Debug.Log("ionit");
             animation.Initialize();
             return animation;
         }
@@ -52,11 +53,11 @@ namespace N8Engine.Animation
         private protected virtual void Reset() { }
 
         /// <summary>
-        /// Called after the <see cref="Animation"/> is passed into <see cref="Animator.ChangeAnimation">Animator.ChangeAnimation().</see>
+        /// Called after the <see cref="Animation"/> is passed into <see cref="Animator.Play">Animator.ChangeAnimation().</see>
         /// </summary>
         internal void OnChangedTo()
         {
-            _currentKeyframeIndex.Reset();
+            _currentKeyframeIndex = 0;
             _keyframeTimer = CurrentKeyframe.Delay;
             _isDone = false;
             Reset();
@@ -82,6 +83,7 @@ namespace N8Engine.Animation
         private void Initialize()
         {
             _cachedKeyframes = Sequence.Merge(Keyframes);
+            Debug.Log(_cachedKeyframes.Length + " " + ShouldLoop);
             OnInitialized();
         }
 
@@ -91,7 +93,7 @@ namespace N8Engine.Animation
             {
                 if (ShouldLoop)
                 {
-                    _currentKeyframeIndex.Reset();
+                    _currentKeyframeIndex = 0;
                     _keyframeTimer = CurrentKeyframe.Delay;
                 }
                 else

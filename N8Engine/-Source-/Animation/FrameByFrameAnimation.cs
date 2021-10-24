@@ -15,9 +15,13 @@ namespace N8Engine.Animation
         protected sealed override Sequence[] Keyframes => new[]
         {
             new Sequence()
-                .Do(gameObject => gameObject.SpriteRenderer.Sprite = _cachedFrames[CurrentFrame])
+                .Do(gameObject =>
+                {
+                    gameObject.SpriteRenderer.Sprite = _cachedFrames[CurrentFrame];
+                    CurrentFrame++;
+                    // TODO: figure out why the hell this does not work
+                })
                 .Wait(TimeBetweenFrames)
-                .Do(() => CurrentFrame++)
                 .Repeat(NumberOfFrames)
         };
 
@@ -34,10 +38,14 @@ namespace N8Engine.Animation
         private int CurrentFrame
         {
             get => _currentFrame;
-            set => _currentFrame = value >= _cachedFrames.Length ? 0 : value.KeptAboveZero();
+            set => _currentFrame = value >= NumberOfFrames ? 0 : value.KeptAboveZero();
         }
 
-        private protected override void OnInitialized() => _cachedFrames = Frames;
+        private protected override void OnInitialized()
+        {
+            _cachedFrames = Frames;
+            Debug.Log(TimeBetweenFrames);
+        }
 
         private protected override void Reset() => CurrentFrame = 0;
     }

@@ -7,7 +7,7 @@ namespace SampleProject
     public sealed class PlayerJumpAnimation : FrameByFrameAnimation
     {
         protected override bool ShouldLoop => false;
-        protected override float TimeBetweenFrames => 0.03f;
+        protected override float TimeBetweenFrames => 0.1f;
         protected override Sprite[] Frames => new[]
         {
             AllSprites.Player.Take(0, 2),
