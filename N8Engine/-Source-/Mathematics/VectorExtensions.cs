@@ -12,7 +12,7 @@ namespace N8Engine.Mathematics
         /// <param name="currentPivot"> The current <see cref="Pivot"/> of the object. </param>
         /// <param name="sizeOfObject"> The <see cref="Vector">size</see> of the entire object. </param>
         /// <param name="newPivot"> The <see cref="Pivot"/> to adjust the <see cref="Vector">position</see> to. </param>
-        /// <seealso cref="IntegerVectorExtensions.AdjustedToPivot"/>
+        /// <seealso cref="IntVectorExtensions.AdjustedToPivot"/>
         public static Vector AdjustedToPivot(this Vector position, Pivot currentPivot, Vector sizeOfObject, Pivot newPivot)
         {
             var moveLeftByHalf = new Vector(-sizeOfObject.X, 0) / 2f;
@@ -127,5 +127,9 @@ namespace N8Engine.Mathematics
             };
             return newPosition;
         }
+
+        public static IntVector Rounded(this Vector vector) => new(vector.X.Rounded(), vector.Y.Rounded());
+        public static IntVector RoundedUp(this Vector vector) => new(vector.X.RoundedUp(), vector.Y.RoundedUp());
+        public static IntVector RoundedDown(this Vector vector) => new(vector.X.RoundedDown(), vector.Y.RoundedDown());
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using N8Engine.External;
+using N8Engine.External.User;
 
 namespace N8Engine.Inputs
 {
@@ -11,16 +12,16 @@ namespace N8Engine.Inputs
     /// <seealso cref="Key"/>
     public static class Input
     {
-        private enum KeyState
+        enum KeyState
         {
             IsPressed, 
             IsReleased, 
             WasJustPressed, 
             WasJustReleased
         }
-        
-        private static readonly Dictionary<Key, KeyState> _keys = new();
-        private static readonly IReadOnlyCollection<Key> _allKeys = Enum.GetValues<Key>();
+
+        static readonly Dictionary<Key, KeyState> _keys = new();
+        static readonly IReadOnlyCollection<Key> _allKeys = Enum.GetValues<Key>();
         
         internal static void Initialize()
         {
@@ -49,13 +50,13 @@ namespace N8Engine.Inputs
         /// </summary>
         public static bool WasJustPressed(this Key key) => _keys[key] == KeyState.WasJustPressed;
 
-        private static void OnPreUpdate(float deltaTime)
+        static void OnPreUpdate(float deltaTime)
         {
             foreach (var key in _allKeys)
             {
                 var previousKeyState = _keys[key];
                 var newKeyState = KeyState.IsReleased;
-                var isKeyDownNow = ConsoleInputHelper.IsKeyDown(key);
+                var isKeyDownNow = UserInput.IsKeyDown(key);
                 newKeyState = previousKeyState switch
                 {
                     KeyState.IsPressed => isKeyDownNow ? KeyState.IsPressed : KeyState.WasJustReleased,

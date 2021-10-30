@@ -10,23 +10,23 @@ namespace N8Engine.Mathematics
         public static bool operator ==(Vector first, Vector second) => first.Equals(second);
         public static bool operator !=(Vector first, Vector second) => !(first == second);
         public static Vector operator +(Vector first, Vector second) => new(first.X + second.X, first.Y + second.Y);
-        public static Vector operator +(Vector first, IntegerVector second) => new(first.X + second.X, first.Y + second.Y);
-        public static Vector operator +(IntegerVector first, Vector second) => new(first.X + second.X, first.Y + second.Y);
+        public static Vector operator +(Vector first, IntVector second) => new(first.X + second.X, first.Y + second.Y);
+        public static Vector operator +(IntVector first, Vector second) => new(first.X + second.X, first.Y + second.Y);
         public static Vector operator +(Vector vector) => vector;
         public static Vector operator -(Vector first, Vector second) => new(first.X - second.X, first.Y - second.Y);
-        public static Vector operator -(Vector first, IntegerVector second) => new(first.X - second.X, first.Y - second.Y);
-        public static Vector operator -(IntegerVector first, Vector second) => new(first.X - second.X, first.Y - second.Y);
+        public static Vector operator -(Vector first, IntVector second) => new(first.X - second.X, first.Y - second.Y);
+        public static Vector operator -(IntVector first, Vector second) => new(first.X - second.X, first.Y - second.Y);
         public static Vector operator -(Vector vector) => new(-vector.X, -vector.Y);
         public static Vector operator *(Vector vector, float multiplier) => new(vector.X * multiplier, vector.Y * multiplier);
         public static Vector operator *(float multiplier, Vector vector) => new(vector.X * multiplier, vector.Y * multiplier);
         public static Vector operator *(Vector first, Vector second) => new(first.X * second.X, first.Y * second.Y);
-        public static Vector operator *(Vector first, IntegerVector second) => new(first.X * second.X, first.Y * second.Y);
-        public static Vector operator *(IntegerVector first, Vector second) => new(first.X * second.X, first.Y * second.Y);
+        public static Vector operator *(Vector first, IntVector second) => new(first.X * second.X, first.Y * second.Y);
+        public static Vector operator *(IntVector first, Vector second) => new(first.X * second.X, first.Y * second.Y);
         public static Vector operator /(Vector vector, float divisor) => new(vector.X / divisor, vector.Y / divisor);
         public static Vector operator /(Vector first, Vector second) => new(first.X / second.X, first.Y / second.Y);
-        public static Vector operator /(Vector first, IntegerVector second) => new(first.X / second.X, first.Y / second.Y);
-        public static Vector operator /(IntegerVector first, Vector second) => new(first.X / second.X, first.Y / second.Y);
-        public static implicit operator Vector(IntegerVector integerVector) => new(integerVector.X, integerVector.Y);
+        public static Vector operator /(Vector first, IntVector second) => new(first.X / second.X, first.Y / second.Y);
+        public static Vector operator /(IntVector first, Vector second) => new(first.X / second.X, first.Y / second.Y);
+        public static implicit operator Vector(IntVector intVector) => new(intVector.X, intVector.Y);
         
         /// <summary>
         /// The equivalent of a <see cref="Vector"/> with values of (0, 0).
@@ -53,8 +53,8 @@ namespace N8Engine.Mathematics
         /// </summary>
         public static readonly Vector Right = new(1f, 0f);
 
-        private readonly float _x;
-        private readonly float _y;
+        readonly float _x;
+        readonly float _y;
         
         /// <summary>
         /// The first value in the <see cref="Vector">Vector.</see>
@@ -135,9 +135,9 @@ namespace N8Engine.Mathematics
     {
         public static bool operator ==(Vector<TFirst, TSecond> first, Vector<TFirst, TSecond> right) => first.Equals(right);
         public static bool operator !=(Vector<TFirst, TSecond> first, Vector<TFirst, TSecond> right) => !(first == right);
-        
-        private readonly TFirst _first;
-        private readonly TSecond _second;
+
+        readonly TFirst _first;
+        readonly TSecond _second;
         
         /// <summary>
         /// The first value of the <see cref="Vector{TFirst, TSecond}">Vector</see> of type <typeparamref name="TFirst">TFirst.</typeparamref>
