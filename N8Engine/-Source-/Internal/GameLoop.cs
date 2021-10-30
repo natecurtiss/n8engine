@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace N8Engine
+namespace N8Engine.Internal
 {
-    static class GameLoop
+    sealed class GameLoop : IInternalEvents, IUpdateEvents, IRenderingUpdates
     {
-        public static event Action<float> OnPreUpdate;
-        public static event Action<float> OnEarlyUpdate;
-        public static event Action<float> OnUpdate;
-        public static event Action<float> OnPostUpdate;
-        public static event Action<float> OnPhysicsUpdate;
-        public static event Action<float> OnLateUpdate;
-        public static event Action OnPreRender;
-        public static event Action OnRender;
-        public static event Action OnPostRender;
+        public event Action OnInternalStart;
+        public event Action OnInternalPreUpdate;
+        public event Action<float> OnUpdate;
+        public event Action<float> OnPhysicsUpdate;
+        public event Action<float> OnLateUpdate;
+        public event Action OnPreRender;
+        public event Action OnRender;
+        public event Action OnPostRender;
         
-        public static int TargetFramerate { get; set; } = 70;
-        public static int FramesPerSecond { get; private set; }
-        static float UpdateRate => 1f / TargetFramerate;
+        readonly float _updateRate;
+        public int FramesPerSecond { get; private set; }
 
-        public static void Run()
+        public GameLoop(int targetFramerate) => _updateRate = 1f / targetFramerate;
+
+        public void Run()
         {
+            OnInternalStart?.Invoke();
+            
             var frames = 0;
             var timer = 0f;
             var previousTimeInMilliseconds = 0.0;
@@ -35,7 +37,7 @@ namespace N8Engine
                 var currentTimeInMilliseconds = stopwatch.ElapsedMilliseconds;
                 var timePassed = (float) (currentTimeInMilliseconds - previousTimeInMilliseconds) / milliseconds_to_seconds;
 
-                if (timePassed >= UpdateRate)
+                if (timePassed >= _updateRate)
                 {
                     frames++;
                     timer += timePassed;
@@ -46,18 +48,16 @@ namespace N8Engine
                         timer = 0f;
                     }
                     previousTimeInMilliseconds = currentTimeInMilliseconds;
-                    InvokeEventsForCurrentFrame(timePassed);
+                    Tick(timePassed);
                 }
             }
         }
 
-        static void InvokeEventsForCurrentFrame(float deltaTime)
+        void Tick(float deltaTime)
         {
-            OnPreUpdate?.Invoke(deltaTime);
-            OnEarlyUpdate?.Invoke(deltaTime);
-            OnUpdate?.Invoke(deltaTime);
-            OnPostUpdate?.Invoke(deltaTime);
+            OnInternalPreUpdate?.Invoke();
             
+            OnUpdate?.Invoke(deltaTime);
             OnPhysicsUpdate?.Invoke(deltaTime);
             OnLateUpdate?.Invoke(deltaTime);
 

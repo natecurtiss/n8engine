@@ -2,7 +2,7 @@ using N8Engine.External;
 using N8Engine.External.User;
 using N8Engine.Mathematics;
 
-namespace N8Engine
+namespace N8Engine.Rendering
 {
     public readonly struct ScreenResolution
     {

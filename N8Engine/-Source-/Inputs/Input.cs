@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using N8Engine.External;
 using N8Engine.External.User;
+using N8Engine.Internal;
 
 namespace N8Engine.Inputs
 {
@@ -10,7 +11,7 @@ namespace N8Engine.Inputs
     /// I suggest going to your search engine of choice to find out what "input" is in the context of a game engine if you do not already know.
     /// </summary>
     /// <seealso cref="Key"/>
-    public static class Input
+    public sealed class Input
     {
         enum KeyState
         {
@@ -20,41 +21,45 @@ namespace N8Engine.Inputs
             WasJustReleased
         }
 
-        static readonly Dictionary<Key, KeyState> _keys = new();
-        static readonly IReadOnlyCollection<Key> _allKeys = Enum.GetValues<Key>();
+        readonly Dictionary<Key, KeyState> _keyStates = new();
+        readonly IEnumerable<Key> _allKeys = Enum.GetValues<Key>();
+        readonly IInternalEvents _internalEvents;
         
-        internal static void Initialize()
+        internal Input(IInternalEvents internalEvents)
         {
+            _internalEvents = internalEvents;
             foreach (var key in _allKeys) 
-                _keys.Add(key, KeyState.IsReleased);
-            GameLoop.OnPreUpdate += OnPreUpdate;
+                _keyStates.Add(key, KeyState.IsReleased);
+            _internalEvents.OnInternalPreUpdate += EveryFrame;
         }
-        
+
+        ~Input() => _internalEvents.OnInternalPreUpdate -= EveryFrame;
+
         /// <summary>
         /// True if the <see cref="Key"/> is currently not being pressed (the opposite of <see cref="IsPressed">IsPressed.</see>)
         /// </summary>
-        public static bool IsReleased(this Key key) => _keys[key] == KeyState.IsReleased;
+        public bool IsReleased(Key key) => _keyStates[key] == KeyState.IsReleased;
         
         /// <summary>
         /// True if the <see cref="Key"/> is currently being pressed (the opposite of <see cref="IsReleased">IsReleased.</see>)
         /// </summary>
-        public static bool IsPressed(this Key key) => _keys[key] == KeyState.IsPressed;
+        public bool IsPressed(Key key) => _keyStates[key] == KeyState.IsPressed;
         
         /// <summary>
         /// True if the<see cref="Key"/> was just released in the current frame.
         /// </summary>
-        public static bool WasJustReleased(this Key key) => _keys[key] == KeyState.WasJustReleased;
+        public bool WasJustReleased(Key key) => _keyStates[key] == KeyState.WasJustReleased;
         
         /// <summary>
         /// True if the <see cref="Key"/> was just pressed in the current frame.
         /// </summary>
-        public static bool WasJustPressed(this Key key) => _keys[key] == KeyState.WasJustPressed;
+        public bool WasJustPressed(Key key) => _keyStates[key] == KeyState.WasJustPressed;
 
-        static void OnPreUpdate(float deltaTime)
+        void EveryFrame()
         {
             foreach (var key in _allKeys)
             {
-                var previousKeyState = _keys[key];
+                var previousKeyState = _keyStates[key];
                 var newKeyState = KeyState.IsReleased;
                 var isKeyDownNow = UserInput.IsKeyDown(key);
                 newKeyState = previousKeyState switch
@@ -65,7 +70,7 @@ namespace N8Engine.Inputs
                     KeyState.WasJustReleased => isKeyDownNow ? KeyState.WasJustPressed : KeyState.IsReleased,
                     var _ => newKeyState
                 };
-                _keys[key] = newKeyState;
+                _keyStates[key] = newKeyState;
             }
         }
     }

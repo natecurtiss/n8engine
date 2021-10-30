@@ -1,5 +1,9 @@
 ﻿using N8Engine;
+using N8Engine.Rendering;
 using N8Engine.SceneManagement;
+using SampleProject;
+
+new Game<SampleGame>().Start();
 
 namespace SampleProject
 {
@@ -7,7 +11,11 @@ namespace SampleProject
     {
         public override string WindowTitle => "sample game";
         public override ScreenResolution WindowSize => new(0.5f, 0.5f);
-        
-        public override Scene[] Scenes { get; }
+
+        public override int TargetFramerate => 60;
+        public override Scene[] Scenes => new Scene[]
+        {
+            new SampleScene()
+        };
     }
 }
