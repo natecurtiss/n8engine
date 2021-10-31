@@ -7,6 +7,10 @@ namespace N8Engine.External.User
 {
     static class UserMetrics
     {
+        // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setprocessdpiaware
+        [DllImport("user32.dll", SetLastError=true)]
+        static extern bool SetProcessDPIAware();
+        
         // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrect
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -19,21 +23,38 @@ namespace N8Engine.External.User
         const int SM_CX_SCREEN = 0;
         const int SM_CY_SCREEN = 1;
 
-        public static IntVector MonitorSize => new(GetSystemMetrics(SM_CX_SCREEN), GetSystemMetrics(SM_CY_SCREEN));
-        
+        static bool _isDpiAware;
+
+        public static IntVector MonitorSize
+        {
+            get
+            {
+                if (!_isDpiAware)
+                {
+                    SetProcessDPIAware();
+                    _isDpiAware = true;
+                }
+                return new(GetSystemMetrics(SM_CX_SCREEN), GetSystemMetrics(SM_CY_SCREEN));
+            }
+        }
+
         public static IntVector GetWindowSize(IntPtr windowHandle)
         {
+            if (!_isDpiAware)
+            {
+                SetProcessDPIAware();
+                _isDpiAware = true;
+            }
             GetWindowRect(windowHandle, out var rect);
-            var width = rect.BottomRightX - rect.TopLeftX;
-            var height = rect.TopLeftY - rect.BottomRightY;
+            var width = rect.Right - rect.Left;
+            var height = rect.Bottom - rect.Top;
             return new IntVector(width, height);
         }
         
         public static IntVector GetCenterOfWindow(IntVector windowSize)
         {
-            var monitorSize = MonitorSize;
-            var difference = monitorSize - windowSize;
-            return difference / 2;
+            var difference = MonitorSize / 2 - windowSize / 2;
+            return difference;
         }
     }
 }

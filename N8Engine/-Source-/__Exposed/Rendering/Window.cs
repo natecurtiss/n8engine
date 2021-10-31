@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using N8Engine.External;
+using N8Engine.External.Console;
 using N8Engine.External.User;
 using N8Engine.Internal;
 using N8Engine.Mathematics;
@@ -16,8 +17,8 @@ namespace N8Engine.Rendering
         {
             _handle = handle;
             _internalEvents = internalEvents;
-            Console.Title = title;
-            UserWindow.Resize(size);
+            UserWindow.SetTitle(handle, title);
+            UserWindow.Resize(handle, size);
             UserWindow.Hide(handle);
             _internalEvents.OnInternalStart += OnStart;
         }

@@ -22,10 +22,10 @@ namespace N8Engine.External
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct RECT
         {
-            public readonly int TopLeftX;
-            public readonly int TopLeftY; 
-            public readonly int BottomRightX;
-            public readonly int BottomRightY;
+            public readonly int Left;
+            public readonly int Top; 
+            public readonly int Right;
+            public readonly int Bottom;
         }
     }
 }

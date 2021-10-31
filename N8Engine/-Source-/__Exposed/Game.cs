@@ -16,7 +16,7 @@ namespace N8Engine
         {
             var launcher = new T();
             _gameLoop = new GameLoop(launcher.TargetFramerate);
-            _window = new Window(launcher.WindowTitle, launcher.WindowSize.Size, ConsoleInfo.Handle, _gameLoop);
+            _window = new Window(launcher.WindowTitle, launcher.WindowSize, ConsoleInfo.Handle, _gameLoop);
             _sceneManager = new SceneManager(launcher.Scenes, _gameLoop);
         }
 

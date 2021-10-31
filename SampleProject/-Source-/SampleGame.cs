@@ -10,7 +10,7 @@ namespace SampleProject
     sealed class SampleGame : Launcher
     {
         public override string WindowTitle => "sample game";
-        public override ScreenResolution WindowSize => new(0.5f, 0.5f);
+        public override ScreenResolution WindowSize => new(0.75f, 0.75f);
 
         public override int TargetFramerate => 60;
         public override Scene[] Scenes => new Scene[]
