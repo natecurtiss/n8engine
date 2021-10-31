@@ -2,7 +2,7 @@ using System;
 
 namespace N8Engine.Internal
 {
-    interface IRenderingUpdates
+    interface IRenderingEvents
     {
         event Action OnPreRender;
         event Action OnRender;

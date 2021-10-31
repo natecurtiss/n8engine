@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace N8Engine.Internal
 {
-    sealed class GameLoop : IInternalEvents, IUpdateEvents, IRenderingUpdates
+    sealed class GameLoop : IInternalEvents, IUpdateEvents, IRenderingEvents
     {
         public event Action OnInternalStart;
         public event Action OnInternalPreUpdate;

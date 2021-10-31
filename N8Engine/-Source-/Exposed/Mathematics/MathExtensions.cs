@@ -74,6 +74,7 @@ namespace N8Engine.Mathematics
         /// and less than or equal to the maximum value passed in.
         /// </summary>
         public static bool IsWithin(this float value, float minimum, float maximum) => value.ClampedBetween(minimum, maximum) == value;
+        public static bool IsWithin(this int value, int minimum, int maximum) => value.ClampedBetween(minimum, maximum) == value;
 
         public static float KeptAbove(this float value, float threshold) => MaximumOf(value, threshold);
         public static float KeptBelow(this float value, float threshold) => MinimumOf(value, threshold);

@@ -11,6 +11,8 @@ namespace N8Engine
         
         public abstract string WindowTitle { get; }
         public abstract ScreenResolution WindowSize { get; }
+        [ValueRange(1, 8)]
+        public abstract int FontSize { get; }
         
         [ValueRange(0, 200)]
         public abstract int TargetFramerate { get; }

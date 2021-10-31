@@ -11,6 +11,7 @@ namespace SampleProject
     {
         public override string WindowTitle => "sample game";
         public override ScreenResolution WindowSize => new(0.75f, 0.75f);
+        public override int FontSize => 1;
 
         public override int TargetFramerate => 60;
         public override Scene[] Scenes => new Scene[]

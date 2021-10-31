@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using N8Engine.Mathematics;
-using SysConsole = System.Console;
 
 namespace N8Engine.External.User
 {

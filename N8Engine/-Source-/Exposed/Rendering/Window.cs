@@ -17,9 +17,9 @@ namespace N8Engine.Rendering
         {
             _handle = handle;
             _internalEvents = internalEvents;
-            UserWindow.SetTitle(handle, title);
-            UserWindow.Resize(handle, size);
-            UserWindow.Hide(handle);
+            UserWindow.SetTitle(_handle, title);
+            UserWindow.Resize(_handle, size);
+            UserWindow.Hide(_handle);
             _internalEvents.OnInternalStart += OnStart;
         }
 
