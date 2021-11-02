@@ -13,6 +13,7 @@ namespace N8Engine.External.User
         // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlonga
         [DllImport("user32.dll")]
         static extern uint GetWindowLong(IntPtr hWnd, int nIndex);
+        // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowlonga
         [DllImport("user32.dll")]
         static extern uint SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
         
@@ -58,7 +59,7 @@ namespace N8Engine.External.User
         public static void SetTitle(IntPtr windowHandle, string title) => SetWindowText(windowHandle, title);
 
         // https://stackoverflow.com/questions/41172595/how-to-change-console-window-style-at-runtime
-        public static void RemoveTitlebar(IntPtr windowHandle)
+        public static void DisableResizing(IntPtr windowHandle)
         {
             var currentWindowStyle = GetWindowLong(windowHandle, NEW_WINDOW_STYLE);
             SetWindowLong(windowHandle, NEW_WINDOW_STYLE, 

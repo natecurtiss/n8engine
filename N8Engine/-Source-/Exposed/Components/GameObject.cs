@@ -21,7 +21,7 @@ namespace N8Engine
         public GameObject ChangeTransform<T>() where T : Transform, new()
         {
             RemoveComponent(Transform);
-            AddComponent<T>(out var transform);
+            AddAnyComponent<T>(out var transform);
             Transform = transform;
             return this;
         }
@@ -34,15 +34,30 @@ namespace N8Engine
             _components.Add(component);
             return this;
         }
+
+        public GameObject AddComponent<T>() where T : Component, new() => AddComponent<T>(out var _);
         
         public GameObject RemoveComponent(Component component)
         {
             if (!_components.Contains(component))
-                throw new NotAddableComponentException($"{this} does not have the specified {component} attached to remove.");
+                throw new ComponentIsNotAttachedException($"{this} does not have the specified {component} attached to remove.");
             _components.Remove(component);
             return this;
         }
-        
-        // TODO: GetComponent<T>().d
+
+        public T GetComponent<T>() where T : Component
+        {
+            foreach (var component in _components)
+                if (component is T t)
+                    return t;
+            throw new ComponentIsNotAttachedException($"{this} does not have a component of type {typeof(T)} attached.");
+        }
+
+        GameObject AddAnyComponent<T>(out T component) where T : Component, new()
+        {
+            (component = new T()).Give(this);
+            _components.Add(component);
+            return this;
+        }
     }
 }

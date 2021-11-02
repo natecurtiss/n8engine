@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Text;
 using N8Engine.External.Console;
 using N8Engine.Mathematics;
-using JetBrains.Annotations;
 using N8Engine.External.User;
 using N8Engine.Internal;
 
@@ -22,16 +21,19 @@ namespace N8Engine.Rendering
 
         Color _backgroundColor = Color.Black;
 
-        public ConsoleRenderer(short fontSize, IRenderingEvents renderingEvents)
+        public ConsoleRenderer(short fontSize, IntPtr windowHandle, IntVector windowSize, IRenderingEvents renderingEvents)
         {
-            _screenSize = new IntVector(Console.WindowWidth, Console.WindowHeight);
-
             // TODO: fix this.
-            ConsoleFont.SetTo("Consolas", fontSize, true);
             ConsoleQuickEditMode.Disable();
             ConsoleMode.EnableAnsiEscapeSequences();
-            Console.SetBufferSize(_screenSize.X, _screenSize.Y);
+            ConsoleFont.SetTo("Consolas", fontSize);
+            UserWindow.Resize(windowHandle, windowSize);
             
+            _screenSize = new IntVector(Console.WindowWidth, Console.WindowHeight);
+            // TODO: make this cross-platform.
+            Console.SetBufferSize(_screenSize.X, _screenSize.Y);
+            Console.CursorVisible = false;
+
             _renderingEvents = renderingEvents;
             _renderingEvents.OnRender += DisplayPixels;
             
@@ -42,7 +44,7 @@ namespace N8Engine.Rendering
         ~ConsoleRenderer() => _renderingEvents.OnRender -= DisplayPixels;
         
         // TODO: call this from a sprite renderer component.
-        public void Render([NotNull] Color[,] image, IntVector position)
+        public void Render(Color[,] image, IntVector position)
         {
             var offset = WorldToScreen(position);
             for (var y = 0; y < image.GetLength(1); y++)

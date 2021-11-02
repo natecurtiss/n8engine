@@ -3,7 +3,7 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.SceneManagement
 {
-    public sealed class SceneManager
+    sealed class SceneManager : ISceneManager
     {
         public Scene CurrentScene { get; private set; }
         readonly Scene[] _scenes;
@@ -16,6 +16,13 @@ namespace N8Engine.SceneManagement
             for (var i = 0; i < _scenes.Length; i++)
                 _scenes[i].Index = i;
             _internalEvents.OnInternalStart += OnStart;
+        }
+        
+        public void LoadScene(Scene scene)
+        {
+            // CurrentScene?.Unload();
+            // CurrentScene = scene;
+            // scene.Load();
         }
 
         public void LoadScene(string name)
@@ -53,13 +60,6 @@ namespace N8Engine.SceneManagement
         }
 
         public void LoadCurrentScene() => LoadScene(CurrentScene);
-
-        void LoadScene(Scene scene)
-        {
-            // CurrentScene?.Unload();
-            // CurrentScene = scene;
-            // scene.Load();
-        }
 
         void OnStart()
         {

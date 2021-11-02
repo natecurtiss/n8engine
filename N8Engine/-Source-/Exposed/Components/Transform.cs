@@ -4,6 +4,8 @@ namespace N8Engine
 {
     public class Transform : Component
     {
+        internal override bool CanBeAddedByUser => false;
+
         Vector _position;
         public Vector Position
         {

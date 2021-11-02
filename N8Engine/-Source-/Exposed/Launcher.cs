@@ -7,6 +7,7 @@ namespace N8Engine
 {
     public abstract class Launcher
     {
+        [CanBeNull]
         public virtual ILogger CustomLogger { get; } = null;
         
         public abstract string WindowTitle { get; }

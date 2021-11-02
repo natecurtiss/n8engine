@@ -8,17 +8,18 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    public sealed class Window
+    sealed class Window : IWindow
     {
         readonly IntPtr _handle;
         readonly IInternalEvents _internalEvents;
         
-        internal Window(string title, IntVector size, IntPtr handle, IInternalEvents internalEvents)
+        public Window(string title, IntVector size, IntPtr handle, IInternalEvents internalEvents)
         {
             _handle = handle;
             _internalEvents = internalEvents;
             UserWindow.SetTitle(_handle, title);
             UserWindow.Resize(_handle, size);
+            UserWindow.DisableResizing(_handle);
             UserWindow.Hide(_handle);
             _internalEvents.OnInternalStart += OnStart;
         }

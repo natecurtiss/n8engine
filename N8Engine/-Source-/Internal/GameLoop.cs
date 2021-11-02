@@ -5,6 +5,8 @@ namespace N8Engine.Internal
 {
     sealed class GameLoop : IInternalEvents, IUpdateEvents, IRenderingEvents
     {
+        readonly float _updateRate;
+
         public event Action OnInternalStart;
         public event Action OnInternalPreUpdate;
         public event Action<float> OnUpdate;
@@ -14,8 +16,11 @@ namespace N8Engine.Internal
         public event Action OnRender;
         public event Action OnPostRender;
         
-        readonly float _updateRate;
         public int FramesPerSecond { get; private set; }
+        // TODO: probably move these things into their own classes.
+        public IInternalEvents InternalEvents => this;
+        public IUpdateEvents UpdateEvents => this;
+        public IRenderingEvents RenderingEvents => this;
 
         public GameLoop(int targetFramerate) => _updateRate = 1f / targetFramerate;
 
