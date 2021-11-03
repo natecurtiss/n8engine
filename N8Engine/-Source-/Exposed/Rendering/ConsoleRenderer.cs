@@ -44,21 +44,26 @@ namespace N8Engine.Rendering
         ~ConsoleRenderer() => _renderingEvents.OnRender -= DisplayPixels;
         
         // TODO: call this from a sprite renderer component.
-        public void Render(Color[,] image, IntVector position)
+        void IRenderer.Render(IRenderable renderable, IntVector objectPosition)
         {
-            var offset = WorldToScreen(position);
-            for (var y = 0; y < image.GetLength(1); y++)
+            var offset = WorldToScreen(objectPosition);
+            var i = 0;
+            for (var y = 0; y < renderable.Pixels.GetLength(1); y++)
             {
-                for (var x = 0; x < image.GetLength(0); x++)
+                for (var x = 0; x < renderable.Pixels.GetLength(0); x++)
                 {
-                    var screenPos = new IntVector(x, y) + offset;
+                    // TODO: if IRenderable.Pixels becomes a 2d array add this back.
+                    // var pixel = renderable.Pixels[x, y];
+                    var pixel = renderable.Pixels[i];
+                    
+                    var screenPos = pixel.LocalPosition + offset;
                     if (IsOnScreen(screenPos))
                     {
-                        var pixel = image[x, y];
-                        if (IsTransparent(pixel))
-                            pixel = _backgroundColor;
-                        _pixels[screenPos.X, screenPos.Y] = pixel;
+                        if (IsTransparent(pixel.Color))
+                            pixel = pixel.With(_backgroundColor);
+                        _pixels[screenPos.X, screenPos.Y] = pixel.Color;
                     }
+                    i++;
                 }
             }
         }
