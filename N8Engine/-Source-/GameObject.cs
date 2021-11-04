@@ -1,30 +1,26 @@
 using System.Collections.Generic;
 using N8Engine.Rendering;
-using static N8Engine.InternalServices;
 
 namespace N8Engine
 {
     public sealed class GameObject
     {
+        public readonly string Name;
         readonly List<Component> _components = new();
+        
         public Transform Transform { get; private set; }
 
-        public GameObject()
+        GameObject(string name)
         {
-            UpdateEvents.OnUpdate += OnUpdate;
-            UpdateEvents.OnPhysicsUpdate += OnPhysicsUpdate;
-            UpdateEvents.OnLateUpdate += OnLateUpdate;
-            RenderingEvents.OnPreRender += OnPreRender;
+            Name = name;
             AddComponent<Transform>(out var transform);
             Transform = transform;
         }
 
+        public static GameObject Create(string name = "new gameobject") => new(name);
+
         public void Destroy()
         {
-            UpdateEvents.OnUpdate -= OnUpdate;
-            UpdateEvents.OnPhysicsUpdate -= OnPhysicsUpdate;
-            UpdateEvents.OnLateUpdate -= OnLateUpdate;
-            RenderingEvents.OnPreRender -= OnPreRender;
             foreach (var component in _components)
                 component.Destroy();
         }
@@ -59,25 +55,25 @@ namespace N8Engine
             return null;
         }
 
-        void OnUpdate(float deltaTime)
+        internal void OnUpdate(float deltaTime)
         {
             foreach (var component in _components)
                 component.Update(deltaTime);
         }
 
-        void OnPhysicsUpdate(float deltaTime)
+        internal void OnPhysicsUpdate(float deltaTime)
         {
             foreach (var component in _components)
                 component.PhysicsUpdate(deltaTime);
         }
         
-        void OnLateUpdate(float deltaTime)
+        internal void OnLateUpdate(float deltaTime)
         {
             foreach (var component in _components)
                 component.LateUpdate(deltaTime);
         }
 
-        void OnPreRender(IRenderer renderer)
+        internal void OnPreRender(IRenderer renderer)
         {
             foreach (var component in _components)
                 component.RenderUpdate(renderer);

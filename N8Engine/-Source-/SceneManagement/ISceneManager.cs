@@ -1,3 +1,5 @@
+using N8Engine.Rendering;
+
 namespace N8Engine.SceneManagement
 {
     public interface ISceneManager
@@ -10,5 +12,6 @@ namespace N8Engine.SceneManagement
         void LoadPreviousScene();
         void LoadCurrentScene();
         void LoadFirstScene();
+        internal void UpdateCurrentScene(float deltaTime, IRenderer renderer);
     }
 }

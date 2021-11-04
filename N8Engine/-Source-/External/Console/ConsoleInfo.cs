@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using N8Engine.Mathematics;
-using static N8Engine.External.CommonStructures;
 
 namespace N8Engine.External.Console
 {

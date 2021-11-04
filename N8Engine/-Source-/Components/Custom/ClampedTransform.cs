@@ -1,4 +1,3 @@
-using System;
 using N8Engine.Mathematics;
 using Math = N8Engine.Mathematics.Math;
 

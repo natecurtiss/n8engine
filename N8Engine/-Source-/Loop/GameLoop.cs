@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Diagnostics;
-using N8Engine.Rendering;
+using N8Engine.Loop;
 
-namespace N8Engine.Internal
+namespace N8Engine.Loop
 {
-    sealed class GameLoop
+    sealed class GameLoop : ILoopEvents
     {
+        public event Action OnStart;
+        public event Action<float> OnUpdate;
+        
         readonly float _updateRate;
-
         public int FramesPerSecond { get; private set; }
 
         public GameLoop(int targetFramerate) => _updateRate = 1f / targetFramerate;
 
-        public void Run(Action onStart, Action<float> onUpdate)
+        public void Run()
         {
-            onStart();
+            OnStart?.Invoke();
             var frames = 0;
             var timer = 0f;
             var previousTimeInMilliseconds = 0.0;
@@ -40,7 +42,7 @@ namespace N8Engine.Internal
                         timer = 0f;
                     }
                     previousTimeInMilliseconds = currentTimeInMilliseconds;
-                    onUpdate(timePassed);
+                    OnUpdate?.Invoke(timePassed);
                 }
             }
         }

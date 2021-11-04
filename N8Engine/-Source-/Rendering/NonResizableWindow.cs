@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using N8Engine.External;
-using N8Engine.External.Console;
 using N8Engine.External.User;
-using N8Engine.Internal;
 using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering

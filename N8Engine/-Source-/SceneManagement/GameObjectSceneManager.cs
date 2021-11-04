@@ -1,5 +1,6 @@
-﻿using N8Engine.Internal;
+﻿using System.Linq;
 using N8Engine.Mathematics;
+using N8Engine.Rendering;
 
 namespace N8Engine.SceneManagement
 {
@@ -44,6 +45,19 @@ namespace N8Engine.SceneManagement
 
         void ISceneManager.LoadCurrentScene() => LoadScene(CurrentScene);
         void ISceneManager.LoadFirstScene() => LoadScene(_scenes[0]);
+
+        void ISceneManager.UpdateCurrentScene(float deltaTime, IRenderer renderer)
+        {
+            var gameObjects = CurrentScene.ToArray();
+            foreach (var gameObject in gameObjects)
+                gameObject.OnUpdate(deltaTime);
+            foreach (var gameObject in gameObjects)
+                gameObject.OnPhysicsUpdate(deltaTime);
+            foreach (var gameObject in gameObjects)
+                gameObject.OnLateUpdate(deltaTime);
+            foreach (var gameObject in gameObjects)
+                gameObject.OnPreRender(renderer);
+        }
 
         void LoadScene(Scene scene)
         {
