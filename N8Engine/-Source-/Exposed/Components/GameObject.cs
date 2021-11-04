@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using N8Engine.Rendering;
+using static N8Engine.Services;
 
 namespace N8Engine
 {
@@ -9,28 +11,30 @@ namespace N8Engine
 
         public GameObject()
         {
+            UpdateEvents.OnUpdate += OnUpdate;
+            UpdateEvents.OnPhysicsUpdate += OnPhysicsUpdate;
+            UpdateEvents.OnLateUpdate += OnLateUpdate;
+            RenderingEvents.OnPreRender += OnPreRender;
             AddComponent<Transform>(out var transform);
             Transform = transform;
         }
 
         public void Destroy()
         {
-            
-        }
-
-        public GameObject ChangeTransform<T>() where T : Transform, new()
-        {
-            RemoveComponent(Transform);
-            AddAnyComponent<T>(out var transform);
-            Transform = transform;
-            return this;
+            UpdateEvents.OnUpdate -= OnUpdate;
+            UpdateEvents.OnPhysicsUpdate -= OnPhysicsUpdate;
+            UpdateEvents.OnLateUpdate -= OnLateUpdate;
+            RenderingEvents.OnPreRender -= OnPreRender;
+            foreach (var component in _components)
+                component.Destroy();
         }
         
         public GameObject AddComponent<T>(out T component) where T : Component, new()
         {
             (component = new T()).Give(this);
-            if (!component.CanBeAddedByUser)
-                throw new NotAddableComponentException($"You aren't allowed to add a component of type {component.GetType()}.");
+            if (!component.CanHaveMultiple)
+                if (HasComponent<T>())
+                    throw new CannotHaveMultipleComponentException($"You aren't allowed to add a component of type {component.GetType()}.");
             _components.Add(component);
             return this;
         }
@@ -40,24 +44,43 @@ namespace N8Engine
         public GameObject RemoveComponent(Component component)
         {
             if (!_components.Contains(component))
-                throw new ComponentIsNotAttachedException($"{this} does not have the specified {component} attached to remove.");
+                throw new ComponentIsNotFoundException($"{this} does not have the specified {component} attached to remove.");
             _components.Remove(component);
             return this;
         }
+
+        public bool HasComponent<T>() where T : Component => GetComponent<T>() != null;
 
         public T GetComponent<T>() where T : Component
         {
             foreach (var component in _components)
                 if (component is T t)
                     return t;
-            throw new ComponentIsNotAttachedException($"{this} does not have a component of type {typeof(T)} attached.");
+            return null;
         }
 
-        GameObject AddAnyComponent<T>(out T component) where T : Component, new()
+        void OnUpdate(float deltaTime)
         {
-            (component = new T()).Give(this);
-            _components.Add(component);
-            return this;
+            foreach (var component in _components)
+                component.Update(deltaTime);
+        }
+
+        void OnPhysicsUpdate(float deltaTime)
+        {
+            foreach (var component in _components)
+                component.PhysicsUpdate(deltaTime);
+        }
+        
+        void OnLateUpdate(float deltaTime)
+        {
+            foreach (var component in _components)
+                component.LateUpdate(deltaTime);
+        }
+
+        void OnPreRender(IRenderer renderer)
+        {
+            foreach (var component in _components)
+                component.RenderUpdate(renderer);
         }
     }
 }

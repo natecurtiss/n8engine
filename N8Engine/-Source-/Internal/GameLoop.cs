@@ -1,33 +1,20 @@
 ﻿using System;
 using System.Diagnostics;
+using N8Engine.Rendering;
 
 namespace N8Engine.Internal
 {
-    sealed class GameLoop : IInternalEvents, IUpdateEvents, IRenderingEvents
+    sealed class GameLoop
     {
         readonly float _updateRate;
 
-        public event Action OnInternalStart;
-        public event Action OnInternalPreUpdate;
-        public event Action<float> OnUpdate;
-        public event Action<float> OnPhysicsUpdate;
-        public event Action<float> OnLateUpdate;
-        public event Action OnPreRender;
-        public event Action OnRender;
-        public event Action OnPostRender;
-        
         public int FramesPerSecond { get; private set; }
-        // TODO: probably move these things into their own classes.
-        public IInternalEvents InternalEvents => this;
-        public IUpdateEvents UpdateEvents => this;
-        public IRenderingEvents RenderingEvents => this;
 
         public GameLoop(int targetFramerate) => _updateRate = 1f / targetFramerate;
 
-        public void Run()
+        public void Run(Action onStart, Action<float> onUpdate)
         {
-            OnInternalStart?.Invoke();
-            
+            onStart();
             var frames = 0;
             var timer = 0f;
             var previousTimeInMilliseconds = 0.0;
@@ -53,22 +40,9 @@ namespace N8Engine.Internal
                         timer = 0f;
                     }
                     previousTimeInMilliseconds = currentTimeInMilliseconds;
-                    Tick(timePassed);
+                    onUpdate(timePassed);
                 }
             }
-        }
-
-        void Tick(float deltaTime)
-        {
-            OnInternalPreUpdate?.Invoke();
-            
-            OnUpdate?.Invoke(deltaTime);
-            OnPhysicsUpdate?.Invoke(deltaTime);
-            OnLateUpdate?.Invoke(deltaTime);
-
-            OnPreRender?.Invoke();
-            OnRender?.Invoke();
-            OnPostRender?.Invoke();
         }
     }
 }

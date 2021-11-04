@@ -4,7 +4,6 @@ using System.Text;
 using N8Engine.External.Console;
 using N8Engine.Mathematics;
 using N8Engine.External.User;
-using N8Engine.Internal;
 
 namespace N8Engine.Rendering
 {
@@ -14,14 +13,13 @@ namespace N8Engine.Rendering
         
         readonly string _pixel = new('▒', NUMBER_OF_CHARACTERS_PER_PIXEL);
         readonly string _empty = new(' ', NUMBER_OF_CHARACTERS_PER_PIXEL);
-        readonly IRenderingEvents _renderingEvents;
         readonly IntVector _screenSize;
         readonly Color[,] _pixels;
         readonly StringBuilder _output = new();
 
         Color _backgroundColor = Color.Black;
 
-        public ConsoleRenderer(short fontSize, IntPtr windowHandle, IntVector windowSize, IRenderingEvents renderingEvents)
+        public ConsoleRenderer(short fontSize, IntPtr windowHandle, IntVector windowSize)
         {
             // TODO: fix this.
             ConsoleQuickEditMode.Disable();
@@ -34,15 +32,10 @@ namespace N8Engine.Rendering
             Console.SetBufferSize(_screenSize.X, _screenSize.Y);
             Console.CursorVisible = false;
 
-            _renderingEvents = renderingEvents;
-            _renderingEvents.OnRender += DisplayPixels;
-            
             _pixels = new Color[_screenSize.X, _screenSize.Y];
             WriteInitialPixels();
         }
-        
-        ~ConsoleRenderer() => _renderingEvents.OnRender -= DisplayPixels;
-        
+
         // TODO: call this from a sprite renderer component.
         void IRenderer.Render(IRenderable renderable, IntVector objectPosition)
         {
@@ -67,8 +60,18 @@ namespace N8Engine.Rendering
                 }
             }
         }
+
+        void IRenderer.ChangeBackground(Color color)
+        {
+            for (var y = 0; y < _pixels.GetLength(1); y++)
+            {
+                for (var x = 0; x < _pixels.GetLength(0); x++)
+                    if (IsBackground(x, y)) AddPixel(x, y, color);
+            }
+            _backgroundColor = color;
+        }
         
-        void DisplayPixels()
+        void IRenderer.DisplayPixels()
         {
             _output.Clear();
             _output.MoveCursorTo(IntVector.Zero);
@@ -101,18 +104,7 @@ namespace N8Engine.Rendering
         }
 
         void AddPixel(int x, int y, Color color) => _pixels[x, y] = color;
-
-        // TODO: connect this with the window somehow.
-        void ChangeBackground(Color color)
-        {
-            for (var y = 0; y < _pixels.GetLength(1); y++)
-            {
-                for (var x = 0; x < _pixels.GetLength(0); x++)
-                    if (IsBackground(x, y)) AddPixel(x, y, color);
-            }
-            _backgroundColor = color;
-        }
-
+        
         bool IsBackground(int x, int y) => _pixels[x, y] == _backgroundColor;
 
         IntVector WorldToScreen(IntVector worldPos)

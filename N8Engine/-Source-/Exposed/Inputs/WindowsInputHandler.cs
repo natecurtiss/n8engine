@@ -6,12 +6,14 @@ using N8Engine.Internal;
 
 namespace N8Engine.Inputs
 {
+    // TODO: update this summary.
     /// <summary>
     /// Just like <see cref="Application">Application,</see>
     /// I suggest going to your search engine of choice to find out what "input" is in the context of a game engine if you do not already know.
     /// </summary>
     /// <seealso cref="Key"/>
-    public sealed class Input
+    // TODO: I'm pretty sure it does, but make sure this ONLY works on windows.
+    sealed class WindowsInputHandler : IInput
     {
         enum KeyState
         {
@@ -23,39 +25,34 @@ namespace N8Engine.Inputs
 
         readonly Dictionary<Key, KeyState> _keyStates = new();
         readonly IEnumerable<Key> _allKeys = Enum.GetValues<Key>();
-        readonly IInternalEvents _internalEvents;
-        
-        internal Input(IInternalEvents internalEvents)
+
+        internal WindowsInputHandler()
         {
-            _internalEvents = internalEvents;
             foreach (var key in _allKeys) 
                 _keyStates.Add(key, KeyState.IsReleased);
-            _internalEvents.OnInternalPreUpdate += EveryFrame;
         }
-
-        ~Input() => _internalEvents.OnInternalPreUpdate -= EveryFrame;
 
         /// <summary>
         /// True if the <see cref="Key"/> is currently not being pressed (the opposite of <see cref="IsPressed">IsPressed.</see>)
         /// </summary>
-        public bool IsReleased(Key key) => _keyStates[key] == KeyState.IsReleased;
+        bool IInput.IsReleased(Key key) => _keyStates[key] == KeyState.IsReleased;
         
         /// <summary>
         /// True if the <see cref="Key"/> is currently being pressed (the opposite of <see cref="IsReleased">IsReleased.</see>)
         /// </summary>
-        public bool IsPressed(Key key) => _keyStates[key] == KeyState.IsPressed;
+        bool IInput.IsPressed(Key key) => _keyStates[key] == KeyState.IsPressed;
         
         /// <summary>
         /// True if the<see cref="Key"/> was just released in the current frame.
         /// </summary>
-        public bool WasJustReleased(Key key) => _keyStates[key] == KeyState.WasJustReleased;
+        bool IInput.WasJustReleased(Key key) => _keyStates[key] == KeyState.WasJustReleased;
         
         /// <summary>
         /// True if the <see cref="Key"/> was just pressed in the current frame.
         /// </summary>
-        public bool WasJustPressed(Key key) => _keyStates[key] == KeyState.WasJustPressed;
+        bool IInput.WasJustPressed(Key key) => _keyStates[key] == KeyState.WasJustPressed;
 
-        void EveryFrame()
+        void IInput.CheckInput()
         {
             foreach (var key in _allKeys)
             {

@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using N8Engine.Debugging;
 using N8Engine.External;
 using N8Engine.External.Console;
+using N8Engine.Inputs;
 using N8Engine.Internal;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
@@ -13,37 +14,59 @@ namespace N8Engine
     {
         readonly IntPtr _windowHandle = ConsoleInfo.Handle;
         readonly GameLoop _gameLoop;
-        readonly IDebugger _debug;
-        readonly IWindow _window;
-        readonly ISceneManager _sceneManager;
-        readonly IRenderer _renderer;
-        
+
         bool _isRunning;
 
         public Game()
         {
-            // Make sure to register the service after creating it to avoid nullref exceptions when cross-referencing services on creation.
+            // To future readers (probably just nate) I'm sorry for everything terrible I've done in this class.
+            // Please clean this up without breaking everything.
+            // The idea behind this is to reduce coupling between the service classes and use this as a sort of "controller"
+            // to bring them all together, but I'm not sure a massive Service Locator is the answer.
             var launcher = new T();
             _gameLoop = new GameLoop(launcher.TargetFramerate);
+
+            // TODO: rename these or something because the static import doesn't work.
+            Services.InternalEvents = new InternalEvents();
+            Services.UpdateEvents = new UpdateEvents();
+            Services.RenderingEvents = new RenderingEvents();
             
-            // This is the proper way to create a new service,
-            _debug = new CustomDebugger(launcher.CustomLogger);
-            Services.Debug = _debug;
+            Services.Debug = new CustomDebugger(launcher.CustomLogger);
+            Services.Renderer = new ConsoleRenderer((short) launcher.FontSize, _windowHandle, launcher.WindowSize);
+            Services.Window = new NonResizableWindow(launcher.WindowTitle, launcher.WindowSize, _windowHandle);
+            Services.SceneManager = new GameObjectSceneManager(launcher.Scenes);
+            // TODO: make this cross-platform.
+            Services.Input = new WindowsInputHandler();
             
-            _window = new Window(launcher.WindowTitle, launcher.WindowSize, _windowHandle, _gameLoop.InternalEvents);
-            Services.Window = _window;
-            
-            _sceneManager = new SceneManager(launcher.Scenes, _gameLoop.InternalEvents);
-            Services.SceneManager = _sceneManager;
-            
-            _renderer = new ConsoleRenderer((short) launcher.FontSize, _windowHandle, launcher.WindowSize, _gameLoop.RenderingEvents);
+            // TODO: this is hella messy so probably clean it up later.
+            Services.Window.OnBackgroundChanged += Services.Renderer.ChangeBackground;
+            Services.InternalEvents.OnPreUpdate += Services.Input.CheckInput;
+            Services.RenderingEvents.OnRender += Services.Renderer.DisplayPixels;
+        }
+
+        ~Game()
+        {
+            // TODO: see above TODO.
+            Services.Window.OnBackgroundChanged -= Services.Renderer.ChangeBackground;
+            Services.InternalEvents.OnPreUpdate -= Services.Input.CheckInput;
+            Services.RenderingEvents.OnRender -= Services.Renderer.DisplayPixels;
         }
 
         public void Start()
         {
+            // TODO: see above TODO as well.
             if (_isRunning) return;
             _isRunning = true;
-            _gameLoop.Run();
+            _gameLoop.Run(() =>
+            {
+                Services.Window.Show();
+                Services.SceneManager.LoadFirstScene();
+            }, deltaTime =>
+            {
+                // TODO: maybe this stuff goes in the scene manager/scene or something?
+                Services.UpdateEvents.Invoke(deltaTime);
+                Services.RenderingEvents.Invoke(Services.Renderer);
+            });
         }
     }
 }
