@@ -30,6 +30,7 @@ namespace N8Engine
                 new WindowsInputHandler()
             );
         }
+
         public void Start()
         {
             if (_isRunning) return;

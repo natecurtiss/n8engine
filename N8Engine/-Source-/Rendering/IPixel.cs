@@ -3,11 +3,11 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    interface IPixel
+    public interface IPixel
     {
         Color Color { get; }
         IntVector LocalPosition { get; }
 
-        public IPixel With(Color color);
+        IPixel With(Color color);
     }
 }

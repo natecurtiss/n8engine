@@ -13,15 +13,14 @@ namespace N8Engine
         internal void Update(float deltaTime) => OnUpdate(deltaTime);
         internal void PhysicsUpdate(float deltaTime) => OnPhysicsUpdate(deltaTime);
         internal void LateUpdate(float deltaTime) => OnLateUpdate(deltaTime);
-        internal void RenderUpdate(IRenderer renderer) => OnRenderUpdate(renderer);
+        internal void Render(IRenderer renderer) => OnRender(renderer);
         
         protected virtual void OnStart() { }
         protected virtual void OnDestroyed() { }
         protected virtual void OnUpdate(float deltaTime) { }
         protected virtual void OnPhysicsUpdate(float deltaTime) { }
         protected virtual void OnLateUpdate(float deltaTime) { }
-        // TODO: might want to make this accessible to external assemblies in order to give the user more control over what gets rendered (custom rendering components and whatnot).
-        private protected virtual void OnRenderUpdate(IRenderer renderer) { }
+        protected virtual void OnRender(IRenderer renderer) { }
 
         internal void Give(GameObject gameObject) => GameObject = gameObject;
     }

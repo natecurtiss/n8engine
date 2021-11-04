@@ -8,7 +8,7 @@ namespace N8Engine
         public override bool CanHaveMultiple => false;
         public Sprite Sprite { get; set; }
 
-        private protected override void OnRenderUpdate(IRenderer renderer) => renderer.Render(Sprite, GameObject.Transform.Position);
+        protected override void OnRender(IRenderer renderer) => renderer.Render(Sprite, GameObject.Transform.Position);
     }
 
     public static partial class GameObjectExtensions

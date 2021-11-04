@@ -76,7 +76,7 @@ namespace N8Engine
         internal void OnPreRender(IRenderer renderer)
         {
             foreach (var component in _components)
-                component.RenderUpdate(renderer);
+                component.Render(renderer);
         }
     }
 }

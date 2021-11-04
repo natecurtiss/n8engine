@@ -3,10 +3,10 @@ using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    interface IRenderer
+    public interface IRenderer
     {
         void Render(IRenderable renderable, IntVector objectPosition);
-        void ChangeBackground(Color color);
+        internal void ChangeBackground(Color color);
         internal void DisplayPixels();
     }
 }
