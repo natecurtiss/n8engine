@@ -12,9 +12,5 @@ namespace N8Engine
         public static IWindow Window { get; internal set; }
         public static ISceneManager SceneManager { get; internal set; }
         public static IInput Input { get; internal set; }
-        internal static IRenderer Renderer { get; set; }
-        internal static InternalEvents InternalEvents { get; set; }
-        internal static UpdateEvents UpdateEvents { get; set; }
-        internal static RenderingEvents RenderingEvents { get; set; }
     }
 }

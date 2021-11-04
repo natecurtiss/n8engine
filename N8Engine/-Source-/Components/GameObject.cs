@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using N8Engine.Rendering;
-using static N8Engine.Services;
+using static N8Engine.InternalServices;
 
 namespace N8Engine
 {

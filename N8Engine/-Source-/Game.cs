@@ -7,6 +7,9 @@ using N8Engine.Inputs;
 using N8Engine.Internal;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
+using static N8Engine.InternalServices;
+using static N8Engine.Services;
+
 
 namespace N8Engine
 {
@@ -27,46 +30,43 @@ namespace N8Engine
             _gameLoop = new GameLoop(launcher.TargetFramerate);
 
             // TODO: rename these or something because the static import doesn't work.
-            Services.InternalEvents = new InternalEvents();
-            Services.UpdateEvents = new UpdateEvents();
-            Services.RenderingEvents = new RenderingEvents();
+            InternalServices.InternalEvents = new InternalEvents();
+            InternalServices.UpdateEvents = new UpdateEvents();
+            InternalServices.RenderingEvents = new RenderingEvents();
             
-            Services.Debug = new CustomDebugger(launcher.CustomLogger);
-            Services.Renderer = new ConsoleRenderer((short) launcher.FontSize, _windowHandle, launcher.WindowSize);
-            Services.Window = new NonResizableWindow(launcher.WindowTitle, launcher.WindowSize, _windowHandle);
-            Services.SceneManager = new GameObjectSceneManager(launcher.Scenes);
+            Debug = new CustomDebugger(launcher.CustomLogger);
+            Renderer = new ConsoleRenderer((short) launcher.FontSize, _windowHandle, launcher.WindowSize);
+            Window = new NonResizableWindow(launcher.WindowTitle, launcher.WindowSize, _windowHandle);
+            SceneManager = new GameObjectSceneManager(launcher.Scenes);
             // TODO: make this cross-platform.
-            Services.Input = new WindowsInputHandler();
-            
-            // TODO: this is hella messy so probably clean it up later.
-            Services.Window.OnBackgroundChanged += Services.Renderer.ChangeBackground;
-            Services.InternalEvents.OnPreUpdate += Services.Input.CheckInput;
-            Services.RenderingEvents.OnRender += Services.Renderer.DisplayPixels;
-        }
-
-        ~Game()
-        {
-            // TODO: see above TODO.
-            Services.Window.OnBackgroundChanged -= Services.Renderer.ChangeBackground;
-            Services.InternalEvents.OnPreUpdate -= Services.Input.CheckInput;
-            Services.RenderingEvents.OnRender -= Services.Renderer.DisplayPixels;
+            Input = new WindowsInputHandler();
         }
 
         public void Start()
         {
-            // TODO: see above TODO as well.
+            // TODO: this is hella messy so probably clean it up later.
+            Window.OnBackgroundChanged += Renderer.ChangeBackground;
+            InternalServices.InternalEvents.OnPreUpdate += Input.CheckInput;
+            InternalServices.RenderingEvents.OnRender += Renderer.DisplayPixels;
+            
+            // TODO: see above TODO.
             if (_isRunning) return;
             _isRunning = true;
             _gameLoop.Run(() =>
             {
-                Services.Window.Show();
-                Services.SceneManager.LoadFirstScene();
+                Window.Show();
+                SceneManager.LoadFirstScene();
             }, deltaTime =>
             {
                 // TODO: maybe this stuff goes in the scene manager/scene or something?
-                Services.UpdateEvents.Invoke(deltaTime);
-                Services.RenderingEvents.Invoke(Services.Renderer);
+                InternalServices.UpdateEvents.Invoke(deltaTime);
+                InternalServices.RenderingEvents.Invoke(Renderer);
             });
+            
+            // TODO: see above TODO as well.
+            Window.OnBackgroundChanged -= Renderer.ChangeBackground;
+            InternalServices.InternalEvents.OnPreUpdate -= Input.CheckInput;
+            InternalServices.RenderingEvents.OnRender -= Renderer.DisplayPixels;
         }
     }
 }

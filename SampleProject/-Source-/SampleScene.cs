@@ -8,7 +8,7 @@ namespace SampleProject
         public override string Name => "sample scene";
         protected override void OnSceneLoaded()
         {
-            // var player = new GameObject().AddComponent<SpriteRenderer>().SetSprite("path");
+            var player = new GameObject().AddComponent<SpriteRenderer>().SetSprite("path");
         }
     }
 }
