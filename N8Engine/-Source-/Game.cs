@@ -14,13 +14,11 @@ namespace N8Engine
         readonly IntPtr _windowHandle = ConsoleInfo.Handle;
         readonly GameLoop _gameLoop;
 
-        bool _isRunning;
-
         public Game()
         {
             var launcher = new T();
             _gameLoop = new GameLoop(launcher.TargetFramerate);
-            Services.Give
+            Services.Setup
             (
                 _gameLoop,
                 new ConsoleRenderer((short) launcher.FontSize, _windowHandle, launcher.WindowSize),
@@ -31,11 +29,6 @@ namespace N8Engine
             );
         }
 
-        public void Start()
-        {
-            if (_isRunning) return;
-            _isRunning = true;
-            _gameLoop.Run();
-        }
+        public void Start() => _gameLoop.Run();
     }
 }

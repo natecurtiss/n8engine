@@ -13,7 +13,7 @@ namespace N8Engine
         public static ISceneManager SceneManager { get; private set; }
         public static IInput Input { get; private set; }
 
-        internal static void Give(ILoopEvents loopEvents, IRenderer renderer, IDebugger debugger, IWindow window, ISceneManager sceneManager, IInput input)
+        internal static void Setup(ILoopEvents loopEvents, IRenderer renderer, IDebugger debugger, IWindow window, ISceneManager sceneManager, IInput input)
         {
             Debug = debugger;
             Window = window;

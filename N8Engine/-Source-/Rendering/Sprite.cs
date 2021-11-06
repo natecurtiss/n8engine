@@ -9,10 +9,10 @@ namespace N8Engine
         readonly IPixel[] _pixels;
         IPixel[] IRenderable.Pixels => _pixels;
 
-        public Sprite(string path, Pivot pivot = Pivot.Center)
+        public Sprite(string path, Pivot pivot = Pivot.Center) : this(new Bitmap(path), pivot) { }
+
+        public Sprite(Bitmap image, Pivot pivot = Pivot.Center)
         {
-            // TODO: make cross-platform later.
-            var image = new Bitmap(path);
             var size = new IntVector(image.Width, image.Height);
             _pixels = new IPixel[size.X * size.Y];
 
