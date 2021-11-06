@@ -1,3 +1,4 @@
+using System.IO;
 using N8Engine.Debugging;
 using N8Engine.Inputs;
 using N8Engine.Loop;
@@ -8,6 +9,8 @@ namespace N8Engine
 {
     public static class Services
     {
+        public static readonly string PathToProject = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName;
+        
         public static IDebugger Debug { get; private set; }
         public static IWindow Window { get; private set; }
         public static ISceneManager SceneManager { get; private set; }
