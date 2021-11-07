@@ -16,9 +16,10 @@ namespace SampleProject
         public override Color BackgroundColor => Color.Black;
 
         public override int TargetFramerate => 60;
-        public override Scene[] Scenes => new Scene[]
+        // TODO: I hate this so much I probably should refactor at some point.
+        public override IScene<GameObject>[] Scenes => new IScene<GameObject>[]
         {
-            new SampleScene()
+            Scene.Create<SampleScene>("level 1")
         };
     }
 }

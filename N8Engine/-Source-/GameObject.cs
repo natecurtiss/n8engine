@@ -14,13 +14,19 @@ namespace N8Engine
         {
             Name = name;
             AddComponent<Transform>(out var transform);
+            Services.SceneManager.AddToCurrentScene(this);
             Transform = transform;
         }
 
-        public static GameObject Create(string name = "new gameobject") => new(name);
+        public static GameObject Create(string name = "some gameObject you didn't name lol")
+        {
+            var gameObject = new GameObject(name);
+            return gameObject;
+        }
 
         public void Destroy()
         {
+            Services.SceneManager.RemoveFromCurrentScene(this);
             foreach (var component in _components)
                 component.Destroy();
         }

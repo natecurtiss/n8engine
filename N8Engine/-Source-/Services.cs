@@ -13,10 +13,10 @@ namespace N8Engine
         
         public static IDebugger Debug { get; private set; }
         public static IWindow Window { get; private set; }
-        public static ISceneManager SceneManager { get; private set; }
+        public static ISceneManager<GameObject> SceneManager { get; private set; }
         public static IInput Input { get; private set; }
 
-        internal static void Setup(ILoopEvents loopEvents, IRenderer renderer, IDebugger debugger, IWindow window, ISceneManager sceneManager, IInput input)
+        internal static void Setup(ILoopEvents loopEvents, IRenderer renderer, IDebugger debugger, IWindow window, ISceneManager<GameObject> sceneManager, IInput input)
         {
             Debug = debugger;
             Window = window;

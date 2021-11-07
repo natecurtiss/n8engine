@@ -24,7 +24,7 @@ namespace N8Engine
                 new ConsoleRenderer((short) launcher.FontSize, _windowHandle, launcher.WindowSize),
                 new CustomDebugger(launcher.CustomLogger),
                 new NonResizableWindow(launcher.WindowTitle, launcher.WindowSize, _windowHandle),
-                new GameObjectSceneManager(launcher.Scenes),
+                new SceneManager(launcher.Scenes),
                 new WindowsInputHandler()
             );
         }

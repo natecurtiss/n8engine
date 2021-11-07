@@ -4,10 +4,10 @@ using N8Engine.Rendering;
 
 namespace SampleProject
 {
-    public sealed class SpritesFolder
+    public static class SpritesFolder
     {
-        static readonly string _path = Services.PathToProject + "\\SpritesFolder";
+        static readonly string _path = Services.PathToProject + "\\Sprites";
 
-        public static readonly SpriteSheet Player = new($"{_path}\\SpritesFolder", new(16, 16));
+        public static readonly SpriteSheet Player = new($"{_path}\\player.png", new(16, 16));
     }
 }

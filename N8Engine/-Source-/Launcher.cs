@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 using N8Engine.Debugging;
 using N8Engine.Rendering;
@@ -15,6 +16,6 @@ namespace N8Engine
         public abstract Color BackgroundColor { get; }
         
         public abstract int TargetFramerate { get; }
-        public abstract Scene[] Scenes { get; }
+        public abstract IScene<GameObject>[] Scenes { get; }
     }
 }

@@ -40,24 +40,18 @@ namespace N8Engine.Rendering
         void IRenderer.Render(IRenderable renderable, IntVector objectPosition)
         {
             var offset = WorldToScreen(objectPosition);
-            var i = 0;
-            for (var y = 0; y < renderable.Pixels.GetLength(1); y++)
+            for (var i = 0; i < renderable.Pixels.Length; i++)
             {
-                for (var x = 0; x < renderable.Pixels.GetLength(0); x++)
-                {
-                    // TODO: if IRenderable.Pixels becomes a 2d array add this back.
-                    // var pixel = renderable.Pixels[x, y];
-                    var pixel = renderable.Pixels[i];
+                var pixel = renderable.Pixels[i];
                     
-                    var screenPos = pixel.LocalPosition + offset;
-                    if (IsOnScreen(screenPos))
-                    {
-                        if (IsTransparent(pixel.Color))
-                            pixel = pixel.With(_backgroundColor);
-                        _pixels[screenPos.X, screenPos.Y] = pixel.Color;
-                    }
-                    i++;
+                var screenPos = pixel.LocalPosition + offset;
+                if (IsOnScreen(screenPos))
+                {
+                    if (IsTransparent(pixel.Color))
+                        pixel = pixel.With(_backgroundColor);
+                    _pixels[screenPos.X, screenPos.Y] = pixel.Color;
                 }
+                i++;
             }
         }
 
