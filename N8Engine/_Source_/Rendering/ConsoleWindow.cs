@@ -1,26 +1,28 @@
 using System;
+using System.Diagnostics;
 using N8Engine.External;
-using Console = N8Engine.External.Console;
+using N8Engine.Mathematics;
 
 namespace N8Engine.Rendering
 {
-    public sealed class ConsoleWindow : IModule
+    sealed class ConsoleWindow : Window, IModule
     {
-        readonly IntPtr _handle;
-        
-        public ConsoleWindow(string title, uint width, uint height)
+        protected override IntPtr Handle => Terminal.Handle;
+
+        public ConsoleWindow(string title, IntVector size)
         {
-            Window.SetTitle(Console.Handle, title);
-            Window.Resize(Console.Handle, size);
-            Window.DisableResizing(Console.Handle);
-            Window.Hide(Console.Handle);
+            SetTitle(title);
+            Resize(size);
+            DisableResizing();
+            Hide();
         }
         
         void IModule.Initialize()
         {
-            
+            Debug.WriteLine("show");
+            Show();
         }
-        
+
         void IModule.Update(Time time)
         {
             

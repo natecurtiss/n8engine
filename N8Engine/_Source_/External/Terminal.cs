@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace N8Engine.External
 {
-    static class Console
+    static class Terminal
     {
         // https://docs.microsoft.com/en-us/windows/console/getstdhandle
         [DllImport("kernel32.dll", SetLastError = true)]

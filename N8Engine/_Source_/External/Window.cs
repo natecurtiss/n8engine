@@ -5,7 +5,7 @@ using static N8Engine.External.Structs;
 
 namespace N8Engine.External
 {
-    static class Window
+    abstract class Window
     {
         // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setwindowpos
         [DllImport("user32.dll", SetLastError = true)]
@@ -62,27 +62,28 @@ namespace N8Engine.External
         const int SM_CX_SCREEN = 0;
         const int SM_CY_SCREEN = 1;
 
-        static bool _isDpiAware;
+        bool _isDpiAware;
 
-        public static void Resize(IntPtr handle, IntVector size)
+        protected abstract IntPtr Handle { get; }
+
+        protected void SetTitle(string title) => SetWindowText(Handle, title);
+
+        protected void Resize(IntVector size)
         {
             if (size == GetMonitorSize())
-                Maximize(handle);
-            var center = GetCenter(handle);
-            SetWindowPos(handle, new IntPtr(0), center.X, center.Y, size.X, size.Y, SWP_SHOW_WINDOW);
+                Maximize();
+            var center = GetCenter();
+            SetWindowPos(Handle, new IntPtr(0), center.X, center.Y, size.X, size.Y, SWP_SHOW_WINDOW);
         }
 
-        public static void Maximize(IntPtr windowHandle) => ShowWindow(windowHandle, SW_MAXIMIZE);
-        public static void Show(IntPtr windowHandle) => ShowWindow(windowHandle, SW_SHOW);
-        public static void Hide(IntPtr windowHandle) => ShowWindow(windowHandle, SW_HIDE);
-
-        public static void SetTitle(IntPtr windowHandle, string title) => SetWindowText(windowHandle, title);
+        protected void Show() => ShowWindow(Handle, SW_SHOW);
+        protected void Hide() => ShowWindow(Handle, SW_HIDE);
 
         // https://stackoverflow.com/questions/41172595/how-to-change-console-window-style-at-runtime
-        public static void DisableResizing(IntPtr windowHandle)
+        protected void DisableResizing()
         {
-            var currentWindowStyle = GetWindowLong(windowHandle, NEW_WINDOW_STYLE);
-            SetWindowLong(windowHandle, NEW_WINDOW_STYLE, 
+            var currentWindowStyle = GetWindowLong(Handle, NEW_WINDOW_STYLE);
+            SetWindowLong(Handle, NEW_WINDOW_STYLE, 
                 currentWindowStyle & 
                 ~WS_MAXIMIZE_BOX & 
                 ~WS_MINIMIZE_BOX & 
@@ -92,26 +93,28 @@ namespace N8Engine.External
             );
         }
         
-        public static IntVector GetSize(IntPtr handle)
+        void Maximize() => ShowWindow(Handle, SW_MAXIMIZE);
+        
+        IntVector GetSize()
         {
             if (!_isDpiAware)
             {
                 SetProcessDPIAware();
                 _isDpiAware = true;
             }
-            GetWindowRect(handle, out var rect);
+            GetWindowRect(Handle, out var rect);
             var width = rect.Right - rect.Left;
             var height = rect.Bottom - rect.Top;
             return new IntVector(width, height);
         }
-        
-        public static IntVector GetCenter(IntPtr handle)
+
+        IntVector GetCenter()
         {
-            var difference = GetMonitorSize() / 2 - GetSize(handle) / 2;
+            var difference = GetMonitorSize() / 2 - GetSize() / 2;
             return difference;
         }
 
-        public static IntVector GetMonitorSize()
+        IntVector GetMonitorSize()
         {
             if (!_isDpiAware)
             {
