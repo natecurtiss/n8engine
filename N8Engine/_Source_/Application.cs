@@ -9,7 +9,7 @@ namespace N8Engine
         public static Game Build(int targetFps, string title, IntVector windowSize, params Scene[] scenes) => new
         (
             targetFps,
-            new ConsoleWindow(title, windowSize),
+            new GameWindow(title, windowSize),
             new SceneManager(scenes),
             new GameObjectEvents()
         );

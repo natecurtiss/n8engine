@@ -5,6 +5,6 @@ Application.Build
 (
     60, 
     "n8engine",
-    new(1280, 720),
+    new(1920, 1080),
     new SampleScene()
-);
+).Start();
