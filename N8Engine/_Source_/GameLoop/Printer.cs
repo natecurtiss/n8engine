@@ -14,7 +14,7 @@ namespace N8Engine
             _onUpdated = onUpdated;
         }
 
-        void IInitializable.Initialize() => Debug.WriteLine(_onInitialized);
-        void IUpdateable.Update(Time time) => Debug.WriteLine(_onUpdated);
+        void IModule.Initialize() => Debug.WriteLine(_onInitialized);
+        void IModule.Update(Time time) => Debug.WriteLine(_onUpdated);
     }
 }
