@@ -2,16 +2,16 @@ namespace N8Engine
 {
     public abstract class Component
     {
-        public GameObject AttachedTo { get; private set; }
+        public GameObject GameObject { get; private set; }
 
         internal void AttatchTo(GameObject gameObject)
         {
-            AttachedTo = gameObject;
+            GameObject = gameObject;
             OnStart();
         }
         internal void Detatch()
         {
-            AttachedTo = null;
+            GameObject = null;
             OnEnd();
         }
         internal void Update(Time time) => OnUpdate(time);

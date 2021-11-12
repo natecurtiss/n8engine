@@ -15,11 +15,16 @@ namespace N8Engine.Rendering
         readonly StringBuilder _output = new();
         
         RenderedPixel[,] _pixels;
+        Color _background;
         IntVector _consoleSize;
         
         Type IModule.Type => GetType();
         
-        internal Renderer(short fontSize) => _fontSize = fontSize;
+        internal Renderer(short fontSize)
+        {
+            _fontSize = fontSize;
+            _background = Color.Black;
+        }
 
         void IModule.Initialize()
         {
@@ -58,6 +63,7 @@ namespace N8Engine.Rendering
                     var pixel = _pixels[x, y];
                     if (pixel.IsClear)
                     {
+                        _output.Append(ExtConsole.SetColor(_background));
                         _output.Append(_emptyChar);
                     }
                     else

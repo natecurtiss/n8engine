@@ -10,4 +10,8 @@
         <ProjectReference Include="..\N8Engine\N8Engine.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Sprites" />
+    </ItemGroup>
+
 </Project>
