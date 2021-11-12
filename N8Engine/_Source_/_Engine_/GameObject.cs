@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using N8Engine.Mathematics;
 
 namespace N8Engine
 {
@@ -7,6 +8,8 @@ namespace N8Engine
         public readonly string Name;
         readonly GameObjectEvents _events;
         readonly List<Component> _components = new();
+        
+        public Vector Position { get; set; }
 
         public GameObject(string name)
         {
