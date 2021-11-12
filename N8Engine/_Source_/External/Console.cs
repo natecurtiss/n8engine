@@ -1,9 +1,10 @@
 using System;
 using System.Runtime.InteropServices;
+using SysConsole = System.Console;
 
 namespace N8Engine.External
 {
-    static class Terminal
+    static class Console
     {
         // https://docs.microsoft.com/en-us/windows/console/getstdhandle
         [DllImport("kernel32.dll", SetLastError = true)]
@@ -49,6 +50,8 @@ namespace N8Engine.External
             SetConsoleMode(StandardInputHandle, consoleMode);
         }
 
-        public static void RemoveScrollbar() => Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
+        public static void HideCursor() => SysConsole.CursorVisible = false;
+
+        public static void RemoveScrollbar() => SysConsole.SetBufferSize(SysConsole.WindowWidth, SysConsole.WindowHeight);
     }
 }
