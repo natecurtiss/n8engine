@@ -8,6 +8,8 @@ namespace N8Engine
         readonly string _onInitialized;
         readonly string _onUpdated;
         
+        Type IModule.Type => GetType();
+        
         public Printer(string onInitialized, string onUpdated)
         {
             _onInitialized = onInitialized;

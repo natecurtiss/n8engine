@@ -15,5 +15,25 @@ namespace N8Engine
         public static float Abs(this float value) =>  value >= 0 ? value : value * -1f;
         public static int Abs(this int value) => (int) ((float) value).Abs();
         public static float Sqrt(this float value) => (float) SysMath.Sqrt(value);
+        public static float Clamp(this float value, float minimum, float maximum)
+        {
+            var clampedValue = value;
+            if (value > maximum) 
+                clampedValue = maximum;
+            else if (value < minimum)
+                clampedValue = minimum;
+            return clampedValue;
+        }
+        public static int Clamp(this int value, int minimum, int maximum)
+        {
+            var clampedValue = value;
+            if (value > maximum) 
+                clampedValue = maximum;
+            else if (value < minimum)
+                clampedValue = minimum;
+            return clampedValue;
+        }
+        public static bool IsWithin(this float value, float minimum, float maximum) => value.Clamp(minimum, maximum) == value;
+        public static bool IsWithin(this int value, int minimum, int maximum) => value.Clamp(minimum, maximum) == value;
     }
 }

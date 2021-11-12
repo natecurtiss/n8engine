@@ -8,6 +8,8 @@ namespace N8Engine
         public event Action<Time> OnLateUpdate;
         public event Action OnRender;
         
+        Type IModule.Type => GetType();
+        
         void IModule.Initialize() { }
         void IModule.Update(Time time)
         {

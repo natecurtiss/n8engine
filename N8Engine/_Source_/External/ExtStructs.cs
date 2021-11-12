@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace N8Engine.External
 {
-    static class Structs
+    static class ExtStructs
     {
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct COORD

@@ -1,3 +1,5 @@
+using System;
+
 namespace N8Engine.SceneManagement
 {
     // TODO: throw exceptions.
@@ -5,6 +7,8 @@ namespace N8Engine.SceneManagement
     {
         readonly Scene[] _scenes;
         int _current;
+        
+        Type IModule.Type => GetType();
 
         public SceneManager(Scene[] scenes) => _scenes = scenes;
 
