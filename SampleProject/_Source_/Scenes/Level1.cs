@@ -1,5 +1,6 @@
 using System;
 using N8Engine;
+using N8Engine.InputSystem;
 using N8Engine.SceneManagement;
 
 namespace SampleProject
@@ -13,7 +14,9 @@ namespace SampleProject
             _player = new GameObject
             (
                 "player",
-                new SpriteRenderer(Sprites.Player)
+                new SpriteRenderer(Sprites.Player),
+                new TopDownInput(),
+                new Movement(10f)
             );
         }
         

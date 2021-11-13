@@ -10,7 +10,7 @@ namespace N8Engine.InputSystem
         Input _input;
         float _jumpTimer;
 
-        public int Horizontal
+        public float Horizontal
         {
             get
             {

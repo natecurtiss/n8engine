@@ -92,7 +92,7 @@ namespace N8Engine.Rendering
 
         IntVector WorldToScreen(IntVector worldPos)
         {
-            var screenPos = worldPos;
+            var screenPos = new IntVector(worldPos.X, -worldPos.Y);
             screenPos.X *= CHARACTERS_PER_PIXEL;
             screenPos.X += _consoleSize.X / 2;
             screenPos.Y += _consoleSize.Y / 2;

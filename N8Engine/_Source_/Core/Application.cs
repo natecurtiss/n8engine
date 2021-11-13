@@ -1,3 +1,4 @@
+using N8Engine.InputSystem;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
@@ -12,6 +13,7 @@ namespace N8Engine
             new Window(title, windowSize),
             new Renderer(7),
             new SceneManager(scenes),
+            new Input(),
             new GameObjectEvents()
         );
     }

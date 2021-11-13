@@ -18,7 +18,13 @@ namespace N8Engine.InputSystem
         readonly IEnumerable<Key> _allKeys = Enum.GetValues<Key>();
         
         Type IModule.Type => GetType();
-        void IModule.Initialize() { }
+        
+        void IModule.Initialize()
+        {
+            foreach (var key in _allKeys) 
+                _keyStates.Add(key, KeyState.IsReleased);
+        }
+        
         void IModule.Update(Time time)
         {
             foreach (var key in _allKeys)

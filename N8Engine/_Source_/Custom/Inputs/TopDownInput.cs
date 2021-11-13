@@ -11,8 +11,8 @@ namespace N8Engine.InputSystem
 
         Input _input;
 
-        public IntVector Axis => new(Horizontal, Vertical);
-        public int Horizontal
+        public Vector Axis => new(Horizontal, Vertical);
+        public float Horizontal
         {
             get
             {
@@ -21,7 +21,7 @@ namespace N8Engine.InputSystem
                 return 0;
             }
         }
-        public int Vertical
+        public float Vertical
         {
             get
             {

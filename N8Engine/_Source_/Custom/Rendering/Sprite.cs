@@ -18,15 +18,17 @@ namespace N8Engine
             _pivot = pivot;
 
             var i = 0;
+            var yFlip = size.Y - 1;
             for (var y = 0; y < size.Y; y++)
             {
                 for (var x = 0; x < size.X; x++)
                 {
                     var color = image.GetPixel(x, y);
-                    var pos = new IntVector(x, y).PivotOff(BottomLeft, pivot, size);
+                    var pos = new IntVector(x, yFlip).PivotOff(BottomLeft, pivot, size);
                     _pixels[i] = new Pixel(pos, color);
                     i++;
                 }
+                yFlip--;
             }
         }
 
