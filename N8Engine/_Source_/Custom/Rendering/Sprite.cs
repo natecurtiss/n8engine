@@ -8,14 +8,12 @@ namespace N8Engine
     public sealed class Sprite : IRenderable
     {
         readonly Pixel[] _pixels;
-        readonly Pivot _pivot;
         Pixel[] IRenderable.Pixels => _pixels;
 
         Sprite(Bitmap image, Pivot pivot)
         {
             var size = new IntVector(image.Width, image.Height);
             _pixels = new Pixel[size.X * size.Y];
-            _pivot = pivot;
 
             var i = 0;
             var yFlip = size.Y - 1;

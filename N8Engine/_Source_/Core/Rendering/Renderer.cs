@@ -78,7 +78,7 @@ namespace N8Engine.Rendering
                     }
                 }
             _output.Append(ExtConsole.MoveCursor(IntVector.Zero));
-            Console.Write(_output.ToString());
+            FastConsole.Write(_output.ToString());
             ClearScreen();
         }
 
