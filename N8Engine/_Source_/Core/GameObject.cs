@@ -56,6 +56,7 @@ namespace N8Engine
 
         void RegisterEvents()
         {
+            _events.OnEarlyUpdate += Update;
             _events.OnUpdate += Update;
             _events.OnLateUpdate += LateUpdate;
             _events.OnRender += Render;
@@ -63,6 +64,7 @@ namespace N8Engine
 
         void DeregisterEvents()
         {
+            _events.OnEarlyUpdate -= Update;
             _events.OnUpdate -= Update;
             _events.OnLateUpdate -= LateUpdate;
             _events.OnRender -= Render;

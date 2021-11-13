@@ -4,7 +4,7 @@ using N8Engine.SceneManagement;
 
 namespace SampleProject
 {
-    sealed class SampleScene : Scene
+    sealed class Level1 : Scene
     {
         GameObject _player;
         

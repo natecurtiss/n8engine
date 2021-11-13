@@ -4,6 +4,7 @@ namespace N8Engine
 {
     sealed class GameObjectEvents : IModule
     {
+        public event Action<Time> OnEarlyUpdate;
         public event Action<Time> OnUpdate;
         public event Action<Time> OnLateUpdate;
         public event Action OnRender;
@@ -13,6 +14,7 @@ namespace N8Engine
         void IModule.Initialize() { }
         void IModule.Update(Time time)
         {
+            OnEarlyUpdate?.Invoke(time);
             OnUpdate?.Invoke(time);
             OnLateUpdate?.Invoke(time);
             OnRender?.Invoke();

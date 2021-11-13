@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <Folder Include="Sprites" />
+      <Folder Include="_Source_\Components" />
     </ItemGroup>
 
 </Project>
