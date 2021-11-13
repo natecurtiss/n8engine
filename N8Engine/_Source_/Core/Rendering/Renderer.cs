@@ -63,10 +63,12 @@ namespace N8Engine.Rendering
             for (var y = 0; y < _pixels.GetLength(1); y++)
                 for (var x = 0; x < _pixels.GetLength(0); x += CHARACTERS_PER_PIXEL)
                 {
+                    // TODO: don't create a new string every frame.
                     _output.Append(ExtConsole.MoveCursor(new(x, y)));
                     var pixel = _pixels[x, y];
                     if (pixel.IsClear)
                     {
+                        // TODO: don't create a new string every frame.
                         _output.Append(ExtConsole.SetColor(_background));
                         _output.Append(_emptyChar);
                     }
@@ -78,12 +80,14 @@ namespace N8Engine.Rendering
                     }
                 }
             _output.Append(ExtConsole.MoveCursor(IntVector.Zero));
-            FastConsole.Write(_output.ToString());
+            // TODO: don't create a new string every frame.
+            Console.Write(_output.ToString());
             ClearScreen();
         }
 
         void ClearScreen()
         {
+            // TODO: don't allocate a new array every frame.
             _pixels = new RenderedPixel[_consoleSize.X, _consoleSize.Y];
             for (var y = 0; y < _pixels.GetLength(1); y++)
                 for (var x = 0; x < _pixels.GetLength(0); x++)
