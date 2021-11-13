@@ -11,20 +11,16 @@ namespace N8Engine.Rendering
         const int CHARACTERS_PER_PIXEL = 2;
         readonly string _pixelChar = new('▒', CHARACTERS_PER_PIXEL);
         readonly string _emptyChar = new(' ', CHARACTERS_PER_PIXEL);
-        readonly short _fontSize;
         readonly StringBuilder _output = new();
+        readonly Color _background = Color.Black;
+        readonly short _fontSize;
         
         RenderedPixel[,] _pixels;
-        Color _background;
         IntVector _consoleSize;
         
         Type IModule.Type => GetType();
         
-        internal Renderer(short fontSize)
-        {
-            _fontSize = fontSize;
-            _background = Color.Black;
-        }
+        internal Renderer(short fontSize) => _fontSize = fontSize;
 
         void IModule.Initialize()
         {
