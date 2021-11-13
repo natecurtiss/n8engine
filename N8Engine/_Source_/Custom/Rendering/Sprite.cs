@@ -20,7 +20,7 @@ namespace N8Engine
                 for (var x = 0; x < size.X; x++)
                 {
                     var color = image.GetPixel(x, y);
-                    var pos = new IntVector(x, y) + size / 2; // TODO: adjust to pivot later.
+                    var pos = new IntVector(x, y) - size / 2; // TODO: adjust to pivot later.
                     _pixels[i] = new Pixel(pos, color);
                     i++;
                 }

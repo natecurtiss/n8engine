@@ -54,12 +54,11 @@ namespace N8Engine.Rendering
 
         void Display()
         {
-            var topLeft = IntVector.Zero;
             _output.Clear();
-            _output.Append(ExtConsole.MoveCursor(topLeft));
             for (var y = 0; y < _pixels.GetLength(1); y++)
-                for (var x = 0; x < _pixels.GetLength(0); x++)
+                for (var x = 0; x < _pixels.GetLength(0); x += CHARACTERS_PER_PIXEL)
                 {
+                    _output.Append(ExtConsole.MoveCursor(new(x, y)));
                     var pixel = _pixels[x, y];
                     if (pixel.IsClear)
                     {
@@ -73,7 +72,8 @@ namespace N8Engine.Rendering
                         _output.Append(_pixelChar);
                     }
                 }
-            Console.WriteLine(_output.ToString());
+            _output.Append(ExtConsole.MoveCursor(IntVector.Zero));
+            Console.Write(_output.ToString());
             ClearScreen();
         }
 
@@ -87,7 +87,7 @@ namespace N8Engine.Rendering
 
         IntVector WorldToScreen(IntVector worldPos)
         {
-            var screenPos = new IntVector(worldPos.X, -worldPos.Y);
+            var screenPos = worldPos;
             screenPos.X *= CHARACTERS_PER_PIXEL;
             screenPos.X += _consoleSize.X / 2;
             screenPos.Y += _consoleSize.Y / 2;

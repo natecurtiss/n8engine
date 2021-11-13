@@ -18,7 +18,7 @@ namespace SampleProject
         
         protected override void OnUnloaded()
         {
-            
+            _player.Destroy();
         }
     }
 }
