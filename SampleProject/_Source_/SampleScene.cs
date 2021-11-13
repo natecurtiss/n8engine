@@ -1,3 +1,4 @@
+using System;
 using N8Engine;
 using N8Engine.SceneManagement;
 
@@ -12,7 +13,7 @@ namespace SampleProject
             _player = new GameObject
             (
                 "player",
-                new SpriteRenderer(Sprite.FromImage(@"C:\Users\NateDawg\RiderProjects\n8engine\SampleProject\Sprites\player.png"))
+                new SpriteRenderer(Sprites.Player)
             );
         }
         

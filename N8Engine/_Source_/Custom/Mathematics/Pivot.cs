@@ -1,3 +1,5 @@
+using static N8Engine.Mathematics.Pivot;
+
 namespace N8Engine.Mathematics
 {
     public enum Pivot
@@ -25,15 +27,15 @@ namespace N8Engine.Mathematics
             
             var withCenterPivot = from switch
             {
-                Pivot.Center => pos,
-                Pivot.Left => pos + right,
-                Pivot.Right => pos + left,
-                Pivot.Bottom => pos + up,
-                Pivot.Top => pos + down,
-                Pivot.BottomLeft => pos + up + right,
-                Pivot.BottomRight => pos + up + left,
-                Pivot.TopLeft => pos + down + right,
-                Pivot.TopRight => pos + down + left,
+                Center => pos,
+                Left => pos + right,
+                Right => pos + left,
+                Bottom => pos + up,
+                Top => pos + down,
+                BottomLeft => pos + up + right,
+                BottomRight => pos + up + left,
+                TopLeft => pos + down + right,
+                TopRight => pos + down + left,
 
                 var _ => pos
             };
@@ -41,18 +43,20 @@ namespace N8Engine.Mathematics
             
             var newPos = to switch
             {
-                Pivot.Center => center,
-                Pivot.Top => center + up,
-                Pivot.Bottom => center + down,
-                Pivot.Right => center + right,
-                Pivot.Left => center + left,
-                Pivot.TopRight => center + right + up,
-                Pivot.TopLeft => center + left + up,
-                Pivot.BottomRight => center + right + down,
-                Pivot.BottomLeft => center + left + down,
+                Center => center,
+                Top => center + up,
+                Bottom => center + down,
+                Right => center + right,
+                Left => center + left,
+                TopRight => center + right + up,
+                TopLeft => center + left + up,
+                BottomRight => center + right + down,
+                BottomLeft => center + left + down,
                 var _ => center
             };
             return newPos;
         }
+
+        public static IntVector PivotOff(this IntVector pos, Pivot from, Pivot to, Vector objSize) => ((Vector) pos).PivotOff(from, to, objSize);
     }
 }

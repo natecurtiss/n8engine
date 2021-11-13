@@ -30,10 +30,15 @@ namespace N8Engine.Rendering
         {
             ExtConsole.EnableAnsiEscapeSequences();
             ExtConsole.SetFont("Consolas", _fontSize);
+            ExtConsole.DisableQuickEditMode();
+            ExtConsole.RemoveScrollbar();
+
             var window = Modules.Get<Window>();
             ExtWindow.Resize(window.Handle, window.Size);
             _consoleSize = new(Console.WindowWidth, Console.WindowHeight);
             ClearScreen();
+            
+            ExtConsole.HideCursor();
         }
         void IModule.Update(Time time) => Display();
 

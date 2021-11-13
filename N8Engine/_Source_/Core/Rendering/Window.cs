@@ -18,9 +18,6 @@ namespace N8Engine.Rendering
             ExtWindow.Resize(Handle, size);
             ExtWindow.DisableResizing(Handle);
             ExtWindow.Hide(Handle);
-            ExtConsole.DisableQuickEditMode();
-            ExtConsole.RemoveScrollbar();
-            ExtConsole.HideCursor();
         }
         
         void IModule.Initialize() => ExtWindow.Show(Handle);
