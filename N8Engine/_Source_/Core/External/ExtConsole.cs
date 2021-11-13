@@ -48,11 +48,6 @@ namespace N8Engine.External
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         static extern bool SetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool useMaximumWindow, ref CONSOLE_FONT_INFOEX currentConsoleFontOutput);
 
-        // https://docs.microsoft.com/en-us/windows/console/writeconsoleoutputcharacter
-        // https://www.pinvoke.net/default.aspx/kernel32/writeconsole.html?diff=y
-        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        static extern bool WriteConsoleOutputCharacter(IntPtr hConsoleOutput, StringBuilder lpCharacter, uint nLength, COORD dwWriteCoord);
-            
         const int STANDARD_INPUT_HANDLE_NUMBER = -10;
         const int STANDARD_OUTPUT_HANDLE_NUMBER = -11;
         const int STANDARD_ERROR_HANDLE_NUMBER = -12;
@@ -178,14 +173,5 @@ namespace N8Engine.External
             };
             return ansiColor + "m";
         }
-
-        public static void Write(StringBuilder text, uint numberOfChars, IntVector cursorPos) => 
-            WriteConsoleOutputCharacter
-            (
-                StandardOutputHandle, 
-                text, 
-                numberOfChars, 
-                new COORD((short) cursorPos.X, (short) cursorPos.Y)
-            );
     }
 }
