@@ -16,12 +16,14 @@ namespace N8Engine
         }
         internal void EarlyUpdate(Time time) => OnEarlyUpdate(time);
         internal void Update(Time time) => OnUpdate(time);
+        internal void Physics(Time time) => OnPhysics(time);
         internal void LateUpdate(Time time) => OnLateUpdate(time);
         internal void Render() => OnRender();
         
         protected virtual void OnStart() { }
         protected virtual void OnEarlyUpdate(Time time) { }
         protected virtual void OnUpdate(Time time) { }
+        protected virtual void OnPhysics(Time time) { }
         protected virtual void OnLateUpdate(Time time) { }
         protected virtual void OnRender() { }
         protected virtual void OnEnd() { }

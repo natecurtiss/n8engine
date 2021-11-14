@@ -56,21 +56,25 @@ namespace N8Engine
 
         void RegisterEvents()
         {
-            _events.OnEarlyUpdate += Update;
+            _events.OnEarlyUpdate += EarlyUpdate;
             _events.OnUpdate += Update;
+            _events.OnPhysics += Physics;
             _events.OnLateUpdate += LateUpdate;
             _events.OnRender += Render;
         }
 
         void DeregisterEvents()
         {
-            _events.OnEarlyUpdate -= Update;
+            _events.OnEarlyUpdate -= EarlyUpdate;
             _events.OnUpdate -= Update;
+            _events.OnPhysics -= Physics;
             _events.OnLateUpdate -= LateUpdate;
             _events.OnRender -= Render;
         }
         
+        void EarlyUpdate(Time time) => _components.ForEach(component => component.EarlyUpdate(time));
         void Update(Time time) => _components.ForEach(component => component.Update(time));
+        void Physics(Time time) => _components.ForEach(component => component.Physics(time));
         void LateUpdate(Time time) => _components.ForEach(component => component.LateUpdate(time));
         void Render() => _components.ForEach(component => component.Render());
     }
