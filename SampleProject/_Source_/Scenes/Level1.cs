@@ -11,9 +11,7 @@ namespace SampleProject
         
         protected override void OnLoaded()
         {
-            _player = new GameObject
-            (
-                "player",
+            _player = new GameObject("player",
                 new SpriteRenderer(Sprites.Player),
                 new TopDownInput(),
                 new Movement(10f)

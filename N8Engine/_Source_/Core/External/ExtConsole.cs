@@ -48,6 +48,9 @@ namespace N8Engine.External
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         static extern bool SetCurrentConsoleFontEx(IntPtr standardOutputHandle, bool useMaximumWindow, ref CONSOLE_FONT_INFOEX currentConsoleFontOutput);
 
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+        static extern bool WriteConsoleA(IntPtr hConsoleOutput, string lpBuffer, uint nNumberOfCharsToWrite, out uint lpNumberOfCharsWritten, IntPtr lpReserved);
+
         const int STANDARD_INPUT_HANDLE_NUMBER = -10;
         const int STANDARD_OUTPUT_HANDLE_NUMBER = -11;
         const int STANDARD_ERROR_HANDLE_NUMBER = -12;
@@ -173,5 +176,8 @@ namespace N8Engine.External
             };
             return ansiColor + "m";
         }
+
+        // This is just as slow as C#'s version, but maybe there's hope?
+        public static void Write(string text) => WriteConsoleA(StandardOutputHandle, text, (uint) text.Length, out var _, IntPtr.Zero);
     }
 }

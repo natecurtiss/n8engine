@@ -9,8 +9,7 @@ namespace N8Engine.Rendering
     public sealed class Renderer : IModule
     {
         const int CHARACTERS_PER_PIXEL = 2;
-        readonly string _pixelChar = new('▒', CHARACTERS_PER_PIXEL);
-        readonly string _emptyChar = new(' ', CHARACTERS_PER_PIXEL);
+        readonly string _pixel = new(' ', CHARACTERS_PER_PIXEL);
         readonly StringBuilder _output = new();
         readonly Color _background = Color.Black;
         readonly short _fontSize;
@@ -31,10 +30,12 @@ namespace N8Engine.Rendering
 
             var window = Modules.Get<Window>();
             ExtWindow.Resize(window.Handle, window.Size);
-            _consoleSize = new(Console.WindowWidth, Console.WindowHeight);
-            ClearScreen();
             
             ExtConsole.HideCursor();
+
+            _consoleSize = new(Console.WindowWidth, Console.WindowHeight);
+            _pixels = new RenderedPixel[_consoleSize.X, _consoleSize.Y];
+            ClearScreen();
         }
         void IModule.Update(Time time) => Display();
 
@@ -59,32 +60,27 @@ namespace N8Engine.Rendering
             for (var y = 0; y < _pixels.GetLength(1); y++)
                 for (var x = 0; x < _pixels.GetLength(0); x += CHARACTERS_PER_PIXEL)
                 {
-                    // TODO: don't create a new string every frame.
                     _output.Append(ExtConsole.MoveCursor(new(x, y)));
                     var pixel = _pixels[x, y];
                     if (pixel.IsClear)
                     {
-                        // TODO: don't create a new string every frame.
                         _output.Append(ExtConsole.SetColor(_background));
-                        _output.Append(_emptyChar);
                     }
                     else
                     {
                         var color = pixel.Color;
                         _output.Append(ExtConsole.SetColor(color));
-                        _output.Append(_pixelChar);
                     }
+                    _output.Append(_pixel);
                 }
             _output.Append(ExtConsole.MoveCursor(IntVector.Zero));
-            // TODO: don't create a new string every frame.
             Console.Write(_output.ToString());
+            
             ClearScreen();
         }
 
         void ClearScreen()
         {
-            // TODO: don't allocate a new array every frame.
-            _pixels = new RenderedPixel[_consoleSize.X, _consoleSize.Y];
             for (var y = 0; y < _pixels.GetLength(1); y++)
                 for (var x = 0; x < _pixels.GetLength(0); x++)
                     _pixels[x, y] = RenderedPixel.Empty();
