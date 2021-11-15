@@ -9,11 +9,13 @@ namespace N8Engine
             GameObject = gameObject;
             OnStart();
         }
+        
         internal void Detatch()
         {
             GameObject = null;
             OnEnd();
         }
+        
         internal void EarlyUpdate(Time time) => OnEarlyUpdate(time);
         internal void Update(Time time) => OnUpdate(time);
         internal void Physics(Time time) => OnPhysics(time);

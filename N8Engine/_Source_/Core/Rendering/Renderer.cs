@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using N8Engine.External;
@@ -26,18 +27,22 @@ namespace N8Engine.Rendering
             ExtConsole.EnableAnsiEscapeSequences();
             ExtConsole.SetFont("Consolas", _fontSize);
             ExtConsole.DisableQuickEditMode();
-            ExtConsole.RemoveScrollbar();
 
             var window = Modules.Get<Window>();
             ExtWindow.Resize(window.Handle, window.Size);
             
+            ExtConsole.RemoveScrollbar();
             ExtConsole.HideCursor();
 
             _consoleSize = new(Console.WindowWidth, Console.WindowHeight);
             _pixels = new RenderedPixel[_consoleSize.X, _consoleSize.Y];
             ClearScreen();
         }
-        void IModule.Update(Time time) => Display();
+        void IModule.Update(Time time)
+        {
+            Debug.WriteLine("render");
+            Display();
+        }
 
         public void Render(IRenderable renderable, Vector pos, int sortingOrder)
         {
@@ -75,7 +80,7 @@ namespace N8Engine.Rendering
                 }
             _output.Append(ExtConsole.MoveCursor(IntVector.Zero));
             Console.Write(_output.ToString());
-            
+            Console.Write("hello world");
             ClearScreen();
         }
 
@@ -84,6 +89,7 @@ namespace N8Engine.Rendering
             for (var y = 0; y < _pixels.GetLength(1); y++)
                 for (var x = 0; x < _pixels.GetLength(0); x++)
                     _pixels[x, y] = RenderedPixel.Empty();
+            Debug.WriteLine('c');
         }
 
         IntVector WorldToScreen(IntVector worldPos)

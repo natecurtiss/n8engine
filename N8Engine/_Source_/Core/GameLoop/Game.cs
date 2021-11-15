@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Compression;
 
 namespace N8Engine
 {
@@ -22,15 +23,19 @@ namespace N8Engine
             timer.Start();
             while (true)
             {
+                var didUpdate = false;
                 var current = ToSeconds(timer.ElapsedMilliseconds);
                 var elapsed = current - last;
                 var time = new Time(elapsed);
                 while (elapsed >= _secondsPerUpdate)
                 {
+                    didUpdate = true;
                     elapsed = Math.Min(elapsed - _secondsPerUpdate, 0f);
+                    Debug.WriteLine("update");
                     Modules.Update(time);
+                    Debug.WriteLine("update 2");
                 }
-                last = current - elapsed;
+                if (didUpdate) last = current - elapsed;
             }
         }
 

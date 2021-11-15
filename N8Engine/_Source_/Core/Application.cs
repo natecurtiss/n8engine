@@ -11,7 +11,7 @@ namespace N8Engine
         (
             targetFps,
             new Window(title, windowSize),
-            new Renderer(7),
+            new Renderer(4),
             new SceneManager(scenes),
             new Input(),
             new GameObjectEvents()

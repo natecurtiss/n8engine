@@ -16,6 +16,7 @@ namespace SampleProject
 #nullable disable
 
         public static readonly Sprite
-            Player = FromImage(SpritesFolder + "player.png");
+            Player = FromImage(SpritesFolder + "player.png"),
+            Stage = FromImage(SpritesFolder + "stage.png");
     }
 }

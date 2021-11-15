@@ -8,6 +8,7 @@ namespace SampleProject
     sealed class Level1 : Scene
     {
         GameObject _player;
+        GameObject _stage;
         
         protected override void OnLoaded()
         {
@@ -16,11 +17,15 @@ namespace SampleProject
                 new TopDownInput(),
                 new Movement(10f)
             );
+            _stage = new GameObject("stage",
+                new SpriteRenderer(Sprites.Stage, -1)
+            );
         }
         
         protected override void OnUnloaded()
         {
-            _player.Destroy();
+            // _player.Destroy();
+            // _stage.Destroy();
         }
     }
 }
