@@ -9,7 +9,7 @@ public static class Modules
     {
         var type = typeof(T);
         if (_dict[type] is not T module)
-            throw new MissingModuleException($"There is no module of type {type}!");
+            throw new MissingModuleException($"There is no module of type {type} to get!");
         return module;
     }
 
@@ -37,6 +37,8 @@ public static class Modules
         var type = typeof(T);
         if (_dict.ContainsKey(type))
             _dict.Remove(type);
+        else
+            throw new MissingModuleException($"There is no module of type {type} to remove!");
     }
 
     internal static void Initialize()
