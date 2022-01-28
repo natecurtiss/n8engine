@@ -1,6 +1,6 @@
 namespace N8Engine.Rendering;
 
-public interface Window
+public interface Window : Module
 {
-    void Show();
+    
 }

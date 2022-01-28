@@ -1,3 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using N8Engine;
+using N8Engine.Rendering;
 
-Console.WriteLine("Hello, World!");
+Application.WithFps(60).WithModule<Window>(new OpenTKWindow(1920, 1080, "n8engine")).Start();
