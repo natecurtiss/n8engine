@@ -9,6 +9,7 @@ public sealed class OpenTKWindow : GameWindow, Window
         CenterWindow();
         Size = new(width, height);
         Title = title;
+        Run();
     }
     
     void Module.Initialize() { }
