@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{ACBCEEE6-5941-4CCD-8609-C6FC281FDC96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleGame", "SampleGame\SampleGame.csproj", "{266FE8CB-E90A-4241-A4E6-4D8406367A6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{E6C22C44-20A3-4E98-987E-C922B0A56C08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{ACBCEEE6-5941-4CCD-8609-C6FC281FDC96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACBCEEE6-5941-4CCD-8609-C6FC281FDC96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACBCEEE6-5941-4CCD-8609-C6FC281FDC96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACBCEEE6-5941-4CCD-8609-C6FC281FDC96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{266FE8CB-E90A-4241-A4E6-4D8406367A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{266FE8CB-E90A-4241-A4E6-4D8406367A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{266FE8CB-E90A-4241-A4E6-4D8406367A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{266FE8CB-E90A-4241-A4E6-4D8406367A6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6C22C44-20A3-4E98-987E-C922B0A56C08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6C22C44-20A3-4E98-987E-C922B0A56C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6C22C44-20A3-4E98-987E-C922B0A56C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6C22C44-20A3-4E98-987E-C922B0A56C08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
