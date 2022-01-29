@@ -2,14 +2,14 @@ using C = System.Console;
 
 namespace N8Engine;
 
-public sealed class Window
+abstract class Window
 {
     // TODO: double buffer + swap this.
     readonly char[] _buffer;
     readonly string _chars = "\u001b[38;2;000;000;000m";
     readonly string _reset = "\u001b[0;0H";
 
-    public Window(uint width, uint height, string title)
+    protected Window(uint width, uint height, string title)
     {
         _buffer = new char[width * height * _chars.Length + _reset.Length];
         for (var c = 0; c < _reset.Length; c++)

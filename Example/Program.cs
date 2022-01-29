@@ -1,3 +1,10 @@
-﻿using N8Engine;
+﻿using Example;
+using N8Engine;
 
-Application.WithWindow(60, 1920, 1080, "n8engine").Run();
+Application.New()
+    .WithFps(60)
+    .WithFloatingWindow(1280, 720, "-=n8engine=-")
+    .WithLevels
+    (
+        new TestLevel()
+    );

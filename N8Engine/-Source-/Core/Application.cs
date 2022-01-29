@@ -2,22 +2,46 @@
 
 public sealed class Application
 {
-    readonly Loop _loop;
-    readonly Window _window;
+    Loop _loop;
+    Window _window;
+    World _world;
+
+    Application() { }
+
+    public static Application New() => new Application()
+        .WithFps(60)
+        .WithFloatingWindow(1280, 720, "Game")
+        .WithLevels(new EmptyLevel());
     
-    Application(int targetFps, uint width, uint height, string title)
+    public Application WithFps(int fps)
     {
-        _loop = new(targetFps, Update);
-        _window = new(width, height, title);
+        _loop = new(fps, Update);
+        return this;
+    }
+    
+    public Application WithFloatingWindow(uint width, uint height, string title)
+    {
+        _window = new FloatingWindow(width, height, title);
+        return this;
+    }
+    
+    public Application WithFullscreenWindow(uint width, uint height, string title)
+    {
+        _window = new FullscreenWindow(width, height, title);
+        return this;
     }
 
-    public static Application WithWindow(int fps, uint width, uint height, string title) => new(fps, width, height, title);
+    public Application WithLevels(params Level[] levels)
+    {
+        _world = new(levels);
+        return this;
+    }
 
     public void Run() => _loop.Start();
 
     void Update(Frame frame)
     {
-        Modules.Update(frame);
+        _world.Update(frame);
         _window.Write();
     }
 }
