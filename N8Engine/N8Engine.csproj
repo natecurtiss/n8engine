@@ -10,4 +10,8 @@
         <Product>n8engine</Product>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="-Source-\Custom" />
+    </ItemGroup>
+
 </Project>
