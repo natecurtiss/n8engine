@@ -4,7 +4,11 @@ public sealed class Application
 {
     readonly Loop _loop;
     
-    Application(int targetFps) => _loop = new Loop(targetFps, Modules.Update);
+    Application(int targetFps)
+    {
+        _loop = new Loop(targetFps, Modules.Update);
+        Modules.Initialize();
+    }
 
     public static Application WithFps(int targetFps) => new(targetFps);
 
@@ -17,7 +21,6 @@ public sealed class Application
     
     public Application Start()
     {
-        Modules.Initialize();
         _loop.Start();
         return this;
     }

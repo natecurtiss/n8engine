@@ -1,6 +1,12 @@
 namespace N8Engine.Rendering;
 
-public interface Window : Module
+public sealed class Window : Module
 {
+    void Module.Initialize()
+    {
+    }
     
+    void Module.Update(Frame frame)
+    {
+    }
 }
