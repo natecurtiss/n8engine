@@ -3,25 +3,21 @@
 public sealed class Application
 {
     readonly Loop _loop;
+    readonly Window _window;
     
-    Application(int targetFps)
+    Application(int targetFps, uint width, uint height, string title)
     {
-        _loop = new Loop(targetFps, Modules.Update);
-        Modules.Initialize();
+        _loop = new(targetFps, Update);
+        _window = new(width, height, title);
     }
 
-    public static Application WithFps(int targetFps) => new(targetFps);
+    public static Application WithWindow(int fps, uint width, uint height, string title) => new(fps, width, height, title);
 
-    public Application WithModule<T>() where T : class, Module, new() => WithModule(new T());
-    public Application WithModule<T>(T module) where T : class, Module
+    public void Run() => _loop.Start();
+
+    void Update(Frame frame)
     {
-        Modules.Add(module);
-        return this;
-    }
-    
-    public Application Start()
-    {
-        _loop.Start();
-        return this;
+        Modules.Update(frame);
+        _window.Write();
     }
 }

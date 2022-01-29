@@ -2,6 +2,5 @@
 
 public interface Module
 {
-    void Initialize();
-    void Update(Frame frame);
+    void Update(Frame frame) { }
 }

@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <Folder Include="-Source-\Custom" />
+      <Folder Include="-Source-\Custom\Rendering" />
     </ItemGroup>
 
 </Project>

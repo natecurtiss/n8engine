@@ -10,7 +10,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\N8Engine\N8Engine.csproj" />
-      <ProjectReference Include="..\Rendering\Rendering.csproj" />
     </ItemGroup>
 
 </Project>

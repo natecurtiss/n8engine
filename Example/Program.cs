@@ -1,3 +1,3 @@
 ﻿using N8Engine;
 
-Application.WithFps(60).Start();
+Application.WithWindow(60, 1920, 1080, "n8engine").Run();
