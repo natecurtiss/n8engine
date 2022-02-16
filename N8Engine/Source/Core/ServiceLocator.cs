@@ -6,7 +6,7 @@ namespace N8Engine;
 // TODO: Add exceptions.
 public abstract class ServiceLocator<TService>
 {
-    readonly Dictionary<Type, TService> _services;
+    readonly Dictionary<Type, TService> _services = new();
 
     protected void Register<TType>(TType service) where TType : TService
     {
