@@ -8,7 +8,7 @@ public abstract class ServiceLocator<TService>
 {
     readonly Dictionary<Type, TService> _services;
 
-    protected void Add<TType>(TType service) where TType : TService
+    protected void Register<TType>(TType service) where TType : TService
     {
         if (_services.ContainsKey(typeof(TType)))
             _services[typeof(TType)] = service;
@@ -16,7 +16,7 @@ public abstract class ServiceLocator<TService>
             _services.Add(typeof(TType), service);
     }
 
-    protected void Remove<TType>() where TType : TService => _services.Remove(typeof(TType));
+    protected void Deregister<TType>() where TType : TService => _services.Remove(typeof(TType));
 
-    protected TType Get<TType>() where TType : TService => (TType) _services[typeof(TType)];
+    protected TType Locate<TType>() where TType : TService => (TType) _services[typeof(TType)];
 }
