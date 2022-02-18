@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using N8Engine.Events;
 using N8Engine.SceneManagement;
 
 namespace N8Engine;
@@ -21,7 +20,11 @@ public sealed class GameObject
         Name = name;
     }
 
-    public void Destroy() => IsAlive = false;
+    public void Destroy()
+    {
+        IsAlive = false;
+        _scene.Destroy(this);
+    }
 
     public T GetComponent<T>() where T : Component => (T) _components.First(component => component.Type == typeof(T));
     
@@ -42,24 +45,18 @@ public sealed class GameObject
 
     internal void EarlyUpdate(Frame frame)
     {
-        if (!IsAlive)
-            return;
         foreach (var component in _components) 
             component.EarlyUpdate(frame);
     }
     
     internal void Update(Frame frame)
     {
-        if (!IsAlive)
-            return;
         foreach (var component in _components) 
             component.Update(frame);
     }
     
     internal void LateUpdate(Frame frame)
     {
-        if (!IsAlive)
-            return;
         foreach (var component in _components) 
             component.LateUpdate(frame);
     }
