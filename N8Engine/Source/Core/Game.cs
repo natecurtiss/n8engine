@@ -1,4 +1,6 @@
-﻿namespace N8Engine;
+﻿using N8Engine.Events;
+
+namespace N8Engine;
 
 public sealed class Game : ServiceLocator<Module>
 {
@@ -11,7 +13,9 @@ public sealed class Game : ServiceLocator<Module>
     {
         _loop = new(60, frame =>
         {
-            _gameObjectEvents.Fire(frame);
+            _gameObjectEvents.OnEarlyUpdate.Raise(frame);
+            _gameObjectEvents.OnUpdate.Raise(frame);
+            _gameObjectEvents.OnLateUpdate.Raise(frame);
         });
     }
 

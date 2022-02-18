@@ -1,17 +1,8 @@
-﻿using System;
-
-namespace N8Engine;
+﻿namespace N8Engine.Events;
 
 sealed class GameObjectEvents
 {
-    public event Action<Frame> OnUpdate;
-    public event Action<Frame> OnLateUpdate;
-    public event Action<Frame> OnPhysicsUpdate;
-    
-    public void Fire(Frame frame)
-    {
-        OnUpdate?.Invoke(frame);
-        OnLateUpdate?.Invoke(frame);
-        OnPhysicsUpdate?.Invoke(frame);
-    }
+    public readonly Event<Frame> OnEarlyUpdate = new();
+    public readonly Event<Frame> OnUpdate = new();
+    public readonly Event<Frame> OnLateUpdate = new();
 }
