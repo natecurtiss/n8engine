@@ -2,5 +2,5 @@
 
 public interface Module
 {
-    
+    void OnQuit() { }
 }

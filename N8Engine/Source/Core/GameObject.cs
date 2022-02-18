@@ -1,49 +1,46 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using N8Engine.Events;
+using N8Engine.SceneManagement;
 
 namespace N8Engine;
 
 // TODO: Add Exceptions.
 public sealed class GameObject
 {
-    readonly GameObjectEvents _events;
     readonly List<Component> _components = new();
-    public bool IsAlive { get; set; }
+    readonly Scene _scene;
+    
+    public bool IsAlive { get; private set; }
+    public string Name { get; set; }
 
-    internal GameObject(GameObjectEvents events)
+    internal GameObject(Scene scene, string name)
     {
+        _scene = scene;
         IsAlive = true;
-        _events = events;
-        _events.OnEarlyUpdate.Add(EarlyUpdate);
-        _events.OnUpdate.Add(Update);
-        _events.OnLateUpdate.Add(LateUpdate);
+        Name = name;
     }
 
-    public void Destroy()
-    {
-        IsAlive = false;
-        _events.OnEarlyUpdate.Remove(EarlyUpdate);
-        _events.OnUpdate.Remove(Update);
-        _events.OnLateUpdate.Remove(LateUpdate);
-    }
+    public void Destroy() => IsAlive = false;
 
     public T GetComponent<T>() where T : Component => (T) _components.First(component => component.Type == typeof(T));
     
-    public void AddComponent<T>(T component) where T : Component
+    public GameObject AddComponent<T>(T component) where T : Component
     {
         _components.Add(component);
         component.Type = typeof(T);
-        component.Create(this);
+        component.Create(this, _scene);
+        return this;
     }
 
-    public void RemoveComponent(Component component)
+    public GameObject RemoveComponent(Component component)
     {
         _components.Remove(component);
         component.Destroy();
+        return this;
     }
 
-    void EarlyUpdate(Frame frame)
+    internal void EarlyUpdate(Frame frame)
     {
         if (!IsAlive)
             return;
@@ -51,7 +48,7 @@ public sealed class GameObject
             component.EarlyUpdate(frame);
     }
     
-    void Update(Frame frame)
+    internal void Update(Frame frame)
     {
         if (!IsAlive)
             return;
@@ -59,7 +56,7 @@ public sealed class GameObject
             component.Update(frame);
     }
     
-    void LateUpdate(Frame frame)
+    internal void LateUpdate(Frame frame)
     {
         if (!IsAlive)
             return;

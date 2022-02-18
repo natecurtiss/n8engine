@@ -2,22 +2,38 @@
 
 namespace N8Engine.SceneManagement;
 
+// TODO: Add Exceptions.
 public sealed class SceneManager : Module
 {
-    readonly GameObjectEvents _events;
+    readonly GameEvents _events;
+    public Scene CurrentScene { get; private set; }
     
-    internal SceneManager(GameObjectEvents events)
-    {
-        _events = events;
-    }
-
+    internal SceneManager(GameEvents events) => _events = events;
+    
     public void Load(Scene scene)
     {
-        
+        if (CurrentScene != null)
+        {
+            UnsubscribeFromEvents();
+            CurrentScene.Unload();
+        }
+        CurrentScene = scene;
+        SubscribeToEvents();
     }
 
-    public void UnloadScene()
+    void SubscribeToEvents()
     {
-        
+        _events.OnEarlyUpdate += CurrentScene.EarlyUpdate;
+        _events.OnUpdate += CurrentScene.Update;
+        _events.OnLateUpdate += CurrentScene.LateUpdate;
     }
+
+    void UnsubscribeFromEvents()
+    {
+        _events.OnEarlyUpdate -= CurrentScene.EarlyUpdate;
+        _events.OnUpdate -= CurrentScene.Update;
+        _events.OnLateUpdate -= CurrentScene.LateUpdate;
+    }
+    
+    void Module.OnQuit() => UnsubscribeFromEvents();
 }
