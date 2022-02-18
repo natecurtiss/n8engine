@@ -2,12 +2,12 @@
 
 namespace N8Engine;
 
-public interface Component
+public abstract class Component
 {
     internal Type Type { get; set; }
-    public void Create(GameObject gameObject) { }
-    public void Destroy() { }
-    public void EarlyUpdate(Frame frame) { }
-    public void Update(Frame frame) { }
-    public void LateUpdate(Frame frame) { }
+    public virtual void Create(GameObject gameObject) { }
+    public virtual void Destroy() { }
+    public virtual void EarlyUpdate(Frame frame) { }
+    public virtual void Update(Frame frame) { }
+    public virtual void LateUpdate(Frame frame) { }
 }

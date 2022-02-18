@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace N8Engine.Tests;
 
-sealed class Core
+sealed class ModulesTests
 {
     class Empty : Module { }
     readonly Modules _modules = new();

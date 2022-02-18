@@ -9,10 +9,11 @@ public sealed class GameObject
 {
     readonly GameObjectEvents _events;
     readonly List<Component> _components = new();
-    bool _isAlive = true;
+    public bool IsAlive { get; set; }
 
     internal GameObject(GameObjectEvents events)
     {
+        IsAlive = true;
         _events = events;
         _events.OnEarlyUpdate.Add(EarlyUpdate);
         _events.OnUpdate.Add(Update);
@@ -21,7 +22,7 @@ public sealed class GameObject
 
     public void Destroy()
     {
-        _isAlive = false;
+        IsAlive = false;
         _events.OnEarlyUpdate.Remove(EarlyUpdate);
         _events.OnUpdate.Remove(Update);
         _events.OnLateUpdate.Remove(LateUpdate);
@@ -44,7 +45,7 @@ public sealed class GameObject
 
     void EarlyUpdate(Frame frame)
     {
-        if (!_isAlive)
+        if (!IsAlive)
             return;
         foreach (var component in _components) 
             component.EarlyUpdate(frame);
@@ -52,7 +53,7 @@ public sealed class GameObject
     
     void Update(Frame frame)
     {
-        if (!_isAlive)
+        if (!IsAlive)
             return;
         foreach (var component in _components) 
             component.Update(frame);
@@ -60,7 +61,7 @@ public sealed class GameObject
     
     void LateUpdate(Frame frame)
     {
-        if (!_isAlive)
+        if (!IsAlive)
             return;
         foreach (var component in _components) 
             component.LateUpdate(frame);
