@@ -6,11 +6,7 @@ public sealed class SceneManager : Module
     readonly GameEvents _events;
     public Scene CurrentScene { get; private set; }
     
-    internal SceneManager(GameEvents events, Scene first)
-    {
-        _events = events;
-        Load(first);
-    }
+    internal SceneManager(GameEvents events) => _events = events;
 
     public void Load(Scene scene)
     {
@@ -37,6 +33,4 @@ public sealed class SceneManager : Module
         _events.OnUpdate -= CurrentScene.Update;
         _events.OnLateUpdate -= CurrentScene.LateUpdate;
     }
-    
-    void Module.OnQuit() => UnsubscribeFromEvents();
 }

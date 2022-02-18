@@ -5,11 +5,14 @@ namespace N8Engine;
 
 sealed class Loop
 {
-    readonly float _secondsPerUpdate;
     readonly Action<Frame> _onUpdate;
+    readonly float _secondsPerUpdate;
 
-    public Loop(int targetFps) => _secondsPerUpdate = 1f / targetFps;
-    public Loop(int targetFps, Action<Frame> onUpdate) : this(targetFps) => _onUpdate = onUpdate;
+    public Loop(int targetFps, Action<Frame> onUpdate)
+    {
+        _secondsPerUpdate = 1f / targetFps;
+        _onUpdate = onUpdate;
+    }
 
     public void Run()
     {
