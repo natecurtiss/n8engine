@@ -5,6 +5,10 @@
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <AssemblyName>N8Engine.Tests</AssemblyName>
+
+        <RootNamespace>N8Engine.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

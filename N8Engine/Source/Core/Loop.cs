@@ -6,8 +6,10 @@ namespace N8Engine;
 sealed class Loop
 {
     readonly float _secondsPerUpdate;
+    readonly Action<Frame> _onUpdate;
 
-    internal Loop(int targetFps) => _secondsPerUpdate = 1f / targetFps;
+    public Loop(int targetFps) => _secondsPerUpdate = 1f / targetFps;
+    public Loop(int targetFps, Action<Frame> onUpdate) : this(targetFps) => _onUpdate = onUpdate;
 
     public void Run()
     {
@@ -19,16 +21,16 @@ sealed class Loop
             var didUpdate = false;
             var current = ToSeconds(timer.ElapsedMilliseconds);
             var elapsed = current - last;
-            var time = new Frame(elapsed);
+            var frame = new Frame(elapsed);
             while (elapsed >= _secondsPerUpdate)
             {
                 didUpdate = true;
                 elapsed = Math.Min(elapsed - _secondsPerUpdate, 0f);
-                // Update.
+                _onUpdate(frame);
             }
             if (didUpdate) last = current - elapsed;
         }
     }
-    
-    float ToSeconds(long milliseconds) => milliseconds / 1000f;
+
+    static float ToSeconds(long milliseconds) => milliseconds / 1000f;
 }

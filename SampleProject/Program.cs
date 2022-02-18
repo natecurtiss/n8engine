@@ -1,6 +1,3 @@
-﻿namespace SampleProject;
+﻿using N8Engine;
 
-static class Program
-{
-    static void Main() { }
-}
+new Game().WithFps(60).Start();
