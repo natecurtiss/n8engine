@@ -1,6 +1,6 @@
 ﻿using N8Engine.SceneManagement;
 
-namespace SampleProject;
+namespace SampleGame;
 
 // TODO: Later have this a class we inherit from that has methods for Next(), Previous(), etc.
 static class Scenes

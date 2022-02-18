@@ -1,6 +1,6 @@
 ﻿using N8Engine.SceneManagement;
 
-namespace SampleProject;
+namespace SampleGame;
 
 sealed class MainScene : Scene
 {
