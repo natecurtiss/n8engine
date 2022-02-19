@@ -2,7 +2,7 @@
 
 public sealed class Window
 {
-    internal Window()
+    internal Window(WindowOptions options)
     {
         
     }
