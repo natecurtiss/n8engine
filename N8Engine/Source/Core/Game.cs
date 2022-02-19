@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using N8Engine.InputSystem;
 using N8Engine.SceneManagement;
 using N8Engine.Windowing;
@@ -23,8 +22,7 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
 
     public Game()
     {
-        _windowOptions = new("N8Engine Game", new(1280, 720), 60, false);
-
+        _windowOptions = new("N8Engine Game", new(1280, 720), 60, WindowState.Windowed);
         _input = new();
         _sceneManager = new(this);
         Modules.Add(_input);
@@ -53,6 +51,12 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
     public Game Fullscreen()
     {
         _windowOptions = _windowOptions.Fullscreen();
+        return this;
+    }
+    
+    public Game Maximized()
+    {
+        _windowOptions = _windowOptions.Maximized();
         return this;
     }
     

@@ -1,8 +1,8 @@
-﻿using System;
-using N8Engine;
+﻿using N8Engine;
 using SampleGame;
 
 new Game()
-    .WithWindowTitle("Sample Game")
     .WithFirstScene(Scenes.MainScene)
+    .WithWindowTitle("Sample Game")
+    .Maximized()
     .Start();
