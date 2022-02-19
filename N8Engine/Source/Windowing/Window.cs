@@ -1,6 +1,7 @@
 ﻿using System;
 using N8Engine.InputSystem;
 using Silk.NET.Input;
+using Silk.NET.Windowing;
 using static Silk.NET.Windowing.Window;
 using GLWindow = Silk.NET.Windowing.IWindow;
 
@@ -30,7 +31,7 @@ sealed class Window
         _window.Render += _ => OnRender?.Invoke();
     }
 
-    public void Run() => _window.Run(() => { });
+    public void Run() => _window.Run();
 
     public void Close() => _window.Close();
 

@@ -12,7 +12,8 @@ readonly struct WindowOptions
         result.Title = options._title;
         result.Size = new((int) options._size.X, (int) options._size.Y);
         result.FramesPerSecond = options._fps;
-        result.WindowState = options._isFullscreen ? WindowState.Fullscreen : WindowState.Normal;
+        if (options._isFullscreen)
+            result.WindowState = WindowState.Fullscreen;
         return result;
     }
 
@@ -34,6 +35,4 @@ readonly struct WindowOptions
     public WindowOptions WithFps(int fps) => new(_title, _size, fps, _isFullscreen);
     public WindowOptions Fullscreen() => new(_title, _size, _fps, true);
     public WindowOptions Windowed() => new(_title, _size, _fps, false);
-
-    
 }
