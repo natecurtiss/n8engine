@@ -9,6 +9,7 @@ namespace N8Engine.Windowing;
 sealed class Window
 {
     public event Action OnLoad;
+    public event Action OnClose;
     public event Action<Frame> OnUpdate;
     public event Action OnRender;
     public event Action<InputSystem.Key> OnKeyDown;
@@ -24,11 +25,14 @@ sealed class Window
             SetupInput();
             OnLoad?.Invoke();
         };
+        _window.Closing += () => OnClose?.Invoke();
         _window.Update += fps => OnUpdate?.Invoke(new((float) fps));
         _window.Render += _ => OnRender?.Invoke();
-        
-        _window.Run(() => { });
     }
+
+    public void Run() => _window.Run(() => { });
+
+    public void Close() => _window.Close();
 
     void SetupInput()
     {

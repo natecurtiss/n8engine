@@ -28,4 +28,12 @@ readonly struct WindowOptions
         _fps = fps;
         _isFullscreen = isFullscreen;
     }
+
+    public WindowOptions WithTitle(string title) => new(title, _size, _fps, _isFullscreen);
+    public WindowOptions WithSize(UIntVector size) => new(_title, size, _fps, _isFullscreen);
+    public WindowOptions WithFps(int fps) => new(_title, _size, fps, _isFullscreen);
+    public WindowOptions Fullscreen() => new(_title, _size, _fps, true);
+    public WindowOptions Windowed() => new(_title, _size, _fps, false);
+
+    
 }

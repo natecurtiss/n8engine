@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 namespace N8Engine;
 
+[Obsolete("Replaced by N8Engine.Windowing.Window's loop events and all that jazz.")]
 sealed class Loop
 {
     readonly Action<Frame> _onUpdate;
