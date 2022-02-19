@@ -6,7 +6,7 @@ using GLWindow = Silk.NET.Windowing.IWindow;
 
 namespace N8Engine.Windowing;
 
-public sealed class Window
+sealed class Window
 {
     public event Action OnLoad;
     public event Action<Frame> OnUpdate;
@@ -16,12 +16,12 @@ public sealed class Window
     
     readonly GLWindow _window;    
     
-    internal Window(WindowOptions options)
+    public Window(WindowOptions options)
     {
         _window = Create(options);
         _window.Load += () =>
         {
-            SetUpInput();
+            SetupInput();
             OnLoad?.Invoke();
         };
         _window.Update += fps => OnUpdate?.Invoke(new((float) fps));
@@ -30,7 +30,7 @@ public sealed class Window
         _window.Run(() => { });
     }
 
-    void SetUpInput()
+    void SetupInput()
     {
         var input = _window.CreateInput();
         foreach (var keyboard in input.Keyboards)
