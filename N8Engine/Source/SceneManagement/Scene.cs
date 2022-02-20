@@ -37,7 +37,8 @@ public abstract class Scene : IEnumerable<GameObject>
 
     internal void Destroy(GameObject gameObject) => _gameObjects.Remove(gameObject);
 
-    protected GameObject Create(string name = "some gameobject without a name")
+    // TODO: Make sure this scene is loaded.
+    public GameObject Create(string name = "some gameobject without a name")
     {
         var gameObject = new GameObject(this, name);
         _gameObjects.Add(gameObject);

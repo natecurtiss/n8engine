@@ -2,7 +2,6 @@
 using SampleGame;
 
 new Game()
-    .WithFirstScene(Scenes.MainScene)
+    .WithFirstScene(Scenes.Main)
     .WithWindowTitle("Sample Game")
-    .Maximized()
     .Start();

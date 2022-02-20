@@ -4,5 +4,5 @@ namespace SampleGame;
 
 sealed class Player : Component
 {
-    
+
 }
