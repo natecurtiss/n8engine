@@ -37,8 +37,8 @@ public sealed class Input : Module
         _keyStates[key] = newState;
     }
     
-    public bool IsReleased(Key key) => _keyStates[key] == KeyState.IsReleased;
-    public bool IsPressed(Key key) => _keyStates[key] == KeyState.IsPressed;
+    public bool IsReleased(Key key) => _keyStates[key] == KeyState.IsReleased || WasJustReleased(key);
+    public bool IsPressed(Key key) => _keyStates[key] == KeyState.IsPressed || WasJustPressed(key);
     public bool WasJustReleased(Key key) => _keyStates[key] == KeyState.WasJustReleased;
     public bool WasJustPressed(Key key) => _keyStates[key] == KeyState.WasJustPressed;
 }
