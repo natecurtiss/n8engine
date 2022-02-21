@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\N8Engine\N8Engine.csproj" />
+      <ProjectReference Include="..\N8Engine.Core\N8Engine.Core.csproj" />
     </ItemGroup>
 
 </Project>
