@@ -9,27 +9,13 @@ sealed class GameObjectTests
     sealed class B : Component { }
     sealed class C : Component { }
     sealed class S : Scene { public override void Load() { } }
-    
-    static GameObject GameObject() => new(new S(), NAME);
-    static C Component() => new();
 
-    const string NAME = "nate";
-    
-    [Test]
-    public void TestDestroyGameObject()
-    {
-        var go = GameObject(); 
-        Assert.IsFalse(go.IsDestroyed);
-        go.Destroy();
-        Assert.IsTrue(go.IsDestroyed);
-    }
-    
     [Test]
     public void TestGetComponent()
     {
-        var go = GameObject();
+        var go = new GameObject(new S(), "foo");
         Assert.IsNull(go.GetComponent<C>());
-        go.AddComponent(Component());
+        go.AddComponent(new C());
         Assert.IsNotNull(go.GetComponent<C>());
         Assert.IsNull(go.GetComponent<B>());
     }
@@ -37,37 +23,58 @@ sealed class GameObjectTests
     [Test]
     public void TestAddComponent()
     {
-        var go = GameObject();
-        go.AddComponent(Component());
+        var go = new GameObject(new S(), "foo");
+        go.AddComponent(new C());
         Assert.IsNotNull(go.GetComponent<C>());
+        go.Destroy();
+        
     }
 
     [Test]
     public void TestRemoveComponent()
     {
-        var go = GameObject();
-        var c = Component();
+        var go = new GameObject(new S(), "foo");
+        var c = new C();
+        
         go.AddComponent(c);
         go.RemoveComponent(c);
         Assert.IsNull(go.GetComponent<C>());
-        go.AddComponent(Component());
+        
+        go.AddComponent(new C());
         go.RemoveComponent(go.GetComponent<C>());
         Assert.IsNull(go.GetComponent<C>());
+        
         Assert.Catch(() => go.RemoveComponent(new B()));
+    }
+    
+    [Test]
+    public void TestDestroyGameObject()
+    {
+        var go = new GameObject(new S(), "foo");
+        var c = new C();
+        go.AddComponent(c);
+        Assert.IsFalse(go.IsDestroyed);
+        
+        go.Destroy();
+        Assert.IsTrue(go.IsDestroyed);
+        Assert.Catch(() => go.GetComponent<C>());
+        Assert.Catch(() => go.RemoveComponent(c));
+        Assert.Catch(() => go.AddComponent(new C()));
+        Assert.Catch(() => go.AddComponent(new B()));
     }
 
     [Test]
     public void TestNameGameObject()
     {
-        var go = GameObject();
-        Assert.IsTrue(go.Name == NAME);
+        var go = new GameObject(new S(), "foo");
+        Assert.IsTrue(go.Name == "foo");
     }
     
     [Test]
     public void TestRenameGameObject()
     {
-        var go = GameObject();
-        const string name = "fdjkl;asfdsa";
+        var go = new GameObject(new S(), "foo");
+        var name = "fdjkl;asfdsa";
         go.Name = name;
         Assert.IsTrue(go.Name == name);
     }
