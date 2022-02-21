@@ -5,24 +5,30 @@ namespace N8Engine.Tests;
 sealed class ModulesTests
 {
     class Empty : Module { }
-    readonly Modules _modules = new();
 
+    [Test]
+    public void TestGetModule()
+    {
+        var modules = new Modules();
+        Assert.Catch(() => modules.Get<Empty>());
+        modules.Add(new Empty());
+        Assert.IsNotNull(modules.Get<Empty>());
+    }
+    
     [Test]
     public void TestAddModule()
     {
-        _modules.Add(new Empty());
-        Assert.IsNotNull(_modules.Get<Empty>());
-        _modules.Remove<Empty>();
+        var modules = new Modules();
+        modules.Add(new Empty());
+        Assert.IsNotNull(modules.Get<Empty>());
     }
     
     [Test]
     public void TestRemoveModule()
     {
-        _modules.Add(new Empty());
-        _modules.Remove<Empty>();
-        Assert.Catch(() => _modules.Get<Empty>());
+        var modules = new Modules();
+        modules.Add(new Empty());
+        modules.Remove<Empty>();
+        Assert.Catch(() => modules.Get<Empty>());
     }
-    
-    [Test]
-    public void TestGetModule() => Assert.Catch(() => _modules.Get<Empty>());
 }

@@ -1,10 +1,12 @@
-﻿using N8Engine.SceneManagement;
+﻿using System;
+using N8Engine.SceneManagement;
 using NUnit.Framework;
 
 namespace N8Engine.Tests;
 
 sealed class GameObjectTests
 {
+    sealed class B : Component { }
     sealed class C : Component { }
     sealed class S : Scene { public override void Load() { } }
     
@@ -17,27 +19,29 @@ sealed class GameObjectTests
     public void TestDestroyGameObject()
     {
         var go = GameObject(); 
-        Assert.IsTrue(go.IsAlive);
+        Assert.IsFalse(go.IsDestroyed);
         go.Destroy();
-        Assert.IsFalse(go.IsAlive);
-    }
-
-    [Test]
-    public void TestAddComponent()
-    {
-        var go = GameObject();
-        var c = Component();
-        go.AddComponent(c);
-        Assert.IsNotNull(go.GetComponent<C>());
+        Assert.IsTrue(go.IsDestroyed);
     }
     
     [Test]
     public void TestGetComponent()
     {
         var go = GameObject();
-        Assert.Catch(() => go.GetComponent<C>());
+        Assert.IsNull(go.GetComponent<C>());
+        go.AddComponent(Component());
+        Assert.IsNotNull(go.GetComponent<C>());
+        Assert.IsNull(go.GetComponent<B>());
     }
-    
+
+    [Test]
+    public void TestAddComponent()
+    {
+        var go = GameObject();
+        go.AddComponent(Component());
+        Assert.IsNotNull(go.GetComponent<C>());
+    }
+
     [Test]
     public void TestRemoveComponent()
     {
@@ -45,7 +49,11 @@ sealed class GameObjectTests
         var c = Component();
         go.AddComponent(c);
         go.RemoveComponent(c);
-        Assert.Catch(() => go.GetComponent<C>());
+        Assert.IsNull(go.GetComponent<C>());
+        go.AddComponent(Component());
+        go.RemoveComponent(go.GetComponent<C>());
+        Assert.IsNull(go.GetComponent<C>());
+        Assert.Catch(() => go.RemoveComponent(new B()));
     }
 
     [Test]

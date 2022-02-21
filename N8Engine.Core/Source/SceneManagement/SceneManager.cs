@@ -1,6 +1,5 @@
 ﻿namespace N8Engine.SceneManagement;
 
-// TODO: Add Exceptions.
 public sealed class SceneManager : Module
 {
     readonly GameEvents _events;
@@ -17,6 +16,7 @@ public sealed class SceneManager : Module
         }
         CurrentScene = scene;
         SubscribeToEvents();
+        CurrentScene.SwitchTo();
         CurrentScene.Load();
     }
 

@@ -4,32 +4,40 @@ using N8Engine.SceneManagement;
 
 namespace N8Engine;
 
-// TODO: Add Exceptions.
 public sealed class GameObject
 {
     readonly List<Component> _components = new();
     readonly Scene _scene;
     
-    public bool IsAlive { get; private set; }
+    public bool IsDestroyed { get; private set; }
     public string Name { get; set; }
 
     internal GameObject(Scene scene, string name)
     {
         _scene = scene;
-        IsAlive = true;
         Name = name;
     }
 
     public void Destroy()
     {
-        IsAlive = false;
+        IsDestroyed = true;
+        foreach (var component in _components) 
+            component.Destroy();
+        _components.Clear();
         _scene.Destroy(this);
     }
 
-    public T GetComponent<T>() where T : Component => (T) _components.First(component => component.Type == typeof(T));
-    
+    public T GetComponent<T>() where T : Component
+    {
+        if (IsDestroyed)
+            throw new GameObjectIsDestroyedException($"GameObject {Name} is destroyed, you cannot access its components!");
+        return (from component in _components where component.Type == typeof(T) select component as T).FirstOrDefault();
+    }
+
     public GameObject AddComponent<T>(T component) where T : Component
     {
+        if (IsDestroyed)
+            throw new GameObjectIsDestroyedException($"GameObject {Name} is destroyed, you cannot access its components!");
         _components.Add(component);
         component.Type = typeof(T);
         component.Create(this, _scene);
@@ -38,6 +46,10 @@ public sealed class GameObject
 
     public GameObject RemoveComponent(Component component)
     {
+        if (IsDestroyed)
+            throw new GameObjectIsDestroyedException($"GameObject {this} is destroyed, you cannot access its components!");
+        if (!_components.Contains(component))
+            throw new MissingComponentException($"Component of type {component.Type} is not attached to {this}!");
         _components.Remove(component);
         component.Destroy();
         return this;
@@ -60,4 +72,6 @@ public sealed class GameObject
         foreach (var component in _components) 
             component.LateUpdate(frame);
     }
+
+    public override string ToString() => Name;
 }

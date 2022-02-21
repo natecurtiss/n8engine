@@ -39,7 +39,7 @@ sealed class SceneManagementTests
         var s1 = new S1();
         var sm = new SceneManager(new Events());
         sm.Load(s1);
-        Assert.IsTrue(s1.First().IsAlive);
+        Assert.IsFalse(s1.First().IsDestroyed);
         Assert.IsTrue(sm.CurrentScene.Count() == 1);
     }
     
@@ -49,7 +49,7 @@ sealed class SceneManagementTests
         var s1 = new S1();
         var sm = new SceneManager(new Events());
         sm.Load(s1);
-        Assert.IsTrue(s1.First().IsAlive);
+        Assert.IsFalse(s1.First().IsDestroyed);
         sm.Load(new S2());
         Assert.IsTrue(sm.CurrentScene.First().Name == SECOND);
     }
@@ -62,7 +62,7 @@ sealed class SceneManagementTests
         sm.Load(s1);
         var go = s1.First();
         sm.Load(new S2());
-        Assert.IsFalse(go.IsAlive);
+        Assert.IsTrue(go.IsDestroyed);
         Assert.IsTrue(!s1.Any());
     }
 }
