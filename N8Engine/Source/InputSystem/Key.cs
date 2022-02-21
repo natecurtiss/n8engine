@@ -2,6 +2,7 @@
 
 public enum Key
 {
+    Any = -99,
     Unknown = -1,
     Space = 32,
     Apostrophe = 39 /* ' */,
@@ -52,6 +53,7 @@ public enum Key
     RightBracket = 93 /* ] */,
     GraveAccent = 96 /* ` */,
     Esc = 256,
+    Enter = 257,
     Tab = 258,
     Backspace = 259,
     Insert = 260,
