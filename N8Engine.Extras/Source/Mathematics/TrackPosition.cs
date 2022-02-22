@@ -1,4 +1,4 @@
-﻿namespace N8Engine;
+﻿namespace N8Engine.Mathematics;
 
 public sealed class TrackPosition : Component
 {

@@ -1,6 +1,4 @@
-﻿using N8Engine.Mathematics;
-
-namespace N8Engine;
+﻿namespace N8Engine.Mathematics;
 
 public sealed class Transform : Component
 {
