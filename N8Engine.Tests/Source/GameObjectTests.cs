@@ -28,15 +28,22 @@ sealed class GameObjectTests
     [Test]
     public void TestAddComponent()
     {
-        _gameObject.AddComponent<C1>(out var c1);
-        IsNotNull(c1);
+        _gameObject.AddComponent<C1>();
+        IsNotNull(_gameObject.GetComponent<C1>());
     }
-    
+
     [Test]
     public void TestAddSpecificComponent()
     {
         _gameObject.AddComponent(new C1(), out var c1);
         IsNotNull(c1);
+    }
+    
+    [Test]
+    public void TestAddComponentForEquality()
+    {
+        _gameObject.AddComponent(new C1(), out var c1);
+        AreEqual(c1, _gameObject.GetComponent<C1>());
     }
 
     [Test]
