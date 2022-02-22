@@ -1,6 +1,4 @@
-﻿using N8Engine.SceneManagement;
-
-namespace N8Engine.InputSystem;
+﻿namespace N8Engine.InputSystem;
 
 public sealed class InputDebugger : Component
 {

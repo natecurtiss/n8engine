@@ -1,7 +1,4 @@
-﻿using System;
-using N8Engine.SceneManagement;
-
-namespace N8Engine;
+﻿namespace N8Engine;
 
 public abstract class Component
 {
