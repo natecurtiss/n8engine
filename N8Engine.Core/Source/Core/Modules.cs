@@ -14,7 +14,7 @@ public sealed class Modules : ServiceLocator<Module>
         }
         catch (KeyNotFoundException)
         {
-            throw new MissingModuleException($"Module of type {typeof(T)} not found!");
+            throw new ModuleNotFoundException($"Module of type {typeof(T)} not found!");
         }
     }
 
@@ -27,7 +27,7 @@ public sealed class Modules : ServiceLocator<Module>
         }
         catch (KeyNotFoundException)
         {
-            throw new MissingModuleException($"Module of type {typeof(T)} does not exist to remove!");
+            throw new ModuleNotFoundException($"Module of type {typeof(T)} does not exist to remove!");
         }
     }
 }

@@ -47,7 +47,22 @@ sealed class GameObjectTests
     }
 
     [Test]
+    public void TestAddDuplicateComponent()
+    {
+        _gameObject.AddComponent<C1>();
+        Catch(() => _gameObject.AddComponent<C1>());
+    }
+    
+    [Test]
     public void TestRemoveComponent()
+    {
+        _gameObject.AddComponent<C1>(out var c1);
+        _gameObject.RemoveComponent<C1>();
+        IsNull(_gameObject.GetComponent<C1>());
+    }
+
+    [Test]
+    public void TestRemoveSpecificComponent()
     {
         _gameObject.AddComponent<C1>(out var c1);
         _gameObject.RemoveComponent(c1);
