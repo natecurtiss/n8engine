@@ -5,7 +5,7 @@ namespace N8Engine.InputSystem;
 public sealed class InputDebugger : Component
 {
     readonly Action<Key> _onInput;
-    Input _input = default!;
+    Input _input = null!;
 
     public InputDebugger(Action<Key> onInput) => _onInput = onInput;
     

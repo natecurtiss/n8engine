@@ -41,14 +41,18 @@ public sealed class GameObject
         }
         return null;
     }
-
-    public GameObject AddComponent<T>(T component) where T : Component
+    
+    public GameObject AddComponent<T>() where T : Component, new() => AddComponent(new T());
+    public GameObject AddComponent<T>(out T result) where T : Component, new() => AddComponent(new(), out result);
+    public GameObject AddComponent<T>(T component) where T : Component => AddComponent(component, out _);
+    public GameObject AddComponent<T>(T component, out T result) where T : Component
     {
         if (IsDestroyed)
             throw new GameObjectIsDestroyedException($"GameObject {Name} is destroyed, you cannot access its components!");
         _components.Add(component);
         component.Type = typeof(T);
         component.Create(this, _scene);
+        result = component;
         return this;
     }
 
