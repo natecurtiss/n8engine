@@ -5,12 +5,11 @@ namespace N8Engine.InputSystem;
 public sealed class InputDebugger : Component
 {
     readonly Action<Key> _onInput;
-    Input _input = null!;
+    readonly Input _input;
 
-    public InputDebugger(Action<Key> onInput) => _onInput = onInput;
-    
-    public override void Create(GameObject gameObject, Scene scene)
+    public InputDebugger(Action<Key> onInput)
     {
+        _onInput = onInput;
         _input = Game.Modules.Get<Input>();
         _input.OnKeyPress += KeyDown;
     }

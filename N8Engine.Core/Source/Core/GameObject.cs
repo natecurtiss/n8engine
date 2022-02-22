@@ -51,7 +51,6 @@ public sealed class GameObject
             throw new GameObjectIsDestroyedException($"GameObject {Name} is destroyed, you cannot access its components!");
         _components.Add(component);
         component.Type = typeof(T);
-        component.Create(this, _scene);
         result = component;
         return this;
     }

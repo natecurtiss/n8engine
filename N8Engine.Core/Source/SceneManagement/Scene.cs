@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace N8Engine.SceneManagement;
 
-// TODO: Add Exceptions (maybe).
 public abstract class Scene : IEnumerable<GameObject>
 {
     bool _isLoaded;
@@ -42,13 +41,17 @@ public abstract class Scene : IEnumerable<GameObject>
     }
 
     internal void Destroy(GameObject gameObject) => _gameObjects.Remove(gameObject);
+
+    public GameObject Create(string name) => Create(name, out _);
     
-    public GameObject Create(string name = "some gameobject without a name")
+    public GameObject Create(string name, out GameObject gameObject)
     {
-        // TODO: Maybe throw an exception.
         if (!_isLoaded)
+        {
+            gameObject = null;
             return null;
-        var gameObject = new GameObject(this, name);
+        }
+        gameObject = new(this, name);
         _gameObjects.Add(gameObject);
         return gameObject;
     }
