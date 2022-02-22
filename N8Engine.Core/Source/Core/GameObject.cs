@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using N8Engine.SceneManagement;
 
 namespace N8Engine;
 
+// ReSharper disable ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
 public sealed class GameObject
 {
     readonly List<Component> _components = new();
@@ -31,7 +31,15 @@ public sealed class GameObject
     {
         if (IsDestroyed)
             throw new GameObjectIsDestroyedException($"GameObject {Name} is destroyed, you cannot access its components!");
-        return (from component in _components where component.Type == typeof(T) select component as T).FirstOrDefault();
+        foreach (var component in _components)
+        {
+            if (component.Type == typeof(T))
+            {
+                var component1 = component as T;
+                return component1;
+            }
+        }
+        return null;
     }
 
     public GameObject AddComponent<T>(T component) where T : Component
