@@ -1,6 +1,6 @@
 ﻿using N8Engine;
 
-namespace SampleGame;
+namespace Examples.SampleGame;
 
 sealed class Player : Component
 {

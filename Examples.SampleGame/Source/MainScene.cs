@@ -2,7 +2,7 @@
 using N8Engine.InputSystem;
 using N8Engine.SceneManagement;
 
-namespace SampleGame;
+namespace Examples.SampleGame;
 
 sealed class MainScene : Scene
 {
