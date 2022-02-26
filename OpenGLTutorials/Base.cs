@@ -11,7 +11,7 @@ public abstract class Base
     {
         var options = WindowOptions.Default;
         options.Size = new(800, 600);
-        options.Title = "LearnOpenGL with Silk.NET";
+        options.Title = "Like and Subscribe to Keep my Lights on.";
 
         _window = Window.Create(options);
 
