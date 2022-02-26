@@ -3,14 +3,13 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace></RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>HelloWindow</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Silk.NET.Input" Version="2.13.0" />
-      <PackageReference Include="Silk.NET.Windowing" Version="2.13.0" />
+      <ProjectReference Include="..\OpenGLTutorials\OpenGLTutorials.csproj" />
     </ItemGroup>
 
 </Project>

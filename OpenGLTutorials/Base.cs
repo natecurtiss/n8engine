@@ -1,13 +1,13 @@
 ﻿using Silk.NET.Input;
 using Silk.NET.Windowing;
 
-namespace HelloWindow;
+namespace OpenGLTutorials;
 
-static class Program
+public abstract class Base
 {
-    static IWindow _window = default!;
+    protected IWindow _window = default!;
 
-    static void Main()
+    public virtual void Start()
     {
         var options = WindowOptions.Default;
         options.Size = new(800, 600);
@@ -21,20 +21,19 @@ static class Program
 
         _window.Run();
     }
-
-
-    static void OnLoad()
+    
+    void OnLoad()
     {
         var input = _window.CreateInput();
-        for (var i = 0; i < input.Keyboards.Count; i++)
-            input.Keyboards[i].KeyDown += OnKeyDown;
+        foreach (var keyboard in input.Keyboards)
+            keyboard.KeyDown += OnKeyDown;
     }
 
-    static void OnUpdate(double dt) { }
+    protected virtual void OnUpdate(double dt) { }
 
-    static void OnRender(double dt) { }
+    protected virtual void OnRender(double dt) { }
 
-    static void OnKeyDown(IKeyboard keyboard, Key key, int i)
+    protected virtual void OnKeyDown(IKeyboard keyboard, Key key, int i)
     {
         if (key == Key.Escape)
             _window.Close();
