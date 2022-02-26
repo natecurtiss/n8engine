@@ -1,5 +1,5 @@
 ﻿using N8Engine;
-using Examples.SampleGame;
+using SampleGame;
 
 new Game()
     .WithFirstScene(Scenes.Main)

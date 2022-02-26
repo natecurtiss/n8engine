@@ -1,7 +1,7 @@
 ﻿using Silk.NET.Input;
 using Silk.NET.Windowing;
 
-namespace OpenGL.HelloWindow;
+namespace HelloWindow;
 
 static class Program
 {
