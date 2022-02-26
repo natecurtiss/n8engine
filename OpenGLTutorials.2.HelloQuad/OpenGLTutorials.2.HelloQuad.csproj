@@ -7,10 +7,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyName>OpenGLTutorials.HelloQuad</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\OpenGLTutorials\OpenGLTutorials.csproj" />
+      <ProjectReference Include="..\OpenGLTutorials.0.Base\OpenGLTutorials.0.Base.csproj" />
     </ItemGroup>
 
     <ItemGroup>

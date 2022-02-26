@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenGL", "OpenGL", "{B8F0CB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGLTutorials.1.HelloWindow", "OpenGLTutorials.1.HelloWindow\OpenGLTutorials.1.HelloWindow.csproj", "{071E3D46-D78C-4658-AE49-B270B5C2D1F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGLTutorials", "OpenGLTutorials\OpenGLTutorials.csproj", "{0EFB0864-0B7D-445C-9040-287161EA228F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGLTutorials.0.Base", "OpenGLTutorials.0.Base\OpenGLTutorials.0.Base.csproj", "{0EFB0864-0B7D-445C-9040-287161EA228F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenGLTutorials.2.HelloQuad", "OpenGLTutorials.2.HelloQuad\OpenGLTutorials.2.HelloQuad.csproj", "{FB2B9992-A6D1-4F39-B633-928FDABD54F5}"
 EndProject
