@@ -7,7 +7,7 @@ public abstract class Base
 {
     protected IWindow _window = default!;
 
-    public virtual void Start()
+    public void Start()
     {
         var options = WindowOptions.Default;
         options.Size = new(800, 600);
@@ -22,7 +22,7 @@ public abstract class Base
         _window.Run();
     }
     
-    void OnLoad()
+    protected virtual void OnLoad()
     {
         var input = _window.CreateInput();
         foreach (var keyboard in input.Keyboards)
