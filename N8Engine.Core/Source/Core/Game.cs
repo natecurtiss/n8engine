@@ -27,7 +27,6 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
         _sceneManager = new(this);
         Modules.Add(_input);
         Modules.Add(_sceneManager);
-        
     }
 
     public Game WithWindowTitle(string title)
@@ -69,6 +68,12 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
     public Game WithFirstScene(Scene scene)
     {
         _firstScene = scene;
+        return this;
+    }
+
+    public Game WithDebugOutput(Action<object> onOutput)
+    {
+        Debug.OnOutput(onOutput);
         return this;
     }
     
