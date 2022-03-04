@@ -2,6 +2,7 @@
 
 namespace N8Engine.Mathematics;
 
+[Obsolete("Just have two uints lmao.")]
 public struct UIntVector : IEquatable<UIntVector>
 {
     public static bool operator ==(UIntVector l, UIntVector r) => l.Equals(r);

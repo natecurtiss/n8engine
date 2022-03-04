@@ -3,9 +3,11 @@ using Silk.NET.Windowing;
 
 namespace OpenGLTutorials;
 
-public abstract class Base
+public abstract class Base : WindowSize
 {
-    protected IWindow _window = default!;
+    protected IWindow Window = null!;
+    int WindowSize.Width => Window.Size.X;
+    int WindowSize.Height => Window.Size.Y;
 
     public void Start()
     {
@@ -13,18 +15,18 @@ public abstract class Base
         options.Size = new(800, 600);
         options.Title = "Like and Subscribe to Keep my Lights on.";
 
-        _window = Window.Create(options);
+        Window = Silk.NET.Windowing.Window.Create(options);
 
-        _window.Load += OnLoad;
-        _window.Update += OnUpdate;
-        _window.Render += OnRender;
+        Window.Load += OnLoad;
+        Window.Update += OnUpdate;
+        Window.Render += OnRender;
 
-        _window.Run();
+        Window.Run();
     }
     
     protected virtual void OnLoad()
     {
-        var input = _window.CreateInput();
+        var input = Window.CreateInput();
         foreach (var keyboard in input.Keyboards)
             keyboard.KeyDown += OnKeyDown;
     }
@@ -36,6 +38,6 @@ public abstract class Base
     protected virtual void OnKeyDown(IKeyboard keyboard, Key key, int i)
     {
         if (key == Key.Escape)
-            _window.Close();
+            Window.Close();
     }
 }

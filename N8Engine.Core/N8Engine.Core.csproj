@@ -36,6 +36,10 @@
       <PackageReference Include="Silk.NET.Windowing" Version="2.13.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Source\Rendering" />
+    </ItemGroup>
+
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <PlatformTarget>AnyCPU</PlatformTarget>

@@ -2,6 +2,7 @@
 
 namespace N8Engine.Mathematics;
 
+[Obsolete("Use System.Numerics.Vector2 instead")]
 public struct Vector : IEquatable<Vector>
 {
     public static bool operator ==(Vector l, Vector r) => l.Equals(r);

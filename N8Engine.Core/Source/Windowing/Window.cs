@@ -8,7 +8,7 @@ using GLWindow = Silk.NET.Windowing.IWindow;
 
 namespace N8Engine.Windowing;
 
-sealed class Window
+sealed class Window : WindowSize
 {
     public event Action OnLoad;
     public event Action OnClose;
@@ -18,6 +18,9 @@ sealed class Window
     public event Action<InputSystem.Key> OnKeyUp;
     
     readonly GLWindow _window;    
+    
+    int WindowSize.Width => _window.Size.X;
+    int WindowSize.Height => _window.Size.Y;
     
     public Window(WindowOptions options)
     {

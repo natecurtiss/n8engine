@@ -9,7 +9,7 @@ sealed class W : Base
     GL _gl = null!;
     uint _vertexBufferObject;
     uint _vertexArrayObject;
-    uint _shader;
+    Shader _shader = null!;
     
     // Run on each vertex.
     readonly string _vertexShaderSource = @"
@@ -42,6 +42,9 @@ sealed class W : Base
         base.OnLoad();
         // Get the OpenGL API for drawing to the window.
         _gl = GL.GetApi(Window);
+        
+        _shader = new(_gl, _vertexShaderSource, _fragmentShaderSource);
+        _shader.Load();
         
         // Create the vertex array object (VBA; array of VBOs).
         _vertexArrayObject = _gl.GenVertexArray();
@@ -97,28 +100,6 @@ sealed class W : Base
         // Unbind both buffers now that we're done using them.
         _gl.BindVertexArray(0);
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
-
-        // Create a vertex shader.
-        var vertexShader = _gl.CreateShader(ShaderType.VertexShader);
-        _gl.ShaderSource(vertexShader, _vertexShaderSource);
-        _gl.CompileShader(vertexShader);
-        
-        // Create a fragment shader.
-        var fragmentShader = _gl.CreateShader(ShaderType.FragmentShader);
-        _gl.ShaderSource(fragmentShader, _fragmentShaderSource);
-        _gl.CompileShader(fragmentShader);
-        
-        // Combine the shaders.
-        _shader = _gl.CreateProgram();
-        _gl.AttachShader(_shader, vertexShader);
-        _gl.AttachShader(_shader, fragmentShader);
-        _gl.LinkProgram(_shader);
-        
-        // Delete the now unuseful individual shaders.
-        _gl.DetachShader(_shader, vertexShader);
-        _gl.DetachShader(_shader, fragmentShader);
-        _gl.DeleteShader(vertexShader);
-        _gl.DeleteShader(fragmentShader);
     }
 
     protected override void OnRender(double dt)
@@ -129,7 +110,7 @@ sealed class W : Base
         
         // Bind the vertex array object, use the shader, draw the triangles, unbind the vertex array object.
         _gl.BindVertexArray(_vertexArrayObject);
-        _gl.UseProgram(_shader);
+        _shader.Use();
         _gl.DrawArrays(PrimitiveType.Triangles, 0, 6);
         _gl.BindVertexArray(0);
     }

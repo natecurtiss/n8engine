@@ -1,15 +1,20 @@
-﻿using OpenGLTutorials;
+﻿using System.Numerics;
+using OpenGLTutorials;
 using Silk.NET.OpenGL;
 using Boolean = Silk.NET.OpenGL.Boolean;
 
 new W().Start();
 
-sealed class W : Base
+sealed class W : Base, WindowSize
 {
     GL _gl = null!;
     uint _vertexBufferObject;
     uint _vertexArrayObject;
     Shader _shader = null!;
+    Camera _camera = null!;
+    float _time;
+
+    const float ROTATION_SPEED = 100f;
     
     // Run on each vertex.
     readonly string _vertexShaderSource = @"
@@ -18,10 +23,13 @@ sealed class W : Base
         layout (location = 1) in vec3 aColor;
         out vec4 vertexColor;
 
+        uniform mat4 projection;
+        uniform mat4 model;
+
         void main() 
         {
             vertexColor = vec4(aColor.rgb, 1.0);
-            gl_Position = vec4(aPosition.xy, 0, 1.0);
+            gl_Position = projection * model * vec4(aPosition.xy, 0, 1.0);
         }";
 
     // Run on each fragment/pixel of the geometry.
@@ -41,7 +49,10 @@ sealed class W : Base
     {
         base.OnLoad();
         // Get the OpenGL API for drawing to the window.
-        _gl = GL.GetApi(_window);
+        _gl = GL.GetApi(Window);
+        
+        _shader = new(_gl, _vertexShaderSource, _fragmentShaderSource);
+        _shader.Load();
         
         // Create the vertex array object (VBA; array of VBOs).
         _vertexArrayObject = _gl.GenVertexArray();
@@ -52,7 +63,7 @@ sealed class W : Base
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vertexBufferObject);
         
         // Vertex data; uploaded to the VBO.
-        float[] vertices =
+        var vertices = new[]
         {
             -0.5f, 0.5f, 1f, 0f, 0f, // Top left.
             0.5f, 0.5f, 0f, 1f, 0f, // Top right.
@@ -98,19 +109,30 @@ sealed class W : Base
         _gl.BindVertexArray(0);
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
 
-        _shader = new(_gl, _vertexShaderSource, _fragmentShaderSource);
-        _shader.Load();
+        _camera = new(Vector2.Zero, 1f, this);
     }
 
     protected override void OnRender(double dt)
     {
+        _time += (float) dt;
+        
         // Clear the screen and set to black.
         _gl.ClearColor(0, 0, 0, 0);
         _gl.Clear(ClearBufferMask.ColorBufferBit);
+
+        var position = new Vector2(0f, 0f);
+        var scale = new Vector2(150, 100);
+        var rotation = _time * (MathF.PI / 180f) * ROTATION_SPEED;
+        var translationMatrix = Matrix4x4.CreateTranslation(position.X, position.Y, 0f);
+        var scaleMatrix = Matrix4x4.CreateScale(scale.X, scale.Y, 1f);
+        var rotationMatrix = Matrix4x4.CreateRotationZ(rotation);
+        
+        _shader.SetMatrix("model", scaleMatrix * rotationMatrix * translationMatrix);
+        _shader.Use();
+        _shader.SetMatrix("projection", _camera.ProjectionMatrix());
         
         // Bind the vertex array object, use the shader, draw the triangles, unbind the vertex array object.
         _gl.BindVertexArray(_vertexArrayObject);
-        _shader.Use();
         _gl.DrawArrays(PrimitiveType.Triangles, 0, 6);
         _gl.BindVertexArray(0);
     }

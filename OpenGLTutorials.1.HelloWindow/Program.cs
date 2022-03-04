@@ -13,7 +13,7 @@ sealed class W : Base
         base.OnLoad();
         
         // Get the OpenGL API for drawing to the window.
-        _gl = GL.GetApi(_window);
+        _gl = GL.GetApi(Window);
     }
 
     protected override void OnRender(double dt)

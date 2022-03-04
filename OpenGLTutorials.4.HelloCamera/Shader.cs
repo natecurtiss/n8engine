@@ -1,8 +1,8 @@
-﻿using Silk.NET.OpenGL;
+﻿using System.Diagnostics;
+using System.Numerics;
+using Silk.NET.OpenGL;
 using static System.String;
 using static Silk.NET.OpenGL.ShaderType;
-
-namespace N8Engine.Rendering;
 
 sealed class Shader
 {
@@ -26,7 +26,7 @@ sealed class Shader
 
         var infoLog = _gl.GetShaderInfoLog(vertexShader);
         if (!IsNullOrWhiteSpace(infoLog))
-            Debug.Log($"ERROR COMPILING VERTEX SHADER: {infoLog}");
+            Debug.WriteLine($"ERROR COMPILING VERTEX SHADER: {infoLog}");
         
         var fragmentShader = _gl.CreateShader(FragmentShader);
         _gl.ShaderSource(fragmentShader, _fragmentCode);
@@ -34,7 +34,7 @@ sealed class Shader
         
         infoLog = _gl.GetShaderInfoLog(fragmentShader);
         if (!IsNullOrWhiteSpace(infoLog))
-            Debug.Log($"ERROR COMPILING FRAGMENT SHADER: {infoLog}");
+            Debug.WriteLine($"ERROR COMPILING FRAGMENT SHADER: {infoLog}");
         
         _programId = _gl.CreateProgram();
         _gl.AttachShader(_programId, vertexShader);
@@ -48,4 +48,10 @@ sealed class Shader
     }
 
     public void Use() => _gl.UseProgram(_programId);
+    
+    public unsafe void SetMatrix(string name, Matrix4x4 value)
+    {
+        var location = _gl.GetUniformLocation(_programId, name);
+        _gl.UniformMatrix4(location, 1, false, (float*) &value);
+    }
 }
