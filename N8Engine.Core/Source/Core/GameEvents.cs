@@ -1,10 +1,11 @@
 ﻿using System;
+using Silk.NET.OpenGL;
 
 namespace N8Engine;
 
-interface GameEvents
+interface Loop
 {
-    event Action<Frame> OnEarlyUpdate;
     event Action<Frame> OnUpdate;
-    event Action<Frame> OnLateUpdate;
+    event Action<GL> OnRender;
+
 }

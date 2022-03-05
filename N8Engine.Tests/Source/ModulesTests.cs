@@ -2,6 +2,7 @@ using NUnit.Framework;
 
 namespace N8Engine.Tests;
 
+// TODO: Refactor.
 sealed class ModulesTests
 {
     class Empty : Module { }

@@ -4,16 +4,15 @@ using N8Engine.InputSystem;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 using N8Engine.Windowing;
+using Silk.NET.OpenGL;
 
 namespace N8Engine;
 
-public sealed class Game : ServiceLocator<Module>, GameEvents
+public sealed class Game : ServiceLocator<Module>, Loop
 {
     public static readonly Modules Modules = new();
-    
-    public event Action<Frame> OnEarlyUpdate;
     public event Action<Frame> OnUpdate;
-    public event Action<Frame> OnLateUpdate;
+    public event Action<GL> OnRender;
 
     WindowOptions _windowOptions;
     Window _window;
@@ -85,13 +84,8 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
     {
         _window = new(_windowOptions);
         _window.OnLoad += () => _sceneManager.Load(_firstScene);
-        _window.OnUpdate += frame =>
-        {
-            OnEarlyUpdate?.Invoke(frame);
-            OnUpdate?.Invoke(frame);
-            OnLateUpdate?.Invoke(frame);
-        };
-        // _window.OnRender += _render;
+        _window.OnUpdate += frame => OnUpdate?.Invoke(frame);
+        _window.OnRender += () => OnRender?.Invoke(_window.GL);
         _window.OnKeyDown += key => _input.UpdateKey(key, true);
         _window.OnKeyUp += key => _input.UpdateKey(key, false);
         

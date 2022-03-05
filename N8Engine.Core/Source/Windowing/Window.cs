@@ -1,6 +1,7 @@
 ﻿using System;
 using N8Engine.InputSystem;
 using Silk.NET.Input;
+using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 using static Silk.NET.Windowing.Window;
 using GLWindow = Silk.NET.Windowing.IWindow;
@@ -15,7 +16,8 @@ sealed class Window : WindowSize
     public event Action OnRender;
     public event Action<InputSystem.Key> OnKeyDown;
     public event Action<InputSystem.Key> OnKeyUp;
-    
+
+    public readonly GL GL;
     readonly GLWindow _window;    
     
     int WindowSize.Width => _window.Size.X;
@@ -32,6 +34,7 @@ sealed class Window : WindowSize
         _window.Closing += () => OnClose?.Invoke();
         _window.Update += fps => OnUpdate?.Invoke(new((float) fps));
         _window.Render += _ => OnRender?.Invoke();
+        GL = _window.CreateOpenGL();
     }
 
     public void Run() => _window.Run();

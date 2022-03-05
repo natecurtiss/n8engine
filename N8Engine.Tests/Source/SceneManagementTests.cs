@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Linq;
+using System.Numerics;
+using N8Engine.Rendering;
 using N8Engine.SceneManagement;
+using N8Engine.Windowing;
 using NUnit.Framework;
+using Silk.NET.OpenGL;
 
 namespace N8Engine.Tests;
 
+// TODO: Refactor.
 sealed class SceneManagementTests
 {
-    sealed class Events : GameEvents
+    sealed class Events : Loop
     {
-        public event Action<Frame>? OnEarlyUpdate;
         public event Action<Frame>? OnUpdate;
-        public event Action<Frame>? OnLateUpdate;
+        public event Action<GL>? OnRender;
     }
 
     sealed class S1 : Scene
@@ -30,8 +34,18 @@ sealed class SceneManagementTests
         }
     }
 
+    sealed class W : WindowSize
+    {
+        int WindowSize.Width => 0;
+        int WindowSize.Height => 0;
+    }
+
     const string FIRST = "first";
     const string SECOND = "second";
+
+    // TODO: This is really bad so get rid of it please and thank you.
+    [SetUp]
+    public void Setup() => Game.Modules.Add(new Camera(Vector2.Zero, 1f, new W()));
 
     [Test]
     public void TestInitialScene()

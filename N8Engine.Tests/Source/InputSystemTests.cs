@@ -4,6 +4,7 @@ using GLKey = Silk.NET.Input.Key;
 
 namespace N8Engine.Tests;
 
+// TODO: Refactor.
 sealed class InputSystemTests
 {
     const Key KEY = Key.A;

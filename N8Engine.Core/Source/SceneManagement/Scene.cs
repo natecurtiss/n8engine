@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Silk.NET.OpenGL;
 
 namespace N8Engine.SceneManagement;
 
@@ -22,22 +23,21 @@ public abstract class Scene : IEnumerable<GameObject>
         _gameObjects.Clear();
     }
 
-    internal void EarlyUpdate(Frame frame)
-    {
-        foreach (var gameObject in this.ToArray()) 
-            gameObject.EarlyUpdate(frame);
-    }
-    
     internal void Update(Frame frame)
     {
         foreach (var gameObject in this.ToArray()) 
+            gameObject.EarlyUpdate(frame);
+        foreach (var gameObject in this.ToArray()) 
             gameObject.Update(frame);
-    }
-    
-    internal void LateUpdate(Frame frame)
-    {
         foreach (var gameObject in this.ToArray()) 
             gameObject.LateUpdate(frame);
+
+    }
+
+    internal void Render(GL gl)
+    {
+        foreach (var gameObject in this.ToArray()) 
+            gameObject.Render(gl);
     }
 
     internal void Destroy(GameObject gameObject) => _gameObjects.Remove(gameObject);
