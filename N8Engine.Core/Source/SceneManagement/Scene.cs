@@ -13,6 +13,7 @@ public abstract class Scene : IEnumerable<GameObject>
     bool _isLoaded;
     
     public Camera Camera { get; private set; }
+    internal SpriteRenderer SpriteRenderer { get; private set; }
 
     public abstract void Load();
     
@@ -30,9 +31,10 @@ public abstract class Scene : IEnumerable<GameObject>
         return gameObject;
     }
 
-    internal void SwitchTo(WindowSize windowSize)
+    internal void SwitchTo(WindowSize windowSize, WindowRendering rendering)
     {
         Camera = new(Vector2.Zero, 1f, windowSize);
+        SpriteRenderer = new(rendering.GL);
         _isLoaded = true;
     }
 
@@ -59,6 +61,7 @@ public abstract class Scene : IEnumerable<GameObject>
     {
         foreach (var gameObject in this.ToArray()) 
             gameObject.Render(rendering);
+        SpriteRenderer.Display();
     }
 
     internal void Destroy(GameObject gameObject) => _gameObjects.Remove(gameObject);

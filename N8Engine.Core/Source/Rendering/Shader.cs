@@ -5,26 +5,27 @@ using static Silk.NET.OpenGL.ShaderType;
 
 namespace N8Engine.Rendering;
 
-public sealed class Shader
+sealed class Shader
 {
     readonly Debug _debug;
     readonly GL _gl;
-    readonly string _vertexCode;
-    readonly string _fragmentCode;
+    readonly string _vertex;
+    readonly string _fragment;
+    
     uint _programId;
     
-    public Shader(GL gl, string vertexCode, string fragmentCode)
+    public Shader(GL gl, string vertex, string fragment)
     {
         _gl = gl;
-        _vertexCode = vertexCode;
-        _fragmentCode = fragmentCode;
+        _vertex = vertex;
+        _fragment = fragment;
         _debug = Game.Modules.Get<Debug>();
     }
 
     public void Load()
     {
         var vertexShader = _gl.CreateShader(VertexShader);
-        _gl.ShaderSource(vertexShader, _vertexCode);
+        _gl.ShaderSource(vertexShader, _vertex);
         _gl.CompileShader(vertexShader);
 
         var infoLog = _gl.GetShaderInfoLog(vertexShader);
@@ -32,7 +33,7 @@ public sealed class Shader
             _debug.Log($"ERROR COMPILING VERTEX SHADER: {infoLog}");
         
         var fragmentShader = _gl.CreateShader(FragmentShader);
-        _gl.ShaderSource(fragmentShader, _fragmentCode);
+        _gl.ShaderSource(fragmentShader, _fragment);
         _gl.CompileShader(fragmentShader);
         
         infoLog = _gl.GetShaderInfoLog(fragmentShader);
