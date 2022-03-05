@@ -16,10 +16,10 @@ sealed class GameObjectTests
     public void Setup() => _gameObject = new(new S(), "foo");
     
     [Test]
-    public void TestGetNonExistingComponent() => IsNull(_gameObject.GetComponent<C1>());
+    public void TestGetNonExistentComponent() => IsNull(_gameObject.GetComponent<C1>());
 
     [Test]
-    public void TestGetExistingComponent()
+    public void TestGetExistentComponent()
     {
         _gameObject.AddComponent<C1>();
         IsNotNull(_gameObject.GetComponent<C1>());
@@ -50,13 +50,13 @@ sealed class GameObjectTests
     public void TestAddDuplicateComponent()
     {
         _gameObject.AddComponent<C1>();
-        Catch(() => _gameObject.AddComponent<C1>());
+        Catch<ComponentAlreadyAttachedException>(() => _gameObject.AddComponent<C1>());
     }
     
     [Test]
     public void TestRemoveComponent()
     {
-        _gameObject.AddComponent<C1>(out var c1);
+        _gameObject.AddComponent<C1>();
         _gameObject.RemoveComponent<C1>();
         IsNull(_gameObject.GetComponent<C1>());
     }
@@ -70,7 +70,7 @@ sealed class GameObjectTests
     }
 
     [Test]
-    public void TestRemoveNonExistingComponent() => Catch(() => _gameObject.RemoveComponent(new C2()));
+    public void TestRemoveNonExistentComponent() => Catch<ComponentNotAttachedException>(() => _gameObject.RemoveComponent(new C2()));
 
     [Test]
     public void TestGameObjectIsNotDestroyedInitially() => IsFalse(_gameObject.IsDestroyed);
@@ -86,20 +86,20 @@ sealed class GameObjectTests
     public void TestGetComponentOnDestroyedGameObject()
     {
         _gameObject.AddComponent<C1>().Destroy();
-        Catch(() => _gameObject.GetComponent<C1>());
+        Catch<GameObjectIsDestroyedException>(() => _gameObject.GetComponent<C1>());
     }
     
     [Test]
     public void TestAddComponentOnDestroyedGameObject()
     {
         _gameObject.Destroy();
-        Catch(() => _gameObject.AddComponent<C1>());
+        Catch<GameObjectIsDestroyedException>(() => _gameObject.AddComponent<C1>());
     }
     
     [Test]
     public void TestRemoveComponentOnDestroyedGameObject()
     {
         _gameObject.AddComponent<C1>(out var c1).Destroy();
-        Catch(() => _gameObject.RemoveComponent(c1));
+        Catch<GameObjectIsDestroyedException>(() => _gameObject.RemoveComponent(c1));
     }
 }

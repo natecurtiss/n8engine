@@ -2,6 +2,7 @@
 using System.Linq;
 using N8Engine.InputSystem;
 using NUnit.Framework;
+using static NUnit.Framework.Assert;
 using GLKey = Silk.NET.Input.Key;
 
 namespace N8Engine.Tests;
@@ -14,40 +15,40 @@ sealed class InputSystemTests
     public void Setup() => _input = new();
 
     [Test]
-    public void TestAllKeysReleasedInitially() => Assert.IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && _input.IsReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    public void TestAllKeysReleasedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && _input.IsReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
     [Test]
-    public void TestNoKeysPressedInitially() => Assert.IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.IsPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    public void TestNoKeysPressedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.IsPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
     [Test]
-    public void TestNoKeysJustReleasedInitially() => Assert.IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.WasJustReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    public void TestNoKeysJustReleasedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.WasJustReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
     [Test]
-    public void TestNoKeysJustPressedInitially() => Assert.IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.WasJustPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    public void TestNoKeysJustPressedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.WasJustPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
 
     [Test]
     public void TestIsSpecificKeyPressed()
     {
         _input.UpdateKey(Key.A, true);
-        Assert.IsTrue(_input.IsPressed(Key.A));
+        IsTrue(_input.IsPressed(Key.A));
     }
     
     [Test]
     public void TestIsAnyKeyPressed()
     {
         _input.UpdateKey(Key.A, true);
-        Assert.IsTrue(_input.IsPressed(Key.Any));
+        IsTrue(_input.IsPressed(Key.Any));
     }
     
     [Test]
     public void TestWasSpecificKeyJustPressed()
     {
         _input.UpdateKey(Key.A, true);
-        Assert.IsTrue(_input.WasJustPressed(Key.A));
+        IsTrue(_input.WasJustPressed(Key.A));
     }
     
     [Test]
     public void TestWasAnyKeyJustPressed()
     {
         _input.UpdateKey(Key.A, true);
-        Assert.IsTrue(_input.WasJustPressed(Key.Any));
+        IsTrue(_input.WasJustPressed(Key.Any));
     }
     
     [Test]
@@ -55,7 +56,7 @@ sealed class InputSystemTests
     {
         _input.UpdateKey(Key.A, true);
         _input.UpdateKey(Key.A, false);
-        Assert.IsTrue(_input.IsReleased(Key.A));
+        IsTrue(_input.IsReleased(Key.A));
     }
     
     [Test]
@@ -63,7 +64,7 @@ sealed class InputSystemTests
     {
         _input.UpdateKey(Key.A, true);
         _input.UpdateKey(Key.A, false);
-        Assert.IsTrue(_input.IsReleased(Key.Any));
+        IsTrue(_input.IsReleased(Key.Any));
     }
     
     [Test]
@@ -71,7 +72,7 @@ sealed class InputSystemTests
     {
         _input.UpdateKey(Key.A, true);
         _input.UpdateKey(Key.A, false);
-        Assert.IsTrue(_input.WasJustReleased(Key.A));
+        IsTrue(_input.WasJustReleased(Key.A));
     }
     
     [Test]
@@ -79,9 +80,9 @@ sealed class InputSystemTests
     {
         _input.UpdateKey(Key.A, true);
         _input.UpdateKey(Key.A, false);
-        Assert.IsTrue(_input.WasJustReleased(Key.Any));
+        IsTrue(_input.WasJustReleased(Key.Any));
     }
 
     [Test]
-    public void TestGLKeyToKeyConversion() => Assert.IsTrue(GLKey.A.AsKey() == Key.A);
+    public void TestGLKeyToKeyConversion() => IsTrue(GLKey.A.AsKey() == Key.A);
 }
