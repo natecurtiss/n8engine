@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Numerics;
 using N8Engine.InputSystem;
+using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 using N8Engine.Windowing;
 
@@ -16,19 +18,18 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
     WindowOptions _windowOptions;
     Window _window;
 
-    readonly Debug _debug;
-    readonly Input _input;
+    readonly Debug _debug = new();
+    readonly Input _input = new();
     readonly SceneManager _sceneManager;
+    Camera _camera;
     Scene _firstScene = new EmptyScene();
 
     public Game()
     {
         _windowOptions = new("N8Engine Game", new(1280, 720), 60, WindowState.Windowed);
-        _debug = new();
-        _input = new();
-        _sceneManager = new(this);
         Modules.Add(_debug);
         Modules.Add(_input);
+        _sceneManager = new(this);
         Modules.Add(_sceneManager);
     }
 
@@ -93,6 +94,10 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
         // _window.OnRender += _render;
         _window.OnKeyDown += key => _input.UpdateKey(key, true);
         _window.OnKeyUp += key => _input.UpdateKey(key, false);
+        
+        _camera = new(Vector2.Zero, 1f, _window);
+        Modules.Add(_camera);
+
         _window.Run();
     }
 }
