@@ -5,6 +5,8 @@ namespace N8Engine;
 public sealed class Modules : ServiceLocator<Module>
 {
     internal Modules() { }
+
+    internal new int Count => base.Count;
     
     public T Get<T>() where T : Module
     {
@@ -21,13 +23,7 @@ public sealed class Modules : ServiceLocator<Module>
     internal void Add<T>(T module) where T : Module => Register(module);
     internal void Remove<T>() where T : Module
     {
-        try
-        {
-            Deregister<T>();
-        }
-        catch (KeyNotFoundException)
-        {
+        if (!Deregister<T>())
             throw new ModuleNotFoundException($"Module of type {typeof(T)} does not exist to remove!");
-        }
     }
 }

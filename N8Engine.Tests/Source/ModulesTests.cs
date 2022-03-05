@@ -2,34 +2,40 @@ using NUnit.Framework;
 
 namespace N8Engine.Tests;
 
-// TODO: Refactor.
 sealed class ModulesTests
 {
-    class Empty : Module { }
+    class M : Module { }
 
-    [Test]
-    public void TestGetModule()
-    {
-        var modules = new Modules();
-        Assert.Catch(() => modules.Get<Empty>());
-        modules.Add(new Empty());
-        Assert.IsNotNull(modules.Get<Empty>());
-    }
+    Modules _modules = null!;
+
+    [SetUp]
+    public void Setup() => _modules = new();
     
     [Test]
     public void TestAddModule()
     {
-        var modules = new Modules();
-        modules.Add(new Empty());
-        Assert.IsNotNull(modules.Get<Empty>());
+        _modules.Add(new M());
+        Assert.IsTrue(_modules.Count == 1);
     }
     
     [Test]
-    public void TestRemoveModule()
+    public void TestRemoveNonExistentModule() => Assert.Catch<ModuleNotFoundException>(() => _modules.Remove<M>());
+
+    [Test]
+    public void TestRemoveExistentModule()
     {
-        var modules = new Modules();
-        modules.Add(new Empty());
-        modules.Remove<Empty>();
-        Assert.Catch(() => modules.Get<Empty>());
+        _modules.Add(new M());
+        _modules.Remove<M>();
+        Assert.IsTrue(_modules.Count == 0);
+    }
+
+    [Test]
+    public void TestGetNonExistentModule() => Assert.Catch<ModuleNotFoundException>(() => _modules.Get<M>());
+
+    [Test]
+    public void TestGetExistentModule()
+    {
+        _modules.Add(new M());
+        Assert.IsNotNull(_modules.Get<M>());
     }
 }
