@@ -2,11 +2,10 @@
 
 namespace N8Engine;
 
-public static class Debug
+public sealed class Debug : Module
 {
-    static Action<object> _onOutput;
+    Action<object> _onOutput;
 
-    public static void OnOutput(Action<object> onOutput) => _onOutput = onOutput;
-
-    public static void Log(object message) => _onOutput(message);
+    public void OnOutput(Action<object> onOutput) => _onOutput = onOutput;
+    public void Log(object message) => _onOutput(message);
 }

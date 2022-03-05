@@ -75,7 +75,7 @@ sealed class W : Base
         // *** We're using inter-leaf data (X, Y, R, G, and B are included in the same array). ***
         
         // This means for positions we need to count the first two and then skip the rest in the same line.
-        // Start at index 0.
+        // Make this the first vertex attrib array.
         // Positions -> 2 dimensions.
         // We're using floats.
         // Don't normalize the values.
@@ -86,7 +86,7 @@ sealed class W : Base
         _gl.EnableVertexAttribArray(0);
         
         // Now we move on to colors.
-        // Start at the second index (after X and Y).
+        // Make this the second vertex attrib array.
         // We're using floats.
         // Don't normalize the values.
         // There are 5 values between each line (number of bytes).

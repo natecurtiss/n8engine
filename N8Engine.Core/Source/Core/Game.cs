@@ -15,7 +15,8 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
 
     WindowOptions _windowOptions;
     Window _window;
-    
+
+    readonly Debug _debug;
     readonly Input _input;
     readonly SceneManager _sceneManager;
     Scene _firstScene = new EmptyScene();
@@ -23,8 +24,10 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
     public Game()
     {
         _windowOptions = new("N8Engine Game", new(1280, 720), 60, WindowState.Windowed);
+        _debug = new();
         _input = new();
         _sceneManager = new(this);
+        Modules.Add(_debug);
         Modules.Add(_input);
         Modules.Add(_sceneManager);
     }
@@ -73,7 +76,7 @@ public sealed class Game : ServiceLocator<Module>, GameEvents
 
     public Game WithDebugOutput(Action<object> onOutput)
     {
-        Debug.OnOutput(onOutput);
+        _debug.OnOutput(onOutput);
         return this;
     }
     
