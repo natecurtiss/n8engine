@@ -1,59 +1,87 @@
-﻿using N8Engine.InputSystem;
+﻿using System;
+using System.Linq;
+using N8Engine.InputSystem;
 using NUnit.Framework;
 using GLKey = Silk.NET.Input.Key;
 
 namespace N8Engine.Tests;
 
-// TODO: Refactor.
 sealed class InputSystemTests
 {
-    const Key KEY = Key.A;
-    const Key ANY = Key.Any;
-    const GLKey GL_KEY = GLKey.A;
+    Input _input = null!;
+
+    [SetUp]
+    public void Setup() => _input = new();
 
     [Test]
-    public void TestIsKeyPressed()
+    public void TestAllKeysReleasedInitially() => Assert.IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && _input.IsReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    [Test]
+    public void TestNoKeysPressedInitially() => Assert.IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.IsPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    [Test]
+    public void TestNoKeysJustReleasedInitially() => Assert.IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.WasJustReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    [Test]
+    public void TestNoKeysJustPressedInitially() => Assert.IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.WasJustPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+
+    [Test]
+    public void TestIsSpecificKeyPressed()
     {
-        var input = new Input();
-        input.UpdateKey(KEY, true);
-        Assert.IsTrue(input.IsPressed(KEY));
-        Assert.IsTrue(input.IsPressed(ANY));
+        _input.UpdateKey(Key.A, true);
+        Assert.IsTrue(_input.IsPressed(Key.A));
     }
     
     [Test]
-    public void TestWasKeyJustPressed()
+    public void TestIsAnyKeyPressed()
     {
-        var input = new Input();
-        input.UpdateKey(KEY, true);
-        Assert.IsTrue(input.WasJustPressed(KEY));
-        Assert.IsTrue(input.WasJustPressed(ANY));
-        input.UpdateKey(KEY, false);
-        input.UpdateKey(KEY, true);
-        Assert.IsTrue(input.WasJustPressed(KEY));
-        Assert.IsTrue(input.WasJustPressed(ANY));
+        _input.UpdateKey(Key.A, true);
+        Assert.IsTrue(_input.IsPressed(Key.Any));
     }
     
     [Test]
-    public void TestIsKeyReleased()
+    public void TestWasSpecificKeyJustPressed()
     {
-        var input = new Input();
-        Assert.IsTrue(input.IsReleased(KEY));
-        Assert.IsTrue(input.IsReleased(ANY));
-        input.UpdateKey(KEY, false);
-        Assert.IsTrue(input.IsReleased(KEY));
-        Assert.IsTrue(input.IsReleased(ANY));
+        _input.UpdateKey(Key.A, true);
+        Assert.IsTrue(_input.WasJustPressed(Key.A));
     }
     
     [Test]
-    public void TestWasKeyJustReleased()
+    public void TestWasAnyKeyJustPressed()
     {
-        var input = new Input();
-        input.UpdateKey(KEY, true);
-        input.UpdateKey(KEY, false);
-        Assert.IsTrue(input.WasJustReleased(KEY));
-        Assert.IsTrue(input.WasJustReleased(ANY));
+        _input.UpdateKey(Key.A, true);
+        Assert.IsTrue(_input.WasJustPressed(Key.Any));
+    }
+    
+    [Test]
+    public void TestIsSpecificKeyReleased()
+    {
+        _input.UpdateKey(Key.A, true);
+        _input.UpdateKey(Key.A, false);
+        Assert.IsTrue(_input.IsReleased(Key.A));
+    }
+    
+    [Test]
+    public void TestIsAnyKeyReleased()
+    {
+        _input.UpdateKey(Key.A, true);
+        _input.UpdateKey(Key.A, false);
+        Assert.IsTrue(_input.IsReleased(Key.Any));
+    }
+    
+    [Test]
+    public void TestWasSpecificKeyJustReleased()
+    {
+        _input.UpdateKey(Key.A, true);
+        _input.UpdateKey(Key.A, false);
+        Assert.IsTrue(_input.WasJustReleased(Key.A));
+    }
+    
+    [Test]
+    public void TestWasAnyKeyJustReleased()
+    {
+        _input.UpdateKey(Key.A, true);
+        _input.UpdateKey(Key.A, false);
+        Assert.IsTrue(_input.WasJustReleased(Key.Any));
     }
 
     [Test]
-    public void TestKeyConversions() => Assert.IsTrue(GL_KEY.AsKey() == KEY);
+    public void TestGLKeyToKeyConversion() => Assert.IsTrue(GLKey.A.AsKey() == Key.A);
 }
