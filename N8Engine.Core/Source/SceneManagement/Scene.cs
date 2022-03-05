@@ -32,9 +32,7 @@ public abstract class Scene : IEnumerable<GameObject>
 
     internal void SwitchTo(WindowSize windowSize)
     {
-        Camera ??= new(windowSize);
-        Camera.Position = Vector2.Zero;
-        Camera.Zoom = 1f;
+        Camera = new(Vector2.Zero, 1f, windowSize);
         _isLoaded = true;
     }
 

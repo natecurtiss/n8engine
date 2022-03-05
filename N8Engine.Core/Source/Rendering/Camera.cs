@@ -10,7 +10,12 @@ public sealed class Camera
     public Vector2 Position { get; set; }
     public float Zoom { get; set; }
     
-    internal Camera(WindowSize windowSize) => _windowSize = windowSize;
+    internal Camera(Vector2 position, float zoom, WindowSize windowSize)
+    {
+        Position = position;
+        Zoom = zoom;
+        _windowSize = windowSize;
+    }
 
     internal Matrix4x4 ProjectionMatrix()
     {
