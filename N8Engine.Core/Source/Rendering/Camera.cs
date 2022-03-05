@@ -3,19 +3,14 @@ using N8Engine.Windowing;
 
 namespace N8Engine.Rendering;
 
-public sealed class Camera : Module
+public sealed class Camera
 {
     readonly WindowSize _windowSize;
 
     public Vector2 Position { get; set; }
     public float Zoom { get; set; }
     
-    internal Camera(Vector2 position, float zoom, WindowSize windowSize)
-    {
-        Position = position;
-        Zoom = zoom;
-        _windowSize = windowSize;
-    }
+    internal Camera(WindowSize windowSize) => _windowSize = windowSize;
 
     internal Matrix4x4 ProjectionMatrix()
     {

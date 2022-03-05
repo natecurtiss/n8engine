@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using N8Engine.SceneManagement;
-using Silk.NET.OpenGL;
+using N8Engine.Windowing;
 
 namespace N8Engine;
 
@@ -98,10 +98,10 @@ public sealed class GameObject
             component.LateUpdate(frame);
     }
 
-    internal void Render(GL gl)
+    internal void Render(WindowRendering rendering)
     {
         foreach (var component in _components.Values) 
-            component.Render(gl);
+            component.Render(rendering);
     }
 
     public override string ToString() => Name;

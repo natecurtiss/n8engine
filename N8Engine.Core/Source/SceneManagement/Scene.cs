@@ -1,19 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Silk.NET.OpenGL;
+using System.Numerics;
+using N8Engine.Rendering;
+using N8Engine.Windowing;
 
 namespace N8Engine.SceneManagement;
 
-// TODO : Get the camera in here homie.
 public abstract class Scene : IEnumerable<GameObject>
 {
+    readonly List<GameObject> _gameObjects = new();
     bool _isLoaded;
     
-    readonly List<GameObject> _gameObjects = new();
+    public Camera Camera { get; private set; }
 
     public abstract void Load();
+    
     public GameObject Create(string name) => Create(name, out _);
+    
     public GameObject Create(string name, out GameObject gameObject)
     {
         if (!_isLoaded)
@@ -26,7 +30,13 @@ public abstract class Scene : IEnumerable<GameObject>
         return gameObject;
     }
 
-    internal void SwitchTo() => _isLoaded = true;
+    internal void SwitchTo(WindowSize windowSize)
+    {
+        Camera ??= new(windowSize);
+        Camera.Position = Vector2.Zero;
+        Camera.Zoom = 1f;
+        _isLoaded = true;
+    }
 
     internal void Unload()
     {
@@ -47,10 +57,10 @@ public abstract class Scene : IEnumerable<GameObject>
 
     }
 
-    internal void Render(GL gl)
+    internal void Render(WindowRendering rendering)
     {
         foreach (var gameObject in this.ToArray()) 
-            gameObject.Render(gl);
+            gameObject.Render(rendering);
     }
 
     internal void Destroy(GameObject gameObject) => _gameObjects.Remove(gameObject);

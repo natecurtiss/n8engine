@@ -1,11 +1,11 @@
 ﻿using System;
-using Silk.NET.OpenGL;
+using N8Engine.Windowing;
 
 namespace N8Engine;
 
 interface Loop
 {
     event Action<Frame> OnUpdate;
-    event Action<GL> OnRender;
+    event Action<WindowRendering> OnRender;
 
 }
