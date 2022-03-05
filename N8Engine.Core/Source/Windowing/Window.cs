@@ -1,7 +1,6 @@
 ﻿using System;
 using N8Engine.InputSystem;
 using Silk.NET.Input;
-using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
 using static Silk.NET.Windowing.Window;
 using GLWindow = Silk.NET.Windowing.IWindow;
