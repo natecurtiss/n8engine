@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using N8Engine.SceneManagement;
-using N8Engine.Windowing;
 
 namespace N8Engine;
 
@@ -98,10 +97,10 @@ public sealed class GameObject
             component.LateUpdate(frame);
     }
 
-    internal void Render(WindowRendering rendering)
+    internal void Render()
     {
         foreach (var component in _components.Values) 
-            component.Render(rendering);
+            component.Render();
     }
 
     public override string ToString() => Name;

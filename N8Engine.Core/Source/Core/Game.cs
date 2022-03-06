@@ -8,15 +8,16 @@ namespace N8Engine;
 public sealed class Game : ServiceLocator<Module>, Loop
 {
     public static readonly Modules Modules = new();
-    
-    public event Action<Frame> OnUpdate;
-    public event Action<WindowRendering> OnRender;
 
-    WindowOptions _windowOptions;
+    public event Action<Frame> OnUpdate;
+    public event Action OnRender;
+
     Window _window;
     Debug _debug;
     Input _input;
     SceneManager _sceneManager;
+    
+    WindowOptions _windowOptions;
     Scene _firstScene = new EmptyScene();
 
     public Game()
@@ -80,7 +81,7 @@ public sealed class Game : ServiceLocator<Module>, Loop
         Modules.Add(_sceneManager = new(this, _window));
         _window.OnLoad += () => _sceneManager.Load(_firstScene);
         _window.OnUpdate += frame => OnUpdate?.Invoke(frame);
-        _window.OnRender += () => OnRender?.Invoke(_window);
+        _window.OnRender += () => OnRender?.Invoke();
         _window.OnKeyDown += key => _input.UpdateKey(key, true);
         _window.OnKeyUp += key => _input.UpdateKey(key, false);
         _window.Run();

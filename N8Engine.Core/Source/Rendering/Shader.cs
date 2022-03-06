@@ -1,22 +1,22 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using Silk.NET.OpenGL;
 using static System.String;
 using static Silk.NET.OpenGL.ShaderType;
+using static N8Engine.Windowing.Window;
 
 namespace N8Engine.Rendering;
 
 sealed class Shader
 {
     readonly Debug _debug;
-    readonly GL _gl;
     readonly string _vertex;
     readonly string _fragment;
     
-    uint _programId;
+    uint _handle;
     
-    public Shader(GL gl, string vertex, string fragment)
+    public Shader(string vertex, string fragment)
     {
-        _gl = gl;
         _vertex = vertex;
         _fragment = fragment;
         _debug = Game.Modules.Get<Debug>();
@@ -24,38 +24,54 @@ sealed class Shader
 
     public void Load()
     {
-        var vertexShader = _gl.CreateShader(VertexShader);
-        _gl.ShaderSource(vertexShader, _vertex);
-        _gl.CompileShader(vertexShader);
+        var vertexShader = Graphics.CreateShader(VertexShader);
+        Graphics.ShaderSource(vertexShader, _vertex);
+        Graphics.CompileShader(vertexShader);
 
-        var infoLog = _gl.GetShaderInfoLog(vertexShader);
+        var infoLog = Graphics.GetShaderInfoLog(vertexShader);
         if (!IsNullOrWhiteSpace(infoLog))
             _debug.Log($"ERROR COMPILING VERTEX SHADER: {infoLog}");
         
-        var fragmentShader = _gl.CreateShader(FragmentShader);
-        _gl.ShaderSource(fragmentShader, _fragment);
-        _gl.CompileShader(fragmentShader);
+        var fragmentShader = Graphics.CreateShader(FragmentShader);
+        Graphics.ShaderSource(fragmentShader, _fragment);
+        Graphics.CompileShader(fragmentShader);
         
-        infoLog = _gl.GetShaderInfoLog(fragmentShader);
+        infoLog = Graphics.GetShaderInfoLog(fragmentShader);
         if (!IsNullOrWhiteSpace(infoLog))
             _debug.Log($"ERROR COMPILING FRAGMENT SHADER: {infoLog}");
         
-        _programId = _gl.CreateProgram();
-        _gl.AttachShader(_programId, vertexShader);
-        _gl.AttachShader(_programId, fragmentShader);
-        _gl.LinkProgram(_programId);
+        _handle = Graphics.CreateProgram();
+        Graphics.AttachShader(_handle, vertexShader);
+        Graphics.AttachShader(_handle, fragmentShader);
+        Graphics.LinkProgram(_handle);
         
-        _gl.DetachShader(_programId, vertexShader);
-        _gl.DetachShader(_programId, fragmentShader);
-        _gl.DeleteShader(vertexShader);
-        _gl.DeleteShader(fragmentShader);
+        Graphics.DetachShader(_handle, vertexShader);
+        Graphics.DetachShader(_handle, fragmentShader);
+        Graphics.DeleteShader(vertexShader);
+        Graphics.DeleteShader(fragmentShader);
     }
 
-    public void Use() => _gl.UseProgram(_programId);
+    public void Use() => Graphics.UseProgram(_handle);
     
     public unsafe void SetMatrix(string name, Matrix4x4 value)
     {
-        var location = _gl.GetUniformLocation(_programId, name);
-        _gl.UniformMatrix4(location, 1, false, (float*) &value);
+        var location = Graphics.GetUniformLocation(_handle, name);
+        Graphics.UniformMatrix4(location, 1, false, (float*) &value);
+    }
+    
+    public void SetUniform(string name, int value)
+    {
+        var location = Graphics.GetUniformLocation(_handle, name);
+        if (location == -1)
+            throw new InvalidOperationException($"{name} uniform not found on shader.");
+        Graphics.Uniform1(location, value);
+    }
+
+    public void SetUniform(string name, float value)
+    {
+        var location = Graphics.GetUniformLocation(_handle, name);
+        if (location == -1)
+            throw new InvalidOperationException($"{name} uniform not found on shader.");
+        Graphics.Uniform1(location, value);
     }
 }

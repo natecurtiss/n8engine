@@ -6,15 +6,13 @@ public sealed class SceneManager : Module
 {
     readonly Loop _loop;
     readonly WindowSize _windowSize;
-    readonly WindowRendering _rendering;
 
     public Scene CurrentScene { get; private set; } = new EmptyScene();
     
-    internal SceneManager(Loop loop, WindowSize windowSize, WindowRendering rendering)
+    internal SceneManager(Loop loop, WindowSize windowSize)
     {
         _loop = loop;
         _windowSize = windowSize;
-        _rendering = rendering;
     }
 
     public void Load(Scene scene)
@@ -26,7 +24,7 @@ public sealed class SceneManager : Module
         
         _loop.OnUpdate += CurrentScene.Update;
         _loop.OnRender += CurrentScene.Render;
-        CurrentScene.SwitchTo(_windowSize, _rendering);
+        CurrentScene.SwitchTo(_windowSize);
         CurrentScene.Load();
     }
 }

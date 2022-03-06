@@ -8,5 +8,5 @@ public abstract class Component
     public virtual void EarlyUpdate(Frame frame) { }
     public virtual void Update(Frame frame) { }
     public virtual void LateUpdate(Frame frame) { }
-    internal virtual void Render(WindowRendering rendering) { }
+    internal virtual void Render() { }
 }

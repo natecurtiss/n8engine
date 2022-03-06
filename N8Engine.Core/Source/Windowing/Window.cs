@@ -8,8 +8,10 @@ using GLWindow = Silk.NET.Windowing.IWindow;
 
 namespace N8Engine.Windowing;
 
-sealed class Window : WindowSize, WindowRendering
+sealed class Window : WindowSize
 {
+    public static GL Graphics { get; private set; }
+
     public event Action OnLoad;
     public event Action OnClose;
     public event Action<Frame> OnUpdate;
@@ -17,12 +19,10 @@ sealed class Window : WindowSize, WindowRendering
     public event Action<InputSystem.Key> OnKeyDown;
     public event Action<InputSystem.Key> OnKeyUp;
 
-    readonly GL _gl;
     readonly GLWindow _window;    
     
     int WindowSize.Width => _window.Size.X;
     int WindowSize.Height => _window.Size.Y;
-    GL WindowRendering.GL => _gl;
 
     public Window(WindowOptions options)
     {
@@ -35,7 +35,7 @@ sealed class Window : WindowSize, WindowRendering
         _window.Closing += () => OnClose?.Invoke();
         _window.Update += fps => OnUpdate?.Invoke(new((float) fps));
         _window.Render += _ => OnRender?.Invoke();
-        _gl = _window.CreateOpenGL();
+        Graphics = _window.CreateOpenGL();
     }
 
     public void Run() => _window.Run();

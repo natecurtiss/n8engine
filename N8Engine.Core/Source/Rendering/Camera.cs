@@ -17,7 +17,7 @@ public sealed class Camera
         _windowSize = windowSize;
     }
 
-    internal Matrix4x4 ProjectionMatrix()
+    internal Matrix4x4 Projection()
     {
         var left = Position.X - _windowSize.Width / 2f;
         var right = Position.X + _windowSize.Width / 2f;
