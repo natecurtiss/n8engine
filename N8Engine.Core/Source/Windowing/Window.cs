@@ -29,13 +29,13 @@ sealed class Window : WindowSize
         _window = Create(options);
         _window.Load += () =>
         {
+            Graphics = _window.CreateOpenGL();
             SetupInput();
             OnLoad?.Invoke();
         };
         _window.Closing += () => OnClose?.Invoke();
         _window.Update += fps => OnUpdate?.Invoke(new((float) fps));
         _window.Render += _ => OnRender?.Invoke();
-        Graphics = _window.CreateOpenGL();
     }
 
     public void Run() => _window.Run();

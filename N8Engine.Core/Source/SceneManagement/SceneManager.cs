@@ -17,11 +17,13 @@ public sealed class SceneManager : Module
 
     public void Load(Scene scene)
     {
+        _loop.OnStart -= CurrentScene.Initialize;
         _loop.OnUpdate -= CurrentScene.Update;
         _loop.OnRender -= CurrentScene.Render;
         CurrentScene.Unload();
         CurrentScene = scene;
         
+        _loop.OnStart += CurrentScene.Initialize;
         _loop.OnUpdate += CurrentScene.Update;
         _loop.OnRender += CurrentScene.Render;
         CurrentScene.SwitchTo(_windowSize);

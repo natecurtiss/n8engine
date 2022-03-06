@@ -13,6 +13,6 @@ sealed class MainScene : Scene
         Create("player", out var player)
             .AddComponent(new Transform())
             .AddComponent(new Player())
-            .AddComponent(new Sprite(this, player, "../../../../Assets/Sprites/n8dev.png"));
+            .AddComponent(new Sprite(this, player, "../../../../Assets/Sprites/n8dev.jpg"));
     }
 }

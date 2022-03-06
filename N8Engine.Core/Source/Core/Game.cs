@@ -9,6 +9,7 @@ public sealed class Game : ServiceLocator<Module>, Loop
 {
     public static readonly Modules Modules = new();
 
+    public event Action OnStart;
     public event Action<Frame> OnUpdate;
     public event Action OnRender;
 
@@ -79,7 +80,11 @@ public sealed class Game : ServiceLocator<Module>, Loop
         Modules.Add(_debug = new());
         Modules.Add(_input = new());
         Modules.Add(_sceneManager = new(this, _window));
-        _window.OnLoad += () => _sceneManager.Load(_firstScene);
+        _window.OnLoad += () =>
+        {
+            OnStart?.Invoke();
+            _sceneManager.Load(_firstScene);
+        };
         _window.OnUpdate += frame => OnUpdate?.Invoke(frame);
         _window.OnRender += () => OnRender?.Invoke();
         _window.OnKeyDown += key => _input.UpdateKey(key, true);

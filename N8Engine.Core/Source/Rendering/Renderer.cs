@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Numerics;
 using Silk.NET.OpenGL;
-using Silk.NET.SDL;
 using static N8Engine.Windowing.Window;
 using Boolean = Silk.NET.OpenGL.Boolean;
 
@@ -10,19 +9,17 @@ namespace N8Engine.Rendering;
 // For now this only supports Sprites but this might change.
 sealed class Renderer
 {
-    readonly Shader _shader;
+    Shader _shader;
     Texture _texture;
-
     uint _vao;
-    uint _vbo;
 
-    public unsafe Renderer()
+    public unsafe void Initialize()
     {
         _shader = new("../../../../Assets/Shaders/sprite.vert", "../../../../Assets/Shaders/sprite.frag");
         _shader.Load();
         
         _vao = Graphics.GenVertexArray();
-        _vbo = Graphics.GenBuffer();
+        var vbo = Graphics.GenBuffer();
         
         var vertices = new[]
         {
@@ -36,7 +33,7 @@ sealed class Renderer
             1.0f, 0.0f, 1.0f, 0.0f
         };
         
-        Graphics.BindBuffer(GLEnum.ArrayBuffer, _vbo);
+        Graphics.BindBuffer(GLEnum.ArrayBuffer, vbo);
         fixed (void* first = &vertices[0])
         {
             Graphics.BufferData(GLEnum.ArrayBuffer, (nuint) (sizeof(nuint) * vertices.Length), first, GLEnum.StaticDraw);
@@ -48,7 +45,6 @@ sealed class Renderer
         
         Graphics.BindBuffer(GLEnum.ArrayBuffer, 0);
         Graphics.BindVertexArray(0);
-
     }
     
     public void Draw(Renderable renderable)

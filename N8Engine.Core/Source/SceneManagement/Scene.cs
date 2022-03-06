@@ -45,6 +45,8 @@ public abstract class Scene : IEnumerable<GameObject>
         _gameObjects.Clear();
     }
 
+    internal void Initialize() => Renderer.Initialize();
+
     internal void Update(Frame frame)
     {
         foreach (var gameObject in this.ToArray()) 
