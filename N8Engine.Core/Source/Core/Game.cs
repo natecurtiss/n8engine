@@ -1,6 +1,7 @@
 ﻿using System;
 using N8Engine.InputSystem;
 using N8Engine.SceneManagement;
+using N8Engine.Utils;
 using N8Engine.Windowing;
 
 namespace N8Engine;

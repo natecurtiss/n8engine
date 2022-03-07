@@ -1,4 +1,4 @@
-﻿namespace N8Engine.Mathematics;
+﻿namespace N8Engine;
 
 public sealed class TrackScale : Component
 {
