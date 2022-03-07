@@ -8,6 +8,7 @@ using GLWindow = Silk.NET.Windowing.IWindow;
 
 namespace N8Engine.Windowing;
 
+// TODO: Wrapper that can be Unit Tested.
 sealed class Window : WindowSize
 {
     public static GL Graphics { get; private set; }
