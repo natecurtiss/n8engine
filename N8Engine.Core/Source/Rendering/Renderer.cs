@@ -13,8 +13,9 @@ sealed class Renderer
     Texture _texture;
     uint _vao;
 
-    public unsafe void Initialize()
+    public unsafe void Start()
     {
+        Game.Modules.Get<Debug>().Log("start");
         _shader = new("../../../../Assets/Shaders/sprite.vert", "../../../../Assets/Shaders/sprite.frag");
         _shader.Load();
         
@@ -49,6 +50,7 @@ sealed class Renderer
     
     public void Draw(Renderable renderable)
     {
+        Game.Modules.Get<Debug>().Log("draw");
         _texture = renderable.Texture;
         Graphics.Clear((uint) ClearBufferMask.ColorBufferBit);
 

@@ -27,10 +27,5 @@ public sealed class Sprite : Component, Renderable
         _texture = new(path);
     }
 
-    public override void Destroy() => _texture.Dispose();
-
-    internal override void Render()
-    {
-        _renderer.Draw(this);
-    }
+    internal override void Render() => _renderer.Draw(this);
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Numerics;
 using Silk.NET.OpenGL;
 using static System.String;
@@ -17,8 +18,8 @@ sealed class Shader
     
     public Shader(string vertex, string fragment)
     {
-        _vertex = vertex;
-        _fragment = fragment;
+        _vertex = File.ReadAllText(vertex);
+        _fragment = File.ReadAllText(fragment);
         _debug = Game.Modules.Get<Debug>();
     }
 
@@ -74,4 +75,7 @@ sealed class Shader
             throw new InvalidOperationException($"{name} uniform not found on shader.");
         Graphics.Uniform1(location, value);
     }
+
+    public void SetUniform(int location, int value) => Graphics.Uniform1(location, value);
+    public void SetUniform(int location, float value) => Graphics.Uniform1(location, value);
 }

@@ -21,10 +21,7 @@ public sealed class Game : ServiceLocator<Module>, Loop
     WindowOptions _windowOptions;
     Scene _firstScene = new EmptyScene();
 
-    public Game()
-    {
-        _windowOptions = new("N8Engine Game", new(1280, 720), 60, WindowState.Windowed);
-    }
+    public Game() => _windowOptions = new("N8Engine Game", new(1280, 720), 60, WindowState.Windowed);
 
     public Game WithWindowTitle(string title)
     {
@@ -77,13 +74,13 @@ public sealed class Game : ServiceLocator<Module>, Loop
     public void Start()
     {
         _window = new(_windowOptions);
-        Modules.Add(_debug = new());
+        Modules.Add(_debug = new(Console.WriteLine));
         Modules.Add(_input = new());
         Modules.Add(_sceneManager = new(this, _window));
         _window.OnLoad += () =>
         {
-            OnStart?.Invoke();
             _sceneManager.Load(_firstScene);
+            OnStart?.Invoke();
         };
         _window.OnUpdate += frame => OnUpdate?.Invoke(frame);
         _window.OnRender += () => OnRender?.Invoke();

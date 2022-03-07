@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using N8Engine.InputSystem;
 using N8Engine.Mathematics;
 using N8Engine.Rendering;
@@ -11,8 +12,8 @@ sealed class MainScene : Scene
     public override void Load()
     {
         Create("player", out var player)
-            .AddComponent(new Transform())
+            .AddComponent(new Transform(Vector2.Zero, Vector2.One * 1000))
             .AddComponent(new Player())
-            .AddComponent(new Sprite(this, player, "../../../../Assets/Sprites/n8dev.jpg"));
+            .AddComponent(new Sprite(this, player, "../../../../Assets/Sprites/n8dev.png"));
     }
 }

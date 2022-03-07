@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Silk.NET.OpenGL;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
@@ -9,34 +8,28 @@ using static N8Engine.Windowing.Window;
 
 namespace N8Engine.Rendering;
 
-sealed class Texture : IDisposable
+sealed class Texture
 {
     uint _handle;
 
     public unsafe Texture(string path)
     {
-        var img = (Image<Rgba32>) Image.Load(path);
-        
-        fixed (void* data = &MemoryMarshal.GetReference(img.DangerousGetPixelRowMemory(0).Span))
-        {
-            Load(data, (uint) img.Width, (uint) img.Height);
-        }
-        
-        img.Dispose();
-    }
+        var image = Image.Load<Rgba32>(path);
 
-    unsafe void Load(void* data, uint width, uint height)
-    {
-        _handle = Graphics.GenTexture();
-        Bind();
-        
-        Graphics.TexImage2D(Texture2D, 0, (int) InternalFormat.Rgba, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
-        Graphics.TexParameter(Texture2D, TextureParameterName.TextureWrapS, (int) GLEnum.Repeat);
-        Graphics.TexParameter(Texture2D, TextureParameterName.TextureWrapT, (int) GLEnum.Repeat);
-        Graphics.TexParameter(Texture2D, TextureParameterName.TextureMinFilter, (int) GLEnum.Linear);
-        Graphics.TexParameter(Texture2D, TextureParameterName.TextureMagFilter, (int) GLEnum.Linear);
-        
-        Graphics.GenerateMipmap(Texture2D);
+        image.ProcessPixelRows(accessor =>
+        {
+            fixed(void* data = &MemoryMarshal.GetReference(accessor.GetRowSpan(0)))
+            {
+                _handle = Graphics.GenTexture();
+                Bind();
+                Graphics.TexImage2D(Texture2D, 0, (int) InternalFormat.Rgba, (uint) image.Width, (uint) image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+                Graphics.TexParameter(Texture2D, TextureParameterName.TextureWrapS, (int) GLEnum.Repeat);
+                Graphics.TexParameter(Texture2D, TextureParameterName.TextureWrapT, (int) GLEnum.Repeat);
+                Graphics.TexParameter(Texture2D, TextureParameterName.TextureMinFilter, (int) GLEnum.Linear);
+                Graphics.TexParameter(Texture2D, TextureParameterName.TextureMagFilter, (int) GLEnum.Linear);
+                Graphics.GenerateMipmap(Texture2D);
+            }
+        });
     }
 
     public void Bind(TextureUnit textureSlot = TextureUnit.Texture0)
@@ -44,6 +37,4 @@ sealed class Texture : IDisposable
         Graphics.ActiveTexture(textureSlot);
         Graphics.BindTexture(Texture2D, _handle);
     }
-
-    public void Dispose() => Graphics.DeleteTexture(_handle);
 }
