@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace N8Engine.Utils;
+namespace N8Engine.Utilities;
 
 public abstract class ServiceLocator<TService>
 {
