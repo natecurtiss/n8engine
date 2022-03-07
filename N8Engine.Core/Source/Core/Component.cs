@@ -1,6 +1,4 @@
-﻿using N8Engine.Windowing;
-
-namespace N8Engine;
+﻿namespace N8Engine;
 
 public abstract class Component
 {

@@ -57,12 +57,4 @@ sealed class SceneManagementTests
         _sceneManager.Load(new S2());
         IsTrue(!s1.Any());
     }
-
-    [Test]
-    public void TestSceneHasACamera()
-    {
-        var s1 = new S1();
-        _sceneManager.Load(s1);
-        IsNotNull(s1.Camera);
-    }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using N8Engine.Rendering;
 using N8Engine.Windowing;
 
 namespace N8Engine.SceneManagement;
@@ -11,9 +9,6 @@ public abstract class Scene : IEnumerable<GameObject>
 {
     readonly List<GameObject> _gameObjects = new();
     bool _isLoaded;
-    
-    public Camera Camera { get; private set; }
-    internal readonly Renderer Renderer = new();
 
     public abstract void Load();
     
@@ -31,11 +26,7 @@ public abstract class Scene : IEnumerable<GameObject>
         return gameObject;
     }
 
-    internal void SwitchTo(WindowSize windowSize)
-    {
-        Camera = new(Vector2.Zero, 1f, windowSize);
-        _isLoaded = true;
-    }
+    internal void SwitchTo(WindowSize windowSize) => _isLoaded = true;
 
     internal void Unload()
     {
@@ -44,8 +35,8 @@ public abstract class Scene : IEnumerable<GameObject>
             gameObject.Destroy();
         _gameObjects.Clear();
     }
-
-    internal void Start() => Renderer.Start();
+    
+    internal void Start() { }
 
     internal void Update(Frame frame)
     {
