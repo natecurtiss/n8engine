@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using N8Engine.Mathematics;
+using N8Engine;
 using N8Engine.SceneManagement;
 
 namespace SampleGame;

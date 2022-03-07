@@ -21,7 +21,7 @@ public sealed class Game : ServiceLocator<Module>, Loop
     WindowOptions _windowOptions;
     Scene _firstScene = new EmptyScene();
 
-    public Game() => _windowOptions = new("N8Engine Game", new(1280, 720), 60, WindowState.Windowed);
+    public Game() => _windowOptions = new("N8Engine Game", 1280, 720, 60, WindowState.Windowed);
 
     public Game WithWindowTitle(string title)
     {
@@ -31,7 +31,7 @@ public sealed class Game : ServiceLocator<Module>, Loop
 
     public Game WithWindowSize(uint width, uint height)
     {
-        _windowOptions = _windowOptions.WithSize(new(width, height));
+        _windowOptions = _windowOptions.WithSize(width, height);
         return this;
     }
 
