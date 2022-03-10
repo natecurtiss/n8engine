@@ -59,14 +59,9 @@ public sealed class GameObject
 
     public GameObject RemoveComponent<T>() where T : Component
     {
-        try
-        {
-            return RemoveComponent(_components[typeof(T)] as T);
-        }
-        catch (KeyNotFoundException)
-        {
+        if (!_components.ContainsKey(typeof(T)))
             throw new ComponentNotAttachedException($"Component of type {typeof(T)} is not attached to {this}!");
-        }
+        return RemoveComponent(_components[typeof(T)] as T);
     }
 
     public GameObject RemoveComponent<T>(T component) where T : Component
