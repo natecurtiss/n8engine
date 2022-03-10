@@ -1,5 +1,4 @@
-﻿using System.IO;
-using N8Engine.SceneManagement;
+﻿using N8Engine.SceneManagement;
 using Silk.NET.OpenGL;
 
 namespace N8Engine.Rendering;
@@ -8,11 +7,11 @@ public sealed class SpriteRenderer : SceneModule
 {
     readonly float[] _vertices =
     { 
-        // X     Y     Z    R   G   B   A
-         0.5f,  0.5f, 0.0f, 1f, 0f, 0f, 1f,
-         0.5f, -0.5f, 0.0f, 0f, 0f, 1f, 1f,
-        -0.5f, -0.5f, 0.0f, 0f, 1f, 0f, 1f,
-        -0.5f,  0.5f, 0.0f, 1f, 1f, 0f, 1f
+        //X     Y     Z     U   V
+         0.5f,  0.5f, 0.0f, 1f, 0f,
+         0.5f, -0.5f, 0.0f, 1f, 1f,
+        -0.5f, -0.5f, 0.0f, 0f, 1f,
+        -0.5f,  0.5f, 0.5f, 0f, 0f
     };
     readonly uint[] _indices =
     {
