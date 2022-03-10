@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace N8Engine.InputSystem;
 
-public sealed class Input : Module
+public sealed class Input : GameModule
 {
     enum KeyState
     {

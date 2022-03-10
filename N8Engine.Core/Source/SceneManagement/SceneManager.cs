@@ -2,7 +2,7 @@
 
 namespace N8Engine.SceneManagement;
 
-public sealed class SceneManager : Module
+public sealed class SceneManager : GameModule
 {
     readonly Loop _loop;
     readonly WindowSize _windowSize;

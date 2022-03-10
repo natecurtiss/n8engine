@@ -5,9 +5,9 @@ namespace N8Engine.Tests;
 
 sealed class ModulesTests
 {
-    class M : Module { }
+    class M : GameModule { }
 
-    Modules _modules = null!;
+    GameModules _modules = null!;
 
     [SetUp]
     public void Setup() => _modules = new();

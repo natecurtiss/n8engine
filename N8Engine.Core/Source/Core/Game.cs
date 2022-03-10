@@ -1,15 +1,14 @@
 ﻿using System;
 using N8Engine.InputSystem;
 using N8Engine.SceneManagement;
-using N8Engine.Utilities;
 using N8Engine.Windowing;
 
 namespace N8Engine;
 
 // TODO: Unit Testable Poco.
-public sealed class Game : ServiceLocator<Module>, Loop
+public sealed class Game : Loop
 {
-    public static readonly Modules Modules = new();
+    public static readonly GameModules Modules = new();
 
     public event Action OnStart;
     public event Action<Frame> OnUpdate;
