@@ -6,8 +6,6 @@ public sealed class GameModules : ServiceLocator<GameModule, ModuleNotFoundExcep
 {
     internal GameModules() { }
 
-    internal new int Count => base.Count;
-
     protected override ModuleNotFoundException ServiceNotFoundException<T>() => new($"Module of type {typeof(T)} not found!");
 
     public T Get<T>() where T : GameModule => Locate<T>();
