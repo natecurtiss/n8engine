@@ -42,11 +42,11 @@ public sealed class SpriteRenderer : SceneModule
         _vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 5, 0);
         _vao.VertexAttributePointer(1, 2, VertexAttribPointerType.Float, 5, 3);
 
-        _shader = new(_gl, "Assets/Shaders/sprite.vert".ApproximatePath(8), "Assets/Shaders/sprite.frag".ApproximatePath(8));
-        _texture = new(_gl, "Assets/Textures/n8dev.png".ApproximatePath(8));
-        _debug.Log($"Texture with path {Path.GetFullPath("Assets/Textures/n8dev.png".ApproximatePath(8))} loaded successfully.");
-        _debug.Log($"Shader with path {Path.GetFullPath("Assets/Shaders/sprite.vert".ApproximatePath(8))} loaded successfully.");
-        _debug.Log($"Shader with path {Path.GetFullPath("Assets/Shaders/sprite.frag".ApproximatePath(8))} loaded successfully.");
+        _shader = new(_gl, "Assets/Shaders/sprite.vert".Find(), "Assets/Shaders/sprite.frag".Find());
+        _texture = new(_gl, "Assets/Textures/n8dev.png".Find());
+        _debug.Log($"Texture with path {Path.GetFullPath("Assets/Textures/n8dev.png".Find())} loaded successfully.");
+        _debug.Log($"Shader with path {Path.GetFullPath("Assets/Shaders/sprite.vert".Find())} loaded successfully.");
+        _debug.Log($"Shader with path {Path.GetFullPath("Assets/Shaders/sprite.frag".Find())} loaded successfully.");
     }
 
     void SceneModule.OnSceneUpdate() { }

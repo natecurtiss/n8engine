@@ -4,7 +4,7 @@ namespace N8Engine.Utilities;
 
 public static class PathApproximation
 {
-    public static string ApproximatePath(this string path, int iterations = 4)
+    public static string Find(this string path, int iterations = 8)
     {
         if (File.Exists(path))
             return path;
