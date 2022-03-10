@@ -6,7 +6,7 @@ namespace N8Engine.Rendering;
 public sealed class SpriteRenderer : SceneModule
 {
     const string VERTEX_SHADER_SOURCE = @"
-    #version 330 core //Using version GLSL version 3.3
+    #version 330 core
     layout (location = 0) in vec4 vPos;
     
     void main()
@@ -31,7 +31,7 @@ public sealed class SpriteRenderer : SceneModule
         -0.5f, -0.5f, 0.0f,
         -0.5f,  0.5f, 0.0f
     };
-    readonly float[] _indices =
+    readonly uint[] _indices =
     {
         0, 1, 3,
         1, 2, 3
@@ -51,7 +51,8 @@ public sealed class SpriteRenderer : SceneModule
         _debug = Game.Modules.Get<Debug>();
 
         _vao = _gl.GenVertexArray();
-        
+        _gl.BindVertexArray(_vao);
+
         _vbo = _gl.GenBuffer();
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vbo);
         fixed (void* v = &_vertices[0])
@@ -65,7 +66,7 @@ public sealed class SpriteRenderer : SceneModule
         {
             _gl.BufferData(BufferTargetARB.ElementArrayBuffer, (nuint) (sizeof(uint) * _indices.Length), i, BufferUsageARB.StaticDraw);
         }
-        
+
         _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), null);
         _gl.EnableVertexAttribArray(0);
         _gl.BindVertexArray(0);
