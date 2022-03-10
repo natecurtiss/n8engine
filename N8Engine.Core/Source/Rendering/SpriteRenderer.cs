@@ -7,29 +7,39 @@ public sealed class SpriteRenderer : SceneModule
 {
     const string VERTEX_SHADER_SOURCE = @"
     #version 330 core
-    layout (location = 0) in vec4 vPos;
-    
+
+    layout (location = 0) in vec3 vPos;
+    layout (location = 1) in vec4 vColor;
+
+    uniform float uBlue;
+
+    out vec4 fColor;
+
     void main()
     {
-        gl_Position = vec4(vPos.x, vPos.y, vPos.z, 1.0);
+        gl_Position = vec4(vPos, 1.0);
+        fColor = vColor;
     }
     ";
     const string FRAGMENT_SHADER_SOURCE = @"
     #version 330 core
-    layout (location = 0) out vec4 FragColor;
+
+    in vec4 fColor;
+    out vec4 FragColor;
+
     void main()
     {
-        FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+        FragColor = fColor;
     }
     ";
     
     readonly float[] _vertices =
     { 
-        // X.   Y.    Z.
-        0.5f,  0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f
+        // X     Y     Z    R  G  B  A
+         0.5f,  0.5f, 0.0f, 1f, 0f, 0f, 1f,
+         0.5f, -0.5f, 0.0f, 0f, 0f, 1f, 1f,
+        -0.5f, -0.5f, 0.0f, 0f, 1f, 0f, 1f,
+        -0.5f,  0.5f, 0.0f, 1f, 1f, 0f, 1f
     };
     readonly uint[] _indices =
     {
@@ -39,36 +49,21 @@ public sealed class SpriteRenderer : SceneModule
 
     GL _gl;
 
-    uint _vbo;
-    uint _ebo;
-    uint _vao;
+    BufferObject<float> _vbo;
+    BufferObject<uint> _ebo;
+    VertexArrayObject<float, uint> _vao;
     Shader _shader;
 
     unsafe void SceneModule.OnSceneLoad(Scene scene)
     {
         _gl = Game.Modules.Get<Graphics>().Get();
+        
+        _vbo = new(_gl, _vertices, BufferTargetARB.ArrayBuffer);
+        _ebo = new(_gl, _indices, BufferTargetARB.ElementArrayBuffer);
+        _vao = new(_gl, _vbo, _ebo);
 
-        _vao = _gl.GenVertexArray();
-        _gl.BindVertexArray(_vao);
-
-        _vbo = _gl.GenBuffer();
-        _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vbo);
-        fixed (void* v = &_vertices[0])
-        {
-            _gl.BufferData(GLEnum.ArrayBuffer, (nuint) (sizeof(uint) * _vertices.Length), v, GLEnum.StaticDraw);
-        }
-
-        _ebo = _gl.GenBuffer();
-        _gl.BindBuffer(GLEnum.ElementArrayBuffer, _ebo);
-        fixed (void* i = &_indices[0])
-        {
-            _gl.BufferData(BufferTargetARB.ElementArrayBuffer, (nuint) (sizeof(uint) * _indices.Length), i, BufferUsageARB.StaticDraw);
-        }
-
-        _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), null);
-        _gl.EnableVertexAttribArray(0);
-        _gl.BindVertexArray(0);
-        _gl.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
+        _vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 7, 0);
+        _vao.VertexAttributePointer(1, 4, VertexAttribPointerType.Float, 7, 3);
 
         _shader = new(_gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
     }
@@ -79,17 +74,16 @@ public sealed class SpriteRenderer : SceneModule
     {
         _gl.ClearColor(0, 0, 0, 0);
         _gl.Clear(ClearBufferMask.ColorBufferBit);
-        _gl.BindVertexArray(_vao);
+        _vao.Bind();
         _shader.Use();
         _gl.DrawElements(PrimitiveType.Triangles, (uint) _indices.Length, DrawElementsType.UnsignedInt, null);
-        _gl.BindVertexArray(0);
     }
 
     void SceneModule.OnSceneUnload()
     {
-        _gl.DeleteBuffer(_vbo);
-        _gl.DeleteBuffer(_ebo);
-        _gl.DeleteVertexArray(_vao);
+        _vbo.Dispose();
+        _ebo.Dispose();
+        _vao.Dispose();
         _shader.Dispose();
     }
 }
