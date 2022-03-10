@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using N8Engine.Utilities;
 
 namespace N8Engine.SceneManagement;
@@ -8,7 +8,7 @@ public sealed class SceneModules : ServiceLocator<SceneModule, SceneModuleNotFou
     string _sceneName;
     
     internal bool IsInitialized { get; private set; }
-    SceneModule[] Modules => Services.Values.ToArray();
+    IEnumerable<SceneModule> Modules => Services.Values;
     
     internal SceneModules() { }
     
