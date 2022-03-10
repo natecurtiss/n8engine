@@ -10,8 +10,10 @@ sealed class SceneManagementTests
 {
     sealed class W : WindowSize { int WindowSize.Width => 0; int WindowSize.Height => 0; }
     sealed class L : Loop { public event Action? OnStart; public event Action<Frame>? OnUpdate; public event Action? OnRender; }
-    sealed class S1 : Scene { public override void Load() => Create("a"); }
-    sealed class S2 : Scene { public override void Load() => Create("b"); }
+    sealed class S1 : Scene {
+        protected override void Load() => Create("a"); }
+    sealed class S2 : Scene {
+        protected override void Load() => Create("b"); }
 
     SceneManager _sceneManager = null!;
     

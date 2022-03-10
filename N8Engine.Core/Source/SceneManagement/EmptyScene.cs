@@ -2,5 +2,6 @@
 
 public sealed class EmptyScene : Scene
 {
-    public override void Load() { }
+    public override string Name => "Empty Scene";
+    protected override void Load() { }
 }

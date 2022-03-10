@@ -8,7 +8,7 @@ sealed class GameObjectTests
 {
     sealed class C1 : Component { }
     sealed class C2 : Component { }
-    sealed class S : Scene { public override void Load() { } }
+    sealed class S : Scene { protected override void Load() { } }
 
     GameObject _gameObject = null!;
 

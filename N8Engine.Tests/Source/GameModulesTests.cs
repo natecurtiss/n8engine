@@ -3,7 +3,7 @@ using static NUnit.Framework.Assert;
 
 namespace N8Engine.Tests;
 
-sealed class ModulesTests
+sealed class GameModulesTests
 {
     class M : GameModule { }
 
@@ -20,7 +20,7 @@ sealed class ModulesTests
     }
     
     [Test]
-    public void TestRemoveNonExistentModule() => Catch<ModuleNotFoundException>(() => _modules.Remove<M>());
+    public void TestRemoveNonExistentModule() => Catch<GameModuleNotFoundException>(() => _modules.Remove<M>());
 
     [Test]
     public void TestRemoveExistentModule()
@@ -31,7 +31,7 @@ sealed class ModulesTests
     }
 
     [Test]
-    public void TestGetNonExistentModule() => Catch<ModuleNotFoundException>(() => _modules.Get<M>());
+    public void TestGetNonExistentModule() => Catch<GameModuleNotFoundException>(() => _modules.Get<M>());
 
     [Test]
     public void TestGetExistentModule()

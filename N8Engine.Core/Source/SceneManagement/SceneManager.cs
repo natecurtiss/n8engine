@@ -26,7 +26,6 @@ public sealed class SceneManager : GameModule
         _loop.OnStart += CurrentScene.Start;
         _loop.OnUpdate += CurrentScene.Update;
         _loop.OnRender += CurrentScene.Render;
-        CurrentScene.SwitchTo(_windowSize);
-        CurrentScene.Load();
+        CurrentScene.SwitchTo();
     }
 }
