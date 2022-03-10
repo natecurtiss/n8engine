@@ -1,5 +1,6 @@
 ﻿using System;
 using N8Engine.InputSystem;
+using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 using N8Engine.Windowing;
 
@@ -74,11 +75,12 @@ public sealed class Game : Loop
     public void Start()
     {
         _window = new(_windowOptions);
-        Modules.Add(_debug = new(Console.WriteLine));
-        Modules.Add(_input = new());
-        Modules.Add(_sceneManager = new(this, _window));
         _window.OnLoad += () =>
         {
+            Modules.Add(_debug = new(Console.WriteLine));
+            Modules.Add(_input = new());
+            Modules.Add<Graphics>(_window.CreateGL());
+            Modules.Add(_sceneManager = new(this, _window, _window));
             _sceneManager.Load(_firstScene);
             OnStart?.Invoke();
         };

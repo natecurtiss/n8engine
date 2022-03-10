@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using N8Engine.Rendering;
 
 namespace N8Engine.SceneManagement;
 
@@ -31,38 +32,46 @@ public abstract class Scene
         if (!Modules.IsInitialized)
             Modules.Initialize(Name);
         _isLoaded = true;
+        Modules.Add(new SpriteRenderer());
         Modules.OnSceneLoad(this);
         Load();
     }
 
     internal void Unload()
     {
+        // TODO: Clean this up.
+        if (Modules.Count > 0)
+        {
+            Modules.Remove<SpriteRenderer>();
+        }
         _isLoaded = false;
-        foreach (var gameObject in _gameObjects) 
+        foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Destroy();
         _gameObjects.Clear();
     }
 
     internal void Start()
     {
-        foreach (var gameObject in _gameObjects) 
+        foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Start();
     }
 
     internal void Update(Frame frame)
     {
-        foreach (var gameObject in _gameObjects) 
+        foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.EarlyUpdate(frame);
-        foreach (var gameObject in _gameObjects) 
+        foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Update(frame);
-        foreach (var gameObject in _gameObjects) 
+        foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.LateUpdate(frame);
+        Modules.OnSceneUpdate();
     }
 
     internal void Render()
     {
-        foreach (var gameObject in _gameObjects) 
+        foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Render();
+        Modules.OnSceneRender();
     }
 
     internal void Destroy(GameObject gameObject) => _gameObjects.Remove(gameObject);

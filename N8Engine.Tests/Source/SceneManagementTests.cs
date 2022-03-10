@@ -8,7 +8,7 @@ namespace N8Engine.Tests;
 
 sealed class SceneManagementTests
 {
-    sealed class W : WindowSize { int WindowSize.Width => 0; int WindowSize.Height => 0; }
+    sealed class W : WindowSize, WindowEvents { int WindowSize.Width => 0; int WindowSize.Height => 0; public event Action? OnClose; }
     sealed class L : Loop { public event Action? OnStart; public event Action<Frame>? OnUpdate; public event Action? OnRender; }
     sealed class S1 : Scene {
         protected override void Load() => Create("a"); }
@@ -18,7 +18,7 @@ sealed class SceneManagementTests
     SceneManager _sceneManager = null!;
     
     [SetUp]
-    public void Setup() => _sceneManager = new(new L(), new W());
+    public void Setup() => _sceneManager = new(new L(), new W(), new W());
 
     [Test]
     public void TestDefaultScene() => IsNotNull(_sceneManager.CurrentScene);

@@ -25,4 +25,16 @@ public sealed class SceneModules : ServiceLocator<SceneModule, SceneModuleNotFou
         foreach (var module in Modules) 
             module.OnSceneLoad(scene);
     }
+
+    internal void OnSceneUpdate()
+    {
+        foreach (var module in Modules) 
+            module.OnSceneUpdate();
+    }
+
+    internal void OnSceneRender()
+    {
+        foreach (var module in Modules) 
+            module.OnSceneRender();
+    }
 }
