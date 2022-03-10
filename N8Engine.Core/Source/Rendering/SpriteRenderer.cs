@@ -38,17 +38,15 @@ public sealed class SpriteRenderer : SceneModule
     };
 
     GL _gl;
-    Debug _debug;
-    
+
     uint _vbo;
     uint _ebo;
     uint _vao;
-    uint _shader;
+    Shader _shader;
 
     unsafe void SceneModule.OnSceneLoad(Scene scene)
     {
         _gl = Game.Modules.Get<Graphics>().Get();
-        _debug = Game.Modules.Get<Debug>();
 
         _vao = _gl.GenVertexArray();
         _gl.BindVertexArray(_vao);
@@ -71,32 +69,8 @@ public sealed class SpriteRenderer : SceneModule
         _gl.EnableVertexAttribArray(0);
         _gl.BindVertexArray(0);
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
-        
-        var vertexShader = _gl.CreateShader(ShaderType.VertexShader);
-        _gl.ShaderSource(vertexShader, VERTEX_SHADER_SOURCE);
-        _gl.CompileShader(vertexShader);
-        var infoLog = _gl.GetShaderInfoLog(vertexShader);
-        if (!string.IsNullOrWhiteSpace(infoLog))
-            _debug.Log($"Error compiling vertex shader {infoLog}");
-        
-        var fragmentShader = _gl.CreateShader(ShaderType.FragmentShader);
-        _gl.ShaderSource(fragmentShader, FRAGMENT_SHADER_SOURCE);
-        _gl.CompileShader(fragmentShader);
-        infoLog = _gl.GetShaderInfoLog(fragmentShader);
-        if (!string.IsNullOrWhiteSpace(infoLog))
-            _debug.Log($"Error compiling fragment shader {infoLog}");
 
-        _shader = _gl.CreateProgram();
-        _gl.AttachShader(_shader, vertexShader);
-        _gl.AttachShader(_shader, fragmentShader);
-        _gl.LinkProgram(_shader);
-        _gl.GetProgram(_shader, GLEnum.LinkStatus, out var status);
-        if (status == 0) _debug.Log($"Error linking shader {_gl.GetProgramInfoLog(_shader)}");
-        
-        _gl.DetachShader(_shader, vertexShader);
-        _gl.DetachShader(_shader, fragmentShader);
-        _gl.DeleteShader(vertexShader);
-        _gl.DeleteShader(fragmentShader);
+        _shader = new(_gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
     }
 
     void SceneModule.OnSceneUpdate() { }
@@ -106,7 +80,7 @@ public sealed class SpriteRenderer : SceneModule
         _gl.ClearColor(0, 0, 0, 0);
         _gl.Clear(ClearBufferMask.ColorBufferBit);
         _gl.BindVertexArray(_vao);
-        _gl.UseProgram(_shader);
+        _shader.Use();
         _gl.DrawElements(PrimitiveType.Triangles, (uint) _indices.Length, DrawElementsType.UnsignedInt, null);
         _gl.BindVertexArray(0);
     }
@@ -116,6 +90,6 @@ public sealed class SpriteRenderer : SceneModule
         _gl.DeleteBuffer(_vbo);
         _gl.DeleteBuffer(_ebo);
         _gl.DeleteVertexArray(_vao);
-        _gl.DeleteProgram(_shader);
+        _shader.Dispose();
     }
 }
