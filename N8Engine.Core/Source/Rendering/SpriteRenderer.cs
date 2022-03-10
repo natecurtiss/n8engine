@@ -1,4 +1,6 @@
-﻿using N8Engine.SceneManagement;
+﻿using System.IO;
+using N8Engine.SceneManagement;
+using N8Engine.Utilities;
 using Silk.NET.OpenGL;
 
 namespace N8Engine.Rendering;
@@ -26,26 +28,31 @@ public sealed class SpriteRenderer : SceneModule
     Shader _shader;
     Texture _texture;
 
+    Debug _debug;
+
     void SceneModule.OnSceneLoad(Scene scene)
     {
         _gl = Game.Modules.Get<Graphics>().Get();
+        _debug = Game.Modules.Get<Debug>();
         
         _vbo = new(_gl, _vertices, BufferTargetARB.ArrayBuffer);
         _ebo = new(_gl, _indices, BufferTargetARB.ElementArrayBuffer);
         _vao = new(_gl, _vbo, _ebo);
 
-        _vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 7, 0);
-        _vao.VertexAttributePointer(1, 4, VertexAttribPointerType.Float, 7, 3);
+        _vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 5, 0);
+        _vao.VertexAttributePointer(1, 2, VertexAttribPointerType.Float, 5, 3);
 
-        _shader = new(_gl, "../../../../Assets/Shaders/sprite.vert", "../../../../Assets/Shaders/sprite.frag");
-        _texture = new(_gl, "../../../../Assets/Textures/n8dev.png");
+        _shader = new(_gl, "Assets/Shaders/sprite.vert".ApproximatePath(8), "Assets/Shaders/sprite.frag".ApproximatePath(8));
+        _texture = new(_gl, "Assets/Textures/n8dev.png".ApproximatePath(8));
+        _debug.Log($"Texture with path {Path.GetFullPath("Assets/Textures/n8dev.png".ApproximatePath(8))} loaded successfully.");
+        _debug.Log($"Shader with path {Path.GetFullPath("Assets/Shaders/sprite.vert".ApproximatePath(8))} loaded successfully.");
+        _debug.Log($"Shader with path {Path.GetFullPath("Assets/Shaders/sprite.frag".ApproximatePath(8))} loaded successfully.");
     }
 
     void SceneModule.OnSceneUpdate() { }
 
     unsafe void SceneModule.OnSceneRender()
     {
-        _gl.ClearColor(0, 0, 0, 0);
         _gl.Clear(ClearBufferMask.ColorBufferBit);
         _vao.Bind();
         _shader.Use();
