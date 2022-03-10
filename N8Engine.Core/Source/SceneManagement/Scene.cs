@@ -38,26 +38,30 @@ public abstract class Scene
     internal void Unload()
     {
         _isLoaded = false;
-        foreach (var gameObject in _gameObjects.ToArray()) 
+        foreach (var gameObject in _gameObjects) 
             gameObject.Destroy();
         _gameObjects.Clear();
     }
-    
-    internal void Start() { }
+
+    internal void Start()
+    {
+        foreach (var gameObject in _gameObjects) 
+            gameObject.Start();
+    }
 
     internal void Update(Frame frame)
     {
-        foreach (var gameObject in _gameObjects.ToArray()) 
+        foreach (var gameObject in _gameObjects) 
             gameObject.EarlyUpdate(frame);
-        foreach (var gameObject in _gameObjects.ToArray()) 
+        foreach (var gameObject in _gameObjects) 
             gameObject.Update(frame);
-        foreach (var gameObject in _gameObjects.ToArray()) 
+        foreach (var gameObject in _gameObjects) 
             gameObject.LateUpdate(frame);
     }
 
     internal void Render()
     {
-        foreach (var gameObject in _gameObjects.ToArray()) 
+        foreach (var gameObject in _gameObjects) 
             gameObject.Render();
     }
 
