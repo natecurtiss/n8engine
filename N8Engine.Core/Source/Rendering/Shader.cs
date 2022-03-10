@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Silk.NET.OpenGL;
 
 namespace N8Engine.Rendering;
@@ -8,11 +9,11 @@ sealed class Shader : IDisposable
     readonly GL _gl;
     readonly uint _shader;
 
-    public Shader(GL gl, string vertexSource, string fragmentSource)
+    public Shader(GL gl, string vertexPath, string fragmentPath)
     {
         _gl = gl;
-        var vertex = Load(ShaderType.VertexShader, vertexSource);
-        var fragment = Load(ShaderType.FragmentShader, fragmentSource);
+        var vertex = Load(ShaderType.VertexShader, vertexPath);
+        var fragment = Load(ShaderType.FragmentShader, fragmentPath);
         _shader = _gl.CreateProgram();
         _gl.AttachShader(_shader, vertex);
         _gl.AttachShader(_shader, fragment);
@@ -46,8 +47,9 @@ sealed class Shader : IDisposable
         _gl.Uniform1(location, value);
     }
 
-    uint Load(ShaderType type, string source)
+    uint Load(ShaderType type, string path)
     {
+        var source = File.ReadAllText(path);
         var loaded = _gl.CreateShader(type);
         _gl.ShaderSource(loaded, source);
         _gl.CompileShader(loaded);

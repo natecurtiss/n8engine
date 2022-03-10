@@ -1,41 +1,14 @@
-﻿using N8Engine.SceneManagement;
+﻿using System.IO;
+using N8Engine.SceneManagement;
 using Silk.NET.OpenGL;
 
 namespace N8Engine.Rendering;
 
 public sealed class SpriteRenderer : SceneModule
 {
-    const string VERTEX_SHADER_SOURCE = @"
-    #version 330 core
-
-    layout (location = 0) in vec3 vPos;
-    layout (location = 1) in vec4 vColor;
-
-    uniform float uBlue;
-
-    out vec4 fColor;
-
-    void main()
-    {
-        gl_Position = vec4(vPos, 1.0);
-        fColor = vColor;
-    }
-    ";
-    const string FRAGMENT_SHADER_SOURCE = @"
-    #version 330 core
-
-    in vec4 fColor;
-    out vec4 FragColor;
-
-    void main()
-    {
-        FragColor = fColor;
-    }
-    ";
-    
     readonly float[] _vertices =
     { 
-        // X     Y     Z    R  G  B  A
+        // X     Y     Z    R   G   B   A
          0.5f,  0.5f, 0.0f, 1f, 0f, 0f, 1f,
          0.5f, -0.5f, 0.0f, 0f, 0f, 1f, 1f,
         -0.5f, -0.5f, 0.0f, 0f, 1f, 0f, 1f,
@@ -54,7 +27,7 @@ public sealed class SpriteRenderer : SceneModule
     VertexArrayObject<float, uint> _vao;
     Shader _shader;
 
-    unsafe void SceneModule.OnSceneLoad(Scene scene)
+    void SceneModule.OnSceneLoad(Scene scene)
     {
         _gl = Game.Modules.Get<Graphics>().Get();
         
@@ -65,7 +38,7 @@ public sealed class SpriteRenderer : SceneModule
         _vao.VertexAttributePointer(0, 3, VertexAttribPointerType.Float, 7, 0);
         _vao.VertexAttributePointer(1, 4, VertexAttribPointerType.Float, 7, 3);
 
-        _shader = new(_gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
+        _shader = new(_gl, "../../../../Assets/Shaders/colors.vert", "../../../../Assets/Shaders/colors.frag");
     }
 
     void SceneModule.OnSceneUpdate() { }
