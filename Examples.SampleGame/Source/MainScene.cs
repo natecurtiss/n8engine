@@ -15,6 +15,6 @@ sealed class MainScene : Scene
         Create("player")
             .AddComponent(new Transform(new(0.2f, 0f)))
             .AddComponent(new Sprite("Assets/Textures/n8dev.png".Find()))
-            .AddComponent(new Player());
+            .AddComponent(new Player(1f));
     }
 }
