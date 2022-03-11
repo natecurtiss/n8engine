@@ -10,10 +10,10 @@ public sealed class SpriteRenderer : SceneModule
     readonly float[] _vertices =
     { 
         //X     Y     Z     U   V
-         0.5f,  0.5f, 0.0f, 1f, 1f,
-         0.5f, -0.5f, 0.0f, 1f, 0f,
-        -0.5f, -0.5f, 0.0f, 0f, 0f,
-        -0.5f,  0.5f, 0.0f, 0f, 1f
+         0.5f,  0.5f, 0.0f, 1f, 0f,
+         0.5f, -0.5f, 0.0f, 1f, 1f,
+        -0.5f, -0.5f, 0.0f, 0f, 1f,
+        -0.5f,  0.5f, 0.0f, 0f, 0f
     };
     readonly uint[] _indices =
     {
