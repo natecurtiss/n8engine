@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using N8Engine.Utilities;
 using Silk.NET.OpenGL;
 
 namespace N8Engine.Rendering;

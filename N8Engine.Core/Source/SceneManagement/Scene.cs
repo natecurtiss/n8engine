@@ -53,6 +53,8 @@ public abstract class Scene
     internal void Start()
     {
         foreach (var gameObject in _gameObjects.ToArray()) 
+            gameObject.Create();
+        foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Start();
     }
 

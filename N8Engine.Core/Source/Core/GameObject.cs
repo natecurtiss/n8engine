@@ -75,15 +75,21 @@ public sealed class GameObject
         return this;
     }
 
-    internal void Start()
+    internal void Create()
     {
         foreach (var component in _components.Values)
         {
-            component.Start();
-            component.Start(this);
-            component.Start(_scene);
-            component.Start(this, _scene);
+            component.Create();
+            component.Create(_scene);
+            component.Create(this);
+            component.Create(this, _scene);
         }
+    }
+
+    internal void Start()
+    {
+        foreach (var component in _components.Values) 
+            component.Start();
     }
 
     internal void EarlyUpdate(Frame frame)
