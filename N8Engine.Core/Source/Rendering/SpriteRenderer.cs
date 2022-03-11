@@ -52,6 +52,7 @@ public sealed class SpriteRenderer : SceneModule
             sprite.Shader.Use();
             sprite.Texture.Bind();
             sprite.Shader.SetUniform("uTexture0", 0);
+            sprite.Shader.SetUniform("uModel", sprite.ViewMatrix());
             _gl.DrawElements(PrimitiveType.Triangles, (uint) _indices.Length, DrawElementsType.UnsignedInt, null);
         }
         

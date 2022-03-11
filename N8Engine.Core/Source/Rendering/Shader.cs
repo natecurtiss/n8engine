@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Numerics;
 using Silk.NET.OpenGL;
 
 namespace N8Engine.Rendering;
@@ -30,6 +31,14 @@ sealed class Shader : IDisposable
     public void Use() => _gl.UseProgram(_shader);
     
     public void Dispose() => _gl.DeleteProgram(_shader);
+    
+    public unsafe void SetUniform(string name, Matrix4x4 value)
+    {
+        var location = _gl.GetUniformLocation(_shader, name);
+        if (location == -1)
+            throw new MissingUniformOnShaderException($"{name} uniform not found on shader.");
+        _gl.UniformMatrix4(location, 1, false, (float*) &value);
+    }
 
     public void SetUniform(string name, int value)
     {
