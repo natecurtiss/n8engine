@@ -15,13 +15,19 @@ public sealed class Texture : IDisposable
         _gl = gl;
         _handle = _gl.GenTexture();
         Bind();
-        using var image = Image.Load<Rgba32>(path);
-        _gl.TexImage2D(TextureTarget.Texture2D, 0, (int) InternalFormat.Rgba, (uint) image.Width, (uint) image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, null);
+        var image = Image.Load<Rgba32>(path);
+        image.ProcessPixelRows(a =>
+        {
+            var data = a.GetRowSpan(0);
+            fixed (void* d = &data[0])
+                _gl.TexImage2D(TextureTarget.Texture2D, 0, (int) InternalFormat.Rgba, (uint) image.Width, (uint) image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, d);
+        });
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) GLEnum.Repeat);
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) GLEnum.Repeat);
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) GLEnum.Linear);
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) GLEnum.Linear);
         _gl.GenerateMipmap(TextureTarget.Texture2D);
+        image.Dispose();
     }
 
     public void Bind(TextureUnit textureSlot = TextureUnit.Texture0)
