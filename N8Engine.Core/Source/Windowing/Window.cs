@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using N8Engine.InputSystem;
 using Silk.NET.Input;
 using Silk.NET.OpenGL;
@@ -44,10 +45,8 @@ sealed class Window : WindowSize, WindowEvents
     void SetupInput()
     {
         var input = _window.CreateInput();
-        foreach (var keyboard in input.Keyboards)
-        {
-            keyboard.KeyDown += (_, glKey, _) => OnKeyDown?.Invoke(glKey.AsKey());
-            keyboard.KeyUp += (_, glKey, _) => OnKeyUp?.Invoke(glKey.AsKey());
-        }
+        var keyboard = input.Keyboards[0];
+        keyboard.KeyDown += (_, glKey, _) => OnKeyDown?.Invoke(glKey.AsKey());
+        keyboard.KeyUp += (_, glKey, _) => OnKeyUp?.Invoke(glKey.AsKey());
     }
 }

@@ -80,6 +80,7 @@ public sealed class Game : Loop
             Modules.Add(_debug = new(Console.WriteLine));
             Modules.Add(_input = new());
             Modules.Add<Graphics>(_window.CreateGL());
+            Modules.Add<WindowSize>(_window);
             Modules.Add(_sceneManager = new(this, _window, _window));
             _sceneManager.Load(_firstScene);
             OnStart?.Invoke();

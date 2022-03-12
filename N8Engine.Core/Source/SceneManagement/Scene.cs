@@ -33,6 +33,7 @@ public abstract class Scene
             Modules.Initialize(Name);
         _isLoaded = true;
         Modules.Add(new SpriteRenderer());
+        Modules.Add(new Camera());
         Modules.OnSceneLoad(this);
         Load();
     }
@@ -40,8 +41,11 @@ public abstract class Scene
     internal void Unload()
     {
         // TODO: Clean this up.
-        if (Modules.Count > 0) 
+        if (Modules.Count > 0)
+        {
             Modules.Remove<SpriteRenderer>();
+            Modules.Remove<Camera>();
+        }
         _isLoaded = false;
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Destroy();

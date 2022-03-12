@@ -22,6 +22,7 @@ public sealed class SpriteRenderer : SceneModule
     };
 
     GL _gl;
+    Camera _camera;
     BufferObject<float> _vbo;
     BufferObject<uint> _ebo;
     VertexArrayObject<float, uint> _vao;
@@ -31,7 +32,8 @@ public sealed class SpriteRenderer : SceneModule
     void SceneModule.OnSceneLoad(Scene scene)
     {
         _gl = Game.Modules.Get<Graphics>().Get();
-
+        _camera = scene.Modules.Get<Camera>();
+        
         _vbo = new(_gl, _vertices, BufferTargetARB.ArrayBuffer);
         _ebo = new(_gl, _indices, BufferTargetARB.ElementArrayBuffer);
         _vao = new(_gl, _vbo, _ebo);
@@ -53,6 +55,7 @@ public sealed class SpriteRenderer : SceneModule
             sprite.Texture.Bind();
             sprite.Shader.SetUniform("uTexture0", 0);
             sprite.Shader.SetUniform("uModel", sprite.ViewMatrix());
+            sprite.Shader.SetUniform("uProjection", _camera.ProjectionMatrix());
             _gl.DrawElements(PrimitiveType.Triangles, (uint) _indices.Length, DrawElementsType.UnsignedInt, null);
         }
         
