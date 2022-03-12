@@ -8,6 +8,7 @@ public sealed class Camera : SceneModule
 {
     public Vector2 Position { get; set; }
     public float Zoom { get; set; } = 1f;
+    // TODO: Add rotation.
 
     readonly WindowSize _windowSize;
 

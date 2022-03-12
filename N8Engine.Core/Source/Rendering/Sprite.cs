@@ -34,5 +34,5 @@ public sealed class Sprite : Component
 
     public override void Render() => _spriteRenderer.AddToRenderQueue(this);
 
-    public Matrix4x4 ViewMatrix() => _transform.ViewMatrix();
+    public Matrix4x4 ModelMatrix() => _transform.ModelMatrix();
 }
