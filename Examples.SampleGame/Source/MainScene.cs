@@ -12,9 +12,12 @@ sealed class MainScene : Scene
 
     protected override void Load()
     {
-        Create("player")
-            .AddComponent(new Transform(new(0.2f, 0f)))
+        Create("other")
+            .AddComponent(new Transform(Vector2.Zero, Vector2.One * 0.2f))
             .AddComponent(new Sprite("Assets/Textures/n8dev.png".Find()))
-            .AddComponent(new Player(1f));
+            .AddComponent(new Movement(2f));
+        Create("player")
+            .AddComponent(new Transform(Vector2.One * 0.5f, Vector2.One * 0.1f))
+            .AddComponent(new Sprite("Assets/Textures/n8dev.png".Find()));
     }
 }

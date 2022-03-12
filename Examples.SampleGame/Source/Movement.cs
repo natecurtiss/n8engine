@@ -3,13 +3,13 @@ using N8Engine.InputSystem;
 
 namespace SampleGame;
 
-sealed class Player : Component
+public sealed class Movement : Component
 {
     readonly Input _input;
     readonly float _speed;
     Transform _transform;
 
-    public Player(float speed)
+    public Movement(float speed)
     {
         _input = Game.Modules.Get<Input>();
         _speed = speed;

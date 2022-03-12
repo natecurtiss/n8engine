@@ -4,7 +4,6 @@ using N8Engine.SceneManagement;
 
 namespace N8Engine;
 
-// TODO: Make Unit Testable.
 public sealed class GameObject
 {
     readonly Dictionary<Type, Component> _components = new();

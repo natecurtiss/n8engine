@@ -40,10 +40,8 @@ public abstract class Scene
     internal void Unload()
     {
         // TODO: Clean this up.
-        if (Modules.Count > 0)
-        {
+        if (Modules.Count > 0) 
             Modules.Remove<SpriteRenderer>();
-        }
         _isLoaded = false;
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Destroy();

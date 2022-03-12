@@ -1,4 +1,6 @@
-﻿namespace N8Engine.InputSystem;
+﻿using System;
+
+namespace N8Engine.InputSystem;
 
 public sealed class InputDebugger : Component
 {
