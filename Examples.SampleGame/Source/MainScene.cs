@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using N8Engine;
+﻿using N8Engine;
 using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 using N8Engine.Utilities;
@@ -12,11 +11,11 @@ sealed class MainScene : Scene
 
     protected override void Load()
     {
-        Create("other")
-            .AddComponent(new Transform(Vector2.Zero, Vector2.One * 100f))
+        Create("player_1")
+            .AddComponent(new Transform().WithScale(150, 150).AtPosition(300, 0))
             .AddComponent(new Sprite("Assets/Textures/n8dev.png".Find()));
-        Create("player")
-            .AddComponent(new Transform(Vector2.One * 300, Vector2.One * 150f))
+        Create("player_2")
+            .AddComponent(new Transform().WithScale(100, 100))
             .AddComponent(new Sprite("Assets/Textures/n8dev.png".Find()));
         Create("camera")
             .AddComponent(new CameraController(1000f));

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using N8Engine.InputSystem;
 using Silk.NET.Input;
 using Silk.NET.OpenGL;
