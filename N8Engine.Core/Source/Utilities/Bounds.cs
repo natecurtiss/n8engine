@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace N8Engine.Mathematics;
+namespace N8Engine.Utilities;
 
 public struct Bounds
 {

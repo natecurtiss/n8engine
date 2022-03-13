@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using N8Engine.Mathematics;
+using N8Engine.Utilities;
 using NUnit.Framework;
 using static NUnit.Framework.Assert;
 
