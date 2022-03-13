@@ -15,7 +15,8 @@ public abstract class Scene
     
     public virtual string Name { get; } = "New Scene";
 
-    protected abstract void Load();
+    protected virtual void Load() { }
+    protected virtual void Unload() { }
     
     public GameObject Create(string name) => Create(name, out _);
     
@@ -44,7 +45,7 @@ public abstract class Scene
         Load();
     }
 
-    internal void Unload(Action<SceneModules> onRemoveModules)
+    internal void SwitchFrom(Action<SceneModules> onRemoveModules)
     {
         _isLoaded = false;
         if (_isInitialized) 
@@ -52,6 +53,8 @@ public abstract class Scene
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Destroy();
         _gameObjects.Clear();
+        Modules.OnSceneUnload();
+        Unload();
     }
 
     internal void Start()

@@ -36,5 +36,5 @@ public sealed class SceneManager : GameModule
         CurrentScene.SwitchTo(_onAddSceneModules);
     }
 
-    void UnloadCurrentScene() => CurrentScene.Unload(_onRemoveSceneModules);
+    void UnloadCurrentScene() => CurrentScene.SwitchFrom(_onRemoveSceneModules);
 }

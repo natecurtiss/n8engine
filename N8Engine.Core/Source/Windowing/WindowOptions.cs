@@ -36,6 +36,7 @@ readonly struct WindowOptions
         _state = state;
     }
 
+    // TODO: When maximized and fullscreen set width and height to size of monitor.
     public WindowOptions WithTitle(string title) => new(title, _width, _height, _fps, _state);
     public WindowOptions WithSize(uint width, uint height) => new(_title, width, height, _fps, _state);
     public WindowOptions WithFps(int fps) => new(_title, _width, _height, fps, _state);
