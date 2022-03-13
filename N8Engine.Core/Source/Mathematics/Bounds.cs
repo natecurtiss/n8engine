@@ -21,7 +21,9 @@ public struct Bounds
 
     public void Move(Vector2 position) => this = new(position, Size);
     public void Expand(Vector2 amount) => this = new(Center, Size + amount);
-    public void Grow(float scale) => this = new(Center, Size * scale);
+    public void Expand(float amount) => Expand(new Vector2(amount));
+    public void Grow(Vector2 scale) => this = new(Center, Size * scale);
+    public void Grow(float scale) => Grow(new Vector2(scale));
 
     public bool Contains(Vector2 point) =>
         point.X >= Left.X &&
