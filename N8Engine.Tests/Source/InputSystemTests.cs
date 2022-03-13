@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using N8Engine.InputSystem;
 using NUnit.Framework;
+using static N8Engine.InputSystem.Key;
 using static NUnit.Framework.Assert;
 using GLKey = Silk.NET.Input.Key;
 
@@ -15,74 +18,74 @@ sealed class InputSystemTests
     public void Setup() => _input = new();
 
     [Test]
-    public void TestAllKeysReleasedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && _input.IsReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    public void TestAllKeysReleasedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Unknown && _input.IsReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
     [Test]
-    public void TestNoKeysPressedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.IsPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    public void TestNoKeysPressedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Unknown && !_input.IsPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
     [Test]
-    public void TestNoKeysJustReleasedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.WasJustReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    public void TestNoKeysJustReleasedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Unknown && !_input.WasJustReleased(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
     [Test]
-    public void TestNoKeysJustPressedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Key.Unknown && !_input.WasJustPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
+    public void TestNoKeysJustPressedInitially() => IsTrue(Enum.GetValues<Key>().Where(k => k != Unknown && !_input.WasJustPressed(k)).ToList().Count == Enum.GetValues<Key>().Length - 1);
 
     [Test]
     public void TestIsSpecificKeyPressed()
     {
-        _input.UpdateKey(Key.A, true);
-        IsTrue(_input.IsPressed(Key.A));
+        _input.UpdateKey(A, true);
+        IsTrue(_input.IsPressed(A));
     }
     
     [Test]
     public void TestIsAnyKeyPressed()
     {
-        _input.UpdateKey(Key.A, true);
-        IsTrue(_input.IsPressed(Key.Any));
+        _input.UpdateKey(A, true);
+        IsTrue(_input.IsPressed(Any));
     }
     
     [Test]
     public void TestWasSpecificKeyJustPressed()
     {
-        _input.UpdateKey(Key.A, true);
-        IsTrue(_input.WasJustPressed(Key.A));
+        _input.UpdateKey(A, true);
+        IsTrue(_input.WasJustPressed(A));
     }
     
     [Test]
     public void TestWasAnyKeyJustPressed()
     {
-        _input.UpdateKey(Key.A, true);
-        IsTrue(_input.WasJustPressed(Key.Any));
+        _input.UpdateKey(A, true);
+        IsTrue(_input.WasJustPressed(Any));
     }
     
     [Test]
     public void TestIsSpecificKeyReleased()
     {
-        _input.UpdateKey(Key.A, true);
-        _input.UpdateKey(Key.A, false);
-        IsTrue(_input.IsReleased(Key.A));
+        _input.UpdateKey(A, true);
+        _input.UpdateKey(A, false);
+        IsTrue(_input.IsReleased(A));
     }
     
     [Test]
     public void TestIsAnyKeyReleased()
     {
-        _input.UpdateKey(Key.A, true);
-        _input.UpdateKey(Key.A, false);
-        IsTrue(_input.IsReleased(Key.Any));
+        _input.UpdateKey(A, true);
+        _input.UpdateKey(A, false);
+        IsTrue(_input.IsReleased(Any));
     }
     
     [Test]
     public void TestWasSpecificKeyJustReleased()
     {
-        _input.UpdateKey(Key.A, true);
-        _input.UpdateKey(Key.A, false);
-        IsTrue(_input.WasJustReleased(Key.A));
+        _input.UpdateKey(A, true);
+        _input.UpdateKey(A, false);
+        IsTrue(_input.WasJustReleased(A));
     }
     
     [Test]
     public void TestWasAnyKeyJustReleased()
     {
-        _input.UpdateKey(Key.A, true);
-        _input.UpdateKey(Key.A, false);
-        IsTrue(_input.WasJustReleased(Key.Any));
+        _input.UpdateKey(A, true);
+        _input.UpdateKey(A, false);
+        IsTrue(_input.WasJustReleased(Any));
     }
 
     [Test]
-    public void TestGLKeyToKeyConversion() => IsTrue(GLKey.A.AsKey() == Key.A);
+    public void TestGLKeyToKeyConversion() => IsTrue(GLKey.A.AsKey() == A);
 }

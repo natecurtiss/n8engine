@@ -4,7 +4,6 @@ using static N8Engine.InputSystem.Key;
 
 namespace N8Engine.InputSystem;
 
-// TODO: Unit tests.
 public static class InputExtensions
 {
     public static Vector2 Axis(this Input input) => new Vector2(input.Horizontal(), input.Vertical()).Normalized();
@@ -24,5 +23,4 @@ public static class InputExtensions
             isDown(DownArrow) || isDown(S) ? -1f : 
             isDown(UpArrow) || isDown(W) ? 1f : 0f;
     }
-    
 }

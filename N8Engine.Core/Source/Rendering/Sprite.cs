@@ -6,7 +6,6 @@ namespace N8Engine.Rendering;
 
 public sealed class Sprite : Component
 {
-    // TODO: Allow custom shaders in the future.
     internal readonly Shader Shader;
     internal readonly Texture Texture;
     

@@ -2,7 +2,6 @@
 
 namespace N8Engine.Mathematics;
 
-// TODO: Unit test this.
 public struct Bounds
 {
     public readonly Vector2 Center;
