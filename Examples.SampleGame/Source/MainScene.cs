@@ -15,7 +15,7 @@ sealed class MainScene : Scene
             .AddComponent(new Sprite("Assets/Textures/player.png".Find()))
             .AddComponent(new Transform()
                 .AtPosition(-100f, 0f)
-                .WithScale(100f, 100f))
+                .WithScale(199f, 178f))
             .AddComponent(new Player(100f));
     }
 }
