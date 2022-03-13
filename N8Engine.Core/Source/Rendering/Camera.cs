@@ -8,11 +8,10 @@ public sealed class Camera : SceneModule
 {
     public Vector2 Position { get; set; }
     public float Zoom { get; set; } = 1f;
-    // TODO: Add rotation.
 
     readonly WindowSize _windowSize;
 
-    internal Camera() => _windowSize = Game.Modules.Get<WindowSize>();
+    internal Camera(WindowSize windowSize) => _windowSize = windowSize;
 
     internal Matrix4x4 ProjectionMatrix()
     {

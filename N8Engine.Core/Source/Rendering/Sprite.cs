@@ -15,7 +15,7 @@ public sealed class Sprite : Component
 
     public Sprite(string path)
     {
-        var gl = Game.Modules.Get<Graphics>().Get();
+        var gl = Game.Modules.Get<Graphics>().Lib;
         Shader = new(gl, "Assets/Shaders/sprite.vert".Find(), "Assets/Shaders/sprite.frag".Find());
         Texture = new(gl, path);
     }

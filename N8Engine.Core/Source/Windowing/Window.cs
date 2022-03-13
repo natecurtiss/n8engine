@@ -17,7 +17,8 @@ sealed class Window : WindowSize, WindowEvents
     public event Action<InputSystem.Key> OnKeyDown;
     public event Action<InputSystem.Key> OnKeyUp;
 
-    readonly GLWindow _window;    
+    readonly GLWindow _window;
+    GL _gl;
     
     int WindowSize.Width => _window.Size.X;
     int WindowSize.Height => _window.Size.Y;
@@ -30,7 +31,12 @@ sealed class Window : WindowSize, WindowEvents
             SetupInput();
             OnLoad?.Invoke();
         };
-        _window.Closing += () => OnClose?.Invoke();
+        _window.Closing += () =>
+        {
+            OnClose?.Invoke();
+            _window.Dispose();
+            _gl.Dispose();
+        };
         _window.Update += fps => OnUpdate?.Invoke(new((float) fps));
         _window.Render += _ => OnRender?.Invoke();
     }
@@ -39,7 +45,7 @@ sealed class Window : WindowSize, WindowEvents
 
     public void Close() => _window.Close();
     
-    public GL CreateGL()  => _window.CreateOpenGL();
+    public GL CreateGL() => _gl = _window.CreateOpenGL();
 
     void SetupInput()
     {

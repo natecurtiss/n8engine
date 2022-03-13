@@ -79,9 +79,16 @@ public sealed class Game : Loop
         {
             Modules.Add(_debug = new(Console.WriteLine));
             Modules.Add(_input = new());
-            Modules.Add<Graphics>(_window.CreateGL());
-            Modules.Add<WindowSize>(_window);
-            Modules.Add(_sceneManager = new(this, _window, _window));
+            Modules.Add<Graphics>(new(_window.CreateGL()));
+            Modules.Add(_sceneManager = new(this, _window, m =>
+            {
+                m.Add(new Camera(_window));
+                m.Add(new SpriteRenderer(Modules.Get<Graphics>().Lib));
+            }, m =>
+            {
+                m.Remove<Camera>();
+                m.Remove<SpriteRenderer>();
+            }));
             _sceneManager.Load(_firstScene);
             OnStart?.Invoke();
         };

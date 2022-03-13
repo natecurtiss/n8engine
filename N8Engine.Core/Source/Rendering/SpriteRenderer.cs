@@ -20,18 +20,19 @@ public sealed class SpriteRenderer : SceneModule
         0, 1, 3,
         1, 2, 3
     };
-
-    GL _gl;
+    readonly GL _gl;
+    
     Camera _camera;
     BufferObject<float> _vbo;
     BufferObject<uint> _ebo;
     VertexArrayObject<float, uint> _vao;
 
+    internal SpriteRenderer(GL gl) => _gl = gl;
+
     public void AddToRenderQueue(Sprite sprite) => _sprites.Add(sprite);
 
     void SceneModule.OnSceneLoad(Scene scene)
     {
-        _gl = Game.Modules.Get<Graphics>().Get();
         _camera = scene.Modules.Get<Camera>();
         
         _vbo = new(_gl, _vertices, BufferTargetARB.ArrayBuffer);

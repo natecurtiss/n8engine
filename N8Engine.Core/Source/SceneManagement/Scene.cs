@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using N8Engine.Rendering;
+using N8Engine.Windowing;
 
 namespace N8Engine.SceneManagement;
 
@@ -7,8 +9,10 @@ public abstract class Scene
 {
     public readonly SceneModules Modules = new();
     readonly List<GameObject> _gameObjects = new();
+    
     bool _isLoaded;
-
+    bool _isInitialized;
+    
     public virtual string Name { get; } = "New Scene";
 
     protected abstract void Load();
@@ -27,26 +31,24 @@ public abstract class Scene
         return gameObject;
     }
 
-    internal void SwitchTo()
+    internal void SwitchTo(Action<SceneModules> onAddModules)
     {
-        if (!Modules.IsInitialized)
-            Modules.Initialize(Name);
         _isLoaded = true;
-        Modules.Add(new SpriteRenderer());
-        Modules.Add(new Camera());
+        if (!_isInitialized)
+        {
+            Modules.Initialize(Name);
+            _isInitialized = true;
+        }
+        onAddModules(Modules);
         Modules.OnSceneLoad(this);
         Load();
     }
 
-    internal void Unload()
+    internal void Unload(Action<SceneModules> onRemoveModules)
     {
-        // TODO: Clean this up.
-        if (Modules.Count > 0)
-        {
-            Modules.Remove<SpriteRenderer>();
-            Modules.Remove<Camera>();
-        }
         _isLoaded = false;
+        if (_isInitialized) 
+            onRemoveModules(Modules);
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Destroy();
         _gameObjects.Clear();

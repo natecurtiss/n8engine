@@ -1,6 +1,6 @@
 ﻿namespace N8Engine.Windowing;
 
-interface WindowSize : GameModule
+interface WindowSize
 {
     int Width { get; }    
     int Height { get; }    
