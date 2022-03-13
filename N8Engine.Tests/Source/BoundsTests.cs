@@ -14,7 +14,7 @@ sealed class BoundsTests
 
     [Test]
     [TestCase(0, 0, true)]
-    [TestCase(-5, 2, true)]
+    [TestCase(-5, 3, true)]
     [TestCase(-50, 50, true)]
     [TestCase(-26, 48, true)]
     [TestCase(0, 100, false)]
