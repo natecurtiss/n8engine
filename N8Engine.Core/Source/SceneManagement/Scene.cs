@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using N8Engine.Rendering;
-using N8Engine.Windowing;
 
 namespace N8Engine.SceneManagement;
 
@@ -17,9 +15,9 @@ public abstract class Scene
 
     protected abstract void Load();
     
-    public GameObject Create(string name) => Create(name, out _);
+    public GameObject? Create(string name) => Create(name, out _);
     
-    public GameObject Create(string name, out GameObject gameObject)
+    public GameObject? Create(string name, out GameObject? gameObject)
     {
         if (!_isLoaded)
         {

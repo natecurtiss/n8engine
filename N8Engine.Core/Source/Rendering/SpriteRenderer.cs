@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using N8Engine.SceneManagement;
 using Silk.NET.OpenGL;
 
@@ -22,10 +23,10 @@ public sealed class SpriteRenderer : SceneModule
     };
     readonly GL _gl;
     
-    Camera _camera;
-    BufferObject<float> _vbo;
-    BufferObject<uint> _ebo;
-    VertexArrayObject<float, uint> _vao;
+    Camera? _camera;
+    BufferObject<float>? _vbo;
+    BufferObject<uint>? _ebo;
+    VertexArrayObject<float, uint>? _vao;
 
     internal SpriteRenderer(GL gl) => _gl = gl;
 
@@ -48,10 +49,13 @@ public sealed class SpriteRenderer : SceneModule
     unsafe void SceneModule.OnSceneRender()
     {
         _gl.Clear(ClearBufferMask.ColorBufferBit);
-        _vao.Bind();
+        _vao?.Bind();
 
         foreach (var sprite in _sprites)
         {
+            if (_camera is null)
+                throw new InvalidOperationException($"{nameof(_camera)} was null");
+            
             sprite.Shader.Use();
             sprite.Texture.Bind();
             sprite.Shader.SetUniform("uTexture0", 0);
@@ -65,8 +69,8 @@ public sealed class SpriteRenderer : SceneModule
 
     void SceneModule.OnSceneUnload()
     {
-        _vbo.Dispose();
-        _ebo.Dispose();
-        _vao.Dispose();
+        _vbo?.Dispose();
+        _ebo?.Dispose();
+        _vao?.Dispose();
     }
 }

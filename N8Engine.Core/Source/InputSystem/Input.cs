@@ -14,8 +14,8 @@ public sealed class Input : GameModule
         WasJustReleased
     }
 
-    public event Action<Key> OnKeyPress;
-    public event Action<Key> OnKeyRelease;
+    public event Action<Key>? OnKeyPress;
+    public event Action<Key>? OnKeyRelease;
     
     readonly Dictionary<Key, KeyState> _keyStates = new();
     readonly IEnumerable<Key> _allKeys = Enum.GetValues<Key>();

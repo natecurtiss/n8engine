@@ -5,7 +5,7 @@ namespace N8Engine.SceneManagement;
 
 public sealed class SceneModules : ServiceLocator<SceneModule, SceneModuleNotFoundException>
 {
-    string _sceneName;
+    string? _sceneName;
     IEnumerable<SceneModule> Modules => Services.Values;
     
     internal SceneModules() { }

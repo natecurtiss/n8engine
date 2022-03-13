@@ -25,10 +25,10 @@ public abstract class ServiceLocator<TService, TServiceNotFoundException> where 
             throw ServiceNotFoundException<T>();
     }
 
-    public T Get<T>() where T : TService
+    public T? Get<T>() where T : TService
     {
         if (!Services.ContainsKey(typeof(T)))
             throw ServiceNotFoundException<T>();
-        return (T) Services[typeof(T)];
+        return (T?) Services[typeof(T)];
     }
 }

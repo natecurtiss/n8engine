@@ -10,14 +10,14 @@ public sealed class Game : Loop
 {
     public static readonly GameModules Modules = new();
 
-    public event Action OnStart;
-    public event Action<Frame> OnUpdate;
-    public event Action OnRender;
+    public event Action? OnStart;
+    public event Action<Frame>? OnUpdate;
+    public event Action? OnRender;
 
-    Window _window;
-    Debug _debug;
-    Input _input;
-    SceneManager _sceneManager;
+    Window? _window;
+    Debug? _debug;
+    Input? _input;
+    SceneManager? _sceneManager;
     
     WindowOptions _windowOptions;
     Scene _firstScene = new EmptyScene();
@@ -68,12 +68,16 @@ public sealed class Game : Loop
 
     public Game WithDebugOutput(Action<object> onOutput)
     {
-        _debug.OnOutput(onOutput);
+        _debug?.OnOutput(onOutput);
         return this;
     }
     
     public void Start()
     {
+        var graphicsModule = Modules.Get<Graphics>();
+        if (graphicsModule is null)
+            throw new InvalidOperationException($"{nameof(Modules)} returned null instead of {nameof(Graphics)}");
+        
         _window = new(_windowOptions);
         _window.OnLoad += () =>
         {
@@ -83,7 +87,7 @@ public sealed class Game : Loop
             Modules.Add(_sceneManager = new(this, _window, m =>
             {
                 m.Add(new Camera(_window));
-                m.Add(new SpriteRenderer(Modules.Get<Graphics>().Lib));
+                m.Add(new SpriteRenderer(graphicsModule.Lib));
             }, m =>
             {
                 m.Remove<Camera>();
@@ -94,8 +98,8 @@ public sealed class Game : Loop
         };
         _window.OnUpdate += frame => OnUpdate?.Invoke(frame);
         _window.OnRender += () => OnRender?.Invoke();
-        _window.OnKeyDown += key => _input.UpdateKey(key, true);
-        _window.OnKeyUp += key => _input.UpdateKey(key, false);
+        _window.OnKeyDown += key => _input?.UpdateKey(key, true);
+        _window.OnKeyUp += key => _input?.UpdateKey(key, false);
         _window.Run();
     }
 }

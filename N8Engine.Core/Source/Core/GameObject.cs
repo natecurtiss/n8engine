@@ -27,7 +27,7 @@ public sealed class GameObject
         _scene.Destroy(this);
     }
 
-    public T GetComponent<T>() where T : Component
+    public T? GetComponent<T>() where T : Component
     {
         if (IsDestroyed)
             throw new GameObjectIsDestroyedException($"GameObject {Name} is destroyed, you cannot access its components!");
@@ -56,21 +56,21 @@ public sealed class GameObject
         return this;
     }
 
-    public GameObject RemoveComponent<T>() where T : Component
+    public GameObject? RemoveComponent<T>() where T : Component
     {
         if (!_components.ContainsKey(typeof(T)))
             throw new ComponentNotAttachedException($"Component of type {typeof(T)} is not attached to {this}!");
         return RemoveComponent(_components[typeof(T)] as T);
     }
 
-    public GameObject RemoveComponent<T>(T component) where T : Component
+    public GameObject RemoveComponent<T>(T component) where T : Component?
     {
         if (IsDestroyed)
             throw new GameObjectIsDestroyedException($"GameObject {this} is destroyed, you cannot access its components!");
         if (!_components.ContainsKey(typeof(T)))
             throw new ComponentNotAttachedException($"Component of type {typeof(T)} is not attached to {this}!");
         _components.Remove(typeof(T));
-        component.Destroy();
+        component?.Destroy();
         return this;
     }
 
