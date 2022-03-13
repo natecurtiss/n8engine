@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.CompilerServices;
+using static System.IO.Directory;
+using static System.IO.Path;
 
 namespace N8Engine.Utilities;
 
@@ -7,16 +9,19 @@ public static class PathExtensions
 {
     public static string Find(this string path, [CallerFilePath] string caller = "", int iterations = 8)
     {
-        path = $"{caller}/{path}";
-        if (File.Exists(path))
-            return path;
-        var approximated = path;
+        var pre = caller;
+        var suf = path;
+        string full() => Combine(pre, suf);
+        if (File.Exists(full()))
+            return full();
         for (var i = 0; i < iterations; i++)
         {
-            approximated = approximated.Insert(caller.Length, "../");
-            if (File.Exists(approximated))
-                return approximated;
+            if (GetParent(pre) is null)
+                throw new FileNotFoundException($"File {path} not found!");
+            pre = GetParent(pre)!.FullName;
+            if (File.Exists(full()))
+                return full();
         }
-        return path;
+        throw new FileNotFoundException($"File {path} not found!");
     }
 }
