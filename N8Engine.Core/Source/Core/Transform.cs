@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using N8Engine.Mathematics;
 using N8Engine.Utilities;
 using static System.Numerics.Matrix4x4;
 
@@ -41,4 +42,5 @@ public sealed class Transform : Component
     }
     
     public Matrix4x4 ModelMatrix() => CreateScale(Scale.X, Scale.Y, 1f) * CreateRotationZ(Rotation.ToRadians()) * CreateTranslation(Position.X, Position.Y, 0f);
+    public Bounds Bounds() => new(Position, Scale);
 }
