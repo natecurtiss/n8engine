@@ -37,7 +37,7 @@ sealed class Window : WindowSize, WindowEvents
             _window.Dispose();
             _gl.Dispose();
         };
-        _window.Update += fps => OnUpdate?.Invoke(new((float) fps));
+        _window.Update += dt => OnUpdate?.Invoke(new((float) dt));
         _window.Render += _ => OnRender?.Invoke();
     }
 

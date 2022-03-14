@@ -40,10 +40,11 @@ sealed class MainScene : Scene
             }
         }
 
+        // TODO: Don't have this framerate dependent.
         Create("player")
             .AddComponent(new PlayerStart(() => input.WasJustPressed(Key.Space)))
-            .AddComponent(new Player(3f, () => input.WasJustPressed(Key.Space)))
-            .AddComponent(new Body(-2500), out _)
+            .AddComponent(new Player(4f, () => input.WasJustPressed(Key.Space)))
+            .AddComponent(new Body(-1800), out _)
             .AddComponent(new Sprite("Assets/Textures/player.png".Find()))
             .AddComponent(new Transform()
                 .AtPosition(-100, 0)

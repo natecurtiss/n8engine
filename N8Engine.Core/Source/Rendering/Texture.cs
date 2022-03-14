@@ -31,11 +31,8 @@ public sealed class Texture : IDisposable
                 _pixels[y * _image.Width + x] = _image[x, y];
             }
         }
-        _image.ProcessPixelRows(a =>
-        {
-            fixed (void* data = &_pixels[0])
-                _gl.TexImage2D(TextureTarget.Texture2D, 0, (int) InternalFormat.Rgba, (uint) _image.Width, (uint) _image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
-        });
+        fixed (void* data = &_pixels[0])
+            _gl.TexImage2D(TextureTarget.Texture2D, 0, (int) InternalFormat.Rgba, (uint) _image.Width, (uint) _image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
         
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) GLEnum.Repeat);
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) GLEnum.Repeat);

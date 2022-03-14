@@ -22,7 +22,7 @@ sealed class Body : Component
             return;
         var vel = Velocity;
         // V = 1/2g * t^2
-        vel.Y += _gravity * (frame.DeltaTime * frame.DeltaTime);
+        vel.Y += _gravity * frame.DeltaTime * frame.DeltaTime;
         Velocity = vel;
     }
 }
