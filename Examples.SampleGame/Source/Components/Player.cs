@@ -7,7 +7,7 @@ sealed class Player : Component
 {
     readonly float _jump;
     readonly Func<bool> _whenToJump;
-    
+
     Transform _transform;
     Body _body;
     

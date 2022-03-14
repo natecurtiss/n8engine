@@ -4,5 +4,6 @@ using SampleGame;
 new Game()
     .WithFirstScene(Scenes.Main)
     .WithWindowTitle("Flappo")
-    .WithWindowSize(1500, 800)
+    .WithWindowSize(1300, 700)
+    .WithNotResizableWindow()
     .Start();

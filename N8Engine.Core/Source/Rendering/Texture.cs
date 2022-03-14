@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Silk.NET.OpenGL;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace N8Engine.Rendering;
 
+[SuppressMessage("ReSharper.DPA", "DPA0003: Excessive memory allocations in LOH", MessageId = "type: SixLabors.ImageSharp.PixelFormats.Rgba32[]; size: 96MB")]
 public sealed class Texture : IDisposable
 {
     readonly GL _gl;

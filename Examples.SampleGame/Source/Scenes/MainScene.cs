@@ -15,7 +15,7 @@ sealed class MainScene : Scene
     {
         var input = Game.Modules.Get<Input>();
         var debug = Game.Modules.Get<Debug>();
-        Modules.Get<Camera>().Zoom = 0.7f;
+        Modules.Get<Camera>().Zoom = 0.5f;
 
         Create("background_wall")
             .AddComponent(new Transform().WithScale(1920 * 2, 1080 * 2))
@@ -23,7 +23,7 @@ sealed class MainScene : Scene
 
         var scrolling = new Scrolling(1000f);
         var scrollSpeeds = new[] { 0f, 0.5f, 0.8f };
-        var scrollPositions = new[] {-560f, -270, 0f};
+        var scrollPositions = new[] {-500f, -210, 60f};
         var duplicateScrollPositions = new[] {-3918f, 0, 3918f};
         var backgroundScales = new Vector2[] {new(3918, 395), new(3918, 518), new(3918, 743)};
         for (var s = 2; s >= 0; s--)
@@ -42,7 +42,7 @@ sealed class MainScene : Scene
         Create("player")
             .AddComponent(new PlayerStart(() => input.WasJustPressed(Key.Space)))
             .AddComponent(new Player(1000f, () => input.WasJustPressed(Key.Space)))
-            .AddComponent(new Body(-1800), out var body)
+            .AddComponent(new Body(-2300), out var body)
             .AddComponent(new Sprite("Assets/Textures/player.png".Find()))
             .AddComponent(new Transform()
                 .AtPosition(-100, 0)

@@ -26,6 +26,7 @@ sealed class Window : WindowSize, WindowEvents
     public Window(WindowOptions options)
     {
         _window = Create(options);
+        _window.WindowBorder = options.IsResizable ? WindowBorder.Resizable : WindowBorder.Fixed;
         _window.Load += () =>
         {
             SetupInput();

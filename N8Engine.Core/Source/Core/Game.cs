@@ -22,7 +22,7 @@ public sealed class Game : Loop
     WindowOptions _windowOptions;
     Scene _firstScene = new EmptyScene();
 
-    public Game() => _windowOptions = new("N8Engine Game", 1280, 720, 60, WindowState.Windowed);
+    public Game() => _windowOptions = new("N8Engine Game", 1280, 720, 60, WindowState.Windowed, true);
 
     public Game WithWindowTitle(string title)
     {
@@ -57,6 +57,18 @@ public sealed class Game : Loop
     public Game Windowed()
     {
         _windowOptions = _windowOptions.Windowed();
+        return this;
+    }
+
+    public Game WithResizableWindow()
+    {
+        _windowOptions = _windowOptions.Resizable();
+        return this;
+    }
+    
+    public Game WithNotResizableWindow()
+    {
+        _windowOptions = _windowOptions.NotResizable();
         return this;
     }
 
