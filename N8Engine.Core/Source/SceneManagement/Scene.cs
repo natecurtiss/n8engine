@@ -16,9 +16,9 @@ public abstract class Scene
     protected virtual void Load() { }
     protected virtual void Unload() { }
     
-    public GameObject Create(string name) => Create(name, out _);
+    public GameObject? Create(string name) => Create(name, out _);
     
-    public GameObject Create(string name, out GameObject gameObject)
+    public GameObject? Create(string name, out GameObject? gameObject)
     {
         if (!_isLoaded)
         {

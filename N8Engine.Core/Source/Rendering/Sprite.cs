@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using N8Engine.SceneManagement;
 using N8Engine.Utilities;
 
@@ -9,12 +10,15 @@ public sealed class Sprite : Component
     internal readonly Shader Shader;
     internal readonly Texture Texture;
     
-    SpriteRenderer _spriteRenderer;
-    Transform _transform;
+    SpriteRenderer? _spriteRenderer;
+    Transform? _transform;
 
     public Sprite(string path)
     {
-        var gl = Game.Modules.Get<Graphics>().Lib;
+        var gl = Game.Modules.Get<Graphics>()?.Lib;
+        if (gl is null)
+            throw new InvalidOperationException($"{nameof(gl)} was null");
+
         Shader = new(gl, "Assets/Shaders/sprite.vert".Find(), "Assets/Shaders/sprite.frag".Find());
         Texture = new(gl, path);
     }
@@ -31,7 +35,13 @@ public sealed class Sprite : Component
         Texture.Dispose();
     }
 
-    public override void Render() => _spriteRenderer.AddToRenderQueue(this);
+    public override void Render() => _spriteRenderer?.AddToRenderQueue(this);
 
-    public Matrix4x4 ModelMatrix() => _transform.ModelMatrix();
+    public Matrix4x4 ModelMatrix()
+    {
+        if (_transform is null)
+            throw new InvalidOperationException($"{nameof(_transform)} was null");
+        
+        return _transform.ModelMatrix();
+    }
 }

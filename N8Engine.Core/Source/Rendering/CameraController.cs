@@ -1,13 +1,15 @@
-﻿using N8Engine.InputSystem;
+﻿using System;
+using N8Engine.InputSystem;
 using N8Engine.SceneManagement;
+using N8Engine.Utilities;
 
 namespace N8Engine.Rendering;
 
 public sealed class CameraController : Component
 {
-    readonly Input _input;
+    readonly Input? _input;
     readonly float _speed;
-    Camera _camera;
+    Camera? _camera;
     
     public CameraController(float speed)
     {
@@ -16,5 +18,15 @@ public sealed class CameraController : Component
     }
 
     public override void Create(Scene scene) => _camera = scene.Modules.Get<Camera>();
-    public override void Update(Frame frame) => _camera.Position += _input.Axis() * (_speed * frame.DeltaTime);
+
+    public override void Update(Frame frame)
+    {
+        if (_camera is null)
+            throw new InvalidOperationException($"{nameof(_camera)} was null");
+
+        if (_input is null)
+            throw new InvalidOperationException($"{nameof(_input)} was null");
+        
+        _camera.Position += _input.Axis() * (_speed * frame.DeltaTime);  
+    } 
 }
