@@ -9,6 +9,10 @@
         <AssemblyName>N8Engine.Tests</AssemblyName>
 
         <RootNamespace>N8Engine.Tests</RootNamespace>
+
+        <Configurations>Release;Debug</Configurations>
+
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using N8Engine.InputSystem;
 using NUnit.Framework;
 using static N8Engine.InputSystem.Key;

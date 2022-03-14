@@ -12,22 +12,22 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "N8Engine.Tests", "N8Engine.
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FEA166FB-16B4-474E-9982-65486655B36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEA166FB-16B4-474E-9982-65486655B36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEA166FB-16B4-474E-9982-65486655B36D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEA166FB-16B4-474E-9982-65486655B36D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEA166FB-16B4-474E-9982-65486655B36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEA166FB-16B4-474E-9982-65486655B36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16103C7E-8F84-4A15-B6D3-3BE594E4F51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16103C7E-8F84-4A15-B6D3-3BE594E4F51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{271A7D60-DDC6-4E66-9FFC-C26B32839B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16103C7E-8F84-4A15-B6D3-3BE594E4F51D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16103C7E-8F84-4A15-B6D3-3BE594E4F51D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16103C7E-8F84-4A15-B6D3-3BE594E4F51D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16103C7E-8F84-4A15-B6D3-3BE594E4F51D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FEA166FB-16B4-474E-9982-65486655B36D} = {4D9CCEBA-ED42-49B5-8851-39332E12C3B7}

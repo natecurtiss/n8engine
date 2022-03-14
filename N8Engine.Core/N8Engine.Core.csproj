@@ -16,6 +16,8 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <LangVersion>latest</LangVersion>
         <RootNamespace>N8Engine</RootNamespace>
+        <Configurations>Release;Debug</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -35,9 +37,4 @@
       <PackageReference Include="Silk.NET.Windowing" Version="2.13.0" />
       <PackageReference Include="SixLabors.ImageSharp" Version="2.0.0" />
     </ItemGroup>
-
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-    </PropertyGroup>
 </Project>

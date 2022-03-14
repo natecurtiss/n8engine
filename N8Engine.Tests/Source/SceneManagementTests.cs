@@ -1,10 +1,7 @@
 ﻿using System;
-using N8Engine.Rendering;
 using N8Engine.SceneManagement;
 using N8Engine.Windowing;
 using NUnit.Framework;
-using Silk.NET.Core.Contexts;
-using Silk.NET.OpenGL;
 using static NUnit.Framework.Assert;
 
 namespace N8Engine.Tests;

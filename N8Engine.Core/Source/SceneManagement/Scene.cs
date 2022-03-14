@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using N8Engine.Rendering;
-using N8Engine.Windowing;
 
 namespace N8Engine.SceneManagement;
 

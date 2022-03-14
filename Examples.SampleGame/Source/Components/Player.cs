@@ -23,7 +23,10 @@ sealed class Player : Component
     {
         _transform = gameObject.GetComponent<Transform>();
         _body = gameObject.GetComponent<Body>();
+        Events.OnPlayerStart.Add(Enable);
     }
+
+    public override void Destroy() => Events.OnPlayerStart.Remove(Enable);
 
     public override void Update(Frame frame)
     {
@@ -34,7 +37,7 @@ sealed class Player : Component
         _transform.Position += _body.Velocity;
     }
 
-    public void Enable()
+    void Enable()
     {
         IsEnabled = true;
         _body.UseGravity = true;
