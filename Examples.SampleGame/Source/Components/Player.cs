@@ -34,7 +34,7 @@ sealed class Player : Component
             return;
         if (_whenToJump())
             _body.Velocity = new(0, _jump);
-        _transform.Position += _body.Velocity;
+        _transform.Position += _body.Velocity * frame.DeltaTime;
     }
 
     void Enable()

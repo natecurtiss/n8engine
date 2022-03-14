@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
+﻿using System.Numerics;
 using N8Engine;
 using N8Engine.InputSystem;
 using N8Engine.Rendering;
@@ -11,11 +10,11 @@ namespace SampleGame;
 sealed class MainScene : Scene
 {
     public override string Name => "Main";
-
-    [SuppressMessage("ReSharper.DPA", "DPA0003: Excessive memory allocations in LOH", MessageId = "type: SixLabors.ImageSharp.PixelFormats.Rgba32[]; size: 96MB")]
+    
     protected override void Load()
     {
         var input = Game.Modules.Get<Input>();
+        var debug = Game.Modules.Get<Debug>();
         Modules.Get<Camera>().Zoom = 0.7f;
 
         Create("background_wall")
@@ -39,15 +38,20 @@ sealed class MainScene : Scene
                         .WithScale(backgroundScales[s]));
             }
         }
-
-        // TODO: Don't have this framerate dependent.
+        
         Create("player")
             .AddComponent(new PlayerStart(() => input.WasJustPressed(Key.Space)))
-            .AddComponent(new Player(4f, () => input.WasJustPressed(Key.Space)))
-            .AddComponent(new Body(-1800), out _)
+            .AddComponent(new Player(1000f, () => input.WasJustPressed(Key.Space)))
+            .AddComponent(new Body(-1800), out var body)
             .AddComponent(new Sprite("Assets/Textures/player.png".Find()))
             .AddComponent(new Transform()
                 .AtPosition(-100, 0)
                 .WithScale(199, 178));
+        
+        Create("debug")
+            .AddComponent(new UpdateDebugger(
+                () => debug.Log($"Early Update: {body.Velocity}"),
+                () => debug.Log($"Update: {body.Velocity}"),
+                () => debug.Log($"Late Update: {body.Velocity}")));
     }
 }
