@@ -14,17 +14,22 @@ public sealed class Texture : IDisposable
 
     public unsafe Texture(GL gl, string path)
     {
-        Console.WriteLine(path);
         _gl = gl;
         _handle = _gl.GenTexture();
         Bind();
-        _gl.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
+        
         _image = Image.Load<Rgba32>(path);
-        _image.ProcessPixelRows(a =>
+        var pixels = new Rgba32[_image.Width * _image.Height];
+        for (var y = 0; y < _image.Height; y++)
         {
-            fixed (void* d = &MemoryMarshal.GetReference(a.GetRowSpan(0)))
-                _gl.TexImage2D(TextureTarget.Texture2D, 0, (int) InternalFormat.Rgba, (uint) _image.Width, (uint) _image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, d);
-        });
+            for (var x = 0; x < _image.Width; x++)
+            {
+                pixels[y * _image.Width + x] = _image[x, y];
+            }
+        }
+        fixed (void* data = &pixels[0])
+            _gl.TexImage2D(TextureTarget.Texture2D, 0, (int) InternalFormat.Rgba, (uint) _image.Width, (uint) _image.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+        
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) GLEnum.Repeat);
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int) GLEnum.Repeat);
         _gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) GLEnum.Linear);
