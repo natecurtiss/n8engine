@@ -11,6 +11,7 @@ public sealed class Sprite : Component
     
     SpriteRenderer _spriteRenderer;
     Transform _transform;
+    GameObject _gameObject;
 
     public Sprite(string path)
     {
@@ -23,6 +24,7 @@ public sealed class Sprite : Component
     {
         _transform = gameObject.GetComponent<Transform>();
         _spriteRenderer = scene.Modules.Get<SpriteRenderer>();
+        _gameObject = gameObject;
     }
 
     public override void Destroy()
@@ -31,7 +33,11 @@ public sealed class Sprite : Component
         Texture.Dispose();
     }
 
-    public override void Render() => _spriteRenderer.AddToRenderQueue(this);
+    public override void Render()
+    {
+        Game.Modules.Get<Debug>().Log(_gameObject.IsDestroyed);
+        _spriteRenderer.AddToRenderQueue(this);
+    }
 
     public Matrix4x4 ModelMatrix() => _transform.ModelMatrix();
 }

@@ -15,7 +15,8 @@ sealed class MainScene : Scene
     {
         var input = Game.Modules.Get<Input>();
         var debug = Game.Modules.Get<Debug>();
-        Modules.Get<Camera>().Zoom = 0.5f;
+        var camera = Modules.Get<Camera>();
+        camera.Zoom = 0.5f;
 
         Create("background_wall")
             .AddComponent(new Transform().WithScale(1920 * 2, 1080 * 2))
@@ -42,16 +43,11 @@ sealed class MainScene : Scene
         Create("player")
             .AddComponent(new PlayerStart(() => input.WasJustPressed(Key.Space)))
             .AddComponent(new Player(1000f, () => input.WasJustPressed(Key.Space)))
-            .AddComponent(new Body(-2300), out var body)
+            .AddComponent(new Body(-2300))
             .AddComponent(new Sprite("Assets/Textures/player.png".Find()))
             .AddComponent(new Transform()
                 .AtPosition(-100, 0)
-                .WithScale(199, 178));
-        
-        Create("debug")
-            .AddComponent(new UpdateDebugger(
-                () => debug.Log($"Early Update: {body.Velocity}"),
-                () => debug.Log($"Update: {body.Velocity}"),
-                () => debug.Log($"Late Update: {body.Velocity}")));
+                .WithScale(199, 178), out var player)
+            .AddComponent(new RestartScene(() => !camera.Bounds().Contains(player.Position)));
     }
 }

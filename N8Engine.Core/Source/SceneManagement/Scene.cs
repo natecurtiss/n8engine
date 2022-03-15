@@ -46,11 +46,12 @@ public abstract class Scene
     internal void SwitchFrom(Action<SceneModules> onRemoveModules)
     {
         _isLoaded = false;
-        if (_isInitialized) 
-            onRemoveModules(Modules);
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Destroy();
+        Game.Modules.Get<Debug>().Log("switched from");
         _gameObjects.Clear();
+        if (_isInitialized) 
+            onRemoveModules(Modules);
         Modules.OnSceneUnload();
         Unload();
     }

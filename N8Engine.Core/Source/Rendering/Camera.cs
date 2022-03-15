@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using N8Engine.SceneManagement;
+using N8Engine.Utilities;
 using N8Engine.Windowing;
 
 namespace N8Engine.Rendering;
@@ -12,6 +13,13 @@ public sealed class Camera : SceneModule
     readonly WindowSize _windowSize;
 
     internal Camera(WindowSize windowSize) => _windowSize = windowSize;
+
+    public Bounds Bounds()
+    {
+        var size = new Vector2(_windowSize.Width, _windowSize.Height);
+        size /= Zoom;
+        return new(Position, size);
+    }
 
     internal Matrix4x4 ProjectionMatrix()
     {

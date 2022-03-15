@@ -21,10 +21,10 @@ public sealed class GameObject
     public void Destroy()
     {
         IsDestroyed = true;
+        _scene.Destroy(this);
         foreach (var component in _components.Values) 
             component.Destroy();
         _components.Clear();
-        _scene.Destroy(this);
     }
 
     public T GetComponent<T>() where T : Component
@@ -78,6 +78,8 @@ public sealed class GameObject
     {
         foreach (var component in _components.Values)
         {
+            if (IsDestroyed)
+                return;
             component.Create();
             component.Create(_scene);
             component.Create(this);
@@ -87,23 +89,31 @@ public sealed class GameObject
 
     internal void Start()
     {
-        foreach (var component in _components.Values) 
+        foreach (var component in _components.Values)
+        {
+            if (IsDestroyed)
+                return;
             component.Start();
+        }
     }
 
     internal void EarlyUpdate(Frame frame)
     {
         foreach (var component in _components.Values)
         {
+            if (IsDestroyed)
+                return;
             component.EarlyUpdate();
             component.EarlyUpdate(frame);
         }
     }
     
     internal void Update(Frame frame)
-    {
+    { 
         foreach (var component in _components.Values)
         {
+            if (IsDestroyed)
+                return;
             component.Update();
             component.Update(frame);
         }
@@ -113,6 +123,8 @@ public sealed class GameObject
     {
         foreach (var component in _components.Values)
         {
+            if (IsDestroyed)
+                return;
             component.LateUpdate();
             component.LateUpdate(frame);
         }
@@ -120,8 +132,12 @@ public sealed class GameObject
 
     internal void Render()
     {
-        foreach (var component in _components.Values) 
+        foreach (var component in _components.Values)
+        {
+            if (IsDestroyed)
+                return;
             component.Render();
+        }
     }
 
     public override string ToString() => Name;
