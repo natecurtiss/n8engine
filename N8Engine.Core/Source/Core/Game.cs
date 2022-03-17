@@ -15,7 +15,6 @@ public sealed class Game : Loop
     public event Action OnRender;
 
     Window _window;
-    Debug _debug;
     Input _input;
     SceneManager _sceneManager;
     
@@ -80,7 +79,7 @@ public sealed class Game : Loop
 
     public Game WithDebugOutput(Action<object> onOutput)
     {
-        _debug.OnOutput(onOutput);
+        Debug.OnOutput(onOutput);
         return this;
     }
     
@@ -89,7 +88,6 @@ public sealed class Game : Loop
         _window = new(_windowOptions);
         _window.OnLoad += () =>
         {
-            Modules.Add(_debug = new(Console.WriteLine));
             Modules.Add(_input = new());
             Modules.Add<Graphics>(new(_window.CreateGL()));
             Modules.Add(_sceneManager = new(this, _window, m =>

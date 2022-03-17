@@ -14,7 +14,6 @@ sealed class MainScene : Scene
     protected override void Load()
     {
         var input = Game.Modules.Get<Input>();
-        var debug = Game.Modules.Get<Debug>();
         var camera = Modules.Get<Camera>();
         camera.Zoom = 0.5f;
 

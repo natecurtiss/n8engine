@@ -18,6 +18,6 @@ sealed class RestartScene : Component
     public override void LateUpdate(Frame frame)
     {
         if (_whenToRestart())
-            _sceneManager.Load(new MainScene2());
+            _sceneManager.Load(_sceneManager.CurrentScene);
     }
 }
