@@ -8,16 +8,11 @@ namespace N8Engine;
 
 public sealed class Game : Loop
 {
-    public static readonly GameModules Modules = new();
-
     public event Action OnStart;
     public event Action<Frame> OnUpdate;
     public event Action OnRender;
 
     Window _window;
-    Input _input;
-    SceneManager _sceneManager;
-    
     WindowOptions _windowOptions;
     Scene _firstScene = new EmptyScene();
 
@@ -88,24 +83,29 @@ public sealed class Game : Loop
         _window = new(_windowOptions);
         _window.OnLoad += () =>
         {
-            Modules.Add(_input = new());
-            Modules.Add<Graphics>(new(_window.CreateGL()));
-            Modules.Add(_sceneManager = new(this, _window, m =>
+            // TODO: Move initialization outside.
+            var gl = _window.CreateGL();
+            var input = new Input();
+            var sceneManager = new SceneManager(this, _window, m =>
             {
                 m.Add(new Camera(_window));
-                m.Add(new SpriteRenderer(Modules.Get<Graphics>().Lib));
+                m.Add(new SpriteRenderer(gl));
             }, m =>
             {
                 m.Remove<Camera>();
                 m.Remove<SpriteRenderer>();
-            }));
-            _sceneManager.Load(_firstScene);
+            });
+            Modules.Add(input);
+            Modules.Add(sceneManager);
+            Modules.Add<Graphics>(gl);
+            // TODO: Make this automatic
+            sceneManager.Load(_firstScene);
             OnStart?.Invoke();
+            _window.OnUpdate += frame => OnUpdate?.Invoke(frame);
+            _window.OnRender += () => OnRender?.Invoke();
+            _window.OnKeyDown += key => input.UpdateKey(key, true);
+            _window.OnKeyUp += key => input.UpdateKey(key, false);
         };
-        _window.OnUpdate += frame => OnUpdate?.Invoke(frame);
-        _window.OnRender += () => OnRender?.Invoke();
-        _window.OnKeyDown += key => _input.UpdateKey(key, true);
-        _window.OnKeyUp += key => _input.UpdateKey(key, false);
         _window.Run();
     }
 }

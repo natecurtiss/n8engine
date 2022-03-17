@@ -12,7 +12,7 @@ sealed class RestartScene : Component
     public RestartScene(Func<bool> whenToRestart)
     {
         _whenToRestart = whenToRestart;
-        _sceneManager = Game.Modules.Get<SceneManager>();
+        _sceneManager = Modules.Get<SceneManager>();
     }
 
     public override void LateUpdate(Frame frame)

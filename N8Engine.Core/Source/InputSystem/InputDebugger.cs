@@ -10,7 +10,7 @@ public sealed class InputDebugger : Component
     public InputDebugger(Action<Key> onInput)
     {
         _onInput = onInput;
-        _input = Game.Modules.Get<Input>();
+        _input = Modules.Get<Input>();
         _input.OnKeyPress += KeyDown;
     }
 

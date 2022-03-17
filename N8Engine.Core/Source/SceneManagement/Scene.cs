@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using N8Engine.Utilities;
 
 namespace N8Engine.SceneManagement;
 
-public abstract class Scene
+public abstract class Scene : ServiceLocator<Cog, CogNotFoundException>, Cogs
 {
-    public readonly SceneModules Modules = new();
     readonly List<GameObject> _gameObjects = new();
-    
     bool _isLoaded;
-    bool _isInitialized;
-    
+
     public virtual string Name { get; } = "New Scene";
+    IEnumerable<Cog> Cogs => Services.Values;
+
+    public T Get<T>() where T : Cog => Find<T>();
+    void Cogs.Add<T>(T cog) => Register(cog);
+    void Cogs.Remove<T>() => Deregister<T>();
 
     protected virtual void Load() { }
     protected virtual void Unload() { }
@@ -30,28 +33,24 @@ public abstract class Scene
         return gameObject;
     }
 
-    internal void SwitchTo(Action<SceneModules> onAddModules)
+    internal void SwitchTo(Action<Cogs> onAddCogs)
     {
         _isLoaded = true;
-        if (!_isInitialized)
-        {
-            Modules.Initialize(Name);
-            _isInitialized = true;
-        }
-        onAddModules(Modules);
-        Modules.OnSceneLoad(this);
+        onAddCogs(this);
+        foreach (var cog in Cogs)
+            cog.OnSceneLoad(this);
         Load();
     }
 
-    internal void SwitchFrom(Action<SceneModules> onRemoveModules)
+    internal void SwitchFrom(Action<Cogs> onRemoveCogs)
     {
         _isLoaded = false;
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Destroy();
         _gameObjects.Clear();
-        if (_isInitialized) 
-            onRemoveModules(Modules);
-        Modules.OnSceneUnload();
+        onRemoveCogs(this);
+        foreach (var cog in Cogs)
+            cog.OnSceneUnload();
         Unload();
     }
 
@@ -71,19 +70,21 @@ public abstract class Scene
             gameObject.Update(frame);
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.LateUpdate(frame);
-        Modules.OnSceneUpdate();
+        foreach (var cog in Cogs)
+            cog.OnSceneUpdate();
     }
 
     internal void Render()
     {
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Render();
-        Modules.OnSceneRender();
+        foreach (var cog in Cogs)
+            cog.OnSceneRender();
     }
 
     internal void Destroy(GameObject gameObject) => _gameObjects.Remove(gameObject);
 
-    internal int Count() => _gameObjects.Count;
+    internal new int Count() => _gameObjects.Count;
     internal GameObject First() => _gameObjects[0];
     internal bool Any() => _gameObjects.Count > 0;
 }

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace N8Engine.Utilities;
 
-public abstract class ServiceLocator<TService, TServiceNotFoundException> where TServiceNotFoundException : Exception
+public class ServiceLocator<TS, TE> where TE : Exception
 {
-    protected readonly Dictionary<Type, TService> Services = new();
+    protected readonly Dictionary<Type, TS> Services = new();
 
     public int Count => Services.Count;
 
-    protected abstract TServiceNotFoundException ServiceNotFoundException<T>() where T : TService;
+    protected virtual TE WhenMissing<T>() where T : TS => throw new ServiceNotFoundException($"Service of type {typeof(T)} not found!");
 
-    public void Add<TType>(TType service) where TType : TService
+    public void Register<TType>(TType service) where TType : TS
     {
         if (Services.ContainsKey(typeof(TType)))
             Services[typeof(TType)] = service;
@@ -19,16 +19,16 @@ public abstract class ServiceLocator<TService, TServiceNotFoundException> where 
             Services.Add(typeof(TType), service);
     }
 
-    public void Remove<T>() where T : TService
+    public void Deregister<T>() where T : TS
     {
         if (!Services.Remove(typeof(T)))
-            throw ServiceNotFoundException<T>();
+            throw WhenMissing<T>();
     }
 
-    public T Get<T>() where T : TService
+    public T Find<T>() where T : TS
     {
         if (!Services.ContainsKey(typeof(T)))
-            throw ServiceNotFoundException<T>();
+            throw WhenMissing<T>();
         return (T) Services[typeof(T)];
     }
 }

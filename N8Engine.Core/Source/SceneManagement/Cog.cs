@@ -1,6 +1,6 @@
 ﻿namespace N8Engine.SceneManagement;
 
-public interface SceneModule
+public interface Cog
 {
     void OnSceneLoad(Scene scene);
     void OnSceneUpdate();

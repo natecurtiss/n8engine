@@ -13,8 +13,8 @@ sealed class MainScene : Scene
     
     protected override void Load()
     {
-        var input = Game.Modules.Get<Input>();
-        var camera = Modules.Get<Camera>();
+        var input = Modules.Get<Input>();
+        var camera = Get<Camera>();
         camera.Zoom = 0.5f;
 
         Create("background_wall")

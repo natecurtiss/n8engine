@@ -3,21 +3,22 @@ using N8Engine.Windowing;
 
 namespace N8Engine.SceneManagement;
 
-public sealed class SceneManager : GameModule
+public sealed class SceneManager : Module
 {
     readonly Loop _loop;
     readonly WindowEvents _windowEvents;
-    readonly Action<SceneModules> _onAddSceneModules;
-    readonly Action<SceneModules> _onRemoveSceneModules;
+    readonly Action<Cogs> _onAddCogs;
+    readonly Action<Cogs> _onRemoveCogs;
 
     public Scene CurrentScene { get; private set; } = new EmptyScene();
     
-    internal SceneManager(Loop loop, WindowEvents windowEvents, Action<SceneModules> onAddSceneModules, Action<SceneModules> onRemoveSceneModules)
+    internal SceneManager(Loop loop, WindowEvents windowEvents, Action<Cogs> onAddCogs, Action<Cogs> onRemoveCogs)
     {
         _loop = loop;
         _windowEvents = windowEvents;
-        _onAddSceneModules = onAddSceneModules;
-        _onRemoveSceneModules = onRemoveSceneModules;
+        _onAddCogs = onAddCogs;
+        _onRemoveCogs = onRemoveCogs;
+        CurrentScene.SwitchTo(onAddCogs);
     }
 
     public void Load(Scene scene)
@@ -33,8 +34,8 @@ public sealed class SceneManager : GameModule
         _loop.OnUpdate += CurrentScene.Update;
         _loop.OnRender += CurrentScene.Render;
         _windowEvents.OnClose += UnloadCurrentScene;
-        CurrentScene.SwitchTo(_onAddSceneModules);
+        CurrentScene.SwitchTo(_onAddCogs);
     }
 
-    void UnloadCurrentScene() => CurrentScene.SwitchFrom(_onRemoveSceneModules);
+    void UnloadCurrentScene() => CurrentScene.SwitchFrom(_onRemoveCogs);
 }

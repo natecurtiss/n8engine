@@ -11,10 +11,10 @@ public sealed class CameraController : Component
     
     public CameraController(float speed)
     {
-        _input = Game.Modules.Get<Input>();
+        _input = Modules.Get<Input>();
         _speed = speed;
     }
 
-    public override void Create(GameObject gameObject, Scene scene) => _camera = scene.Modules.Get<Camera>();
+    public override void Create(GameObject gameObject, Scene scene) => _camera = scene.Get<Camera>();
     public override void Update(Frame frame) => _camera.Position += _input.Axis() * (_speed * frame.DeltaTime);
 }

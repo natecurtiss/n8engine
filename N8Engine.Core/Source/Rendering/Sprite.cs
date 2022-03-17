@@ -17,7 +17,8 @@ public sealed class Sprite : Component
 
     public Sprite(string path)
     {
-        var gl = Game.Modules.Get<Graphics>().Lib;
+        // TODO: Find a better way of doing this.
+        var gl = Modules.Get<Graphics>().Lib;
         Shader = new(gl, "Assets/Shaders/sprite.vert".Find(), "Assets/Shaders/sprite.frag".Find());
         Texture = new(gl, path);
     }
@@ -27,7 +28,7 @@ public sealed class Sprite : Component
         _scene = scene;
         _name = gameObject.Name;
         _transform = gameObject.GetComponent<Transform>();
-        _spriteRenderer = scene.Modules.Get<SpriteRenderer>();
+        _spriteRenderer = scene.Get<SpriteRenderer>();
     }
 
     public override void Destroy()
