@@ -15,9 +15,9 @@ sealed class RestartScene : Component
         _sceneManager = Game.Modules.Get<SceneManager>();
     }
 
-    public override void LateUpdate()
+    public override void LateUpdate(Frame frame)
     {
         if (_whenToRestart())
-            _sceneManager.Load(_sceneManager.CurrentScene);
+            _sceneManager.Load(new MainScene2());
     }
 }

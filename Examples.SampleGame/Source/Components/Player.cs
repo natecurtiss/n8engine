@@ -1,5 +1,6 @@
 ﻿using System;
 using N8Engine;
+using N8Engine.SceneManagement;
 
 namespace SampleGame;
 
@@ -19,7 +20,7 @@ sealed class Player : Component
         _whenToJump = whenToJump;
     }
 
-    public override void Create(GameObject gameObject)
+    public override void Create(GameObject gameObject, Scene scene)
     {
         _transform = gameObject.GetComponent<Transform>();
         _body = gameObject.GetComponent<Body>();

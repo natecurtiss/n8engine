@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using N8Engine;
+using N8Engine.SceneManagement;
 
 namespace SampleGame;
 
@@ -19,7 +20,7 @@ sealed class Parallax : Component
         _scrolling = scrolling;
     }
 
-    public override void Create(GameObject gameObject)
+    public override void Create(GameObject gameObject, Scene scene)
     {
         _transform = gameObject.GetComponent<Transform>();
         _length = _transform.Bounds().Size.X;

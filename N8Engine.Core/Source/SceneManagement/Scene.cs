@@ -48,7 +48,6 @@ public abstract class Scene
         _isLoaded = false;
         foreach (var gameObject in _gameObjects.ToArray()) 
             gameObject.Destroy();
-        Game.Modules.Get<Debug>().Log("switched from");
         _gameObjects.Clear();
         if (_isInitialized) 
             onRemoveModules(Modules);

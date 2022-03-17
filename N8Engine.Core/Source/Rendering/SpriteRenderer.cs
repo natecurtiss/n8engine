@@ -68,5 +68,6 @@ public sealed class SpriteRenderer : SceneModule
         _vbo.Dispose();
         _ebo.Dispose();
         _vao.Dispose();
+        _sprites.Clear();
     }
 }

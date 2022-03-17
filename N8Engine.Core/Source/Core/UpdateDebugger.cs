@@ -15,7 +15,7 @@ public sealed class UpdateDebugger : Component
         _onLateUpdate = onLateUpdate;
     }
 
-    public override void EarlyUpdate() => _onEarlyUpdate?.Invoke();
-    public override void Update() => _onUpdate?.Invoke();
-    public override void LateUpdate() => _onLateUpdate?.Invoke();
+    public override void EarlyUpdate(Frame frame) => _onEarlyUpdate?.Invoke();
+    public override void Update(Frame frame) => _onUpdate?.Invoke();
+    public override void LateUpdate(Frame frame) => _onLateUpdate?.Invoke();
 }

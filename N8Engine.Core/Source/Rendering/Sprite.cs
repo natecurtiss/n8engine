@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using N8Engine.SceneManagement;
 using N8Engine.Utilities;
 
@@ -11,7 +12,8 @@ public sealed class Sprite : Component
     
     SpriteRenderer _spriteRenderer;
     Transform _transform;
-    GameObject _gameObject;
+    Scene _scene;
+    string _name;
 
     public Sprite(string path)
     {
@@ -22,9 +24,10 @@ public sealed class Sprite : Component
 
     public override void Create(GameObject gameObject, Scene scene)
     {
+        _scene = scene;
+        _name = gameObject.Name;
         _transform = gameObject.GetComponent<Transform>();
         _spriteRenderer = scene.Modules.Get<SpriteRenderer>();
-        _gameObject = gameObject;
     }
 
     public override void Destroy()
@@ -35,8 +38,15 @@ public sealed class Sprite : Component
 
     public override void Render()
     {
-        Game.Modules.Get<Debug>().Log(_gameObject.IsDestroyed);
-        _spriteRenderer.AddToRenderQueue(this);
+        try
+        {
+            _spriteRenderer.AddToRenderQueue(this);
+        }
+        catch (Exception)
+        {
+            Console.WriteLine(_name + " name " + _scene.Name);
+            throw;
+        }
     }
 
     public Matrix4x4 ModelMatrix() => _transform.ModelMatrix();

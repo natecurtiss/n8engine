@@ -80,9 +80,7 @@ public sealed class GameObject
         {
             if (IsDestroyed)
                 return;
-            component.Create();
-            component.Create(_scene);
-            component.Create(this);
+            Console.WriteLine($"{this} {_scene.Name}");
             component.Create(this, _scene);
         }
     }
@@ -103,7 +101,6 @@ public sealed class GameObject
         {
             if (IsDestroyed)
                 return;
-            component.EarlyUpdate();
             component.EarlyUpdate(frame);
         }
     }
@@ -114,7 +111,6 @@ public sealed class GameObject
         {
             if (IsDestroyed)
                 return;
-            component.Update();
             component.Update(frame);
         }
     }
@@ -125,7 +121,6 @@ public sealed class GameObject
         {
             if (IsDestroyed)
                 return;
-            component.LateUpdate();
             component.LateUpdate(frame);
         }
     }
@@ -134,7 +129,7 @@ public sealed class GameObject
     {
         foreach (var component in _components.Values)
         {
-            if (IsDestroyed)
+            if (IsDestroyed) 
                 return;
             component.Render();
         }

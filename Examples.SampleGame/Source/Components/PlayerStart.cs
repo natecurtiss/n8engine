@@ -1,5 +1,6 @@
 ﻿using System;
 using N8Engine;
+using N8Engine.SceneManagement;
 
 namespace SampleGame;
 
@@ -10,9 +11,9 @@ sealed class PlayerStart : Component
 
     public PlayerStart(Func<bool> whenToStart) => _whenToStart = whenToStart;
 
-    public override void Create(GameObject gameObject) => _gameObject = gameObject;
+    public override void Create(GameObject gameObject, Scene scene) => _gameObject = gameObject;
 
-    public override void Update()
+    public override void Update(Frame frame)
     {
         if (_whenToStart())
         {
