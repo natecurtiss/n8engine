@@ -6,18 +6,17 @@ using N8Engine.Windowing;
 
 namespace N8Engine;
 
-public sealed class Game : Loop
+public sealed class Game : Loop, Ticks
 {
     public event Action OnStart;
     public event Action<Frame> OnUpdate;
     public event Action OnRender;
-
-    Window _window;
+    
     WindowOptions _windowOptions;
     Scene _firstScene = new EmptyScene();
 
     public Game() => _windowOptions = new("N8Engine Game", 1280, 720, 60, WindowState.Windowed, true);
-
+    
     public Game WithWindowTitle(string title)
     {
         _windowOptions = _windowOptions.WithTitle(title);
@@ -77,35 +76,11 @@ public sealed class Game : Loop
         Debug.OnOutput(onOutput);
         return this;
     }
-    
-    public void Start()
-    {
-        _window = new(_windowOptions);
-        _window.OnLoad += () =>
-        {
-            // TODO: Move initialization outside.
-            var gl = _window.CreateGL();
-            var input = new Input();
-            var sceneManager = new SceneManager(this, _window, m =>
-            {
-                m.Add(new Camera(_window));
-                m.Add(new SpriteRenderer(gl));
-            }, m =>
-            {
-                m.Remove<Camera>();
-                m.Remove<SpriteRenderer>();
-            });
-            Modules.Add(input);
-            Modules.Add(sceneManager);
-            Modules.Add<Graphics>(gl);
-            // TODO: Make this automatic
-            sceneManager.Load(_firstScene);
-            OnStart?.Invoke();
-            _window.OnUpdate += frame => OnUpdate?.Invoke(frame);
-            _window.OnRender += () => OnRender?.Invoke();
-            _window.OnKeyDown += key => input.UpdateKey(key, true);
-            _window.OnKeyUp += key => input.UpdateKey(key, false);
-        };
-        _window.Run();
-    }
+
+    public void Run() => Run(GameStart.Default);
+    internal void Run(GameStart starter) => starter.Start(this, this, _windowOptions, _firstScene);
+
+    void Ticks.Start() => OnStart?.Invoke();
+    void Ticks.Update(Frame frame) => OnUpdate?.Invoke(frame);
+    void Ticks.Render() => OnRender?.Invoke();
 }

@@ -6,4 +6,4 @@ new Game()
     .WithWindowTitle("Flappo")
     .WithWindowSize(1300, 700)
     .WithNotResizableWindow()
-    .Start();
+    .Run();

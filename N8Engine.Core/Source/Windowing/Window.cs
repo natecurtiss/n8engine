@@ -29,7 +29,7 @@ sealed class Window : WindowSize, WindowEvents
         _window.WindowBorder = options.IsResizable ? WindowBorder.Resizable : WindowBorder.Fixed;
         _window.Load += () =>
         {
-            SetupInput();
+            SetUpInput();
             OnLoad?.Invoke();
         };
         _window.Closing += () =>
@@ -48,7 +48,7 @@ sealed class Window : WindowSize, WindowEvents
     
     public GL CreateGL() => _gl = _window.CreateOpenGL();
 
-    void SetupInput()
+    void SetUpInput()
     {
         var input = _window.CreateInput();
         var keyboard = input.Keyboards[0];
