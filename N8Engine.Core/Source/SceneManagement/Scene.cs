@@ -4,17 +4,17 @@ using N8Engine.Utilities;
 
 namespace N8Engine.SceneManagement;
 
-public abstract class Scene : ServiceLocator<Cog, CogNotFoundException>, Cogs
+public abstract class Scene : ServiceLocator<Element, ElementNotFoundException>, Elements
 {
     readonly List<GameObject> _gameObjects = new();
     bool _isLoaded;
 
     public virtual string Name { get; } = "New Scene";
-    IEnumerable<Cog> Cogs => Services.Values;
+    IEnumerable<Element> Cogs => Services.Values;
 
-    public T Get<T>() where T : Cog => Find<T>();
-    void Cogs.Add<T>(T cog) => Register(cog);
-    void Cogs.Remove<T>() => Deregister<T>();
+    public T Get<T>() where T : Element => Find<T>();
+    void Elements.Add<T>(T cog) => Register(cog);
+    void Elements.Remove<T>() => Deregister<T>();
 
     protected virtual void Load() { }
     protected virtual void Unload() { }
@@ -33,7 +33,7 @@ public abstract class Scene : ServiceLocator<Cog, CogNotFoundException>, Cogs
         return gameObject;
     }
 
-    internal void SwitchTo(Action<Cogs> onAddCogs)
+    internal void SwitchTo(Action<Elements> onAddCogs)
     {
         _isLoaded = true;
         onAddCogs(this);
@@ -42,7 +42,7 @@ public abstract class Scene : ServiceLocator<Cog, CogNotFoundException>, Cogs
         Load();
     }
 
-    internal void SwitchFrom(Action<Cogs> onRemoveCogs)
+    internal void SwitchFrom(Action<Elements> onRemoveCogs)
     {
         _isLoaded = false;
         foreach (var gameObject in _gameObjects.ToArray()) 

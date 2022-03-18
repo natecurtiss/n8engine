@@ -5,7 +5,7 @@ using N8Engine.Windowing;
 
 namespace N8Engine.Rendering;
 
-public sealed class Camera : Cog
+public sealed class Camera : Element
 {
     public Vector2 Position { get; set; }
     public float Zoom { get; set; } = 1f;
@@ -33,8 +33,8 @@ public sealed class Camera : Cog
         return orthographicMatrix * zoomMatrix;
     }
     
-    void Cog.OnSceneLoad(Scene scene) { }
-    void Cog.OnSceneUpdate() { }
-    void Cog.OnSceneRender() { }
-    void Cog.OnSceneUnload() { }
+    void Element.OnSceneLoad(Scene scene) { }
+    void Element.OnSceneUpdate() { }
+    void Element.OnSceneRender() { }
+    void Element.OnSceneUnload() { }
 }

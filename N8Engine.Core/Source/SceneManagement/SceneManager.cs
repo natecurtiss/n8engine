@@ -7,12 +7,12 @@ public sealed class SceneManager : Module
 {
     readonly Loop _loop;
     readonly WindowEvents _windowEvents;
-    readonly Action<Cogs> _onAddCogs;
-    readonly Action<Cogs> _onRemoveCogs;
+    readonly Action<Elements> _onAddCogs;
+    readonly Action<Elements> _onRemoveCogs;
 
     public Scene CurrentScene { get; private set; } = new EmptyScene();
     
-    internal SceneManager(Loop loop, WindowEvents windowEvents, Action<Cogs> onAddCogs, Action<Cogs> onRemoveCogs)
+    internal SceneManager(Loop loop, WindowEvents windowEvents, Action<Elements> onAddCogs, Action<Elements> onRemoveCogs)
     {
         _loop = loop;
         _windowEvents = windowEvents;
@@ -29,7 +29,7 @@ public sealed class SceneManager : Module
         _windowEvents.OnClose -= UnloadCurrentScene;
         UnloadCurrentScene();
         CurrentScene = scene;
-        
+
         _loop.OnStart += CurrentScene.Start;
         _loop.OnUpdate += CurrentScene.Update;
         _loop.OnRender += CurrentScene.Render;

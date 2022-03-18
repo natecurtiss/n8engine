@@ -4,7 +4,7 @@ using Silk.NET.OpenGL;
 
 namespace N8Engine.Rendering;
 
-public sealed class SpriteRenderer : Cog
+public sealed class SpriteRenderer : Element
 {
     readonly List<Sprite> _sprites = new();
     readonly float[] _vertices =
@@ -31,7 +31,7 @@ public sealed class SpriteRenderer : Cog
 
     public void AddToRenderQueue(Sprite sprite) => _sprites.Add(sprite);
 
-    void Cog.OnSceneLoad(Scene scene)
+    void Element.OnSceneLoad(Scene scene)
     {
         _camera = scene.Get<Camera>();
         
@@ -43,9 +43,9 @@ public sealed class SpriteRenderer : Cog
         _vao.VertexAttributePointer(1, 2, VertexAttribPointerType.Float, 5, 3);
     }
 
-    void Cog.OnSceneUpdate() { }
+    void Element.OnSceneUpdate() { }
 
-    unsafe void Cog.OnSceneRender()
+    unsafe void Element.OnSceneRender()
     {
         _gl.Clear(ClearBufferMask.ColorBufferBit);
         _vao.Bind();
@@ -63,7 +63,7 @@ public sealed class SpriteRenderer : Cog
         _sprites.Clear();
     }
 
-    void Cog.OnSceneUnload()
+    void Element.OnSceneUnload()
     {
         _vbo.Dispose();
         _ebo.Dispose();
